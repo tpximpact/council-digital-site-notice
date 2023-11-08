@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/styled-components": "^5.1.30",
+    "govuk-react": "^0.10.6",
     "next": "14.0.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "styled-components": "^6.1.1"
   },
   "devDependencies": {
     "@types/node": "^20",
