@@ -1,11 +1,7 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import { client } from "../../util/client";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
+const Home = ({ data }: any) => {
   return (
     <>
       <Head>
@@ -15,8 +11,34 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>Create Next App</h1>
+        <ul>
+          {data && data.map(({id, title}: any) =>  {
+            return (
+              <li key={id}>
+                <b>{title}</b>
+              </li>
+            );
+          })}
+        </ul>
       </main>
     </>
   );
+};
+
+export async function getStaticProps() {
+  const query = `*[_type == "post"] {
+    id,
+    title,
+    description
+  }`;
+
+  const data = await client.fetch(query);
+
+  return {
+    props: {
+      data,
+    },
+  };
 }
+
+export default Home;
