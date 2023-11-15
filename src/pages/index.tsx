@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { client } from "../../util/client";
+import { client, getPosts } from "../../util/client";
 
 const Home = ({ data }: any) => {
   return (
@@ -12,9 +12,9 @@ const Home = ({ data }: any) => {
       </Head>
       <main>
         <ul>
-          {data && data.map(({id, title}: any) =>  {
+          {data && data.map(({_id, title}: any) =>  {
             return (
-              <li key={id}>
+              <li key={_id}>
                 <b>{title}</b>
               </li>
             );
@@ -26,13 +26,8 @@ const Home = ({ data }: any) => {
 };
 
 export async function getStaticProps() {
-  const query = `*[_type == "post"] {
-    id,
-    title,
-    description
-  }`;
-
-  const data = await client.fetch(query);
+ 
+  const data = await getPosts();
 
   return {
     props: {
