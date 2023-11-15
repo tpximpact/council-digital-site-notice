@@ -1,7 +1,40 @@
 import Head from "next/head";
-import { client, getPosts } from "../../util/client";
+import React, { useState } from "react";
+import { getPosts, createPost } from "../../util/client";
 
 const Home = ({ data }: any) => {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+  });
+
+  const handleInput = (e: any) => {
+    const fieldName = e.target.name;
+    const fieldValue = e.target.value;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [fieldName]: fieldValue,
+    }));
+  };
+
+  const submitForm = async (e: any) => {
+    e.preventDefault();
+
+    const data = {
+      title: formData.title,
+      description: formData.description,
+      _type: "post",
+    };
+
+    var result = await createPost(data).then((data) => {
+      setFormData({
+        title: "",
+        description: "",
+      });
+    });
+  };
+
   return (
     <>
       <Head>
@@ -12,23 +45,45 @@ const Home = ({ data }: any) => {
       </Head>
       <main>
         <ul>
-          {data && data.map(({_id, title}: any) =>  {
-            return (
-              <li key={_id}>
-                <b>{title}</b>
-              </li>
-            );
-          })}
+          {data &&
+            data.map(({ _id, title }: any) => {
+              return (
+                <li key={_id}>
+                  <b>{title}</b>
+                </li>
+              );
+            })}
         </ul>
+        <form method="POST" onSubmit={submitForm}>
+          <div>
+            <label>Title</label>
+            <input
+              type="text"
+              name="title"
+              onChange={handleInput}
+              value={formData.title}
+            />
+          </div>
+
+          <div>
+            <label>Description</label>
+            <input
+              type="text"
+              name="description"
+              onChange={handleInput}
+              value={formData.description}
+            />
+          </div>
+
+          <button type="submit">Add post</button>
+        </form>
       </main>
     </>
   );
 };
 
 export async function getStaticProps() {
- 
   const data = await getPosts();
-
   return {
     props: {
       data,
