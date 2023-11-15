@@ -15,5 +15,10 @@ export default defineType({
       title: 'Description',
       type: 'text',
     }),
+    defineField({
+      name: 'isActive',
+      title: 'IsActive',
+      type: 'boolean',
+    }),
   ],
 })

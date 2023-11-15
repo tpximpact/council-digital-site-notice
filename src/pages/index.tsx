@@ -1,12 +1,19 @@
 import Head from "next/head";
 import React, { useState } from "react";
-import { getPosts, createPost } from "../../util/client";
+import { getActivePosts, createPost, updatePostToNotActive } from "../../util/client";
 
 const Home = ({ data }: any) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
   });
+
+  const [postId, setPostId] = useState<string>('');
+
+  const handlePostIdInput = (e: any) => {
+    setPostId(e.target.value);
+  };
+  
 
   const handleInput = (e: any) => {
     const fieldName = e.target.name;
@@ -35,6 +42,14 @@ const Home = ({ data }: any) => {
     });
   };
 
+  const submitPostIdForm = async (e: any) => {
+    e.preventDefault();
+
+    var restult = await updatePostToNotActive(postId).then((data) => {
+      setPostId('');
+    });;
+  };
+
   return (
     <>
       <Head>
@@ -49,7 +64,7 @@ const Home = ({ data }: any) => {
             data.map(({ _id, title }: any) => {
               return (
                 <li key={_id}>
-                  <b>{title}</b>
+                  <b>{_id} : {title}</b>
                 </li>
               );
             })}
@@ -77,13 +92,27 @@ const Home = ({ data }: any) => {
 
           <button type="submit">Add post</button>
         </form>
+
+        <form onSubmit={submitPostIdForm}>
+        <div>
+            <label>Description</label>
+            <input
+              type="text"
+              name="id"
+              onChange={handlePostIdInput}
+              value={postId}
+            />
+          </div>
+
+          <button type="submit">Set post as in active</button>
+        </form>
       </main>
     </>
   );
 };
 
 export async function getStaticProps() {
-  const data = await getPosts();
+  const data = await getActivePosts();
   return {
     props: {
       data,
