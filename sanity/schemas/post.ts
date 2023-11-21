@@ -19,6 +19,7 @@ export default defineType({
       name: 'isActive',
       title: 'IsActive',
       type: 'boolean',
+      initialValue: true
     }),
   ],
 })
