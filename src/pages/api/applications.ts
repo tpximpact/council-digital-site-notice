@@ -2,6 +2,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createPost } from "../../../util/client";
 
+/**
+ * @swagger
+ * /api/applications:
+ *   post:
+ *     description: inserts a new planning application
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             applicationId: string
+ *           example:
+ *             applicationId: AAA_BBB_CCC_DDD
+ *     responses:
+ *       200:
+ *         message: Success
+ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
