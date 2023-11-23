@@ -9,17 +9,17 @@ export const  client = createClient({
 })
 
 // uses GROQ to query content: https://www.sanity.io/docs/groq
-export async function getActivePosts() {
-    const posts = await client.fetch('*[_type == "post" && isActive == true]')
+export async function getActiveApplications() {
+    const posts = await client.fetch('*[_type == "planning-application" && isActive == true]')
     return posts
 }
   
-export async function createPost(post: any) {
+export async function createApplication(post: any) {
 const result = client.create(post)
 return result
 }
 
-export async function updatePostToNotActive(_id : string) {
+export async function updateApplicationToNotActive(_id : string) {
 const result = client.patch(_id).set({"isActive" : false}).commit()
 return result
 }

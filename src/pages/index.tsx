@@ -1,55 +1,8 @@
 import Head from "next/head";
 import React, { useState } from "react";
-import { getActivePosts, createPost, updatePostToNotActive } from "../../util/client";
+import { getActiveApplications } from "../../util/client";
 
 const Home = ({ data }: any) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-  });
-
-  const [postId, setPostId] = useState<string>('');
-
-  const handlePostIdInput = (e: any) => {
-    setPostId(e.target.value);
-  };
-  
-
-  const handleInput = (e: any) => {
-    const fieldName = e.target.name;
-    const fieldValue = e.target.value;
-
-    setFormData((prevState) => ({
-      ...prevState,
-      [fieldName]: fieldValue,
-    }));
-  };
-
-  const submitForm = async (e: any) => {
-    e.preventDefault();
-
-    const data = {
-      title: formData.title,
-      description: formData.description,
-      _type: "post",
-    };
-
-    var result = await createPost(data).then((data) => {
-      setFormData({
-        title: "",
-        description: "",
-      });
-    });
-  };
-
-  const submitPostIdForm = async (e: any) => {
-    e.preventDefault();
-
-    var restult = await updatePostToNotActive(postId).then((data) => {
-      setPostId('');
-    });;
-  };
-
   return (
     <>
       <Head>
@@ -61,58 +14,21 @@ const Home = ({ data }: any) => {
       <main>
         <ul>
           {data &&
-            data.map(({ _id, title }: any) => {
+            data.map(({ reference }: any) => {
               return (
-                <li key={_id}>
-                  <b>{_id} : {title}</b>
+                <li key={reference}>
+                  {reference}
                 </li>
               );
             })}
         </ul>
-        <form method="POST" onSubmit={submitForm}>
-          <div>
-            <label>Title</label>
-            <input
-              type="text"
-              name="title"
-              onChange={handleInput}
-              value={formData.title}
-            />
-          </div>
-
-          <div>
-            <label>Description</label>
-            <input
-              type="text"
-              name="description"
-              onChange={handleInput}
-              value={formData.description}
-            />
-          </div>
-
-          <button type="submit">Add post</button>
-        </form>
-
-        <form onSubmit={submitPostIdForm}>
-        <div>
-            <label>Description</label>
-            <input
-              type="text"
-              name="id"
-              onChange={handlePostIdInput}
-              value={postId}
-            />
-          </div>
-
-          <button type="submit">Set post as in active</button>
-        </form>
       </main>
     </>
   );
 };
 
 export async function getStaticProps() {
-  const data = await getActivePosts();
+  const data = await getActiveApplications();
   return {
     props: {
       data,

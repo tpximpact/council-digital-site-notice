@@ -6,8 +6,8 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
-      title: "Application ID",
-      name: "applicationId",
+      title: "Reference",
+      name: "reference",
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
@@ -65,6 +65,12 @@ export default defineType({
       title: "Air Quality",
       name: "airQuality",
       type: "string",
+    }),
+    defineField({
+      name: 'isActive',
+      title: 'IsActive',
+      type: 'boolean',
+      initialValue: true
     }),
   ],
 });
