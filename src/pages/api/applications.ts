@@ -16,13 +16,11 @@ export default async function handler(
     });
   }
 
-  const { title, description } = req.body;
+  const { applicationId } = req.body;
 
   const data = {
-    title: title,
-    description: description,
-    isActive: true,
-    _type: "post",
+    applicationId: applicationId,
+    _type: "planning-application",
   };
 
   var result = await createPost(data).then((data) => {
