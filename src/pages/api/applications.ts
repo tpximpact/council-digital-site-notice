@@ -60,10 +60,11 @@ export default async function handler(
     return;
   }
 
-  const { reference } = req.body;
+  const { reference, description } = req.body;
 
   const data = {
-    reference: reference,
+    reference,
+    description,
     isActive: true,
     _type: "planning-application",
   };
