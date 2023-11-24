@@ -1,7 +1,7 @@
 import {createClient} from '@sanity/client'
 
 export const  client = createClient({
-    projectId: '3uqx196f',
+    projectId: 'xx',
     dataset: 'production',
     useCdn: false, // set to `false` to bypass the edge cache
     apiVersion: '2023-11-15', // use current date (YYYY-MM-DD) to target the latest API version
@@ -25,6 +25,7 @@ return result
 }
 
 export async function checkExistingReference(reference: string): Promise<boolean> {
+    console.log("SHIT");
     const query = '*[_type == "planning-application" && reference == $reference]'
     const posts = await client.fetch(query, { reference })
     return posts.length > 0;
