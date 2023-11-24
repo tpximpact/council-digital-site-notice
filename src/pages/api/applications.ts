@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { createApplication } from "../../../util/client";
+import { createApplication, checkExistingReference } from "../../../util/client";
 
 /**
  * @swagger
@@ -19,11 +19,33 @@ import { createApplication } from "../../../util/client";
  *       200:
  *         message: Success
  */
+
+const validateParams = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { reference } = req.body;
+
+  if (!reference) {
+    res.status(400).json({
+      error: { message: "Reference parameter is required" },
+    });
+    return false;
+  }
+
+  // Check if the reference already exists in the database
+  const existingApplication = await checkExistingReference(reference);
+  if (existingApplication) {
+    res.status(400).json({
+      error: { message: "Reference must be unique" },
+    });
+    return false;
+  }
+
+  return true;
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
   const { method } = req;
 
   if (method !== "POST") {
@@ -31,6 +53,11 @@ export default async function handler(
     res.status(405).json({
       error: { message: `Method ${method} Not Allowed` },
     });
+    return;
+  }
+
+  if (!validateParams(req, res)) {
+    return;
   }
 
   const { reference } = req.body;
@@ -41,7 +68,12 @@ export default async function handler(
     _type: "planning-application",
   };
 
-  var result = await createApplication(data).then((data) => {
-    return res.status(200).json({ message: "Success" });
-  });
+  try {
+    await createApplication(data);
+    res.status(200).json({ message: "Success" });
+  } catch (error) {
+    res.status(500).json({
+      error: { message: "An error occurred while creating the application" },
+    });
+  }
 }

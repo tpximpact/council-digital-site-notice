@@ -9,7 +9,7 @@ export default defineType({
       title: "Reference",
       name: "reference",
       type: "string",
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: any) => Rule.required(),
     }),
     defineField({
       title: "Application Type",
