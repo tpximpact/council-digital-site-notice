@@ -21,6 +21,7 @@ const Home = ({ data }: any) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <h1>Planning applications</h1>
         <ul>
           {data &&
             data.map(({ reference, description }: any) => {

@@ -4,8 +4,9 @@ exports[`renders homepage unchanged 1`] = `
 <div>
   <main>
     <h1>
-      Create Next App
+      Planning applications
     </h1>
+    <ul />
   </main>
 </div>
 `;
