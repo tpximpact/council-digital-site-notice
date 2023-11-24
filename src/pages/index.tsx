@@ -22,7 +22,7 @@ const Home = ({ data }: any) => {
       </Head>
       <main>
         <h1>Planning applications</h1>
-        <ul>
+        <ul key="planning-list">
           {data &&
             data.map(({ reference, description }: any) => {
               return (
