@@ -2,6 +2,15 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { getActiveApplications } from "../../util/client";
 
+export async function getStaticProps() {
+  const data = await getActiveApplications();
+  return {
+    props: {
+      data,
+    },
+  };
+}
+
 const Home = ({ data }: any) => {
   return (
     <>
@@ -12,12 +21,13 @@ const Home = ({ data }: any) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <ul>
+        <h1>Planning applications</h1>
+        <ul key="planning-list">
           {data &&
-            data.map(({ reference }: any) => {
+            data.map(({ reference, description }: any) => {
               return (
                 <li key={reference}>
-                  {reference}
+                  {reference} {description && "-"} {description}
                 </li>
               );
             })}
@@ -26,14 +36,5 @@ const Home = ({ data }: any) => {
     </>
   );
 };
-
-export async function getStaticProps() {
-  const data = await getActiveApplications();
-  return {
-    props: {
-      data,
-    },
-  };
-}
 
 export default Home;

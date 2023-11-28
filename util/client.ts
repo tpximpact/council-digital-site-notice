@@ -23,3 +23,9 @@ export async function updateApplicationToNotActive(_id : string) {
 const result = client.patch(_id).set({"isActive" : false}).commit()
 return result
 }
+
+export async function checkExistingReference(reference: string): Promise<boolean> {
+    const query = '*[_type == "planning-application" && reference == $reference]'
+    const posts = await client.fetch(query, { reference })
+    return posts.length > 0;
+}
