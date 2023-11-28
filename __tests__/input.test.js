@@ -1,4 +1,4 @@
-import Input from ".";
+import Input from "../src/components/input";
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
