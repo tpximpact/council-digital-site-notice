@@ -11,17 +11,15 @@
     "test:update": "jest -u"
   },
   "dependencies": {
-    "@types/styled-components": "^5.1.30",
-    "govuk-react": "^0.10.6",
+    "govuk-frontend": "^4.7.0",
     "next": "14.0.1",
     "react": "^18",
     "react-dom": "^18",
-    "styled-components": "^6.1.1"
+    "sass": "^1.69.5"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.0",
-    "@testing-library/react ": "testing-library/jest-dom",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
