@@ -24,9 +24,8 @@ const result = client.patch(_id).set({"isActive" : false}).commit()
 return result
 }
 
-export async function checkExistingReference(reference: string): Promise<boolean> {
-    console.log("SHIT");
+export async function checkExistingReference(reference: string): Promise<{ exists: boolean }> {
     const query = '*[_type == "planning-application" && reference == $reference]'
     const posts = await client.fetch(query, { reference })
-    return posts.length > 0;
+    return { exists: posts.length > 0 };
 }

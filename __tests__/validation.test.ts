@@ -12,24 +12,24 @@ describe('validatePlanningParams', () => {
     const data = { reference: '', description: 'Some description' };
     const result = await validatePlanningParams(data);
 
-    expect(result).toContain('Reference parameter is required');
-    expect(result).toHaveLength(1);
+    expect(result).toEqual({"errors": [{"message": "Invalid value for field 'reference': String must contain at least 1 character(s)"}], "status": 400});
+    expect(result.errors).toHaveLength(1);
     expect(checkExistingReference).not.toHaveBeenCalled();
   });
 
   it('should return an error if reference already exists', async () => {
         const data = { reference: 'existingReference', description: 'Some description' };
-        checkExistingReference.mockResolvedValue(true);
+        checkExistingReference.mockResolvedValue({"exists":true});
         const result = await validatePlanningParams(data);
     
-        expect(JSON.stringify(result)).toBe('["Reference must be unique"]');
-        expect(result).toHaveLength(1);
+        expect(result).toEqual({"status": 400,"errors":[{"message":"Invalid value for field 'exists': Reference must be unique"}]});
+        expect(result.errors).toHaveLength(1);
         expect(checkExistingReference).toHaveBeenCalledWith('existingReference');
 
-        checkExistingReference.mockResolvedValue(false);
+        checkExistingReference.mockResolvedValue({"exists":false});
         const result2 = await validatePlanningParams(data);
     
-        expect(JSON.stringify(result2)).toBe('[]')
+        expect(result2).toEqual({"status": 200, "errors":[]})
     
       });
 }); 

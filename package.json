@@ -18,9 +18,9 @@
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.19.3",
     "@types/styled-components": "^5.1.30",
+    "govuk-frontend": "^4.7.0",
     "govuk-react": "^0.10.6",
     "groq": "^3.19.3",
-    "govuk-frontend": "^4.7.0",
     "next": "14.0.1",
     "next-sanity": "^6.0.1",
     "next-sanity-image": "^6.1.1",
@@ -28,9 +28,10 @@
     "react": "^18",
     "react-dom": "^18",
     "sanity": "^3.19.3",
+    "sass": "^1.69.5",
     "styled-components": "^6.1.1",
     "swagger-ui-react": "^5.9.4",
-    "sass": "^1.69.5"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",
