@@ -12,6 +12,11 @@ export default defineType({
       validation: (Rule: any) => Rule.required(),
     }),
     defineField({
+      title: "Address",
+      name: "address",
+      type: "string",
+    }),
+    defineField({
       title: "Application Type",
       name: "applicationType",
       type: "string",
@@ -64,6 +69,16 @@ export default defineType({
     defineField({
       title: "Air Quality",
       name: "airQuality",
+      type: "string",
+    }),
+    defineField({
+      title: "Eastings",
+      name: "eastings",
+      type: "string",
+    }),
+    defineField({
+      title: "Northings",
+      name: "northings",
       type: "string",
     }),
     defineField({
