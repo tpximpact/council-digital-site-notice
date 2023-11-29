@@ -1,4 +1,5 @@
 import '@/styles/app.scss'
+import Layout from './app/layout'
 import type { AppProps } from 'next/app'
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -6,5 +7,7 @@ export default function App({ Component, pageProps }: AppProps) {
     const govUk = require("govuk-frontend")
     govUk.initAll()
   }
-  return <Component {...pageProps} />
+  return <Layout>
+            <Component {...pageProps} />
+          </Layout>
 }
