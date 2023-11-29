@@ -8,13 +8,14 @@ import {ArrowIcon} from "../../../public/assets/icons"
 
 const About = () => {
     return(
-        <div style={{maxWidth: "60rem"}}>
-        <h1 className="govuk-heading-xl">Murphy's Yard</h1>
-        <p className="govuk-body-l govuk-!-font-weight-bold">Murphy's Yard Kentish Town NW5</p>
+        <div className="wrap-about">
+        <h1 className="govuk-heading-l">Murphy's Yard</h1>
+        <p className="govuk-body-m govuk-!-font-weight-bold">Murphy's Yard Kentish Town NW5</p>
         <div className="wrap-carousel-desktop">
-        {/* <div className="carousel-wrap">
-            <Carousel />
-        </div> */}
+        <div className="carousel-wrap">
+            {/* <Carousel /> will be place here */}
+            Carousel
+        </div>
         <div>
         <h2 className="govuk-heading-m">About this development</h2>
         <p className="govuk-body-s">Murphy’s, a major local employer who have been in Kentish Town for 57 years, are proposing a redevelopment of Murphy’s Yard (behind Highgate Road) to provide new industrial space, offices, restaurants, healthcare, leisure and homes, with circa one third of the site for new public open space.</p>
