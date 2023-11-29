@@ -1,9 +1,7 @@
 @import "node_modules/govuk-frontend/govuk/all";
+@import "./layout.scss";
+@import "./home.scss";
 @import "./application.scss";
 
 $govuk-assets-path: 'public/assets/';
 
-a {
-    color: #1D70B8;
-
-}

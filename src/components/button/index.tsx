@@ -1,6 +1,4 @@
-import { ReactNode } from "react"
-
-const Button = ({content, icon, className, onClick}:{content:string, icon?:ReactNode, className?:string, onClick?:() => void}) => {
+const Button = ({content, icon, className, onClick}:{content:string, icon?:React.ReactNode, className?:string, onClick?:() => void}) => {
     return(
         <button className={`govuk-button ${className}`} data-module="govuk-button" onClick={onClick}>
             {content}

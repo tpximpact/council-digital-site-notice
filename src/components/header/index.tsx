@@ -3,7 +3,7 @@ import React from "react";
 
 const Header = () => {
     return (
- <header className="govuk-header " role="banner" data-module="govuk-header">
+ <header className="govuk-header" role="banner" data-module="govuk-header">
   <div className="govuk-header__container govuk-width-container">
     <div className="govuk-header__logo">
       <a href="#" className="govuk-header__link govuk-header__link--homepage">
