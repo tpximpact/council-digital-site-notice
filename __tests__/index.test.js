@@ -7,7 +7,7 @@ describe('Home', () => {
     render(<Home />)
  
     const heading = screen.getByRole('heading', {
-      name: "Create Next App",
+      name: "Planning applications",
     })
  
     expect(heading).toBeInTheDocument()

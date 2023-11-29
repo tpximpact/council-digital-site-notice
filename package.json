@@ -1,5 +1,8 @@
 {
   "name": "council-digital-site-notice",
+  "engines": {
+    "node": ">=20"
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,18 +14,32 @@
     "test:update": "jest -u"
   },
   "dependencies": {
+    "@sanity/client": "^6.8.5",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/vision": "^3.19.3",
+    "@types/styled-components": "^5.1.30",
+    "govuk-react": "^0.10.6",
+    "groq": "^3.19.3",
     "govuk-frontend": "^4.7.0",
     "next": "14.0.1",
+    "next-sanity": "^6.0.1",
+    "next-sanity-image": "^6.1.1",
+    "next-swagger-doc": "^0.4.0",
     "react": "^18",
     "react-dom": "^18",
+    "sanity": "^3.19.3",
+    "styled-components": "^6.1.1",
+    "swagger-ui-react": "^5.9.4",
     "sass": "^1.69.5"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.0",
+    "@types/jest": "^29.5.10",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/swagger-ui-react": "^4.18.3",
     "eslint": "^8",
     "eslint-config-next": "14.0.1",
     "install": "^0.13.0",
