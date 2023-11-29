@@ -1,11 +1,17 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import React, { useState } from "react";
+import { getActiveApplications } from "../../util/client";
 
-const inter = Inter({ subsets: ["latin"] });
+export async function getStaticProps() {
+  const data = await getActiveApplications();
+  return {
+    props: {
+      data,
+    },
+  };
+}
 
-export default function Home() {
+const Home = ({ data }: any) => {
   return (
     <>
       <Head>
@@ -15,8 +21,20 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>Create Next App</h1>
+        <h1>Planning applications</h1>
+        <ul key="planning-list">
+          {data &&
+            data.map(({ reference, description }: any) => {
+              return (
+                <li key={reference}>
+                  {reference} {description && "-"} {description}
+                </li>
+              );
+            })}
+        </ul>
       </main>
     </>
   );
-}
+};
+
+export default Home;

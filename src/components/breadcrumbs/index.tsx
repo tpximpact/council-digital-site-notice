@@ -2,7 +2,7 @@ import Link from "next/link"
 
 type BreadcrumbsInfo = {
     name: string,
-    href?: string
+    href: string
 }
 
 const Breadcrumbs = ({breadcrumbs_info}:{breadcrumbs_info: BreadcrumbsInfo[]}) => {
