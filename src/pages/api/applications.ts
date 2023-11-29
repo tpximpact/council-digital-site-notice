@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { createApplication, checkExistingReference } from "../../../util/client";
+import { createApplication } from "../../../util/client";
+import { validatePlanningParams } from "../../../util/validator";
 
 /**
  * @swagger
@@ -20,28 +21,6 @@ import { createApplication, checkExistingReference } from "../../../util/client"
  *         message: Success
  */
 
-const validateParams = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { reference } = req.body;
-
-  if (!reference) {
-    res.status(400).json({
-      error: { message: "Reference parameter is required" },
-    });
-    return false;
-  }
-
-  // Check if the reference already exists in the database
-  const existingApplication = await checkExistingReference(reference);
-  if (existingApplication) {
-    res.status(400).json({
-      error: { message: "Reference must be unique" },
-    });
-    return false;
-  }
-
-  return true;
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -56,8 +35,11 @@ export default async function handler(
     return;
   }
 
-  if (!validateParams(req, res)) {
-    return;
+  const errors = await validatePlanningParams(req.body);
+  if (errors.length > 0) {
+    return res.status(400).json({
+      error: { message: errors.join(", ") },
+    });
   }
 
   const { reference, description } = req.body;
