@@ -57,6 +57,53 @@
     max-width: 50rem;
 }
 
+// feedback message
+.process-grid {
+    margin: 20px 0 10px;
+    display: grid;
+    max-width: 380px;
+    grid-template-columns: 0.75fr 0.5fr;
+    grid-template-rows: 0.5fr 0.5fr 1fr;
+}
+
+
+.process-blue-title{
+    color: #1D70B8;
+}
+
+.process-white-info {
+    background-color: #1D70B8;
+    color: white;
+    padding: 5px 10px;
+
+}
+
+.process-blue-info {
+    background: #D2E2F1; 
+    color: #144E81;
+    padding: 2px 8px;
+    font-size: 14px;
+}
+
+.process-grid :nth-child(3) {
+    margin-top: -10px;
+}
+
+.wrap-mesage-button {
+    display: flex; 
+    flex-direction: column
+}
+
+.wrap-mesage-button :first-child {
+    margin-top: 20px; 
+    max-width: 250px; 
+}
+
+.wrap-mesage-button :last-child{
+    color: black
+}
+
+
 @media (max-width: 600px){
     .wrap-feedback {
         margin-right: -20px;
