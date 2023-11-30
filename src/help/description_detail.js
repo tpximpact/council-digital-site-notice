@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import Link from "next/link"
 export const descriptionDetail = {
     "feeling": <>
         <p className="govuk-body-s">We ask for feedback on developments for a few different reasons. Understanding why we want your input can help you write better feedback and influence a proposed development in your area.</p>
@@ -31,5 +32,10 @@ export const descriptionDetail = {
         <p className="govuk-body-s">Issues such as loss of private view or negative impact on property values, or civil matters like ‘right to light’, party walls and property damage are not considered ‘material planning considerations’.</p>
         <p className="govuk-body-s">The case officer will summarise their findings in the officer's report and/or decision notice.</p>
         <p className="govuk-body-s">We won't acknowledge receipt of your comments, or get in touch with you directly about the issues you've raised. You can check the officer's report or decision notice to see if your, and other, comments have been logged.</p>
+</>,
+"personal-details": <>
+    <p className="govuk-body-s">Your comments will also be made available online for the public to see. We'll include your name and address, but we won’t display your telephone number or email address.</p>
+    <p className="govuk-body-s">We'll make sure any other personal or sensitive information is removed where needed, in line with the <Link href="" style={{color:"black"}}>General Data Protection Regulation</Link> (GDPR). If you have concerns about any data you have sent being published, <Link href="" style={{color:"black"}}>contact the Planning Advice and Information Service.</Link></p>
+    <p className="govuk-body-s">Read our <Link href="" style={{color:"black"}}>corporate privacy statement</Link> and our <Link href="" style={{color:"black"}}>planning service privacy statement</Link> for more information.</p>
 </>
 }

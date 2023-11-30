@@ -52,6 +52,11 @@
     text-decoration: underline
 }
 
+// personal details
+.wrap-personal-details {
+    max-width: 50rem;
+}
+
 @media (max-width: 600px){
     .wrap-feedback {
         margin-right: -20px;
