@@ -1,14 +1,16 @@
 import {createClient} from '@sanity/client'
+import imageUrlBuilder from '@sanity/image-url'
 
 export const  client = createClient({
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    useCdn: false, // set to `false` to bypass the edge cache
-    apiVersion: '2023-11-15', // use current date (YYYY-MM-DD) to target the latest API version
-    token: process.env.NEXT_PUBLIC_SANITY_SECRET_TOKEN // Only if you want to update content with the client
+    useCdn: false, 
+    apiVersion: '2023-11-15', 
+    token: process.env.NEXT_PUBLIC_SANITY_SECRET_TOKEN
 })
 
-// uses GROQ to query content: https://www.sanity.io/docs/groq
+const builder = imageUrlBuilder(client)
+
 export async function getActiveApplications() {
     const posts = await client.fetch('*[_type == "planning-application" && isActive == true]')
     return posts
@@ -28,4 +30,9 @@ export async function checkExistingReference(reference: string): Promise<boolean
     const query = '*[_type == "planning-application" && reference == $reference]'
     const posts = await client.fetch(query, { reference })
     return posts.length > 0;
+}
+
+
+export function urlFor(source: any) {
+  return builder.image(source)
 }
