@@ -25,7 +25,6 @@ return result
 }
 
 export async function checkExistingReference(reference: string): Promise<boolean> {
-    console.log("SHIT");
     const query = '*[_type == "planning-application" && reference == $reference]'
     const posts = await client.fetch(query, { reference })
     return posts.length > 0;
