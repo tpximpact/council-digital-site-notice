@@ -21,7 +21,7 @@ const Feeling = ({onChange}: {onChange: () => void}) => {
         "inFavor": feeling === "inFavor" ? "#D53880" : "white"
     }
     return(
-        <>
+        <section>
         
             <h1 className="govuk-heading-l">How do you feel about this development?</h1>
             <div className="wrap-icons-feeling">
@@ -31,7 +31,7 @@ const Feeling = ({onChange}: {onChange: () => void}) => {
             </div>
             <Details summary="Why your feedback is important" description={descriptionDetail['feeling']}/>
             <Button content="Next" onClick={() => onChange()}/>
-        </>
+        </section>
     )
 }
 

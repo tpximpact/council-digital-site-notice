@@ -4,7 +4,7 @@ import Button from "@/components/button"
 
 const FeedbackMessage = () => {
     return(
-        <>
+        <section>
         <h1 className="govuk-heading-l">Your comment has been submitted</h1>
         <Button content="Sign up for updates about this application"/>
         <h2 className="govuk-heading-m">What’s next for this application?</h2>
@@ -22,7 +22,7 @@ const FeedbackMessage = () => {
             <Link href="#" className="govuk-button govuk-button--secondary">Get involved in the local plan</Link>
             <Link href="#" className="govuk-body-s govuk-!-font-weight-bold">What is a Local Plan?</Link>
         </div>
-        </>
+        </section>
     )
 }
 
