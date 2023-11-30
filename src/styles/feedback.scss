@@ -1,0 +1,60 @@
+.wrap-feedback {
+    background-color: #1D70B8;
+    padding: 20px 100px;
+    margin: 0 -100px 15px -100px;
+}
+
+.wrap-feedback * {
+    color: white;
+    max-width: 50rem;
+}
+
+.wrap-image-legend-feedback {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.wrap-image-legend-feedback h3 {
+    padding-left: 20px;
+}
+
+// feeling style
+.wrap-icons-feeling {
+    display: flex;  
+    justify-content: space-between;
+    margin-bottom: 40px;
+    max-width: 55rem;
+}
+
+.wrap-icons-feeling > div {
+    display: flex; 
+    flex-direction:column;
+}
+
+.wrap-icons-feeling > div > span {
+    text-align: center;
+    margin-top: 5px;
+}
+
+// impact style
+.button-impact-question {
+    margin-top: 20px
+}
+.impact-validation {
+    border: 5px solid #D4351C; 
+    margin-top: 20px; 
+    padding:15px;
+    max-width: 15rem;
+}
+
+.impact-validation :last-child {
+    color: #D4351C; 
+    text-decoration: underline
+}
+
+@media (max-width: 600px){
+    .wrap-feedback {
+        margin-right: -20px;
+        padding-right: 60px;
+    }
+}
