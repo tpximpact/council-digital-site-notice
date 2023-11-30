@@ -4,6 +4,13 @@ import { z } from 'zod';
 const PlanningValidation = z.object({
     reference: z.string().min(1),
     description: z.string().optional(),
+    address: z.string().optional(),
+    applicationType: z.string().optional(),
+    applicationStage: z.string().optional(),
+    height: z.string().optional(),
+    developmentType: z.string().optional(),
+    commentDeadline: z.string().optional(),
+    openSpaceGardens: z.string().optional(),
 });
 const ReferenceResult = z.object({
     exists: z.boolean().refine(value => value == false, {
