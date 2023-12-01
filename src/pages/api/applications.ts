@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next";
 import { createApplication } from "../../../util/client";
 import { validatePlanningParams } from "../../../util/validator";
 
@@ -14,8 +14,27 @@ import { validatePlanningParams } from "../../../util/validator";
  *         application/json:
  *           schema:
  *             reference: string
+ *             description: string
+ *             address: string
+ *             applicationType: string
+ *             applicationStage: string
+ *             height: string
+ *             developmentType: string
+ *             commentDeadline: string
+ *             openSpaceGardens: boolean
+ *             affordableHousing: string
+ *             c02Emissions: string
+ *             airQuality: string
  *           example:
- *             reference: AAA_BBB_CCC_DDD
+ *             reference: 00/12345/ABC
+ *             description: Lorem ipsum dolor sit amet, consectetur adipiscing elit 
+ *             address: 123 Example Street Name Town Name City 
+ *             applicationType: Full Planning Permission
+ *             applicationStage: PCO
+ *             height: 14
+ *             developmentType: Change of Use
+ *             commentDeadline: 31/12/2023 12:00:00 am
+ *             openSpaceGardens: true
  *     responses:
  *       200:
  *         message: Success
@@ -42,11 +61,28 @@ export default async function handler(
     });
   }
 
-  const { reference, description } = req.body;
+  const { 
+    reference, 
+    description, 
+    address, 
+    applicationType,
+    applicationStage,
+    height,
+    developmentType,
+    commentDeadline,
+    openSpaceGardens,
+  } = req.body;
 
   const data = {
     reference,
     description,
+    address,
+    applicationType,
+    applicationStage,
+    height,
+    developmentType,
+    commentDeadline,
+    openSpaceGardens,
     isActive: true,
     _type: "planning-application",
   };
