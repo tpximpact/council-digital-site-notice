@@ -1,8 +1,8 @@
 import { useState } from "react"
 import Button from "@/components/button"
 import Details from "@/components/details"
-import { Love, Neutral, Opposed } from "../../../../public/assets/icons"
-import {descriptionDetail} from "../../../help/description_detail"
+import { Love, Neutral, Opposed } from "../../../../../public/assets/icons"
+import {descriptionDetail} from "../../../../help/description_detail"
 
 const Feeling = ({onChange}: {onChange: () => void}) => {
     const [feeling, setFeeling] = useState("")

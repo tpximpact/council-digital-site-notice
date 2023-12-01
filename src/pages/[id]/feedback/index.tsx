@@ -2,7 +2,7 @@ import Breadcrumbs from "@/components/breadcrumbs"
 import Instructions from "./instructions"
 import Questions from "./questions"
 import { useState } from "react"
-import { questions } from "../../help/questions_info"
+import { questions } from "../../../help/questions_info"
 
 
 
