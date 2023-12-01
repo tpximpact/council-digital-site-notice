@@ -15,6 +15,12 @@ export async function getActiveApplications() {
     const posts = await client.fetch('*[_type == "planning-application" && isActive == true]')
     return posts
 }
+
+export async function getActiveApplicationById(id: string) {
+    const query = '*[_type == "planning-application" && _id == $_id]'
+    const post = await client.fetch(query, { _id:id })
+    return post
+}
   
 export async function createApplication(post: any) {
 const result = client.create(post)
