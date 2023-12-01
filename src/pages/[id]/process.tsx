@@ -3,7 +3,7 @@ import Link from "next/link"
 import Button from "@/components/button"
 import {ArrowIcon} from "../../../public/assets/icons"
 
-const Process = () => {
+const Process = ({id}: {id:any}) => {
     return(
         <section className="process-wrap">
             <h2 className="govuk-heading-l">Where are we in the process?</h2>
@@ -23,7 +23,7 @@ const Process = () => {
                         <Image src="/assets/images/comments-and-docs.png" width={64} height={64} alt="summary and comment icon" style={{marginLeft: "20px"}}/>
                     </div>
                     <div className="wrap-button">
-                        <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href="001/feedback">Comment on this application <ArrowIcon /></Link>
+                        <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${id}/feedback`}>Comment on this application <ArrowIcon /></Link>
                         <Link className="govuk-link process-link" href="">Sign up for updates about this application</Link>
                     </div>
                 </div>
