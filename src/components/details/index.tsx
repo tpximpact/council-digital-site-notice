@@ -4,7 +4,7 @@ const Details = ({summary, color, className, description}:{summary: string, colo
     return(
         <details className={`govuk-details ${className}`} data-module="govuk-details">
         <summary className="govuk-details__summary" style={{color: color}}>
-            <span className="govuk-details__summary-text" role="definition">
+            <span className="govuk-details__summary-text govuk-!-font-size-16" role="definition">
             {summary}
             </span>
         </summary>
