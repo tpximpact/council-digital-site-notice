@@ -2,8 +2,18 @@ import Input from '@/components/input'
 import Button from '@/components/button'
 import PlanningApplications from './app/planning-application'
 import {ArrowIcon} from "../../public/assets/icons"
+import { getActiveApplications } from "../../util/client";
 
-export default function Home() {
+export async function getStaticProps() {
+  const data = await getActiveApplications();
+  return {
+    props: {
+      data,
+    },
+  };
+}
+
+const Home = ({ data }: any) => {
 
   return (
     <div className='wrap-home'>
@@ -14,7 +24,9 @@ export default function Home() {
         <Button className="grid-button-search" content="Search" icon={<ArrowIcon/>}/>
         <Button className="grid-button-signup govuk-button--secondary" content="Sign up for alerts on applications near you "/>
       </section>
-        <PlanningApplications />
+        <PlanningApplications data={data} />
     </div>
   )
 }
+
+export default Home;
