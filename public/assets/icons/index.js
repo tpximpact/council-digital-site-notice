@@ -71,8 +71,8 @@ export const LocalIcon = () => {
 
 export const ArrowIcon = () => {
     return(
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20" fill="none">
-    <path fillRule="evenodd" clipRule="evenodd" d="M0 0L9.20292 10L2.70097e-07 20H6.79511L14.44 11.6929L15.998 10L14.44 8.30707L6.79511 0H0Z" fill="white"/>
-  </svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
+<path fillRule="evenodd" clipRule="evenodd" d="M0.772461 0L10.8382 9.5L0.772461 19H8.20461L16.5662 11.1083L18.2703 9.5L16.5662 7.89172L8.20461 0H0.772461Z" fill="white"/>
+</svg>
     )
 }

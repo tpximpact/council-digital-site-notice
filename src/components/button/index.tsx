@@ -2,7 +2,7 @@ const Button = ({content, icon, className, onClick}:{content:string, icon?:React
     return(
         <button className={`govuk-button ${className}`} data-module="govuk-button" onClick={onClick}>
             {content}
-            {icon && <span style={{marginLeft: '10px'}}>{icon}</span>}
+            {icon && <span style={{marginLeft: '10px', verticalAlign: "middle"}}>{icon}</span>}
         </button>
     )
 }
