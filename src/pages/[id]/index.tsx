@@ -2,21 +2,38 @@ import Breadcrumbs from "@/components/breadcrumbs";
 import About from "./about";
 import Impact from "./impact";
 import Process from "./process";
-import { useRouter } from 'next/router'
+import { getActiveApplications, getActiveApplicationById } from "../../../util/client";
 
-const Application = () => {
+  export async function getStaticProps(context: any) {
+    const {id} = context.params;
+    const data = await getActiveApplicationById(id)
+    return {
+      props: {
+        data: data[0],
+      },
+    };
+  }
+
+  export async function getStaticPaths() {
+    const data = await getActiveApplications();
+    return {
+    paths: data.map((doc: any) => ({params: {data: doc, id: doc._id}})),
+    fallback: false,
+    }
+  }
+
+const Application = ({
+    data}:any) => {
 const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: "Murphy's Yard", href:""}]
-const router = useRouter()
-const { id } = router.query
-
     return (
         <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
-        <About />
+        <About data={data}/>
         <Impact />
-        <Process id={id}/>
+        <Process data={data}/>
         </>
     )
 }
 
 export default Application;
+
