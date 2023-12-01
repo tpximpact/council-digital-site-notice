@@ -2,15 +2,9 @@ import Image from "next/image"
 import Link from "next/link"
 import Button from "@/components/button"
 import {ArrowIcon} from "../../../public/assets/icons"
-import {parse, formatDistanceToNowStrict, getYear, getMonth, getDate} from 'date-fns'
+import { deadline } from "../../../util/client";
 
 const Process = ({data: {_id, commentDeadline}}: {data:any}) => {
-    const deadline = commentDeadline.split(" ")[0].replaceAll('/', "-")
-    const deadlineDateParse = parse(deadline, 'dd-MM-yyyy', new Date())
-    const year = getYear(new Date(deadlineDateParse))
-    const month = getMonth(new Date(deadlineDateParse))
-    const day = getDate(new Date(deadlineDateParse))
-    const timeLeft = formatDistanceToNowStrict(new Date(year, month, day))
 
     return(
         <section className="process-wrap">
@@ -20,7 +14,7 @@ const Process = ({data: {_id, commentDeadline}}: {data:any}) => {
                 <div className="process-grid">
                     <p className="govuk-body govuk-!-font-weight-bold process-consultation">Consultation</p>
                     <p className="govuk-body-s process-consultation-result"><span>IN PROGRESS</span></p>
-                    <p className="govuk-body application-days">{timeLeft} left</p>
+                    <p className="govuk-body application-days">{deadline(commentDeadline)} left</p>
                     <p className="govuk-body">
                     People in the local community share feedback and comment on the proposed plans.
                     </p>

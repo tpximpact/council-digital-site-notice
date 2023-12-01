@@ -2,35 +2,20 @@ import Breadcrumbs from "@/components/breadcrumbs";
 import About from "./about";
 import Impact from "./impact";
 import Process from "./process";
-import { getActiveApplications, getActiveApplicationById } from "../../../util/client";
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
 
-  export async function getStaticProps(context: any) {
-    const {id} = context.params;
-    const data = await getActiveApplicationById(id)
-    return {
-      props: {
-        data: data[0],
-      },
-    };
-  }
+const Application = () => {
+  const { dataApplication } = useContext(ContextApplication);
+  const {name} = dataApplication
 
-  export async function getStaticPaths() {
-    const data = await getActiveApplications();
-    return {
-    paths: data.map((doc: any) => ({params: {data: doc, id: doc._id}})),
-    fallback: false,
-    }
-  }
-
-const Application = ({
-    data}:any) => {
-const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: data.name, href:""}]
+const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: name, href:""}]
     return (
         <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
-        <About data={data}/>
+        <About data={dataApplication}/>
         <Impact />
-        <Process data={data}/>
+        <Process data={dataApplication}/>
         </>
     )
 }

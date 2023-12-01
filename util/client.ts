@@ -1,5 +1,7 @@
 import {createClient} from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
+import { time } from 'console'
+import {parse, formatDistanceToNowStrict, getYear, getMonth, getDate, formatDistanceStrict} from 'date-fns'
 
 export const  client = createClient({
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -14,12 +16,6 @@ const builder = imageUrlBuilder(client)
 export async function getActiveApplications() {
     const posts = await client.fetch('*[_type == "planning-application" && isActive == true]')
     return posts
-}
-
-export async function getActiveApplicationById(id: string) {
-    const query = '*[_type == "planning-application" && _id == $_id]'
-    const post = await client.fetch(query, { _id:id })
-    return post
 }
   
 export async function createApplication(post: any) {
@@ -41,4 +37,14 @@ export async function checkExistingReference(reference: string): Promise<boolean
 
 export function urlFor(source: any) {
   return builder.image(source)
+}
+
+export function deadline(commentDeadline: string) {
+    const deadline = commentDeadline?.split(" ")[0].replaceAll('/', "-")
+    const deadlineDateParse = parse(deadline, 'dd-MM-yyyy', new Date())
+    const year = getYear(new Date(deadlineDateParse))
+    const month = getMonth(new Date(deadlineDateParse))
+    const day = getDate(new Date(deadlineDateParse))
+    const timeLeft = formatDistanceStrict(new Date(year, month, day), new Date().setHours(0, 0, 0, 0), {unit: 'day'})
+    return timeLeft
 }

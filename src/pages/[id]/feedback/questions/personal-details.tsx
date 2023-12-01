@@ -2,7 +2,7 @@ import Link from "next/link";
 import Button from "@/components/button";
 import Details from "@/components/details";
 import Input from "@/components/input";
-import { descriptionDetail } from "@/help/description_detail";
+import { descriptionDetail } from "../../../../../util/description_detail";
 
 const PersonalDetails = ({onChange}: {onChange: () => void}) => {
     return(

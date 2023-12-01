@@ -3,8 +3,8 @@ import Link from "next/link"
 import Button from "@/components/button"
 import Checkbox from "@/components/checkbox"
 import Details from "@/components/details"
-import { descriptionDetail } from "@/help/description_detail"
-import { questions } from "@/help/questions_info"
+import { descriptionDetail } from "../../../../../util/description_detail"
+import { questions } from "../../../../../util/questions_info"
 
 export const checkboxId:number[] = [3,4,5,6,7,8,9,10]
 

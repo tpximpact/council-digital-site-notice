@@ -2,7 +2,7 @@
 import Details from "@/components/details";
 import Button from "@/components/button";
 import Link from "next/link";
-import { descriptionDetail } from "../../help/description_detail"
+import { descriptionDetail } from "../../../util/description_detail"
 import {ArrowIcon} from "../../../public/assets/icons"
 
 const About = ({data:{
@@ -14,7 +14,7 @@ const About = ({data:{
         commentDeadline, 
         applicationType}}: any) => {
             
-        const deadline = commentDeadline.split(" ")[0].split("/")[2]
+        const deadline = commentDeadline?.split(" ")[0].split("/")[2]
             
     return(
         <div className="wrap-about">

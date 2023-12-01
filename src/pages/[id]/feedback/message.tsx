@@ -1,18 +1,23 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link"
 import Button from "@/components/button"
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
+import { deadline } from "../../../../util/client";
 
 const FeedbackMessage = () => {
+    const { dataApplication: {commentDeadline} } = useContext(ContextApplication);
+
     return(
         <section>
         <h1 className="govuk-heading-l">Your comment has been submitted</h1>
         <Button content="Sign up for updates about this application"/>
         <h2 className="govuk-heading-m">What’s next for this application?</h2>
         <Link href="#" style={{color: "#1D70B8"}} className="govuk-body-s">Find out more about the planning process</Link>
-        <div className="process-grid">
+        <div className="process-grid-message">
                 <p className="govuk-body-s govuk-!-font-weight-bold process-blue-title">Consultation</p>
                 <p className="govuk-body-s"><span className="process-white-info govuk-!-font-weight-bold">IN PROGRESS</span></p>
-                <p className="govuk-body-s">21 days left</p>
+                <p className="govuk-body-s">{deadline(commentDeadline)} left</p>
                 <p className="govuk-body-s govuk-!-font-weight-bold process-blue-title" style={{gridColumnStart: "1"}}>Formal assessment</p>
                 <p className="govuk-body-s"><span className="process-blue-info govuk-!-font-weight-bold">UP NEXT</span></p>
         </div>
