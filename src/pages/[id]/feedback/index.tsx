@@ -3,12 +3,33 @@ import Instructions from "./instructions"
 import Questions from "./questions"
 import { useState } from "react"
 import { questions } from "../../../help/questions_info"
+import { getActiveApplications, getActiveApplicationById } from "../../../../util/client";
+
+  export async function getStaticProps(context: any) {
+    const {id} = context.params;
+    const data = await getActiveApplicationById(id)
+    return {
+      props: {
+        data: data[0],
+      },
+    };
+  }
+
+  export async function getStaticPaths() {
+    const data = await getActiveApplications();
+    return {
+    paths: data.map((doc: any) => ({params: {data: doc, id: doc._id}})),
+    fallback: false,
+    }
+  }
 
 
 
-const Feedback = () => {
+const Feedback = ({data}: any) => {
     const [question, setQuestion] = useState<number>(1)
     const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([])
+
+    const {name, _id} = data
 
     const onChangeQuestion = () => {
 
@@ -39,7 +60,7 @@ const Feedback = () => {
             name: "Planning application", href: "/"
         },
         {
-            name: "Murphy's Yard", href: "/1"
+            name: name, href: `/${_id}`
         },
         {
             name: "Tell us what you think", href:""
@@ -48,13 +69,14 @@ const Feedback = () => {
     return(
         <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
-        {question !== 12 && <Instructions />}
+        {question !== 12 && <Instructions data={data}/>}
         <Questions 
             question={question} 
             onChangeQuestion={onChangeQuestion} 
             selectedCheckbox={selectedCheckbox} 
             setSelectedCheckbox={setSelectedCheckbox}
-            label={questions[question]}/>
+            label={questions[question]}
+            />
         </>
     )
 }

@@ -24,7 +24,7 @@ import { getActiveApplications, getActiveApplicationById } from "../../../util/c
 
 const Application = ({
     data}:any) => {
-const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: "Murphy's Yard", href:""}]
+const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: data.name, href:""}]
     return (
         <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
