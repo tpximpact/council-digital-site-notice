@@ -18,12 +18,13 @@ const FeedbackQuestions = ({
     {question:number, onChangeQuestion: () => void, selectedCheckbox: number[], setSelectedCheckbox: (value: number[]) => void, label: string, setQuestion: (value:any) => void}) => {
 
         const [feelingForm, setFeelingForm] = useState("")
-        const [commentForm, setCommentForm] = useState("")
+        const [commentForm, setCommentForm] = useState({})
         const [personalDetailsForm, setPersonalDetailsForm] = useState({})
 
         const submit = () => {
             // submit feedback form function
             console.log('submited')
+            onChangeQuestion()
         }
 
         const switchComponent = () => {
@@ -48,7 +49,7 @@ const FeedbackQuestions = ({
                     return <Message />
                 default:
                     return <Comment 
-                            onChange={() => {onChangeQuestion(), submit()}} 
+                            onChange={() => submit()} 
                             label={label} 
                             commentForm={commentForm} 
                             setCommentForm={setCommentForm} 
