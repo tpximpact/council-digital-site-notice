@@ -1,6 +1,5 @@
 
 const TextArea = ({label, onChange, value}: {label: string, value:string, onChange: (value: any) => void}) => {
-    console.log({value})
     return(
         <>
             <h3 className="govuk-label-wrapper">

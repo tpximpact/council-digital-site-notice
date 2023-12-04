@@ -17,7 +17,7 @@ const ImpactQuestion = ({
 
     const onChecked = (e:any) => {
         const {id, checked} = e.target
-        checked ? setSelectedCheckbox([...selectedCheckbox, id]) : setSelectedCheckbox([...selectedCheckbox?.filter(el => el !== id)])
+        checked ? setSelectedCheckbox([...selectedCheckbox, parseInt(id)]) : setSelectedCheckbox([...selectedCheckbox?.filter(el => el !== parseInt(id))])
     }
 
     const selectedCheckboxValidation = () => {
@@ -31,7 +31,7 @@ const ImpactQuestion = ({
             <Details summary="What happens to your comments" description={descriptionDetail['impact']}/>
                 {
                     checkboxId.map(el => 
-                        <Checkbox label={questions[el]} id={el.toString()} onChange={(e) => onChecked(e)} key={el}/>
+                        <Checkbox label={questions[el]} id={el.toString()} onChange={(e) => onChecked(e)} key={el} checked={selectedCheckbox.includes(el)}/> 
                     )
                 }
         {
