@@ -4,7 +4,7 @@ import {Button} from "@/components/button"
 import {ArrowIcon} from "../../../public/assets/icons"
 import { deadline } from "../../../util/client";
 
-const Process = ({data: {_id, commentDeadline}}: {data:any}) => {
+function Process({data: {_id, commentDeadline}}: {data:any}) {
 
     return(
         <section className="process-wrap">

@@ -1,7 +1,7 @@
 import TextArea from "@/components/text-area"
 import {Button, BackLink} from "@/components/button"
 
-const CommentQuestion = ({
+function CommentQuestion({
     onChange, 
     label,
     commentForm,
@@ -9,7 +9,7 @@ const CommentQuestion = ({
     setQuestion, 
     selectedCheckbox,
     question}: 
-    {onChange: () => void, label: string, commentForm: string, setCommentForm: (value: string) => void, setQuestion: (value:number) => void, selectedCheckbox: any, question: number}) => {
+    {onChange: () => void, label: string, commentForm: string, setCommentForm: (value: string) => void, setQuestion: (value:number) => void, selectedCheckbox: any, question: number}) {
     const indexComponent = selectedCheckbox.indexOf(question)
     const backComponent = indexComponent > 0 ? selectedCheckbox[indexComponent - 1] : 2
     return(

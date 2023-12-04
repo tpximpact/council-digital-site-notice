@@ -2,7 +2,7 @@
 import Image from "next/image"
 import { urlFor } from "../../../../util/client";
 
-const Instructions = ({data}:any) => {
+function Instructions({data}:any) {
     const {image, address} = data
     return(
         <section className="wrap-feedback">

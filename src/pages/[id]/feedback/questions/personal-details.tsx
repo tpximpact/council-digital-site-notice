@@ -3,13 +3,13 @@ import Details from "@/components/details";
 import Input from "@/components/input";
 import { descriptionDetail } from "../../../../../util/description_detail";
 
-const PersonalDetails = ({
+function PersonalDetails({
         onChange, 
         setPersonalDetailsForm, 
         personalDetailsForm,
         setQuestion,
         selectedCheckbox
-    }: {onChange: () => void, personalDetailsForm: any, setPersonalDetailsForm: (value: any) => void, setQuestion:(value:any) => void, selectedCheckbox: any}) => {
+    }: {onChange: () => void, personalDetailsForm: any, setPersonalDetailsForm: (value: any) => void, setQuestion:(value:any) => void, selectedCheckbox: any}) {
     
         const backComponent = selectedCheckbox[selectedCheckbox.length - 1]
 

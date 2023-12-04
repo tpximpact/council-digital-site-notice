@@ -5,14 +5,14 @@ import Link from "next/link";
 import { descriptionDetail } from "../../../util/description_detail"
 import {ArrowIcon} from "../../../public/assets/icons"
 
-const About = ({data:{
+function About({data:{
         name, 
         address, 
         description, 
         height, 
         reference, 
         commentDeadline, 
-        applicationType}}: any) => {
+        applicationType}}: any) {
             
         const deadline = commentDeadline?.split(" ")[0].split("/")[2]
             
