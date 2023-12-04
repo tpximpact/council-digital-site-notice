@@ -1,24 +1,22 @@
-import { useState } from "react"
 import Button from "@/components/button"
 import Details from "@/components/details"
 import { Love, Neutral, Opposed } from "../../../../../public/assets/icons"
 import {descriptionDetail} from "../../../../../util/description_detail"
 
-const Feeling = ({onChange}: {onChange: () => void}) => {
-    const [feeling, setFeeling] = useState("")
+const Feeling = ({onChange, feelingForm, setFeelingForm}: {onChange: () => void, feelingForm: string, setFeelingForm: (value: string) => void}) => {
 
     const onChangeFeeling = (value:string) => {
-        if(feeling === value) {
-            setFeeling("")
+        if(feelingForm === value) {
+            setFeelingForm("")
         }else {
-            setFeeling(value)
+            setFeelingForm(value)
         }
     }
 
     const colors = {
-        "Opposed": feeling === "Opposed" ? "#AA2A16" : "white",
-        "Neutral": feeling === "Neutral" ? "#1D70B8" : "white",
-        "inFavor": feeling === "inFavor" ? "#D53880" : "white"
+        "Opposed": feelingForm === "Opposed" ? "#AA2A16" : "white",
+        "Neutral": feelingForm === "Neutral" ? "#1D70B8" : "white",
+        "inFavor": feelingForm === "inFavor" ? "#D53880" : "white"
     }
     return(
         <section>
