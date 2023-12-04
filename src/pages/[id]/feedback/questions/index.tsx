@@ -10,11 +10,12 @@ import PersonalDetails from "./personal-details"
 
 const FeedbackQuestions = ({
     question, 
+    setQuestion,
     onChangeQuestion, 
     selectedCheckbox, 
     setSelectedCheckbox, 
     label}: 
-    {question:number, onChangeQuestion: () => void, selectedCheckbox: number[], setSelectedCheckbox: (value: number[]) => void, label: string}) => {
+    {question:number, onChangeQuestion: () => void, selectedCheckbox: number[], setSelectedCheckbox: (value: number[]) => void, label: string, setQuestion: (value:any) => void}) => {
 
         const [feelingForm, setFeelingForm] = useState("")
         const [commentForm, setCommentForm] = useState("")
@@ -34,13 +35,26 @@ const FeedbackQuestions = ({
                         onChange={() => onChangeQuestion()} 
                         selectedCheckbox={selectedCheckbox} 
                         setSelectedCheckbox={setSelectedCheckbox} 
+                        setQuestion={setQuestion}
                         />
                 case 11:
-                    return <PersonalDetails onChange={() => onChangeQuestion()} personalDetailsForm={personalDetailsForm} setPersonalDetailsForm={setPersonalDetailsForm} />
+                    return <PersonalDetails 
+                            onChange={() => onChangeQuestion()} 
+                            personalDetailsForm={personalDetailsForm} 
+                            setPersonalDetailsForm={setPersonalDetailsForm} 
+                            setQuestion={setQuestion} 
+                            selectedCheckbox={selectedCheckbox}/>
                 case 12:
                     return <Message />
                 default:
-                    return <Comment onChange={() => {onChangeQuestion(), submit()}} label={label} commentForm={commentForm} setCommentForm={setCommentForm} />
+                    return <Comment 
+                            onChange={() => {onChangeQuestion(), submit()}} 
+                            label={label} 
+                            commentForm={commentForm} 
+                            setCommentForm={setCommentForm} 
+                            setQuestion={setQuestion} 
+                            selectedCheckbox={selectedCheckbox}
+                            question={question} />
                 }
         }
 

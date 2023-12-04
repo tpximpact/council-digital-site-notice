@@ -1,6 +1,5 @@
 import {useState} from "react"
-import Link from "next/link"
-import Button from "@/components/button"
+import {Button, BackLink} from "@/components/button"
 import Checkbox from "@/components/checkbox"
 import Details from "@/components/details"
 import { descriptionDetail } from "../../../../../util/description_detail"
@@ -9,10 +8,11 @@ import { questions } from "../../../../../util/questions_info"
 export const checkboxId:number[] = [3,4,5,6,7,8,9,10]
 
 const ImpactQuestion = ({
+        setQuestion,
         onChange, 
         setSelectedCheckbox, 
         selectedCheckbox
-    }: {onChange: () => void, setSelectedCheckbox: (value: number[]) => void, selectedCheckbox: number[]}) => {
+    }: {onChange: () => void, setSelectedCheckbox: (value: number[]) => void, selectedCheckbox: number[], setQuestion: (value: number) => void}) => {
     const [isError, setIsError] = useState<boolean>(false)
 
     const onChecked = (e:any) => {
@@ -25,7 +25,7 @@ const ImpactQuestion = ({
     }
     return(
         <section>
-            <Link href="#" className="govuk-back-link">Back</Link>
+            <BackLink content='Back'onClick={() => setQuestion(1)}/>
             <h1 className="govuk-heading-l">What topics do you want to comment on?</h1>
             <p className="govuk-body">Help us understand what your comments on this development is about. Select all the topics that apply.</p>
             <Details summary="What happens to your comments" description={descriptionDetail['impact']}/>

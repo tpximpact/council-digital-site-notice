@@ -1,4 +1,4 @@
-import Button from "@/components/button"
+import {Button} from "@/components/button"
 import Details from "@/components/details"
 import { Love, Neutral, Opposed } from "../../../../../public/assets/icons"
 import {descriptionDetail} from "../../../../../util/description_detail"
