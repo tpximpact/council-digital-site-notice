@@ -28,12 +28,11 @@ const result = client.patch(_id).set({"isActive" : false}).commit()
 return result
 }
 
-export async function checkExistingReference(reference: string): Promise<boolean> {
+export async function checkExistingReference(reference: string): Promise<{ exists: boolean }> {
     const query = '*[_type == "planning-application" && reference == $reference]'
     const posts = await client.fetch(query, { reference })
-    return posts.length > 0;
+    return { exists: posts.length > 0 };
 }
-
 
 export function urlFor(source: any) {
   return builder.image(source)
