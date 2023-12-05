@@ -17,7 +17,7 @@ const Home = ({ data }: any) => {
 
   return (
     <div className='wrap-home'>
-      <h1 className="govuk-heading-l">Find planning applications near you</h1>
+      <h1 className="govuk-heading-l" role='heading'>Find planning applications near you</h1>
       <p className="govuk-body">Find, review and leave your comments on planning applications in Lambeth</p>
       <section className='search-grid'>
         <Input label="Enter a postcode to find planning applications nearby"/>
