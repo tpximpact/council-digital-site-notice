@@ -10,11 +10,13 @@ export default defineType({
       name: "reference",
       type: "string",
       validation: (Rule: any) => Rule.required(),
+      readOnly: true,
     }),
     defineField({
       title: "Address",
       name: "address",
       type: "string",
+      readOnly: true,
     }),
     defineField({
       title: "Application Type",
@@ -148,11 +150,13 @@ export default defineType({
       title: "Eastings",
       name: "eastings",
       type: "string",
+      readOnly: true,
     }),
     defineField({
       title: "Northings",
       name: "northings",
       type: "string",
+      readOnly: true,
     }),
     defineField({
       name: 'isActive',
