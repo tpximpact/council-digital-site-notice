@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Button from "@/components/button"
 import Details from "@/components/details"
 import { Love, Neutral, Opposed } from "../../../../../public/assets/icons"
@@ -7,11 +7,18 @@ import {descriptionDetail} from "../../../../../util/description_detail"
 const Feeling = ({onChange}: {onChange: () => void}) => {
     const [feeling, setFeeling] = useState("")
 
+    useEffect(() => {
+            const initialValue = localStorage.getItem("feeling") || ''
+            setFeeling(initialValue)
+    },[])
+
     const onChangeFeeling = (value:string) => {
         if(feeling === value) {
             setFeeling("")
+            localStorage.setItem('feeling', "")
         }else {
             setFeeling(value)
+            localStorage.setItem('feeling', value)
         }
     }
 

@@ -1,30 +1,18 @@
+import Link from "next/link";
 import Image from "next/image";
 import { LocalIcon } from "../../../public/assets/icons";
 import { urlFor } from "../../../util/client";
-import { ContextApplication } from "@/context";
-import { useContext } from "react";
-import { useRouter } from "next/router";
 
 
 const PlanningApplications = ({ data }: any) => {
-  const router = useRouter();
-  const { setDataApplication} = useContext(ContextApplication);
-
-  function sendData({data}: any){
-    const {_id} = data
-      router.push(`/${_id}`)
-      setDataApplication(data)
-  }
 
   return (
     <section className="wrap-planning-application">
-      {data && data.map((data: any) => {
-        const {_id, image, name, address} = data
+      {data && data.map(({_id, image, name, address}: any) => {
         return (
-          <div
-          onClick={() => sendData({data}
-          )}
+          <Link
             key={_id}
+            href={`/${_id}`}
             className="planning-application-link"
           >
             {image && (
@@ -39,7 +27,7 @@ const PlanningApplications = ({ data }: any) => {
                 </p>
               </span>
             </div>
-          </div>
+            </Link>
         );
       })}
     </section>
