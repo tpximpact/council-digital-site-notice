@@ -2,39 +2,42 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createApplication } from "../../../util/client";
 import { validatePlanningParams } from "../../../util/validator";
+import { ValidationResult } from "../../../models/validationResult";
 
 /**
  * @swagger
  * /api/applications:
  *   post:
- *     summary: Insert new planning application
+ *     summary: Insert array of new planning application
  *     description: Inserts a new planning application
  *     requestBody:
  *       content:
  *         application/json:
  *           schema:
- *             reference: string
- *             description: string
- *             address: string
- *             applicationType: string
- *             applicationStage: string
- *             height: string
- *             developmentType: string
- *             commentDeadline: string
- *             openSpaceGardens: boolean
- *             affordableHousing: string
- *             c02Emissions: string
- *             airQuality: string
+ *            type: array
+ *            items:
+ *              reference: string
+ *              description: string
+ *              address: string
+ *              applicationType: string
+ *              applicationStage: string
+ *              height: string
+ *              developmentType: string
+ *              commentDeadline: string
+ *              openSpaceGardens: boolean
+ *              affordableHousing: string
+ *              c02Emissions: string
+ *              airQuality: string
  *           example:
- *             reference: 00/12345/ABC
- *             description: Lorem ipsum dolor sit amet, consectetur adipiscing elit 
- *             address: 123 Example Street Name Town Name City 
- *             applicationType: Full Planning Permission
- *             applicationStage: PCO
- *             height: 14
- *             developmentType: Change of Use
- *             commentDeadline: 31/12/2023 12:00:00 am
- *             openSpaceGardens: true
+ *              - reference: 00/12345/ABC
+ *                description: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+ *                address: 123 Example Street Name Town Name City
+ *                applicationType: Full Planning Permission
+ *                applicationStage: PCO
+ *                height: 14
+ *                developmentType: Change of Use
+ *                commentDeadline: 31/12/2023 12:00:00 am
+ *                openSpaceGardens: true
  *     responses:
  *       200:
  *         message: Success
@@ -53,46 +56,76 @@ export default async function handler(
     });
     return;
   }
+  let successApplications = [];
+  let failedCreationApplcaitons = [];
+  let failedValidationApplcaitons = [];
 
-  const validationErrors = await validatePlanningParams(req.body);
-  if (validationErrors.errors.length > 0) {
-    return res.status(validationErrors.status).json(
-      validationErrors
-    );
+  for (var key in req.body) {
+    if (req.body.hasOwnProperty(key)) {
+      const {
+        reference,
+        description,
+        address,
+        applicationType,
+        applicationStage,
+        height,
+        developmentType,
+        commentDeadline,
+        openSpaceGardens,
+      } = req.body[key];
+
+      const validationErrors = await validatePlanningParams(req.body[key]);
+      if (validationErrors.errors.length > 0) {
+        failedValidationApplcaitons.push(
+          `An error occurred while validating the application ${reference}`
+        );
+        continue;
+      }
+
+      const data = {
+        reference,
+        description,
+        address,
+        applicationType,
+        applicationStage,
+        height,
+        developmentType,
+        commentDeadline,
+        openSpaceGardens,
+        isActive: true,
+        _type: "planning-application",
+      };
+
+      try {
+        await createApplication(data);
+        successApplications.push(`Applciation ${reference} created`);
+      } catch (error) {
+        failedCreationApplcaitons.push(
+          `An error occurred while creating the application ${reference}`
+        );
+      }
+    }
   }
 
-  const { 
-    reference, 
-    description, 
-    address, 
-    applicationType,
-    applicationStage,
-    height,
-    developmentType,
-    commentDeadline,
-    openSpaceGardens,
-  } = req.body;
+  let status = 200;
+  let message = "Success";
 
-  const data = {
-    reference,
-    description,
-    address,
-    applicationType,
-    applicationStage,
-    height,
-    developmentType,
-    commentDeadline,
-    openSpaceGardens,
-    isActive: true,
-    _type: "planning-application",
-  };
-
-  try {
-    await createApplication(data);
-    res.status(validationErrors.status).json({ message: "Success" });
-  } catch (error) {
-    res.status(500).json({
-      error: { message: "An error occurred while creating the application" },
-    });
+  if (successApplications.length == 0) {
+    status = 400;
+    message = "An error has occured";
+  } else if (failedCreationApplcaitons.length > 0 || failedValidationApplcaitons.length > 0) {
+    status = 207;
+    message = "Partial success";
   }
+
+  return res.status(status).json({
+    message: message,
+    data: {
+      successfullyCreated: successApplications,
+    },
+    errors: {
+      failedCreation: failedCreationApplcaitons,
+      failedValidation: failedValidationApplcaitons,
+    },
+  });
 }

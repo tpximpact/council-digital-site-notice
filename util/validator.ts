@@ -1,5 +1,6 @@
 import { checkExistingReference } from '../util/client'
 import { z } from 'zod';
+import {ValidationResult} from '../models/validationResult';
 
 const PlanningValidation = z.object({
     reference: z.string().min(1),
@@ -7,10 +8,10 @@ const PlanningValidation = z.object({
     address: z.string().optional(),
     applicationType: z.string().optional(),
     applicationStage: z.string().optional(),
-    height: z.string().optional(),
+    height: z.number().optional(),
     developmentType: z.string().optional(),
     commentDeadline: z.string().optional(),
-    openSpaceGardens: z.string().optional(),
+    openSpaceGardens: z.boolean().optional(),
 });
 const ReferenceResult = z.object({
     exists: z.boolean().refine(value => value == false, {
@@ -21,10 +22,9 @@ const ReferenceResult = z.object({
   
 type PlanningValidationType = z.infer<typeof PlanningValidation>;
 
-export async function validatePlanningParams(data: PlanningValidationType): Promise<{ status: number, errors: { message: string }[] }> {
+export async function validatePlanningParams(data: PlanningValidationType): Promise<ValidationResult> {
     const { reference, description } = data;
-    let errors: { message: string }[] = [];
-    let status = 200;
+    let validationResult: ValidationResult = { status :200, errors: [] }
 
     try {
         PlanningValidation.parse(data);
@@ -35,19 +35,19 @@ export async function validatePlanningParams(data: PlanningValidationType): Prom
         
     } catch (error) {
         if (error instanceof z.ZodError) {
-            errors = error.errors.map((err) => {
+            validationResult.errors = error.errors.map((err) => {
                 if (err.path.length > 0) {
                     return { message: `Invalid value for field '${err.path[0]}': ${err.message}` };
                 } else {
                     return { message: err.message };
                 }
             });
-            status = 400;
+            validationResult.status = 400;
         } else {
-            errors.push({ message: "Unexpected error occurred" });
-            status = 500;
+            validationResult.errors.push({ message: "Unexpected error occurred" });
+            validationResult.status = 500;
         }
     }
 
-    return { status, errors };
+    return validationResult;
 };
