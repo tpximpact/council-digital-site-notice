@@ -164,6 +164,16 @@ export default defineType({
       type: 'boolean',
       initialValue: true
     }),
+    defineField({
+      name: 'commments',
+      title: 'Comments',
+      type: 'array',
+      of: [
+        {
+          type: 'comment'
+        }
+      ]
+    }),
   ],
   preview: {
     select: {
@@ -172,3 +182,4 @@ export default defineType({
     }
   }
 });
+
