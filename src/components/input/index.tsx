@@ -1,4 +1,4 @@
-const Input = ({label}:{label: string}) => {
+const Input = ({label, hint}:{label: string, hint?: string}) => {
     return (
         <div className="govuk-form-group">
         <h1 className="govuk-label-wrapper">
@@ -6,6 +6,11 @@ const Input = ({label}:{label: string}) => {
               {label}
           </label>
         </h1>
+        {
+          hint && <div id="event-name-hint" className="govuk-hint">
+          {hint}
+        </div>
+        }
         <input className="govuk-input" id="event-name" name="eventName" type="text" role="textbox"/>
       </div>
     )

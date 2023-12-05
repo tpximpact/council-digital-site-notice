@@ -21,7 +21,7 @@ import { validatePlanningParams } from "../../../util/validator";
  *             height: string
  *             developmentType: string
  *             commentDeadline: string
- *             openSpaceGardens: string
+ *             openSpaceGardens: boolean
  *             affordableHousing: string
  *             c02Emissions: string
  *             airQuality: string
@@ -34,7 +34,7 @@ import { validatePlanningParams } from "../../../util/validator";
  *             height: 14
  *             developmentType: Change of Use
  *             commentDeadline: 31/12/2023 12:00:00 am
- *             openSpaceGardens: Yes
+ *             openSpaceGardens: true
  *     responses:
  *       200:
  *         message: Success
