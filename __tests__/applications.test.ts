@@ -34,7 +34,7 @@ describe("Applications API", () => {
     const req = {
       method: "POST",
       body: {
-        reference: "AAA_BBB_CCC_DDD",
+        refesrence: "AAA_BBB_CCC_DDD",
         description: "Sample description",
       },
     };
@@ -43,7 +43,7 @@ describe("Applications API", () => {
       json: jest.fn(),
     };
 
-    const errors = ["Invalid reference", "Invalid description"];
+    const errors = {status: 400, errors:["Invalid reference", "Invalid description"]};
     validatePlanningParams.mockResolvedValue(errors);
 
     await handler(req, res);
@@ -51,7 +51,8 @@ describe("Applications API", () => {
     expect(validatePlanningParams).toHaveBeenCalledWith(req.body);
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      error: { message: "Invalid reference, Invalid description" },
+      errors: ["Invalid reference", "Invalid description"],
+      "status": 400,
     });
   });
 
@@ -68,7 +69,7 @@ describe("Applications API", () => {
       json: jest.fn(),
     };
 
-    const errors = [];
+    const errors = {status:200, errors:[]};
     validatePlanningParams.mockResolvedValue(errors);
     createApplication.mockResolvedValue();
 
@@ -98,7 +99,7 @@ describe("Applications API", () => {
       json: jest.fn(),
     };
 
-    const errors = [];
+    const errors = {status: 200, errors:[]};
     validatePlanningParams.mockResolvedValue(errors);
     createApplication.mockRejectedValue(new Error("Failed to create application"));
 

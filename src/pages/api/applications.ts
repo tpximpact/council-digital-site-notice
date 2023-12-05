@@ -54,11 +54,11 @@ export default async function handler(
     return;
   }
 
-  const errors = await validatePlanningParams(req.body);
-  if (errors.length > 0) {
-    return res.status(400).json({
-      error: { message: errors.join(", ") },
-    });
+  const validationErrors = await validatePlanningParams(req.body);
+  if (validationErrors.errors.length > 0) {
+    return res.status(validationErrors.status).json(
+      validationErrors
+    );
   }
 
   const { 
@@ -89,7 +89,7 @@ export default async function handler(
 
   try {
     await createApplication(data);
-    res.status(200).json({ message: "Success" });
+    res.status(validationErrors.status).json({ message: "Success" });
   } catch (error) {
     res.status(500).json({
       error: { message: "An error occurred while creating the application" },
