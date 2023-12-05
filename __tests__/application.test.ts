@@ -6,7 +6,7 @@ import handler from "../src/pages/api/application";
 jest.mock("../util/client");
 jest.mock("../util/validator");
 
-describe("Applications API", () => {
+describe("Application API", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
