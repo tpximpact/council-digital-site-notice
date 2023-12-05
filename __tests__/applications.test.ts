@@ -44,8 +44,6 @@ describe("Applications API", () => {
       json: jest.fn(),
     };
 
-    // verifyApiKey.mockReturnValue(true);
-
     await handler(req, res);
 
     expect(res.setHeader).toHaveBeenCalledWith("Allow", ["POST"]);
