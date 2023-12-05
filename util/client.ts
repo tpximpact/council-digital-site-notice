@@ -1,7 +1,7 @@
 import {createClient} from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 import { time } from 'console'
-import {parse, formatDistanceToNowStrict, getYear, getMonth, getDate, formatDistanceStrict} from 'date-fns'
+import {parse, getYear, getMonth, getDate, formatDistanceStrict} from 'date-fns'
 
 export const  client = createClient({
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -16,6 +16,12 @@ const builder = imageUrlBuilder(client)
 export async function getActiveApplications() {
     const posts = await client.fetch('*[_type == "planning-application" && isActive == true]')
     return posts
+}
+
+export async function getActiveApplicationById(id: string) {
+    const query = '*[_type == "planning-application" && _id == $_id]'
+    const post = await client.fetch(query, { _id:id })
+    return post
 }
   
 export async function createApplication(post: any) {
