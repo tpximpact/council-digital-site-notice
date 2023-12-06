@@ -31,7 +31,8 @@
     "sanity": "^3.19.3",
     "sass": "^1.69.5",
     "styled-components": "^6.1.1",
-    "swagger-ui-react": "^5.9.4"
+    "swagger-ui-react": "^5.9.4",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",

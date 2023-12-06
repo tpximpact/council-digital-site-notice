@@ -1,19 +1,19 @@
 import ImageGallery from "react-image-gallery";
 import Details from "@/components/details";
-import Button from "@/components/button";
+import {Button} from "@/components/button";
 import Link from "next/link";
 import { descriptionDetail } from "../../../util/description_detail"
 import {ArrowIcon} from "../../../public/assets/icons"
 import { urlFor } from "../../../util/client";
 
-const About = ({data:{
+function About({data:{
         name, 
         address, 
         description, 
         height, 
         reference, 
         commentDeadline, 
-        applicationType, image}}: any) => {
+        applicationType, image}}: any) {
             
         const deadline = commentDeadline?.split(" ")[0].split("/")[2]
 
