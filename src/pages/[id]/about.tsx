@@ -1,9 +1,10 @@
-// import Carousel from "@/components/carousel";
+import ImageGallery from "react-image-gallery";
 import Details from "@/components/details";
 import {Button} from "@/components/button";
 import Link from "next/link";
 import { descriptionDetail } from "../../../util/description_detail"
 import {ArrowIcon} from "../../../public/assets/icons"
+import { urlFor } from "../../../util/client";
 
 function About({data:{
         name, 
@@ -12,18 +13,32 @@ function About({data:{
         height, 
         reference, 
         commentDeadline, 
-        applicationType}}: any) {
+        applicationType, image}}: any) {
             
         const deadline = commentDeadline?.split(" ")[0].split("/")[2]
+
+        const images = [
+            {
+                original: urlFor(image).url(),
+                thumbnail: urlFor(image).url(),
+            },
+            {
+              original: urlFor(image).url(),
+              thumbnail: urlFor(image).url(),
+            },
+            {
+              original: urlFor(image).url(),
+              thumbnail: urlFor(image).url(),
+            },
+          ];
             
     return(
         <div className="wrap-about">
         <h1 className="govuk-heading-l">{name}</h1>
         <p className="govuk-body-m govuk-!-font-weight-bold">{address}</p>
-        <div className="wrap-carousel-desktop">
+    <div className="wrap-carousel-desktop">
         <div className="carousel-wrap">
-            {/* <Carousel /> will be place here */}
-            Carousel
+        <ImageGallery items={images} showFullscreenButton={false} showPlayButton={false}/>
         </div>
         <div>
         <h2 className="govuk-heading-m">About this development</h2>
