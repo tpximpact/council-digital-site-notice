@@ -11,7 +11,7 @@ export async function getStaticProps(context: any) {
   const data = await getActiveApplicationById(id)
   return {
     props: {
-      data: data[0],
+      data: data[0] || [],
     },
   };
 }
