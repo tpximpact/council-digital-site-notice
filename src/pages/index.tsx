@@ -5,7 +5,7 @@ import {ArrowIcon} from "../../public/assets/icons"
 import { getActiveApplications } from "../../util/client";
 
 export async function getStaticProps() {
-  const data = await getActiveApplications();
+  const data = await getActiveApplications() || [];
   return {
     props: {
       data,
