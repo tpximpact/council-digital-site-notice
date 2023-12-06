@@ -61,7 +61,6 @@ export default async function handler(
   // Verify API key
   const apiKey = req.headers.authorization as string;
   const isValidApiKey = verifyApiKey(apiKey);
-
   if (!isValidApiKey) {
     res.status(401).json({
       error: { message: "Invalid API key" },
@@ -69,6 +68,8 @@ export default async function handler(
     return;
   }
 
+  console.log("YO")
+  
   let successApplications = [];
   let failedCreationApplcaitons = [];
   let failedValidationApplcaitons = [];
@@ -118,12 +119,6 @@ export default async function handler(
         );
       }
     }
-
-  const validationErrors = await validatePlanningParams(req.body);
-  if (validationErrors.errors.length > 0) {
-    return res.status(validationErrors.status).json(
-      validationErrors
-    );
   }
 
   let status = 200;

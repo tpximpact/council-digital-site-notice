@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createApplication } from "../../../util/client";
 import { validatePlanningParams } from "../../../util/validator";
+import { verifyApiKey } from "../../../util/apiKey";
 
 /**
  * @swagger
@@ -50,6 +51,17 @@ export default async function handler(
     res.setHeader("Allow", ["POST"]);
     res.status(405).json({
       error: { message: `Method ${method} Not Allowed` },
+    });
+    return;
+  }
+
+  // Verify API key
+  const apiKey = req.headers.authorization as string;
+  const isValidApiKey = verifyApiKey(apiKey);
+
+  if (!isValidApiKey) {
+    res.status(401).json({
+      error: { message: "Invalid API key" },
     });
     return;
   }

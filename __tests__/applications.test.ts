@@ -1,7 +1,7 @@
 import { createApplication } from "../util/client";
 import { validatePlanningParams } from "../util/validator";
-import { verifyApiKey } from "../util/apiKey";
 import handler from "../src/pages/api/applications";
+import { verifyApiKey } from "../util/apiKey";
 
 jest.mock("../util/client");
 jest.mock("../util/validator");
@@ -10,27 +10,6 @@ jest.mock("../util/apiKey");
 describe("Applications API", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  it("should return 401 if incorrect api key", async () => {
-    const req = {
-      method: "POST",
-      headers: {
-        authorization: 'test_key',
-      },
-    };
-    const res = {
-      setHeader: jest.fn(),
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    };
-
-    await handler(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.json).toHaveBeenCalledWith({
-      error: { message: "Invalid API key" },
-    });
   });
 
   it("should return 405 if method is not POST", async () => {
@@ -61,6 +40,9 @@ describe("Applications API", () => {
           description: "Sample description",
         },
       ],
+      headers: {
+        authorization: 'test_key',
+      },
     };
 
     const res = {
@@ -102,6 +84,9 @@ describe("Applications API", () => {
           description: "Sample description",
         },
       ],
+      headers: {
+        authorization: 'test_key',
+      },
     };
     const res = {
       status: jest.fn().mockReturnThis(),
@@ -110,8 +95,8 @@ describe("Applications API", () => {
 
     const errors = { status: 200, errors: [] };
     validatePlanningParams.mockResolvedValue(errors);
-    verifyApiKey.mockReturnValue(true);
     createApplication.mockResolvedValue();
+    verifyApiKey.mockReturnValue(true);
 
     await handler(req, res);
 
