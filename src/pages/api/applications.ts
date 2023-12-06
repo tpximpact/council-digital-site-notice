@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { createApplication } from "../../../util/client";
 import { validatePlanningParams } from "../../../util/validator";
 import { ValidationResult } from "../../../models/validationResult";
+import { verifyApiKey } from "../../../util/apiKey";
 
 /**
  * @swagger
@@ -56,6 +57,18 @@ export default async function handler(
     });
     return;
   }
+
+  // Verify API key
+  const apiKey = req.headers.authorization as string;
+  const isValidApiKey = verifyApiKey(apiKey);
+
+  if (!isValidApiKey) {
+    res.status(401).json({
+      error: { message: "Invalid API key" },
+    });
+    return;
+  }
+
   let successApplications = [];
   let failedCreationApplcaitons = [];
   let failedValidationApplcaitons = [];
@@ -105,6 +118,12 @@ export default async function handler(
         );
       }
     }
+
+  const validationErrors = await validatePlanningParams(req.body);
+  if (validationErrors.errors.length > 0) {
+    return res.status(validationErrors.status).json(
+      validationErrors
+    );
   }
 
   let status = 200;

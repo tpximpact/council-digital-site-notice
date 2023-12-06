@@ -10,11 +10,13 @@ export default defineType({
       name: "reference",
       type: "string",
       validation: (Rule: any) => Rule.required(),
+      readOnly: true,
     }),
     defineField({
       title: "Address",
       name: "address",
       type: "string",
+      readOnly: true,
     }),
     defineField({
       title: "Application Type",
@@ -148,17 +150,29 @@ export default defineType({
       title: "Eastings",
       name: "eastings",
       type: "string",
+      readOnly: true,
     }),
     defineField({
       title: "Northings",
       name: "northings",
       type: "string",
+      readOnly: true,
     }),
     defineField({
       name: 'isActive',
       title: 'IsActive',
       type: 'boolean',
       initialValue: true
+    }),
+    defineField({
+      name: 'commments',
+      title: 'Comments',
+      type: 'array',
+      of: [
+        {
+          type: 'comment'
+        }
+      ]
     }),
   ],
   preview: {
@@ -168,3 +182,4 @@ export default defineType({
     }
   }
 });
+
