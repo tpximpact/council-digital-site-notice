@@ -1,15 +1,23 @@
 import {Button} from "@/components/button"
+import { useState, useEffect } from "react"
 import Details from "@/components/details"
 import { Love, Neutral, Opposed } from "../../../../../public/assets/icons"
 import {descriptionDetail} from "../../../../../util/description_detail"
 
 function Feeling({onChange, feelingForm, setFeelingForm}: {onChange: () => void, feelingForm: string, setFeelingForm: (value: string) => void}){
 
+    useEffect(() => {
+            const initialValue = localStorage.getItem("feeling") || ''
+            setFeelingForm(initialValue)
+    },[])
+
     const onChangeFeeling = (value:string) => {
         if(feelingForm === value) {
             setFeelingForm("")
+            localStorage.setItem('feeling', "")
         }else {
             setFeelingForm(value)
+            localStorage.setItem('feeling', value)
         }
     }
 
