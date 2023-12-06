@@ -1,13 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link"
 import Button from "@/components/button"
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
 import { deadline } from "../../../../util/client";
 
 const FeedbackMessage = () => {
+    const [deadlineDate, setDeadlineDate] = useState<string>('')
     const { dataApplication: {commentDeadline} } = useContext(ContextApplication);
 
+    useEffect(() => {
+        const initialValue = localStorage.getItem("application") || ''
+        setDeadlineDate(commentDeadline || JSON.parse(initialValue).deadline)
+    },[])
     return(
         <section>
         <h1 className="govuk-heading-l">Your comment has been submitted</h1>
@@ -17,7 +22,9 @@ const FeedbackMessage = () => {
         <div className="process-grid-message">
                 <p className="govuk-body-s govuk-!-font-weight-bold process-blue-title">Consultation</p>
                 <p className="govuk-body-s"><span className="process-white-info govuk-!-font-weight-bold">IN PROGRESS</span></p>
-                <p className="govuk-body-s">{deadline(commentDeadline)} left</p>
+                {
+                    deadlineDate && <p className="govuk-body-s">{deadline(deadlineDate)} left</p>
+                }
                 <p className="govuk-body-s govuk-!-font-weight-bold process-blue-title" style={{gridColumnStart: "1"}}>Formal assessment</p>
                 <p className="govuk-body-s"><span className="process-blue-info govuk-!-font-weight-bold">UP NEXT</span></p>
         </div>
