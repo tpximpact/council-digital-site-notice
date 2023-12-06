@@ -1,5 +1,5 @@
 
-const TextArea = ({label}: {label: string}) => {
+const TextArea = ({label, onChange, value}: {label: string, value:string, onChange: (value: any) => void}) => {
     return(
         <>
             <h3 className="govuk-label-wrapper">
@@ -7,7 +7,7 @@ const TextArea = ({label}: {label: string}) => {
             {label}
             </label>
             </h3>
-            <textarea className={`govuk-textarea`} id="more-detail" name="moreDetail" rows={5} aria-describedby="more-detail-hint"></textarea>
+            <textarea className={`govuk-textarea`} id="more-detail" name="moreDetail" rows={5} aria-describedby="more-detail-hint" defaultValue={value} onChange={(e) => onChange(e.target.value)}></textarea>
         </>
     )
 }

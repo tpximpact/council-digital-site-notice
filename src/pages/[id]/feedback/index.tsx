@@ -55,6 +55,7 @@ const Feedback = () => {
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         {question !== 12 && <Instructions data={dataApplication}/>}
         <Questions 
+            setQuestion={setQuestion}
             question={question} 
             onChangeQuestion={onChangeQuestion} 
             selectedCheckbox={selectedCheckbox} 

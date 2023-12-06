@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link"
-import Button from "@/components/button"
+import {Button} from "@/components/button"
 import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
 import { deadline } from "../../../../util/client";

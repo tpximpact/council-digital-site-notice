@@ -1,5 +1,5 @@
 import Input from '@/components/input'
-import Button from '@/components/button'
+import {Button} from '@/components/button'
 import PlanningApplications from './app/planning-application'
 import {ArrowIcon} from "../../public/assets/icons"
 import { getActiveApplications } from "../../util/client";
