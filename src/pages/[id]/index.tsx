@@ -33,9 +33,11 @@ const Application = ({data}: {data:any}) => {
     localStorage.setItem("application", JSON.stringify({
       'address': data.address,
       'image': data.image,
-      'deadline': data.commentDeadline
+      'deadline': data.commentDeadline,
+      'name': data.name,
+      'id': data._id
     }))
-  },[])
+  },[data, setDataApplication])
   
 
 const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: name, href:""}]

@@ -25,6 +25,7 @@ const FeedbackQuestions = ({
             // submit feedback form function
             console.log('submited')
             onChangeQuestion()
+            localStorage.clear()
         }
 
         const switchComponent = () => {
