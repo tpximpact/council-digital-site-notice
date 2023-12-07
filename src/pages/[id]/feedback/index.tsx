@@ -16,16 +16,16 @@ const Feedback = () => {
     const [name, setName] = useState('')
 
     useEffect(() => {
-        const {name, id} = dataApplication
-
-        const getStorage = localStorage.getItem("application") || ''
-        const initialValue = JSON.parse(getStorage)
-        
-        const storageName = name || initialValue.name
-        const storageId = id || initialValue.id
-
-        setName(storageName)
-        setId(storageId)
+        const getStorage = localStorage.getItem("application")
+        if(Object.keys(dataApplication).length > 0 || getStorage === null) {
+            const {name, id} = dataApplication
+            setName(name)
+            setId(id)
+    }else {
+        const {name, id} = JSON.parse(getStorage)
+        setName(name)
+        setId(id)
+    }
     }, [dataApplication])
 
     
@@ -52,7 +52,6 @@ const Feedback = () => {
             setQuestion(newQuestion)
             } 
         }
-
 
     const breadcrumbs_array = [
         {

@@ -1,6 +1,5 @@
 import {createClient} from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
-import { time } from 'console'
 import {parse, getYear, getMonth, getDate, formatDistanceStrict} from 'date-fns'
 
 export const  client = createClient({
@@ -42,6 +41,10 @@ export async function checkExistingReference(reference: string): Promise<{ exist
 
 export function urlFor(source: any) {
   return builder.image(source)
+}
+
+export async function addFeedback(data: any) {
+console.log({data})
 }
 
 export function deadline(commentDeadline: string) {

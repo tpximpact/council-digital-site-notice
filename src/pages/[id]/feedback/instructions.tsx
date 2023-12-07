@@ -8,10 +8,17 @@ const Instructions = ({data}:any) => {
     const [address, setAddress] = useState('')
 
     useEffect(() => {
-       const initialValue = localStorage.getItem("application") || ''
-        setImage(data.image || JSON.parse(initialValue).image)
-        setAddress(data.address || JSON.parse(initialValue).address)
-    }, [])
+       const getStorage = localStorage.getItem("application")
+       if(Object.keys(data).length > 0 || getStorage === null) {
+        const {address, image} = data
+          setImage(image)
+            setAddress(address)
+       }else {
+        const {image, address} = JSON.parse(getStorage)
+        setImage(image)
+        setAddress(address)
+       }
+    }, [data])
 
 
      

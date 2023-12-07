@@ -32,7 +32,7 @@ function PersonalDetails({
         }, [personalDetailsForm])
 
         const onChangeDetails = (value:any, key:any) => {
-            setPersonalDetailsForm({...personalDetailsForm, key: value})
+            setPersonalDetailsForm({...personalDetailsForm, [key]: value})
             localStorage.setItem(key, value)
         }
 

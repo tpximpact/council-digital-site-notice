@@ -4,6 +4,7 @@ import Impact from "./impact"
 import Message from "../message"
 import Comment from "./comment"
 import PersonalDetails from "./personal-details"
+import {addFeedback} from "../../../../../util/client"
 
 
 
@@ -25,6 +26,7 @@ const FeedbackQuestions = ({
             // submit feedback form function
             console.log('submited')
             onChangeQuestion()
+            addFeedback({feelingForm, commentForm, personalDetailsForm})
             localStorage.clear()
         }
 
@@ -41,7 +43,7 @@ const FeedbackQuestions = ({
                         />
                 case 11:
                     return <PersonalDetails 
-                            onChange={() => onChangeQuestion()} 
+                            onChange={() => submit()} 
                             personalDetailsForm={personalDetailsForm} 
                             setPersonalDetailsForm={setPersonalDetailsForm} 
                             setQuestion={setQuestion} 
@@ -50,7 +52,7 @@ const FeedbackQuestions = ({
                     return <Message />
                 default:
                     return <Comment 
-                            onChange={() => submit()} 
+                            onChange={() => onChangeQuestion()} 
                             label={label} 
                             commentForm={commentForm} 
                             setCommentForm={setCommentForm} 
