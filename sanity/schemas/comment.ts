@@ -44,7 +44,12 @@ export default defineType({
         //   validation: (Rule: any) => Rule.required(),
         //   readOnly: true,
         }),
-        
+        defineField({
+          title: "topic",
+          name: "topic",
+          type: "string",
+          // readOnly: true,
+        }),
     ],
     
 });
