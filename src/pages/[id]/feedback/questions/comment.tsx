@@ -4,13 +4,13 @@ import {Button, BackLink} from "@/components/button"
 function CommentQuestion({
     onChange, 
     label,
-    commentForm,
+    commentForm = {},
     setCommentForm, 
     setQuestion, 
     selectedCheckbox,
     question}: 
     {onChange: () => void, label: string, commentForm: any, setCommentForm: (value: string) => void, setQuestion: (value:number) => void, selectedCheckbox: any, question: number}) {
-    const indexComponent = selectedCheckbox.indexOf(question)
+    const indexComponent = selectedCheckbox?.indexOf(question)
     const backComponent = indexComponent > 0 ? selectedCheckbox[indexComponent - 1] : 2
 
     const defaultValue = commentForm[question]

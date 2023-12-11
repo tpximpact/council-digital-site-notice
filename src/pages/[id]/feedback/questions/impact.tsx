@@ -12,12 +12,12 @@ const ImpactQuestion = ({
         setQuestion,
         onChange, 
         setSelectedCheckbox, 
-        selectedCheckbox
+        selectedCheckbox = []
     }: {onChange: () => void, setSelectedCheckbox: (value: number[]) => void, selectedCheckbox: number[], setQuestion: (value: number) => void}) => {
     const [isError, setIsError] = useState<boolean>(false)
 
     useEffect(() => {
-        const getStorage = localStorage.getItem("impact") || ''
+        const getStorage = localStorage.getItem("impact")
         const initialValue = JSON.parse(getStorage) || []
         setSelectedCheckbox(initialValue)
 },[])

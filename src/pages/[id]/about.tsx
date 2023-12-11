@@ -6,29 +6,30 @@ import { descriptionDetail } from "../../../util/description_detail"
 import {ArrowIcon} from "../../../public/assets/icons"
 import { urlFor } from "../../../util/client";
 
-function About({data:{
-        name, 
-        address, 
-        description, 
-        height, 
-        reference, 
-        commentDeadline, 
-        applicationType, image}}: any) {
-            
+function About({
+        name="", 
+        address="", 
+        description="", 
+        height=0, 
+        reference="", 
+        commentDeadline=`${new Date()}`, 
+        applicationType='', 
+        image= 'image-Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000-jpg'}: any) {
+
         const deadline = commentDeadline?.split(" ")[0].split("/")[2]
 
         const images = [
             {
-                original: urlFor(image).url(),
-                thumbnail: urlFor(image).url(),
+                original: urlFor(image)?.url(),
+                thumbnail: urlFor(image)?.url(),
             },
             {
-              original: urlFor(image).url(),
-              thumbnail: urlFor(image).url(),
+              original: urlFor(image)?.url(),
+              thumbnail: urlFor(image)?.url(),
             },
             {
-              original: urlFor(image).url(),
-              thumbnail: urlFor(image).url(),
+              original: urlFor(image)?.url(),
+              thumbnail: urlFor(image)?.url(),
             },
           ];
             
@@ -39,6 +40,7 @@ function About({data:{
     <div className="wrap-carousel-desktop">
         <div className="carousel-wrap">
         <ImageGallery items={images} showFullscreenButton={false} showPlayButton={false}/>
+
         </div>
         <div>
         <h2 className="govuk-heading-m">About this development</h2>

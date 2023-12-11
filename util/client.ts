@@ -54,7 +54,7 @@ export function urlFor(source: any) {
   return builder.image(source)
 }
 
-export function deadline(commentDeadline: string) {
+export function deadline(commentDeadline: any) {
     const deadline = commentDeadline?.split(" ")[0].replaceAll('/', "-")
     const deadlineDateParse = parse(deadline, 'dd-MM-yyyy', new Date())
     const year = getYear(new Date(deadlineDateParse))

@@ -8,7 +8,7 @@ function PersonalDetails({
         setPersonalDetailsForm, 
         personalDetailsForm,
         setQuestion,
-        selectedCheckbox
+        selectedCheckbox = []
     }: {onChange: () => void, personalDetailsForm: any, setPersonalDetailsForm: (value: any) => void, setQuestion:(value:any) => void, selectedCheckbox: any}) {
     
         const backComponent = selectedCheckbox[selectedCheckbox.length - 1]
