@@ -17,7 +17,7 @@ const ImpactQuestion = ({
     const [isError, setIsError] = useState<boolean>(false)
 
     useEffect(() => {
-        const getStorage = localStorage.getItem("impact")
+        const getStorage = localStorage.getItem("impact") || ''
         const initialValue = JSON.parse(getStorage) || []
         setSelectedCheckbox(initialValue)
 },[])
