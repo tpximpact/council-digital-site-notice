@@ -6,7 +6,7 @@ import { getActiveApplications, getActiveApplicationsPagination } from "../../ut
 import Pagination from './app/pagination';
 import { useEffect, useState } from 'react';
 
-export const itemsPerPage = 1
+export const itemsPerPage = 6
 
 export async function getStaticProps() {
   const data = await getActiveApplications();
