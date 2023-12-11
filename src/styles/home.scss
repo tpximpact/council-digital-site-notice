@@ -42,6 +42,46 @@ max-width: 55rem;
     justify-content: space-between;
 }
 
+.pagination-button{
+    color: #1D70B8; 
+    background:transparent; 
+    border: none; 
+    text-decoration: underline
+}
+
+.active-page {
+    background-color: #1D70B8;
+    font-weight: 700; 
+    color: white;
+    padding: 5px 15px;
+    margin: 10px;
+}
+
+.page-item {
+    list-style-type: none;
+    color: #1D70B8;
+    text-decoration: underline;
+    cursor: pointer;
+    display:flex;
+}
+.page-link {
+    padding: 10px 18px;
+}
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    height: 2rem;
+    padding: 10px;
+}
+
+.active {
+   background-color:  #1D70B8;
+   color: white;
+   font-weight: 700;
+   align-self: center;
+
+
+}
 
 @media (max-width: 900px){
     .search-grid {

@@ -1,4 +1,4 @@
-const Input = ({label, hint, onChange, value, type}:{label: string, hint?: string, onChange: (value: any) => void, value: string, type: string}) => {
+const Input = ({label, hint, onChange, value, type}:{label: string, hint?: string, onChange: (value: any) => void, value?: string, type: string}) => {
     return (
         <div className="govuk-form-group">
         <h1 className="govuk-label-wrapper">

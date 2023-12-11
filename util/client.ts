@@ -14,7 +14,17 @@ export const  client = createClient({
 const builder = imageUrlBuilder(client)
 
 export async function getActiveApplications() {
-    const posts = await client.fetch('*[_type == "planning-application" && isActive == true]')
+    const posts = await client.fetch('*[_type == "planning-application" && isActive == true] {_id}')
+    return posts
+}
+
+export async function getActiveApplicationsPagination({_id, itemsPerPage}: {_id?:any, itemsPerPage:number}) {
+    let posts
+    if (_id === undefined) {
+        posts = await client.fetch(`*[_type == "planning-application" && isActive == true] | order(_id) [0...${itemsPerPage}]`)
+    } else {
+        posts = await client.fetch(`*[_type == "planning-application" && isActive == true && _id >= $_id] | order(_id) [0...${itemsPerPage}]`, {_id})
+    }
     return posts
 }
 
