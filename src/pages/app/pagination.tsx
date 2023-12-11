@@ -1,4 +1,5 @@
 import ReactPaginate from 'react-paginate';
+import { NextIcon, PreviewIcon } from '../../../public/assets/icons';
 
 
 const Pagination = ({data, onSelectPage, itemsPerPage}: any) => {
@@ -15,12 +16,12 @@ return(
     <div className="wrap-pagination">
         <ReactPaginate
         breakLabel="..."
-        nextLabel="next >"
+        nextLabel={<NextIcon/>}
         onPageChange={handlePageClick}
         pageRangeDisplayed={2}
         marginPagesDisplayed={1}
         pageCount={pageCount}
-        previousLabel="< previous"
+        previousLabel={<PreviewIcon/>}
         pageClassName="page-item"
         pageLinkClassName="page-link"
         previousClassName="page-item"

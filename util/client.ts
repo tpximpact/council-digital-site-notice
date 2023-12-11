@@ -23,7 +23,7 @@ export async function getActiveApplicationsPagination({_id, itemsPerPage}: {_id?
     if (_id === undefined) {
         posts = await client.fetch(`*[_type == "planning-application" && isActive == true] | order(_id) [0...${itemsPerPage}]`)
     } else {
-        posts = await client.fetch(`*[_type == "planning-application" && isActive == true && _id >= $id] | order(_id) [0...${itemsPerPage}]`, {_id})
+        posts = await client.fetch(`*[_type == "planning-application" && isActive == true && _id >= $_id] | order(_id) [0...${itemsPerPage}]`, {_id})
     }
     return posts
 }
