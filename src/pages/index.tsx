@@ -20,7 +20,7 @@ const Home = ({ data }: any) => {
       <h1 className="govuk-heading-l">Find planning applications near you</h1>
       <p className="govuk-body">Find, review and leave your comments on planning applications in Lambeth</p>
       <section className='search-grid'>
-        <Input label="Enter a postcode to find planning applications nearby"/>
+        <Input label="Enter a postcode to find planning applications nearby" onChange={() => {}} value="" type="text"/>
         <Button className="grid-button-search" content="Search" icon={<ArrowIcon/>}/>
         <Button className="grid-button-signup govuk-button--secondary" content="Sign up for alerts on applications near you "/>
       </section>
