@@ -4,7 +4,7 @@ import {Button} from "@/components/button"
 import {ArrowIcon} from "../../../public/assets/icons"
 import { deadline } from "../../../util/client";
 
-function Process({data: {_id, commentDeadline}}: {data:any}) {
+function Process({id = "", commentDeadline='31/12/2023 12:00:00 am'}: any) {
 
     return(
         <section className="process-wrap">
@@ -25,7 +25,7 @@ function Process({data: {_id, commentDeadline}}: {data:any}) {
                         <Image src="/assets/images/comments-and-docs.png" width={64} height={64} alt="summary and comment icon" style={{marginLeft: "20px"}}/>
                     </div>
                     <div className="wrap-button">
-                        <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${_id}/feedback`}>Comment on this application <ArrowIcon /></Link>
+                        <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${id}/feedback`}>Comment on this application <ArrowIcon /></Link>
                         <Link className="govuk-link process-link" href="">Sign up for updates about this application</Link>
                     </div>
                 </div>

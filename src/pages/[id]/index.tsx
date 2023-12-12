@@ -20,13 +20,12 @@ export async function getStaticPaths() {
   const data = await getActiveApplications();
   return {
   paths: data.map((doc: any) => ({params: {data: doc, id: doc._id}})),
-  fallback: false,
+  fallback: true,
   }
 }
 
-const Application = ({data}: {data:any}) => {
+const Application = ({data={}}:any) => {
   const {setDataApplication} = useContext(ContextApplication)
-  const {name} = data
 
   useEffect(() => {
     setDataApplication(data)
@@ -40,15 +39,23 @@ const Application = ({data}: {data:any}) => {
   },[data, setDataApplication])
   
 
-const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: name, href:""}]
+const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: data?.name, href:""}]
 
 
     return (
         <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
-        <About data={data}/>
+        <About 
+        name={data.name}
+        address={data.address}
+        description={data.description}
+        height={data.height}
+        reference={data.reference}
+        commentDeadline={data.commentDeadline}
+        applicationType={data.applicationType}
+        image={data?.image} />
         <Impact />
-        <Process data={data}/>
+        <Process id={data?._id} commentDeadline={data.commentDeadline}/>
         </>
     )
 }

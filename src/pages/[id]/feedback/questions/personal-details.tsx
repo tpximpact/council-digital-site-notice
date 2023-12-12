@@ -9,7 +9,7 @@ function PersonalDetails({
         setPersonalDetailsForm, 
         personalDetailsForm,
         setQuestion,
-        selectedCheckbox
+        selectedCheckbox = []
     }: {onChange: () => void, personalDetailsForm: any, setPersonalDetailsForm: (value: any) => void, setQuestion:(value:any) => void, selectedCheckbox: any}) {
         const [defaultValue, setDefaultValue] = useState({name: '', email: '', phone: '', postcode: ''})
     

@@ -4,10 +4,10 @@ import { NextIcon, PreviewIcon } from '../../../public/assets/icons';
 
 const Pagination = ({data, onSelectPage, itemsPerPage}: any) => {
 
-const pageCount = Math.ceil(data.length / itemsPerPage);
+const pageCount = Math.ceil(data?.length / itemsPerPage);
 
 const handlePageClick = (event: any) => {
-    const newOffset = (event.selected * itemsPerPage) % data.length;
+    const newOffset = (event.selected * itemsPerPage) % data?.length;
     const newId = data[newOffset]
     onSelectPage(newId)
   };
