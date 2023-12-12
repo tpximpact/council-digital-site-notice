@@ -10,9 +10,13 @@ const FeedbackMessage = () => {
     const { dataApplication: {commentDeadline} } = useContext(ContextApplication);
 
     useEffect(() => {
-        const initialValue = localStorage.getItem("application") || ''
-        setDeadlineDate(commentDeadline || JSON.parse(initialValue).deadline)
-    },[])
+        const initialValue = localStorage.getItem("application")
+        if(commentDeadline !== undefined || initialValue === null) {
+            setDeadlineDate(commentDeadline)
+        } else {
+            setDeadlineDate(JSON.parse(initialValue).deadline)
+        }
+    },[commentDeadline])
     return(
         <section>
         <h1 className="govuk-heading-l">Your comment has been submitted</h1>
