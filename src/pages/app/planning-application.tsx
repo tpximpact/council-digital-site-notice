@@ -1,12 +1,14 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { LocalIcon } from "../../../public/assets/icons";
 import { urlFor } from "../../../util/client";
 
+
 const PlanningApplications = ({ data }: any) => {
+
   return (
     <section className="wrap-planning-application">
-      {data && data.map(({ _id, name, image, address }: any) => {
+      {data && data.map(({_id, image, name, address}: any) => {
         return (
           <Link
             key={_id}
@@ -25,7 +27,7 @@ const PlanningApplications = ({ data }: any) => {
                 </p>
               </span>
             </div>
-          </Link>
+            </Link>
         );
       })}
     </section>

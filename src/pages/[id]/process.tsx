@@ -1,9 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
-import Button from "@/components/button"
+import {Button} from "@/components/button"
 import {ArrowIcon} from "../../../public/assets/icons"
+import { deadline } from "../../../util/client";
 
-const Process = ({id}: {id:any}) => {
+function Process({id = "", commentDeadline='31/12/2023 12:00:00 am'}: any) {
+
     return(
         <section className="process-wrap">
             <h2 className="govuk-heading-l">Where are we in the process?</h2>
@@ -12,7 +14,7 @@ const Process = ({id}: {id:any}) => {
                 <div className="process-grid">
                     <p className="govuk-body govuk-!-font-weight-bold process-consultation">Consultation</p>
                     <p className="govuk-body-s process-consultation-result"><span>IN PROGRESS</span></p>
-                    <p className="govuk-body application-days">21 days left</p>
+                    <p className="govuk-body application-days">{deadline(commentDeadline)} left</p>
                     <p className="govuk-body">
                     People in the local community share feedback and comment on the proposed plans.
                     </p>

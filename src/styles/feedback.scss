@@ -58,7 +58,7 @@
 }
 
 // feedback message
-.process-grid {
+.process-grid-message {
     margin: 20px 0 10px;
     display: grid;
     max-width: 380px;
@@ -85,7 +85,7 @@
     font-size: 14px;
 }
 
-.process-grid :nth-child(3) {
+.process-grid-message :nth-child(3) {
     margin-top: -10px;
 }
 

@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Details from "@/components/details";
-import { descriptionDetail } from "../../help/description_detail"
+import { descriptionDetail } from "../../../util/description_detail"
 
-const Impact = () => {
+function Impact() {
     return(
         <section className="impact-wrap">
             <div>

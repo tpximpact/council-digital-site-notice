@@ -1,24 +1,30 @@
-import { useState } from "react"
-import Button from "@/components/button"
+import {Button} from "@/components/button"
+import { useState, useEffect } from "react"
 import Details from "@/components/details"
 import { Love, Neutral, Opposed } from "../../../../../public/assets/icons"
-import {descriptionDetail} from "../../../../help/description_detail"
+import {descriptionDetail} from "../../../../../util/description_detail"
 
-const Feeling = ({onChange}: {onChange: () => void}) => {
-    const [feeling, setFeeling] = useState("")
+function Feeling({onChange, feelingForm, setFeelingForm}: {onChange: () => void, feelingForm: string, setFeelingForm: (value: string) => void}){
+
+    useEffect(() => {
+            const initialValue = localStorage.getItem("feeling") || ''
+            setFeelingForm(initialValue)
+    },[setFeelingForm])
 
     const onChangeFeeling = (value:string) => {
-        if(feeling === value) {
-            setFeeling("")
+        if(feelingForm === value) {
+            setFeelingForm("")
+            localStorage.setItem('feeling', "")
         }else {
-            setFeeling(value)
+            setFeelingForm(value)
+            localStorage.setItem('feeling', value)
         }
     }
 
     const colors = {
-        "Opposed": feeling === "Opposed" ? "#AA2A16" : "white",
-        "Neutral": feeling === "Neutral" ? "#1D70B8" : "white",
-        "inFavor": feeling === "inFavor" ? "#D53880" : "white"
+        "Opposed": feelingForm === "Opposed" ? "#AA2A16" : "white",
+        "Neutral": feelingForm === "Neutral" ? "#1D70B8" : "white",
+        "inFavor": feelingForm === "inFavor" ? "#D53880" : "white"
     }
     return(
         <section>
