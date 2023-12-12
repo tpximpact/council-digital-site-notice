@@ -12,7 +12,7 @@ function CommentQuestion({
     question}: 
     {onChange: () => void, label: string, commentForm: any, setCommentForm: (value: any) => void, setQuestion: (value:number) => void, selectedCheckbox: any, question: number}) {
     const [defaultValue, setDefaultValue] = useState('')
-        const indexComponent = selectedCheckbox.indexOf(question)
+        const indexComponent = selectedCheckbox?.indexOf(question)
         const backComponent = indexComponent > 0 ? selectedCheckbox[indexComponent - 1] : 2
 
     useEffect(() => {
