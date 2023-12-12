@@ -1,7 +1,7 @@
 import Breadcrumbs from "@/components/breadcrumbs"
 import Instructions from "./instructions"
 import Questions from "./questions"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { questions } from "../../../../util/questions_info"
 import { useContext } from "react";
 import { ContextApplication } from "@/context";
@@ -12,8 +12,23 @@ const Feedback = () => {
     const { dataApplication } = useContext(ContextApplication);
     const [question, setQuestion] = useState<number>(1)
     const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([])
+    const [id, setId] = useState('')
+    const [name, setName] = useState('')
 
-    const {name, id} = dataApplication
+    useEffect(() => {
+        const getStorage = localStorage.getItem("application")
+        if(Object.keys(dataApplication).length > 0 || getStorage === null) {
+            const {name, id} = dataApplication
+            setName(name)
+            setId(id)
+    }else {
+        const {name, id} = JSON.parse(getStorage)
+        setName(name)
+        setId(id)
+    }
+    }, [dataApplication])
+
+    
 
     const onChangeQuestion = () => {
 
@@ -37,7 +52,6 @@ const Feedback = () => {
             setQuestion(newQuestion)
             } 
         }
-
 
     const breadcrumbs_array = [
         {

@@ -1,6 +1,5 @@
 import {createClient} from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
-import { time } from 'console'
 import {parse, getYear, getMonth, getDate, formatDistanceStrict} from 'date-fns'
 
 export const  client = createClient({
@@ -54,7 +53,11 @@ export function urlFor(source: any) {
   return builder.image(source)
 }
 
-export function deadline(commentDeadline: any) {
+export async function addFeedback(data: any) {
+console.log({data})
+}
+
+export function deadline(commentDeadline: string) {
     const deadline = commentDeadline?.split(" ")[0].replaceAll('/', "-")
     const deadlineDateParse = parse(deadline, 'dd-MM-yyyy', new Date())
     const year = getYear(new Date(deadlineDateParse))

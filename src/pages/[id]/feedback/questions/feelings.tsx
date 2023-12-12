@@ -9,7 +9,7 @@ function Feeling({onChange, feelingForm, setFeelingForm}: {onChange: () => void,
     useEffect(() => {
             const initialValue = localStorage.getItem("feeling") || ''
             setFeelingForm(initialValue)
-    },[])
+    },[setFeelingForm])
 
     const onChangeFeeling = (value:string) => {
         if(feelingForm === value) {

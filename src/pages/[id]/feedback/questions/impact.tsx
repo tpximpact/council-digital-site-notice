@@ -15,12 +15,19 @@ const ImpactQuestion = ({
         selectedCheckbox = []
     }: {onChange: () => void, setSelectedCheckbox: (value: number[]) => void, selectedCheckbox: number[], setQuestion: (value: number) => void}) => {
     const [isError, setIsError] = useState<boolean>(false)
+    const [defaultValue, setDefaultValue] = useState<number[]>([])
 
     useEffect(() => {
-        const getStorage = localStorage.getItem("impact") || ''
-        const initialValue = JSON.parse(getStorage) || []
-        setSelectedCheckbox(initialValue)
-},[])
+        const getStorage = localStorage.getItem("impact")
+        if(selectedCheckbox.length > 0 || getStorage === null) {
+            setDefaultValue(selectedCheckbox)
+        } else {
+            const initialValue = JSON.parse(getStorage)
+            setDefaultValue(initialValue)
+            setSelectedCheckbox(initialValue)
+        } 
+},[selectedCheckbox, setSelectedCheckbox])
+
 
     const onChecked = (e:any) => {
         const {id, checked} = e.target
@@ -30,8 +37,9 @@ const ImpactQuestion = ({
     }
 
     const selectedCheckboxValidation = () => {
-        selectedCheckbox.length > 0 ? onChange() : setIsError(true)
+        (selectedCheckbox.length > 0 || defaultValue.length > 0) ? onChange() : setIsError(true)
     }
+
     return(
         <section>
             <BackLink content='Back'onClick={() => setQuestion(1)}/>
@@ -40,7 +48,7 @@ const ImpactQuestion = ({
             <Details summary="What happens to your comments" description={descriptionDetail['impact']}/>
                 {
                     checkboxId.map(el => 
-                        <Checkbox label={questions[el]} id={el.toString()} onChange={(e) => onChecked(e)} key={el} checked={selectedCheckbox.includes(el)}/>
+                        <Checkbox label={questions[el]} id={el.toString()} onChange={(e) => onChecked(e)} key={el} checked={defaultValue.includes(el)}/>
                     )
                 }
         {
