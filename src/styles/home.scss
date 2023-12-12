@@ -67,11 +67,17 @@ max-width: 55rem;
 .page-link {
     padding: 10px 18px;
 }
+
+.wrap-pagination {
+    display: flex;
+    justify-content: center;
+}
 .pagination {
     display: flex;
     justify-content: space-between;
     height: 2rem;
     padding: 10px;
+    min-width: 15rem;
 }
 
 .active {
