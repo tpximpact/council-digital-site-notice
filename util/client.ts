@@ -58,7 +58,7 @@ console.log({data})
 }
 
 export function deadline(commentDeadline: string) {
-    const deadline = commentDeadline?.split(" ")[0].replaceAll('/', "-")
+    const deadline = commentDeadline?.split(" ")[0]?.replaceAll('/', "-")
     const deadlineDateParse = parse(deadline, 'dd-MM-yyyy', new Date())
     const year = getYear(new Date(deadlineDateParse))
     const month = getMonth(new Date(deadlineDateParse))

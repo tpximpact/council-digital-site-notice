@@ -7,7 +7,16 @@ import PersonalDetails from "./personal-details"
 import {addFeedback} from "../../../../../util/client"
 
 
+export type CommentForm = {
+    [key:number] : string
+}
 
+export type PersonalDetailsForm = {
+    name : string,
+    email: string,
+    phone: string,
+    postcode: string
+}
 
 const FeedbackQuestions = ({
     question, 
@@ -18,9 +27,9 @@ const FeedbackQuestions = ({
     label}: 
     {question:number, onChangeQuestion: () => void, selectedCheckbox: number[], setSelectedCheckbox: (value: number[]) => void, label: string, setQuestion: (value:any) => void}) => {
 
-        const [feelingForm, setFeelingForm] = useState("")
-        const [commentForm, setCommentForm] = useState({})
-        const [personalDetailsForm, setPersonalDetailsForm] = useState({})
+        const [feelingForm, setFeelingForm] = useState<string>("")
+        const [commentForm, setCommentForm] = useState<CommentForm>({})
+        const [personalDetailsForm, setPersonalDetailsForm] = useState<PersonalDetailsForm>({name: "", email: "", phone: "", postcode:""})
 
         const submit = () => {
             // submit feedback form function
