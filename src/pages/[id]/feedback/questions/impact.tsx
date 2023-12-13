@@ -5,6 +5,7 @@ import Checkbox from "@/components/checkbox"
 import Details from "@/components/details"
 import { descriptionDetail } from "../../../../../util/description_detail"
 import { questions } from "../../../../../util/questions_info"
+import Validation from "@/components/validation"
 
 export const checkboxId:number[] = [3,4,5,6,7,8,9,10]
 
@@ -52,12 +53,9 @@ const ImpactQuestion = ({
                     )
                 }
         {
-            isError && (
-        <div className="impact-validation">
-            <p className="govuk-body-l govuk-!-font-weight-bold">There is a problem</p>
-            <p className="govuk-body govuk-!-font-weight-bold">Please select at least one topic</p>
-        </div>
-            )
+            isError && <Validation message='Please select at least one topic'/>
+
+            
         }
         
         <Button content="Next" className="button-impact-question" onClick={() => selectedCheckboxValidation()}/>

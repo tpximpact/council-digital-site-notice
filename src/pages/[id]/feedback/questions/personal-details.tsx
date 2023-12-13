@@ -3,6 +3,8 @@ import Details from "@/components/details";
 import Input from "@/components/input";
 import { descriptionDetail } from "../../../../../util/description_detail";
 import { useEffect, useState } from "react";
+import { PersonalDetailsForm } from ".";
+import Validation from "@/components/validation"
 
 function PersonalDetails({
         onChange, 
@@ -10,8 +12,9 @@ function PersonalDetails({
         personalDetailsForm,
         setQuestion,
         selectedCheckbox = []
-    }: {onChange: () => void, personalDetailsForm: any, setPersonalDetailsForm: (value: any) => void, setQuestion:(value:any) => void, selectedCheckbox: any}) {
+    }: {onChange: () => void, personalDetailsForm: PersonalDetailsForm, setPersonalDetailsForm: (value: any) => void, setQuestion:(value:any) => void, selectedCheckbox: number[]}) {
         const [defaultValue, setDefaultValue] = useState({name: '', email: '', phone: '', postcode: ''})
+        const [isError, setIsError] = useState<boolean>(false)
     
         const backComponent = selectedCheckbox[selectedCheckbox.length - 1]
 
@@ -43,11 +46,16 @@ function PersonalDetails({
         <p className="govuk-body-s">If the your comment relates to an issue that will affect you personally (for example, the development will block light coming into your home or affect your privacy), we need some of your details.</p>
         <p className="govuk-body-s">This is because we can only formally explore comments coming from people who live close to the proposed development.</p>
         <Details summary="How we handle your data" description={descriptionDetail['personal-details']}/>
-        <Input label="Your name" hint="Optional" onChange={(value: any) => onChangeDetails(value, 'name')} value={defaultValue?.name} type='text'/>
+        <Input label="Your name" onChange={(value: any) => onChangeDetails(value, 'name')} value={defaultValue?.name} type='text'/>
         <Input label="Your email address" hint="Optional" onChange={(value: any) => onChangeDetails(value, 'email')} value={defaultValue?.email} type='email'/>
         <Input label="Your telephone number" hint="Optional" onChange={(value: any) => onChangeDetails(value, 'phone')} value={defaultValue?.phone} type='tel'/>
-        <Input label="Your postcode" hint="Optional" onChange={(value: any) => onChangeDetails(value, 'postcode')} value={defaultValue?.postcode} type='text'/>
-        <Button content="Submit your comments" onClick={() => {onChange()}}/>
+        <Input label="Your postcode" onChange={(value: any) => onChangeDetails(value, 'postcode')} value={defaultValue?.postcode} type='text'/>
+        {
+            isError && <Validation message='Name, address and postcode can not be empty'/>
+
+            
+        }
+        <Button content="Submit your comments" onClick={() => {(personalDetailsForm['name'] === '' || personalDetailsForm['postcode'] === '') ? setIsError(true) : onChange()}}/>
         </section>
         )
 }

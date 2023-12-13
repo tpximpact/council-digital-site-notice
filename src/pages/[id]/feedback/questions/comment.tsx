@@ -1,17 +1,20 @@
 import TextArea from "@/components/text-area"
 import {Button, BackLink} from "@/components/button"
 import { useEffect, useState } from "react"
+import Validation from "@/components/validation"
+import { CommentForm } from "."
 
 function CommentQuestion({
     onChange, 
     label,
-    commentForm = {},
+    commentForm,
     setCommentForm, 
     setQuestion, 
     selectedCheckbox,
     question}: 
-    {onChange: () => void, label: string, commentForm: any, setCommentForm: (value: any) => void, setQuestion: (value:number) => void, selectedCheckbox: any, question: number}) {
+    {onChange: () => void, label: string, commentForm: CommentForm, setCommentForm: (value: any) => void, setQuestion: (value:number) => void, selectedCheckbox: number[], question: number}) {
     const [defaultValue, setDefaultValue] = useState('')
+    const [isError, setIsError] = useState<boolean>(false)
         const indexComponent = selectedCheckbox?.indexOf(question)
         const backComponent = indexComponent > 0 ? selectedCheckbox[indexComponent - 1] : 2
 
@@ -40,7 +43,14 @@ function CommentQuestion({
                 onChange={(value:any) => onComment(value)} 
                 value={defaultValue}
                 id={question}/>
-            <Button content="Next" onClick={() => {onChange()}}/>
+
+{
+            isError && <Validation message='Please write a comment'/>
+
+            
+        }
+
+            <Button content="Next" onClick={() => {Object.keys(commentForm).find(el => parseFloat(el) === question) ? onChange() : setIsError(true)}}/>
         </section>
     )
 }

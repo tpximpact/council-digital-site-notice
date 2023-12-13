@@ -1,10 +1,12 @@
 import {Button} from "@/components/button"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import Details from "@/components/details"
 import { Love, Neutral, Opposed } from "../../../../../public/assets/icons"
 import {descriptionDetail} from "../../../../../util/description_detail"
+import Validation from "@/components/validation"
 
 function Feeling({onChange, feelingForm, setFeelingForm}: {onChange: () => void, feelingForm: string, setFeelingForm: (value: string) => void}){
+    const [isError, setIsError] = useState<boolean>(false)
 
     useEffect(() => {
             const initialValue = localStorage.getItem("feeling") || ''
@@ -26,6 +28,7 @@ function Feeling({onChange, feelingForm, setFeelingForm}: {onChange: () => void,
         "Neutral": feelingForm === "Neutral" ? "#1D70B8" : "white",
         "inFavor": feelingForm === "inFavor" ? "#D53880" : "white"
     }
+
     return(
         <section>
         
@@ -36,7 +39,11 @@ function Feeling({onChange, feelingForm, setFeelingForm}: {onChange: () => void,
             <div><Love onClick={() => {onChangeFeeling('inFavor')}} color={colors['inFavor']}/><span className="govuk-body">In favor</span></div>
             </div>
             <Details summary="Why your feedback is important" description={descriptionDetail['feeling']}/>
-            <Button content="Next" onClick={() => onChange()}/>
+           
+            {
+            isError && <Validation message='Please select at least one icon'/>   
+        }
+            <Button content="Next" onClick={() => {feelingForm !== '' ? onChange() : setIsError(true)}}/>
         </section>
     )
 }
