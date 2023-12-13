@@ -39,6 +39,29 @@ function PersonalDetails({
             localStorage.setItem(key, value)
         }
 
+        const nextPage = () => {
+            const nameForm = personalDetailsForm['name'];
+            const postcodeForm = personalDetailsForm['postcode'];
+            const phoneForm = personalDetailsForm['phone'];
+            const emailForm = personalDetailsForm['email'];
+
+            const phoneRegex = /^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/
+            const postCodeRegex = /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/
+
+            if(nameForm !== "" && postCodeRegex.test(postcodeForm)) {
+                const phoneValidation = phoneForm !== "" ? phoneRegex.test(phoneForm) : true
+                const emailValidation = emailForm !== "" ? emailForm.includes('@'): true
+                console.log(phoneValidation, emailValidation)
+                if(phoneValidation && emailValidation) {
+                    onChange()
+                } else {
+                    setIsError(true)
+                }
+            } else {
+                setIsError(true)
+            }
+        }
+
     return(
         <section className="wrap-personal-details">
         <BackLink content='Back'onClick={() => setQuestion(backComponent)}/>
@@ -53,7 +76,7 @@ function PersonalDetails({
         {
             isError && <Validation message='Name, address and postcode can not be empty'/>   
         }
-        <Button content="Submit your comments" onClick={() => {(personalDetailsForm['name'] === '' || personalDetailsForm['postcode'] === '') ? setIsError(true) : onChange()}}/>
+        <Button content="Submit your comments" onClick={() => nextPage()}/>
         </section>
         )
 }
