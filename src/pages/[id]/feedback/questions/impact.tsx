@@ -13,7 +13,7 @@ const ImpactQuestion = ({
         setQuestion,
         onChange, 
         setSelectedCheckbox, 
-        selectedCheckbox = []
+        selectedCheckbox
     }: {onChange: () => void, setSelectedCheckbox: (value: number[]) => void, selectedCheckbox: number[], setQuestion: (value: number) => void}) => {
     const [isError, setIsError] = useState<boolean>(false)
     const [defaultValue, setDefaultValue] = useState<number[]>([])

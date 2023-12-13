@@ -11,12 +11,12 @@ function PersonalDetails({
         setPersonalDetailsForm, 
         personalDetailsForm,
         setQuestion,
-        selectedCheckbox = []
+        selectedCheckbox
     }: {onChange: () => void, personalDetailsForm: PersonalDetailsForm, setPersonalDetailsForm: (value: any) => void, setQuestion:(value:any) => void, selectedCheckbox: number[]}) {
-        const [defaultValue, setDefaultValue] = useState({name: '', email: '', phone: '', postcode: ''})
+        const [defaultValue, setDefaultValue] = useState<any>({name: '', email: '', phone: '', postcode: ''})
         const [isError, setIsError] = useState<boolean>(false)
     
-        const backComponent = selectedCheckbox[selectedCheckbox.length - 1]
+        const backComponent = selectedCheckbox && selectedCheckbox[selectedCheckbox?.length - 1]
 
         useEffect(() => {
             const initialValueName = localStorage.getItem("name") || ''
@@ -51,9 +51,7 @@ function PersonalDetails({
         <Input label="Your telephone number" hint="Optional" onChange={(value: any) => onChangeDetails(value, 'phone')} value={defaultValue?.phone} type='tel'/>
         <Input label="Your postcode" onChange={(value: any) => onChangeDetails(value, 'postcode')} value={defaultValue?.postcode} type='text'/>
         {
-            isError && <Validation message='Name, address and postcode can not be empty'/>
-
-            
+            isError && <Validation message='Name, address and postcode can not be empty'/>   
         }
         <Button content="Submit your comments" onClick={() => {(personalDetailsForm['name'] === '' || personalDetailsForm['postcode'] === '') ? setIsError(true) : onChange()}}/>
         </section>

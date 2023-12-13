@@ -20,7 +20,7 @@ function CommentQuestion({
 
     useEffect(() => {
         const initialValue = localStorage.getItem("comment")
-        if ( Object.keys(commentForm).length > 0  || initialValue === null) {
+        if ( Object.keys(commentForm)?.length > 0  || initialValue === null) {
             setDefaultValue(commentForm[question] !== undefined ? commentForm[question] : "")
         } else {
 
@@ -31,7 +31,16 @@ function CommentQuestion({
 
     const onComment = (value:any) => {
         setCommentForm({...commentForm,[question]: value})
+        setIsError(false)
         localStorage.setItem('comment', JSON.stringify({...commentForm,[question]: value}))
+    }
+
+    const nextPage = () => {
+        let entries = Object.entries(commentForm)
+        const data = entries.filter(([key, val]) => {
+            return parseInt(key) === question && val !== ""
+        })
+        data.length > 0 ? onChange() : setIsError(true)
     }
 
     return(
@@ -50,7 +59,7 @@ function CommentQuestion({
             
         }
 
-            <Button content="Next" onClick={() => {Object.keys(commentForm).find(el => parseFloat(el) === question) ? onChange() : setIsError(true)}}/>
+            <Button content="Next" onClick={() => nextPage()}/>
         </section>
     )
 }
