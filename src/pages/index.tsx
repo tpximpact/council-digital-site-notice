@@ -5,6 +5,7 @@ import {ArrowIcon} from "../../public/assets/icons"
 import { getActiveApplications, getActiveApplicationsPagination } from "../../util/client";
 import Pagination from './app/pagination';
 import { useEffect, useState } from 'react';
+import { PaginationType, Data } from '../../util/type';
 
 export const itemsPerPage = 6
 
@@ -19,9 +20,8 @@ export async function getStaticProps() {
   };
 }
 
-const Home = ({ data, paginationData }: any) => {
-  const [displayData, setDisplayData] = useState([])
-
+const Home = ({ data, paginationData }: PaginationType) => {
+  const [displayData, setDisplayData] = useState<Data[]>()
 useEffect(() => {
     setDisplayData(paginationData)
 }, [data, paginationData])
@@ -41,9 +41,12 @@ async function onSelectPage({_id}: any) {
         <Button className="grid-button-search" content="Search" icon={<ArrowIcon/>}/>
         <Button className="grid-button-signup govuk-button--secondary" content="Sign up for alerts on applications near you "/>
       </section>
-        <PlanningApplications data={displayData} />
+      {
+        displayData && <PlanningApplications data={displayData} />
+      }
+        
         {
-          data.length > itemsPerPage && <Pagination data={data} onSelectPage={(value: any) => onSelectPage(value)} itemsPerPage={itemsPerPage}/>
+          data?.length > itemsPerPage && <Pagination data={data} onSelectPage={(value: any) => onSelectPage(value)} itemsPerPage={itemsPerPage}/>
         }
     </div>
   )

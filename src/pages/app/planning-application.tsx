@@ -2,10 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { LocalIcon } from "../../../public/assets/icons";
 import { urlFor } from "../../../util/client";
+import { PaginationType } from "../../../util/type";
 
-
-const PlanningApplications = ({ data }: any) => {
-
+const PlanningApplications = ({ data }: (PaginationType)) => {
   return (
     <section className="wrap-planning-application">
       {data && data.map(({_id, image, name, address}: any) => {
