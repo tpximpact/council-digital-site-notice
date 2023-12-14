@@ -4,8 +4,8 @@ import { urlFor } from "../../../../util/client";
 import { useEffect, useState } from "react";
 
 const Instructions = ({data}:any) => {
-    const [image, setImage] = useState(undefined)
-    const [address, setAddress] = useState('')
+    const [image, setImage] = useState<string |undefined>(undefined)
+    const [address, setAddress] = useState<string>('')
 
     useEffect(() => {
        const getStorage = localStorage.getItem("application")

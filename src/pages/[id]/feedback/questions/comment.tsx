@@ -1,23 +1,26 @@
 import TextArea from "@/components/text-area"
 import {Button, BackLink} from "@/components/button"
 import { useEffect, useState } from "react"
+import Validation from "@/components/validation"
+import { CommentForm } from "."
 
 function CommentQuestion({
     onChange, 
     label,
-    commentForm = {},
+    commentForm,
     setCommentForm, 
     setQuestion, 
     selectedCheckbox,
     question}: 
-    {onChange: () => void, label: string, commentForm: any, setCommentForm: (value: any) => void, setQuestion: (value:number) => void, selectedCheckbox: any, question: number}) {
+    {onChange: () => void, label: string, commentForm: CommentForm, setCommentForm: (value: any) => void, setQuestion: (value:number) => void, selectedCheckbox: number[], question: number}) {
     const [defaultValue, setDefaultValue] = useState('')
+    const [isError, setIsError] = useState<boolean>(false)
         const indexComponent = selectedCheckbox?.indexOf(question)
         const backComponent = indexComponent > 0 ? selectedCheckbox[indexComponent - 1] : 2
 
     useEffect(() => {
         const initialValue = localStorage.getItem("comment")
-        if ( Object.keys(commentForm).length > 0  || initialValue === null) {
+        if ( Object.keys(commentForm)?.length > 0  || initialValue === null) {
             setDefaultValue(commentForm[question] !== undefined ? commentForm[question] : "")
         } else {
 
@@ -28,7 +31,16 @@ function CommentQuestion({
 
     const onComment = (value:any) => {
         setCommentForm({...commentForm,[question]: value})
+        setIsError(false)
         localStorage.setItem('comment', JSON.stringify({...commentForm,[question]: value}))
+    }
+
+    const nextPage = () => {
+        let entries = Object.entries(commentForm)
+        const data = entries.filter(([key, val]) => {
+            return parseInt(key) === question && val !== ""
+        })
+        data.length > 0 ? onChange() : setIsError(true)
     }
 
     return(
@@ -40,7 +52,14 @@ function CommentQuestion({
                 onChange={(value:any) => onComment(value)} 
                 value={defaultValue}
                 id={question}/>
-            <Button content="Next" onClick={() => {onChange()}}/>
+
+{
+            isError && <Validation message='Please write a comment'/>
+
+            
+        }
+
+            <Button content="Next" onClick={() => nextPage()}/>
         </section>
     )
 }

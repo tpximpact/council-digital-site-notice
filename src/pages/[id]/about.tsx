@@ -6,30 +6,42 @@ import { descriptionDetail } from "../../../util/description_detail"
 import {ArrowIcon} from "../../../public/assets/icons"
 import { urlFor } from "../../../util/client";
 
+type AboutType = {
+    name: string;
+    address: string;
+    description: string;
+    height: number;
+    reference: string;
+    commentDeadline: string;
+    applicationType: string;
+    image: string;
+};
+
 function About({
-        name="", 
-        address="", 
-        description="", 
-        height=0, 
-        reference="", 
-        commentDeadline=`${new Date()}`, 
-        applicationType='', 
-        image= 'image-Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000-jpg'}: any) {
+        name, 
+        address, 
+        description, 
+        height, 
+        reference, 
+        commentDeadline, 
+        applicationType, 
+        image}: 
+        AboutType) {
 
         const deadline = commentDeadline?.split(" ")[0].split("/")[2]
 
         const images = [
             {
-                original: urlFor(image)?.url(),
-                thumbnail: urlFor(image)?.url(),
+                original: image && urlFor(image)?.url(),
+                thumbnail: image && urlFor(image)?.url(),
             },
             {
-              original: urlFor(image)?.url(),
-              thumbnail: urlFor(image)?.url(),
+              original: image && urlFor(image)?.url(),
+              thumbnail: image && urlFor(image)?.url(),
             },
             {
-              original: urlFor(image)?.url(),
-              thumbnail: urlFor(image)?.url(),
+              original: image && urlFor(image)?.url(),
+              thumbnail: image && urlFor(image)?.url(),
             },
           ];
             
