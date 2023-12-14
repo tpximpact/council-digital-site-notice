@@ -6,6 +6,17 @@ import { descriptionDetail } from "../../../util/description_detail"
 import {ArrowIcon} from "../../../public/assets/icons"
 import { urlFor } from "../../../util/client";
 
+type AboutType = {
+    name: string;
+    address: string;
+    description: string;
+    height: number;
+    reference: string;
+    commentDeadline: string;
+    applicationType: string;
+    image: string;
+};
+
 function About({
         name, 
         address, 
@@ -15,7 +26,7 @@ function About({
         commentDeadline, 
         applicationType, 
         image}: 
-        {name: string, address: string, description: string, height: number, reference: string, commentDeadline: string, applicationType: string, image:string}) {
+        AboutType) {
 
         const deadline = commentDeadline?.split(" ")[0].split("/")[2]
 
