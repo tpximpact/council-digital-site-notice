@@ -4,8 +4,9 @@ import Details from "@/components/details"
 import { Love, Neutral, Opposed } from "../../../../../public/assets/icons"
 import {descriptionDetail} from "../../../../../util/description_detail"
 import Validation from "@/components/validation"
+import { FeelingType } from "../../../../../util/type"
 
-function Feeling({onChange, feelingForm, setFeelingForm}: {onChange: () => void, feelingForm: string, setFeelingForm: (value: string) => void}){
+function Feeling({onChange, feelingForm, setFeelingForm}: FeelingType){
     const [isError, setIsError] = useState<boolean>(false)
 
     useEffect(() => {

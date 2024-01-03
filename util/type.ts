@@ -20,3 +20,45 @@ export type PaginationType = {
     data: Data[]
     paginationData?: Data[]
 }
+
+export type CommentForm = {
+    [key:number] : string
+}
+
+export type PersonalDetailsForm = {
+    name : string,
+    email: string,
+    phone: string,
+    postcode: string
+}
+
+export type CommentType = {
+    onChange: () => void, 
+    label: string, 
+    commentForm: CommentForm, 
+    setCommentForm: (value: any) => void, 
+    setQuestion: (value:number) => void, 
+    selectedCheckbox: number[], 
+    question: number
+}
+
+export type PersonalDetailsType = {
+    onChange: () => void, 
+    personalDetailsForm: PersonalDetailsForm, 
+    setPersonalDetailsForm: (value: any) => void, 
+    setQuestion:(value:any) => void, 
+    selectedCheckbox: number[]
+}
+
+export type ImpactType = {
+    onChange: () => void, 
+    setSelectedCheckbox: (value: number[]) => void, 
+    selectedCheckbox: number[], 
+    setQuestion: (value: number) => void 
+}
+
+export type FeelingType = {
+    onChange: () => void, 
+    feelingForm: string, 
+    setFeelingForm: (value: string) => void
+}

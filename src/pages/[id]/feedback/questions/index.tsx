@@ -5,18 +5,10 @@ import Message from "../message"
 import Comment from "./comment"
 import PersonalDetails from "./personal-details"
 import {addFeedback} from "../../../../../util/client"
+import { CommentForm, PersonalDetailsForm } from "../../../../../util/type"
 
 
-export type CommentForm = {
-    [key:number] : string
-}
 
-export type PersonalDetailsForm = {
-    name : string,
-    email: string,
-    phone: string,
-    postcode: string
-}
 
 const FeedbackQuestions = ({
     question, 
@@ -36,7 +28,13 @@ const FeedbackQuestions = ({
             console.log('submited')
             onChangeQuestion()
             addFeedback({feelingForm, commentForm, personalDetailsForm})
-            localStorage.clear()
+            localStorage.removeItem('feeling')
+            localStorage.removeItem('impact')
+            localStorage.removeItem('comment')
+            localStorage.removeItem('name')
+            localStorage.removeItem('postcode')
+            localStorage.removeItem('email')
+            localStorage.removeItem('phone')
         }
 
         const switchComponent = () => {

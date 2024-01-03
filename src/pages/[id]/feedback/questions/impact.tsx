@@ -6,6 +6,7 @@ import Details from "@/components/details"
 import { descriptionDetail } from "../../../../../util/description_detail"
 import { questions } from "../../../../../util/questions_info"
 import Validation from "@/components/validation"
+import { ImpactType } from "../../../../../util/type"
 
 export const checkboxId:number[] = [3,4,5,6,7,8,9,10]
 
@@ -14,7 +15,7 @@ const ImpactQuestion = ({
         onChange, 
         setSelectedCheckbox, 
         selectedCheckbox
-    }: {onChange: () => void, setSelectedCheckbox: (value: number[]) => void, selectedCheckbox: number[], setQuestion: (value: number) => void}) => {
+    }: ImpactType) => {
     const [isError, setIsError] = useState<boolean>(false)
     const [defaultValue, setDefaultValue] = useState<number[]>([])
 
