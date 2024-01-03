@@ -1,23 +1,13 @@
 import ImageGallery from "react-image-gallery";
 import Details from "@/components/details";
-import {Button} from "@/components/button";
 import Link from "next/link";
 import { descriptionDetail } from "../../../util/description_detail"
 import {ArrowIcon} from "../../../public/assets/icons"
 import { urlFor } from "../../../util/client";
-
-type AboutType = {
-    name: string;
-    address: string;
-    description: string;
-    height: number;
-    reference: string;
-    commentDeadline: string;
-    applicationType: string;
-    image: string;
-};
+import { Data } from "../../../util/type";
 
 function About({
+        _id,
         name, 
         address, 
         description, 
@@ -26,7 +16,7 @@ function About({
         commentDeadline, 
         applicationType, 
         image}: 
-        AboutType) {
+        Data) {
 
         const deadline = commentDeadline?.split(" ")[0].split("/")[2]
 
@@ -60,7 +50,7 @@ function About({
         </div>
 </div>
 <div className="wrap-comment-application">
-        <Button content="Comment on this application" icon={<ArrowIcon/>}/>
+    <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${_id}/feedback`}>Comment on this application <ArrowIcon /></Link>
         <Link href="#" style={{marginTop: "-15px"}} className="govuk-link">Sign up for updates about this application</Link>
         </div>
         <h3 className="govuk-heading-m">Application type</h3>
