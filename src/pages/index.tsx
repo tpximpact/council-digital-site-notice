@@ -10,23 +10,26 @@ import { PaginationType, Data } from '../../util/type';
 export const itemsPerPage = 6
 
 export async function getStaticProps() {
-  const data = await getActiveApplications();
-  const paginationData = await getActiveApplicationsPagination({itemsPerPage})
+  const dataId = await getActiveApplications();
+  const data = await getActiveApplicationsPagination({itemsPerPage})
   return {
     props: {
-      data,
-      paginationData
+      dataId,
+      data
     },
   };
 }
 
-const Home = ({ data, paginationData }: PaginationType) => {
+const Home = ({ dataId, data }: PaginationType) => {
+  console.log({dataId, data})
   const [displayData, setDisplayData] = useState<Data[]>()
+
 useEffect(() => {
-    setDisplayData(paginationData)
-}, [data, paginationData])
+    setDisplayData(data)
+}, [dataId, data])
 
 async function onSelectPage({_id}: any) {
+
   const res  = await getActiveApplicationsPagination({_id, itemsPerPage})
   setDisplayData(res)
 
@@ -46,7 +49,7 @@ async function onSelectPage({_id}: any) {
       }
         
         {
-          data?.length > itemsPerPage && <Pagination data={data} onSelectPage={(value: any) => onSelectPage(value)} itemsPerPage={itemsPerPage}/>
+          dataId?.length > itemsPerPage && <Pagination data={dataId} onSelectPage={(value: any) => onSelectPage(value)} itemsPerPage={itemsPerPage}/>
         }
     </div>
   )
