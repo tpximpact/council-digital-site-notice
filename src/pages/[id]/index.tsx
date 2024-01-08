@@ -51,6 +51,7 @@ const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: da
         <About data={data}/>
         <Impact data={data}/>
         <Process id={data?._id} 
+        system_status ={data?.system_status}
         //commentDeadline={data?.commentDeadline}
         />
         </>

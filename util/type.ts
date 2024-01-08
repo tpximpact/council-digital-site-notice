@@ -49,6 +49,7 @@ export type DataDetails = {
     carbonEmissions?: number
     showAccess?: boolean
     access?: string
+    system_status: string
 }
 
 export type DataTypeArray = {

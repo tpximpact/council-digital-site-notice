@@ -9,8 +9,10 @@ import { DataDetails } from "../../../util/type";
 
 function About({data:{ massings, name, development_address, development_description, application_type, proposedLandUse, height, constructionTime, applicationNumber}} : {data: DataDetails}) {
 
+    let images: any = []
 
-        const images = [
+    if(massings) {
+        images = [
             {
                 original: massings && urlFor(massings)?.url(),
                 thumbnail: massings && urlFor(massings)?.url(),
@@ -23,7 +25,11 @@ function About({data:{ massings, name, development_address, development_descript
               original: massings && urlFor(massings)?.url(),
               thumbnail: massings && urlFor(massings)?.url(),
             },
-          ];
+          ]
+    } else {
+        images = []
+    }
+
             
     return(
         <div className="wrap-about">

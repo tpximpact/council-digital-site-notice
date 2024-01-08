@@ -5,8 +5,10 @@ import {ArrowIcon} from "../../../public/assets/icons"
 import { deadline } from "../../../util/client";
 
 function Process({id, 
+    system_status
     //commentDeadline
 }: {id: string, 
+    system_status: string
     //commentDeadline: string
 }) {
 
@@ -17,7 +19,7 @@ function Process({id,
             <div className="wrap-grid-button">
                 <div className="process-grid">
                     <p className="govuk-body govuk-!-font-weight-bold process-consultation">Consultation</p>
-                    <p className="govuk-body-s process-consultation-result"><span>IN PROGRESS</span></p>
+                    <p className="govuk-body-s process-consultation-result"><span>{system_status.toUpperCase()}</span></p>
                     {/* <p className="govuk-body application-days">{commentDeadline && deadline(commentDeadline)} left</p> */}
                     <p className="govuk-body">
                     People in the local community share feedback and comment on the proposed plans.
