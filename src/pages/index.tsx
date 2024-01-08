@@ -21,7 +21,7 @@ export async function getStaticProps() {
 }
 
 const Home = ({ dataId, data }: PaginationType) => {
-  console.log({dataId, data})
+
   const [displayData, setDisplayData] = useState<Data[]>()
 
 useEffect(() => {
@@ -35,12 +35,17 @@ async function onSelectPage({_id}: any) {
 
 }
 
+const onSearchPostCode = async (value: string) => { 
+const res = await getActiveApplicationsPagination({itemsPerPage, postcode: value})
+setDisplayData(res)
+}
+
   return (
     <div className='wrap-home'>
       <h1 className="govuk-heading-l" role='heading'>Find planning applications near you</h1>
       <p className="govuk-body">Find, review and leave your comments on planning applications in Lambeth</p>
       <section className='search-grid'>
-        <Input label="Enter a postcode to find planning applications nearby" onChange={() => {}} type='text'/>
+        <Input label="Enter a postcode to find planning applications nearby" onChange={(e) => onSearchPostCode(e)} type='text'/>
         <Button className="grid-button-search" content="Search" icon={<ArrowIcon/>}/>
         <Button className="grid-button-signup govuk-button--secondary" content="Sign up for alerts on applications near you "/>
       </section>

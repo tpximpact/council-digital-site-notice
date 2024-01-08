@@ -4,7 +4,7 @@ import { descriptionDetail } from "../../../util/description_detail"
 import { DataDetails } from "../../../util/type";
 
 function Impact({
-    data: {housing, showHousing, showHealthcare, healthcareDemand, showOpenSpace, openSpaceArea, jobs, showJobs, showCarbon, showAccess, carbonEmissions}
+    data: {housing, showHousing, showHealthcare, healthcareDemand, showOpenSpace, openSpaceArea, jobs, showJobs, showCarbon, showAccess, carbonEmissions, access}
 }: {data: DataDetails}) {
     
     const affordableHouses = housing && `${(housing?.affordableResidentialUnits * 100) / housing?.residentialUnits} %`
@@ -98,7 +98,7 @@ function Impact({
                                                 <h2 className="govuk-heading-m grid-column-1">Pedestrian and vehicle access</h2>
                                                 <Image src="/assets/images/icon-crossing.png" width={64} height={48} alt="icon pedestrian crossing" />
                                                 </div>
-                                                <p className="govuk-body grid-column-1" style={{gridColumnEnd: 3}}>A new, landscaped public route (for pedestrian and cycle access) between Kentish Town and Hampstead Heath (“the Heath Line”) is proposed alongside wider landscaping and public realm improvements and access routes into and across the site.</p>
+                                                <p className="govuk-body grid-column-1" style={{gridColumnEnd: 3}}>{access}</p>
                                                 
                             </>
                         )

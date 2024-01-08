@@ -61,6 +61,7 @@ function About({data:{ massings, name, development_address, development_descript
                         {proposedLandUse.classC && <li>Residential</li>}
                         {proposedLandUse.classE && <li>Commercial</li>}
                         {proposedLandUse.classF && <li>Industrial</li>}
+                        {proposedLandUse.suiGeneris && <li>{proposedLandUse.suiGenerisDetail}</li>}
                 </ul>
                 )
             }
