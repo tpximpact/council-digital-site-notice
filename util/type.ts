@@ -28,7 +28,7 @@ export type Data = {
 
 export type DataDetails = {
     _id: string
-    massings?: string
+    massings: string
     name: string
     development_description?: string
     development_address: string
@@ -37,7 +37,7 @@ export type DataDetails = {
     height?: number
     constructionTime?: string
     applicationNumber?: string
-    housing?: Housing
+    housing: Housing
     showHousing?: boolean
     showHealthcare?: boolean
     healthcareDemand?: number
