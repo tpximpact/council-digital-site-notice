@@ -2,7 +2,6 @@ import Image from "next/image"
 import Link from "next/link"
 import {Button} from "@/components/button"
 import {ArrowIcon} from "../../../public/assets/icons"
-import { deadline } from "../../../util/client";
 
 function Process({id, 
     system_status,
