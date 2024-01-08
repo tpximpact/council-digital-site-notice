@@ -3,20 +3,22 @@ import Link from "next/link"
 import {Button} from "@/components/button"
 import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
-import { deadline } from "../../../../util/client";
 
 const FeedbackMessage = () => {
     const [deadlineDate, setDeadlineDate] = useState<string>('')
-    const { dataApplication: {commentDeadline} } = useContext(ContextApplication);
+    const [systemStatus, setSystemStatus] = useState<string>('')
+    const { dataApplication: {commentDeadline, system_status} } = useContext(ContextApplication);
 
     useEffect(() => {
         const initialValue = localStorage.getItem("application")
-        if(commentDeadline !== undefined || initialValue === null) {
+        if((commentDeadline !== undefined && system_status !==undefined) || initialValue === null) {
             setDeadlineDate(commentDeadline)
+            setSystemStatus(system_status)
         } else {
             setDeadlineDate(JSON.parse(initialValue).deadline)
+            setSystemStatus(JSON.parse(initialValue).system_status)
         }
-    },[commentDeadline])
+    },[commentDeadline, system_status])
     return(
         <section>
         <h1 className="govuk-heading-l">Your comment has been submitted</h1>
@@ -25,9 +27,9 @@ const FeedbackMessage = () => {
         <Link href="#" style={{color: "#1D70B8"}} className="govuk-body-s">Find out more about the planning process</Link>
         <div className="process-grid-message">
                 <p className="govuk-body-s govuk-!-font-weight-bold process-blue-title">Consultation</p>
-                <p className="govuk-body-s"><span className="process-white-info govuk-!-font-weight-bold">IN PROGRESS</span></p>
+                <p className="govuk-body-s"><span className="process-white-info govuk-!-font-weight-bold">{systemStatus?.toUpperCase()}</span></p>
                 {
-                    deadlineDate && <p className="govuk-body-s">{deadline(deadlineDate)} left</p>
+                    deadlineDate && <p className="govuk-body-s">{deadlineDate} {parseFloat(deadlineDate) > 1 ? 'days' : 'day'} left</p>
                 }
                 <p className="govuk-body-s govuk-!-font-weight-bold process-blue-title" style={{gridColumnStart: "1"}}>Formal assessment</p>
                 <p className="govuk-body-s"><span className="process-blue-info govuk-!-font-weight-bold">UP NEXT</span></p>

@@ -178,13 +178,3 @@ export function urlFor(source: any) {
 export async function addFeedback(data: any) {
 console.log({data})
 }
-
-export function deadline(commentDeadline: string) {
-    const deadline = commentDeadline?.split(" ")[0]?.replaceAll('/', "-")
-    const deadlineDateParse = parse(deadline, 'dd-MM-yyyy', new Date())
-    const year = getYear(new Date(deadlineDateParse))
-    const month = getMonth(new Date(deadlineDateParse))
-    const day = getDate(new Date(deadlineDateParse))
-    const timeLeft = formatDistanceStrict(new Date(year, month, day), new Date().setHours(0, 0, 0, 0), {unit: 'day'})
-    return timeLeft
-}
