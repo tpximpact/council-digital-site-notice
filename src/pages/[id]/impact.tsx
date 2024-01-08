@@ -4,10 +4,9 @@ import { descriptionDetail } from "../../../util/description_detail"
 import { DataDetails } from "../../../util/type";
 
 function Impact({
-    data: {housing, showHousing, showHealthcare, healthcareDemand, showOpenSpace, openSpaceArea, jobs, showJobs, showCarbon, showAccess, carbonEmissions, access}
+    data: {housing = {residentialUnits: 1, affordableResidentialUnits: 1}, showHousing, showHealthcare, healthcareDemand, showOpenSpace, openSpaceArea, jobs, showJobs, showCarbon, showAccess, carbonEmissions, access}
 }: {data: DataDetails}) {
     
-    const affordableHouses = housing && `${(housing?.affordableResidentialUnits * 100) / housing?.residentialUnits} %`
     return(
         <section className="impact-wrap">
             <div>
@@ -18,12 +17,17 @@ function Impact({
                 <div>
                     {showHousing && (
                         <>
-                                        <div className="wrap-impact-item">
+                <div className="wrap-impact-item">
                 <h2 className="govuk-heading-m heading-center">New homes</h2>
                 <Image src="/assets/images/icon-homes.png" width={64} height={64} alt="icon homes"/>
                 </div>
-                <p className="govuk-body small-margin-top"><span className="govuk-!-font-weight-bold">{housing?.residentialUnits}</span> new homes</p>
-                <p className="govuk-body grid-column-1" style={{ marginTop: "-10px"}}>{affordableHouses}<span className="govuk-!-font-weight-bold"></span> affordable housing</p>
+                
+                        <>
+                        <p className="govuk-body small-margin-top"><span className="govuk-!-font-weight-bold">{housing?.residentialUnits}</span> new homes</p>
+                        <p className="govuk-body grid-column-1" style={{ marginTop: "-10px"}}>{(housing?.affordableResidentialUnits * 100) / housing?.residentialUnits}<span className="govuk-!-font-weight-bold"></span> affordable housing</p>
+                        </>
+                    
+                
                 <Details summary='How did we calculate this?' color='white' className="impact-details" description={descriptionDetail['home']}/>
                         </>
                     )}
