@@ -49,6 +49,7 @@ const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: da
         <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         <About 
+        _id={data?._id}
         name={data?.name}
         address={data?.address}
         description={data?.description}

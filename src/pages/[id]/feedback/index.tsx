@@ -18,17 +18,15 @@ const Feedback = () => {
     useEffect(() => {
         const getStorage = localStorage.getItem("application")
         if(Object.keys(dataApplication).length > 0 || getStorage === null) {
-            const {name, id} = dataApplication
+            const {name, _id} = dataApplication
             setName(name)
-            setId(id)
+            setId(_id)
     }else {
         const {name, id} = JSON.parse(getStorage)
         setName(name)
         setId(id)
     }
     }, [dataApplication])
-
-    
 
     const onChangeQuestion = () => {
 

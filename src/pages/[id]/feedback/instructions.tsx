@@ -2,8 +2,9 @@
 import Image from "next/image"
 import { urlFor } from "../../../../util/client";
 import { useEffect, useState } from "react";
+import { DataObj } from "../../../../util/type";
 
-const Instructions = ({data}:any) => {
+const Instructions = ({data}:DataObj) => {
     const [image, setImage] = useState<string |undefined>(undefined)
     const [address, setAddress] = useState<string>('')
 

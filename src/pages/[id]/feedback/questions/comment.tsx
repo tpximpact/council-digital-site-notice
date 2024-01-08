@@ -2,7 +2,7 @@ import TextArea from "@/components/text-area"
 import {Button, BackLink} from "@/components/button"
 import { useEffect, useState } from "react"
 import Validation from "@/components/validation"
-import { CommentForm } from "."
+import { CommentType } from "../../../../../util/type"
 
 function CommentQuestion({
     onChange, 
@@ -12,7 +12,7 @@ function CommentQuestion({
     setQuestion, 
     selectedCheckbox,
     question}: 
-    {onChange: () => void, label: string, commentForm: CommentForm, setCommentForm: (value: any) => void, setQuestion: (value:number) => void, selectedCheckbox: number[], question: number}) {
+    CommentType) {
     const [defaultValue, setDefaultValue] = useState('')
     const [isError, setIsError] = useState<boolean>(false)
         const indexComponent = selectedCheckbox?.indexOf(question)

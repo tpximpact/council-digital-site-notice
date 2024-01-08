@@ -12,14 +12,14 @@ const PlanningApplications = ({ data }: (PaginationType)) => {
           <Link
             key={_id}
             href={`/${_id}`}
-            className="planning-application-link"
+            className="govuk-body planning-application-link"
           >
             {image && (
               <Image width={330} height={223} alt="" src={urlFor(image).url()} />
             )}
             <div>
               <h3>{name}</h3>
-              <span className="planning-application-text">
+              <span className="govuk-body-s planning-application-text">
                 <p>
                   <LocalIcon />
                   1 mile {address}
