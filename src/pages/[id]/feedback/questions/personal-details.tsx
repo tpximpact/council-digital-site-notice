@@ -3,8 +3,8 @@ import Details from "@/components/details";
 import Input from "@/components/input";
 import { descriptionDetail } from "../../../../../util/description_detail";
 import { useEffect, useState } from "react";
-import { PersonalDetailsForm } from ".";
 import Validation from "@/components/validation"
+import { PersonalDetailsType } from "../../../../../util/type";
 
 function PersonalDetails({
         onChange, 
@@ -12,7 +12,7 @@ function PersonalDetails({
         personalDetailsForm,
         setQuestion,
         selectedCheckbox
-    }: {onChange: () => void, personalDetailsForm: PersonalDetailsForm, setPersonalDetailsForm: (value: any) => void, setQuestion:(value:any) => void, selectedCheckbox: number[]}) {
+    }: PersonalDetailsType) {
         const [defaultValue, setDefaultValue] = useState<any>({name: '', email: '', phone: '', postcode: ''})
         const [isError, setIsError] = useState<boolean>(false)
     
@@ -34,7 +34,7 @@ function PersonalDetails({
             })
         }, [personalDetailsForm])
 
-        const onChangeDetails = (value:any, key:any) => {
+        const onChangeDetails = (value:string, key:string) => {
             setPersonalDetailsForm({...personalDetailsForm, [key]: value})
             localStorage.setItem(key, value)
         }

@@ -4,6 +4,7 @@ import Impact from "./impact";
 import Process from "./process";
 import { ContextApplication } from "@/context";
 import { useContext, useEffect } from "react";
+import { DataDetails } from "../../../util/type";
 import { getActiveApplications, getActiveApplicationById } from "../../../util/client";
 
 
@@ -26,15 +27,15 @@ export async function getStaticPaths() {
   }
 }
 
-const Application = ({data}:any) => {
+const Application = ({data}: {data: DataDetails} ) => {
   const {setDataApplication} = useContext(ContextApplication)
 
   useEffect(() => {
     setDataApplication(data)
     localStorage.setItem("application", JSON.stringify({
-      'address': data?.address,
+      'development_address': data?.development_address,
       'massings': data?.massings,
-      'deadline': data?.commentDeadline,
+      //'deadline': data?.commentDeadline,
       'name': data?.name,
       'id': data?._id
     }))
@@ -49,7 +50,9 @@ const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: da
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         <About data={data}/>
         <Impact data={data}/>
-        <Process id={data?._id} commentDeadline={data?.commentDeadline}/>
+        <Process id={data?._id} 
+        //commentDeadline={data?.commentDeadline}
+        />
         </>
     )
 }

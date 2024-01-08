@@ -2,21 +2,22 @@
 import Image from "next/image"
 import { urlFor } from "../../../../util/client";
 import { useEffect, useState } from "react";
+import { DataDetails } from "../../../../util/type";
 
-const Instructions = ({data}:any) => {
+const Instructions = ({data}: {data:DataDetails}) => {
     const [image, setImage] = useState<string |undefined>(undefined)
     const [address, setAddress] = useState<string>('')
 
     useEffect(() => {
        const getStorage = localStorage.getItem("application")
        if(Object.keys(data).length > 0 || getStorage === null) {
-        const {address, image} = data
-          setImage(image)
-            setAddress(address)
+        const {development_address, massings} = data
+          setImage(massings)
+            setAddress(development_address)
        }else {
-        const {image, address} = JSON.parse(getStorage)
-        setImage(image)
-        setAddress(address)
+        const {development_address, massings} = JSON.parse(getStorage)
+        setImage(massings)
+        setAddress(development_address)
        }
     }, [data])
 

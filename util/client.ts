@@ -25,7 +25,7 @@ export async function getCamdenApplications() {
     return posts
 }
 
-export async function getLambethApplicationsPagination({_id, itemsPerPage}: {_id?:any, itemsPerPage:number}) {
+export async function getLambethApplicationsPagination({_id, itemsPerPage, postcode}: {_id?:any, itemsPerPage:number, postcode: string}) {
     let posts
     if (_id === undefined) {
         posts = await client.fetch(`*[_type == "planning-application" && isActive == true] | order(_id) [0...${itemsPerPage}] {_id, image, development_address, name}`)
@@ -36,7 +36,7 @@ export async function getLambethApplicationsPagination({_id, itemsPerPage}: {_id
     return posts
 }
 
-export async function getCamdenApplicationsPagination({_id, itemsPerPage}: {_id?:any, itemsPerPage:number}) {
+export async function getCamdenApplicationsPagination({_id, itemsPerPage, postcode}: {_id?:string, itemsPerPage:number, postcode: string}) {
     // Helper method to convert a JS array to a string for a SOQL query
     const arrayToSoqlString = (arr: []) => "'" + arr.toString().replace(/,/g , "','") + "'"
     const limit = 50;
@@ -55,7 +55,32 @@ let cmsData : any = []
   const ids = cmsData.map((development: any) => development.applicationNumber);
 
   let whereQuery = `application_number in(${arrayToSoqlString(ids)})`;
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}.json?$limit=${limit}&$where=${whereQuery}`)
+  let orderQuery = `registered_date DESC, last_uploaded DESC`;
+
+  // If the user has searched by postcode, we need to tweak the request to
+  // Camden's API to filter by location.
+  const postCodeRegex = /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/
+  if (postCodeRegex.test(postcode)) {
+    // Verify that it's a real postcode and get its geolocation
+    const postcodeRes = await fetch(`https://api.postcodes.io/postcodes/${postcode}`)
+    const postcodeData = await postcodeRes.json()
+
+    if (postcodeData.error) {
+          orderQuery
+    } else {
+
+      postcode = postcodeData.result;
+      // TBD whether we only want to order by location or also filter out
+      // developments that are too far away. For now there won't be too many site
+      // notices, so leaving this out.
+      // whereQuery += ` and within_circle(location, ${postcodeData.result.latitude}, ${postcodeData.result.longitude}, ${distance})`;
+      orderQuery = `distance_in_meters(location, 'POINT (${postcodeData.result.longitude} ${postcodeData.result.latitude})')`
+    }
+
+  }
+
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}.json?$limit=${limit}&$where=${whereQuery}&$order=${orderQuery}`)
   const data = await res.json()
 
   // Build up the array of developments from the CMS data and the data from Camden's API, mapping from Camden's API so we know we're only showing
@@ -73,8 +98,6 @@ let cmsData : any = []
     }
   });
 
-  // ADD SEARCH POSTCODE
-
   return developments
 
 }
@@ -84,12 +107,12 @@ export async function getActiveApplications() {
     return posts
 }
 
-export async function getActiveApplicationsPagination({_id, itemsPerPage}: {_id?:any, itemsPerPage:number}) {
+export async function getActiveApplicationsPagination({_id, itemsPerPage, postcode}: {_id?:string, itemsPerPage:number, postcode?: any}) {
     let posts
     if(process.env.NEXT_PUBLIC_DATA_PROVIDER == 'OpenData') {
-        posts = getCamdenApplicationsPagination({_id, itemsPerPage})
+        posts = getCamdenApplicationsPagination({_id, itemsPerPage, postcode})
     } else {
-        posts = getLambethApplicationsPagination({_id, itemsPerPage})
+        posts = getLambethApplicationsPagination({_id, itemsPerPage, postcode})
     }
     return posts
 }

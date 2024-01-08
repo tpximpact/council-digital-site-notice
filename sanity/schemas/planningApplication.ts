@@ -118,14 +118,14 @@ export default defineType({
             layout: 'checkbox'
           }
         },
-        // {
-        //   title: 'SG - Sui Generis Detail',
-        //   description: 'Please specify the use class for Sui Generis',
-        //   name: 'suiGenerisDetail',
-        //   type: 'string',
-        //   hidden: ({document}) => !document?.proposedLandUse.suiGeneris,
-        //   validation: Rule => Rule.custom((field, context) => (context.document.proposedLandUse.suiGeneris && field === undefined) ? "This field must not be empty." : true),
-        // }
+        {
+          title: 'SG - Sui Generis Detail',
+          description: 'Please specify the use class for Sui Generis',
+          name: 'suiGenerisDetail',
+          type: 'string',
+          hidden: ({document}) => !document?.proposedLandUse.suiGeneris,
+          validation: Rule => Rule.custom((field, context) => (context.document.proposedLandUse.suiGeneris && field === undefined) ? "This field must not be empty." : true),
+        }
       ]
     }),
     defineField({
@@ -156,7 +156,7 @@ export default defineType({
       name: 'openSpaceArea',
       type: 'number',
       hidden: ({document}) => !document?.showOpenSpace,
-      // validation: Rule => Rule.custom((field, context) => (context.document.showOpenSpace && field === undefined) ? "This field must not be empty if the open space impact option is selected" : true),
+      validation: Rule => Rule.custom((field, context) => (context.document.showOpenSpace && field === undefined) ? "This field must not be empty if the open space impact option is selected" : true),
     },
 
     {
@@ -165,7 +165,7 @@ export default defineType({
       name: 'healthcareDemand',
       type: 'number',
       hidden: ({document}) => !document?.showHealthcare,
-      // validation: Rule => Rule.custom((field, context) => (context.document.showHealthcare && field === undefined) ? "This field must not be empty if the healthcare impact option is selected" : true),
+      validation: Rule => Rule.custom((field, context) => (context.document.showHealthcare && field === undefined) ? "This field must not be empty if the healthcare impact option is selected" : true),
     },
 
     defineField({
@@ -183,7 +183,7 @@ export default defineType({
       name: 'carbonEmissions',
       type: 'number',
       hidden: ({document}) => !document?.showCarbon,
-      // validation: Rule => Rule.custom((field, context) => (context.document.showCarbon && field === undefined) ? "This field must not be empty if the carbon impact option is selected" : true),
+      validation: Rule => Rule.custom((field, context) => (context.document.showCarbon && field === undefined) ? "This field must not be empty if the carbon impact option is selected" : true),
     },
     defineField({
       title: "Air Quality",
@@ -219,7 +219,7 @@ export default defineType({
       name: 'access',
       type: 'text',
       hidden: ({document}) => !document?.showAccess,
-      // validation: Rule => Rule.custom((field, context) => (context.document.showAccess && field === undefined) ? "This field must not be empty if the pedestrian and vehicle access impact option is selected" : true),
+      validation: Rule => Rule.custom((field, context) => (context.document.showAccess && field === undefined) ? "This field must not be empty if the pedestrian and vehicle access impact option is selected" : true),
     },
 
     {

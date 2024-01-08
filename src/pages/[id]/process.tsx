@@ -4,7 +4,11 @@ import {Button} from "@/components/button"
 import {ArrowIcon} from "../../../public/assets/icons"
 import { deadline } from "../../../util/client";
 
-function Process({id, commentDeadline}: {id: string, commentDeadline: string}) {
+function Process({id, 
+    //commentDeadline
+}: {id: string, 
+    //commentDeadline: string
+}) {
 
     return(
         <section className="process-wrap">
@@ -14,7 +18,7 @@ function Process({id, commentDeadline}: {id: string, commentDeadline: string}) {
                 <div className="process-grid">
                     <p className="govuk-body govuk-!-font-weight-bold process-consultation">Consultation</p>
                     <p className="govuk-body-s process-consultation-result"><span>IN PROGRESS</span></p>
-                    <p className="govuk-body application-days">{commentDeadline && deadline(commentDeadline)} left</p>
+                    {/* <p className="govuk-body application-days">{commentDeadline && deadline(commentDeadline)} left</p> */}
                     <p className="govuk-body">
                     People in the local community share feedback and comment on the proposed plans.
                     </p>
