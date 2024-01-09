@@ -1,43 +1,53 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link"
-import {Button} from "@/components/button"
 import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
-import { deadline } from "../../../../util/client";
+import Image from "next/image";
+import { urlFor } from "../../../../util/client";
+
 
 const FeedbackMessage = () => {
-    const [deadlineDate, setDeadlineDate] = useState<string>('')
-    const { dataApplication: {commentDeadline} } = useContext(ContextApplication);
+    const { dataApplication: {address, image, reference} } = useContext(ContextApplication);
+    const [addressAplication, setAddressAplication] = useState()
+    const [imageAplication, setImageAplication] = useState()
+    const [referenceAplication, setReferenceAplication] = useState()
 
     useEffect(() => {
         const initialValue = localStorage.getItem("application")
-        if(commentDeadline !== undefined || initialValue === null) {
-            setDeadlineDate(commentDeadline)
+        if(address !== undefined || image !== undefined || reference !== undefined || initialValue === null) {
+            setAddressAplication(address)
+            setImageAplication(image)
+            setReferenceAplication(reference)
         } else {
-            setDeadlineDate(JSON.parse(initialValue).deadline)
+            setAddressAplication(JSON.parse(initialValue).address)
+            setImageAplication(JSON.parse(initialValue).image)
+            setReferenceAplication(JSON.parse(initialValue).reference)
         }
-    },[commentDeadline])
+    },[address, image, reference])
+
     return(
         <section>
-        <h1 className="govuk-heading-l">Your comment has been submitted</h1>
-        <Button content="Sign up for updates about this application"/>
-        <h2 className="govuk-heading-m">What’s next for this application?</h2>
-        <Link href="#" style={{color: "#1D70B8"}} className="govuk-body-s">Find out more about the planning process</Link>
-        <div className="process-grid-message">
-                <p className="govuk-body-s govuk-!-font-weight-bold process-blue-title">Consultation</p>
-                <p className="govuk-body-s"><span className="process-white-info govuk-!-font-weight-bold">IN PROGRESS</span></p>
-                {
-                    deadlineDate && <p className="govuk-body-s">{deadline(deadlineDate)} left</p>
-                }
-                <p className="govuk-body-s govuk-!-font-weight-bold process-blue-title" style={{gridColumnStart: "1"}}>Formal assessment</p>
-                <p className="govuk-body-s"><span className="process-blue-info govuk-!-font-weight-bold">UP NEXT</span></p>
-        </div>
-        <h2 className="govuk-heading-m">Get involved in Lambeth's Local Plan</h2>
-        <p className="govuk-body-s">You can have a big impact on developments in your local community by getting involved in Lambeth's Local Plan. </p>
-        <div className="wrap-mesage-button">
-            <Link href="#" className="govuk-button govuk-button--secondary">Get involved in the local plan</Link>
-            <Link href="#" className="govuk-body-s govuk-!-font-weight-bold">What is a Local Plan?</Link>
-        </div>
+            <div className="wrap-message-reference">
+                <h1 className="govuk-heading-l"> Comment submitted</h1>
+                <h2 className="govuk-body-l"> Your reference number</h2>
+                <p className="govuk-body-l">HDJ2123F</p>
+
+            </div>
+            <div style={{display: 'flex', marginTop: '25px'}}>
+                {imageAplication && <Image src={urlFor(imageAplication)?.url()} alt="development-image" width={80} height={56}/>}
+            
+            <div style={{marginLeft: '15px'}}>
+            <p className="govuk-body govuk-!-font-weight-bold">{addressAplication}</p>
+            <p className="govuk-body govuk-!-font-weight-bold">Application reference <span className="govuk-body govuk-!-font-weight-regular">{referenceAplication}</span></p>
+            </div>
+            </div>
+            <Link href="" className="govuk-button">Sign up for updates about this application</Link>
+            <h1 className="govuk-heading-l">Discover other planning applications in your area</h1>
+            <p className="govuk-body">Interested in finding out more about what is going on around you? You can view all the planning applications currently active in your area, find out about them, and provide your comments.</p>
+            <Link href="" className="govuk-button govuk-button--secondary">View local planning applications</Link>
+            <h1 className="govuk-heading-l">Get involved in Lambeth’s Local Plan</h1>
+            <p className="govuk-body">You can have a big impact on developments in your local community by getting involved in Lambeth's Local Plan. </p>
+            <Link href="" className="govuk-button govuk-button--secondary">Get involved in the local plan</Link>
         </section>
     )
 }
