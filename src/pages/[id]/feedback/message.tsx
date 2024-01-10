@@ -37,17 +37,18 @@ const FeedbackMessage = () => {
                 {imageAplication && <Image src={urlFor(imageAplication)?.url()} alt="development-image" width={80} height={56}/>}
             
             <div style={{marginLeft: '15px'}}>
-            <p className="govuk-body govuk-!-font-weight-bold">{addressAplication}</p>
-            <p className="govuk-body govuk-!-font-weight-bold">Application reference <span className="govuk-body govuk-!-font-weight-regular">{referenceAplication}</span></p>
+            <p className="govuk-body govuk-!-font-weight-bold" style={{marginBottom: '5px'}}>{addressAplication}</p>
+            <p className="govuk-body-s govuk-!-font-weight-bold" style={{marginBottom: 0}}>Application reference </p>
+            <p className="govuk-body-s">{referenceAplication}</p>
             </div>
             </div>
-            <Link href="" className="govuk-button">Sign up for updates about this application</Link>
-            <h1 className="govuk-heading-l">Discover other planning applications in your area</h1>
-            <p className="govuk-body">Interested in finding out more about what is going on around you? You can view all the planning applications currently active in your area, find out about them, and provide your comments.</p>
-            <Link href="" className="govuk-button govuk-button--secondary">View local planning applications</Link>
-            <h1 className="govuk-heading-l">Get involved in Lambeth’s Local Plan</h1>
-            <p className="govuk-body">You can have a big impact on developments in your local community by getting involved in Lambeth's Local Plan. </p>
-            <Link href="" className="govuk-button govuk-button--secondary">Get involved in the local plan</Link>
+            <Link href="" className="govuk-button govuk-!-font-size-16">Sign up for updates about this application</Link>
+            <h1 className="govuk-heading-m">Discover other planning applications in your area</h1>
+            <p className="govuk-body-s">If you’re interested in learning more about planning applications in your area, you can view all currently active applications and provide comments on them .</p>
+            <Link href="" className="govuk-button govuk-button--secondary govuk-!-font-size-16">View local planning applications</Link>
+            <h1 className="govuk-heading-m">Get involved in Lambeth’s Local Plan</h1>
+            <p className="govuk-body-s">You can have a big impact on developments in your local community by getting involved in Lambeth's planning policy. </p>
+            <Link href="" className="govuk-button govuk-button--secondary govuk-!-font-size-16">Find out how you can get involved</Link>
         </section>
     )
 }
