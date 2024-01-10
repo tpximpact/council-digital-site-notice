@@ -39,7 +39,7 @@ const FeedbackQuestions = ({
             localStorage.removeItem('phone')
             localStorage.removeItem('consent')
         }
-console.log(personalDetailsForm)
+
         const switchComponent = () => {
             switch (question) {
                 case 1:
@@ -64,6 +64,8 @@ console.log(personalDetailsForm)
                             setQuestion={setQuestion}
                             commentForm={commentForm}
                             personalDetailsForm={personalDetailsForm} 
+                            setSelectedCheckbox={setSelectedCheckbox}
+                            selectedCheckbox={selectedCheckbox}
                             
                             />
                 case 13:
