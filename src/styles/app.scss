@@ -1,6 +1,9 @@
 @import "node_modules/govuk-frontend/govuk/all";
+@import "~react-image-gallery/styles/scss/image-gallery.scss";
 @import "./layout.scss";
 @import "./home.scss";
+@import "./feedback.scss";
+@import "./application.scss";
 
 $govuk-assets-path: 'public/assets/';
 
