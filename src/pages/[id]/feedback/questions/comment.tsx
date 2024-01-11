@@ -47,7 +47,7 @@ function CommentQuestion({
         <section>
             <BackLink content='Back'onClick={() => setQuestion(backComponent)}/>
             <TextArea 
-            hint={`${selectedCheckbox.indexOf(question) + 1} of ${selectedCheckbox.length}`}
+            hint={`${selectedCheckbox?.indexOf(question) + 1} of ${selectedCheckbox?.length}`}
                 label={label} 
                 onChange={(value:any) => onComment(value)} 
                 value={defaultValue}
