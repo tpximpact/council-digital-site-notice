@@ -3,8 +3,11 @@ import Details from "@/components/details";
 import Link from "next/link";
 import { descriptionDetail } from "../../../util/description_detail"
 import {ArrowIcon} from "../../../public/assets/icons"
-import { urlFor } from "../../../util/client";
 import { Data } from "../../../util/type";
+import { useEffect, useState } from "react";
+import Modal from "@/components/modal";
+import Gallery from "@/components/gallery";
+import { dummy_image } from "../../../util/dummy_image";
 
 function About({
         _id,
@@ -19,31 +22,38 @@ function About({
         Data) {
 
         const deadline = commentDeadline?.split(" ")[0].split("/")[2]
+        const [loadImage, setLoadImage] = useState(0)
+        const [isModalOpen, setIsModalOpen] = useState(false)
+        const [imageSelected, setImageSelected] = useState()
 
-        const images = [
-            {
-                original: image && urlFor(image)?.url(),
-                thumbnail: image && urlFor(image)?.url(),
-            },
-            {
-              original: image && urlFor(image)?.url(),
-              thumbnail: image && urlFor(image)?.url(),
-            },
-            {
-              original: image && urlFor(image)?.url(),
-              thumbnail: image && urlFor(image)?.url(),
-            },
-          ];
+        const images = dummy_image(image)
+
+        useEffect(() => {
+            if(images.length < 8) {
+                setLoadImage(images.length)
+            } else {
+                setLoadImage(6)
+            }
+            setImageSelected(images[0].original)
+        }, [])
+
             
     return(
         <div className="wrap-about">
+            {
+                isModalOpen && <Modal setIsModalOpen={setIsModalOpen} image={imageSelected}/>
+            }
         <h1 className="govuk-heading-l">{name}</h1>
         <p className="govuk-body-m govuk-!-font-weight-bold">{address}</p>
     <div className="wrap-carousel-desktop">
-        <div className="carousel-wrap">
-        <ImageGallery items={images} showFullscreenButton={false} showPlayButton={false}/>
-
-        </div>
+<Gallery 
+    images={images} 
+    loadImage={loadImage} 
+    setIsModalOpen={setIsModalOpen} 
+    setLoadImage={setLoadImage}
+    setImageSelected={setImageSelected}
+    imageSelected={imageSelected}
+/>
         <div>
         <h2 className="govuk-heading-m">About this development</h2>
         <p className="govuk-body-s">{description}</p>
