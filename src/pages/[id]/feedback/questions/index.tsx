@@ -6,6 +6,7 @@ import Comment from "./comment"
 import PersonalDetails from "./personal-details"
 import {addFeedback} from "../../../../../util/client"
 import { CommentForm, PersonalDetailsForm } from "../../../../../util/type"
+import FeedbackInformation from "./feedback-information"
 import CheckAnswers from "./check-answers"
 
 
@@ -42,6 +43,8 @@ const FeedbackQuestions = ({
 
         const switchComponent = () => {
             switch (question) {
+                case 0:
+                    return <FeedbackInformation onChange={() => onChangeQuestion()} />
                 case 1:
                     return <Feeling onChange={() => onChangeQuestion()} feelingForm={feelingForm} setFeelingForm={setFeelingForm}/>
                 case 2:
