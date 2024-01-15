@@ -4,16 +4,16 @@ export async function getStaticProps() {
     const data = await getConcernInfo()
     return {
       props: {
-        content: data[0]?.content
+        data: data
       },
     };
   }
 
-const ConcernInfo = (content: string) => {
+const ConcernInfo = (data: any) => {
 
     return(
         <>
-        {content}
+        {data[0]?.content}
         </>
     )
 }
