@@ -27,9 +27,11 @@ export type CommentForm = {
 
 export type PersonalDetailsForm = {
     name : string,
+    address: string,
     email: string,
     phone: string,
-    postcode: string
+    postcode: string,
+    consent: boolean
 }
 
 export type CommentType = {

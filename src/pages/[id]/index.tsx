@@ -37,7 +37,8 @@ const Application = ({data}:DataObj) => {
       'image': data?.image,
       'deadline': data?.commentDeadline,
       'name': data?.name,
-      'id': data?._id
+      'id': data?._id,
+      'reference': data?.reference
     }))
   },[data, setDataApplication])
   
