@@ -6,6 +6,7 @@ import Comment from "./comment"
 import PersonalDetails from "./personal-details"
 import {addFeedback} from "../../../../../util/client"
 import { CommentForm, PersonalDetailsForm } from "../../../../../util/type"
+import CheckAnswers from "./check-answers"
 
 
 
@@ -21,7 +22,7 @@ const FeedbackQuestions = ({
 
         const [feelingForm, setFeelingForm] = useState<string>("")
         const [commentForm, setCommentForm] = useState<CommentForm>({})
-        const [personalDetailsForm, setPersonalDetailsForm] = useState<PersonalDetailsForm>({name: "", email: "", phone: "", postcode:""})
+        const [personalDetailsForm, setPersonalDetailsForm] = useState<PersonalDetailsForm>({name: "", address: "", email: "", phone: "", postcode:"", consent: false})
 
         const submit = () => {
             // submit feedback form function
@@ -32,9 +33,11 @@ const FeedbackQuestions = ({
             localStorage.removeItem('impact')
             localStorage.removeItem('comment')
             localStorage.removeItem('name')
+            localStorage.removeItem('address')
             localStorage.removeItem('postcode')
             localStorage.removeItem('email')
             localStorage.removeItem('phone')
+            localStorage.removeItem('consent')
         }
 
         const switchComponent = () => {
@@ -50,12 +53,22 @@ const FeedbackQuestions = ({
                         />
                 case 11:
                     return <PersonalDetails 
-                            onChange={() => submit()} 
+                            onChange={() => onChangeQuestion()} 
                             personalDetailsForm={personalDetailsForm} 
                             setPersonalDetailsForm={setPersonalDetailsForm} 
                             setQuestion={setQuestion} 
                             selectedCheckbox={selectedCheckbox}/>
                 case 12:
+                    return <CheckAnswers 
+                            onChange={() => submit()} 
+                            setQuestion={setQuestion}
+                            commentForm={commentForm}
+                            personalDetailsForm={personalDetailsForm} 
+                            setSelectedCheckbox={setSelectedCheckbox}
+                            selectedCheckbox={selectedCheckbox}
+                            
+                            />
+                case 13:
                     return <Message />
                 default:
                     return <Comment 

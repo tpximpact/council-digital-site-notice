@@ -58,6 +58,21 @@
     max-width: 50rem;
 }
 
+.consent-label {
+    padding-top: 0;
+    margin-bottom: 10px;
+}
+
+//check answers
+
+.wrap-answers {
+    margin-bottom: 10px; 
+    border-bottom: 1px solid #B1B4B6; 
+    display: grid;
+    grid-template-columns: 16rem 1fr 0.5fr;
+    gap: 3rem
+}
+
 // feedback message
 
 .wrap-message-reference {
@@ -90,5 +105,8 @@
     .wrap-feedback {
         margin-right: -20px;
         padding-right: 60px;
+    }
+    .wrap-answers {
+        display: block;
     }
 }
