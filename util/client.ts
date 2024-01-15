@@ -32,6 +32,11 @@ export async function getActiveApplicationById(id: string) {
     const post = await client.fetch(query, { _id:id })
     return post
 }
+
+export async function getConcernInfo() {
+    const info = await client.fetch('*[_type == "concern-info"]')
+    return info
+}
   
 export async function createApplication(post: any) {
 const result = client.create(post)
