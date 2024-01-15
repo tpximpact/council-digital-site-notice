@@ -7,7 +7,6 @@ import Validation from "@/components/validation"
 import { FeelingType } from "../../../../../util/type"
 
 function Feeling({onChange, feelingForm, setFeelingForm}: FeelingType){
-    const [isError, setIsError] = useState<boolean>(false)
 
     useEffect(() => {
             const initialValue = localStorage.getItem("feeling") || ''
@@ -40,11 +39,8 @@ function Feeling({onChange, feelingForm, setFeelingForm}: FeelingType){
             <div><Love onClick={() => {onChangeFeeling('inFavor')}} color={colors['inFavor']}/><span className="govuk-body">In favor</span></div>
             </div>
             <Details summary="Why your feedback is important" description={descriptionDetail['feeling']}/>
-           
-            {
-            isError && <Validation message='Please select at least one icon'/>   
-        }
-            <Button content="Next" onClick={() => {feelingForm !== '' ? onChange() : setIsError(true)}}/>
+        
+            <Button content="Next" onClick={() => onChange()}/>
         </section>
     )
 }

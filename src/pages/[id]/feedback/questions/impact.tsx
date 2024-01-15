@@ -5,7 +5,6 @@ import Checkbox from "@/components/checkbox"
 import Details from "@/components/details"
 import { descriptionDetail } from "../../../../../util/description_detail"
 import { questions } from "../../../../../util/questions_info"
-import Validation from "@/components/validation"
 import { ImpactType } from "../../../../../util/type"
 
 export const checkboxId:number[] = [3,4,5,6,7,8,9,10]
@@ -16,7 +15,6 @@ const ImpactQuestion = ({
         setSelectedCheckbox, 
         selectedCheckbox
     }: ImpactType) => {
-    const [isError, setIsError] = useState<boolean>(false)
     const [defaultValue, setDefaultValue] = useState<number[]>([])
 
     useEffect(() => {
@@ -38,9 +36,6 @@ const ImpactQuestion = ({
             (setSelectedCheckbox([...selectedCheckbox?.filter(el => el !== parseInt(id))]), localStorage.setItem('impact', JSON.stringify([...selectedCheckbox?.filter(el => el !== parseInt(id))])))
     }
 
-    const selectedCheckboxValidation = () => {
-        (selectedCheckbox.length > 0 || defaultValue.length > 0) ? onChange() : setIsError(true)
-    }
 
     return(
         <section>
@@ -53,13 +48,8 @@ const ImpactQuestion = ({
                         <Checkbox label={questions[el]} id={el.toString()} onChange={(e) => onChecked(e)} key={el} checked={defaultValue.includes(el)}/>
                     )
                 }
-        {
-            isError && <Validation message='Please select at least one topic'/>
-
-            
-        }
         
-        <Button content="Next" className="button-impact-question" onClick={() => selectedCheckboxValidation()}/>
+        <Button content="Next" className="button-impact-question" onClick={() => onChange()}/>
         </section>
     )
 }

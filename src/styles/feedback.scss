@@ -59,50 +59,31 @@
 }
 
 // feedback message
-.process-grid-message {
-    margin: 20px 0 10px;
-    display: grid;
-    max-width: 380px;
-    grid-template-columns: 0.75fr 0.5fr;
-    grid-template-rows: 0.5fr 0.5fr 1fr;
+
+.wrap-message-reference {
+    background-color: #00703C;
+    padding: 15px 25px;
+    text-align: center;
 }
 
-
-.process-blue-title{
-    color: #1D70B8;
+.wrap-message-reference h1{
+    font-size: 32px;
+    color: white
 }
 
-.process-white-info {
-    background-color: #1D70B8;
+.wrap-message-reference h2 {
     color: white;
-    padding: 5px 10px;
+    font-size: 24px;
+    margin-top: 40px;
+}
+
+.wrap-message-reference p {
+    margin-top: -15px;
+    color: white;
+    font-weight: bold;
 
 }
 
-.process-blue-info {
-    background: #D2E2F1; 
-    color: #144E81;
-    padding: 2px 8px;
-    font-size: 14px;
-}
-
-.process-grid-message :nth-child(3) {
-    margin-top: -10px;
-}
-
-.wrap-mesage-button {
-    display: flex; 
-    flex-direction: column
-}
-
-.wrap-mesage-button :first-child {
-    margin-top: 20px; 
-    max-width: 20rem; 
-}
-
-.wrap-mesage-button :last-child{
-    color: black
-}
 
 
 @media (max-width: 600px){

@@ -1,7 +1,6 @@
 import TextArea from "@/components/text-area"
 import {Button, BackLink} from "@/components/button"
 import { useEffect, useState } from "react"
-import Validation from "@/components/validation"
 import { CommentType } from "../../../../../util/type"
 
 function CommentQuestion({
@@ -14,7 +13,6 @@ function CommentQuestion({
     question}: 
     CommentType) {
     const [defaultValue, setDefaultValue] = useState('')
-    const [isError, setIsError] = useState<boolean>(false)
         const indexComponent = selectedCheckbox?.indexOf(question)
         const backComponent = indexComponent > 0 ? selectedCheckbox[indexComponent - 1] : 2
 
@@ -31,16 +29,7 @@ function CommentQuestion({
 
     const onComment = (value:any) => {
         setCommentForm({...commentForm,[question]: value})
-        setIsError(false)
         localStorage.setItem('comment', JSON.stringify({...commentForm,[question]: value}))
-    }
-
-    const nextPage = () => {
-        let entries = Object.entries(commentForm)
-        const data = entries.filter(([key, val]) => {
-            return parseInt(key) === question && val !== ""
-        })
-        data.length > 0 ? onChange() : setIsError(true)
     }
 
     return(
@@ -53,13 +42,7 @@ function CommentQuestion({
                 value={defaultValue}
                 id={question}/>
 
-{
-            isError && <Validation message='Please write a comment'/>
-
-            
-        }
-
-            <Button content="Next" onClick={() => nextPage()}/>
+            <Button content="Next" onClick={() => onChange()}/>
         </section>
     )
 }
