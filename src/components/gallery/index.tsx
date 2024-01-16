@@ -4,19 +4,19 @@ const Gallery = ({images, loadImage, setIsModalOpen, setLoadImage, setImageSelec
     return(
         <>
                 <div className="carousel-wrap">
-                    <Image src={images[0].original} alt="" width={323} height={240} onClick={() => {setIsModalOpen(true), setImageSelected(imageSelected)}}/>
+                    <Image src={images?.[0]} alt="" width={323} height={240} onClick={() => {setIsModalOpen(true), setImageSelected(imageSelected)}}/>
                     <div className="carousel-image-list">
                     {images?.slice(0, loadImage).map((el:any, index :any)=> {
                         return (
-                            <div key={index} onClick={() => {setIsModalOpen(true), setImageSelected(el.original)}}>
-                            <Image src={el.thumbnail} alt="" width={100} height={80}/>
+                            <div key={index} onClick={() => {setIsModalOpen(true), setImageSelected(el)}}>
+                            <Image src={el} alt="" width={100} height={80}/>
                             </div>
 
                         )
                     })}
 </div>
 {
-    images.length > loadImage && <Button onClick={() => setLoadImage(images.length)} content={`Load ${images.length - loadImage} more images`} className="govuk-button--secondary gallery-image-button"/>
+    images?.length > loadImage && <Button onClick={() => setLoadImage(images?.length)} content={`Load ${images?.length - loadImage} more images`} className="govuk-button--secondary gallery-image-button"/>
 }
 
         </div>

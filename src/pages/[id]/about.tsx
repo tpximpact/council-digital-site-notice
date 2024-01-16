@@ -31,7 +31,7 @@ function About({
             } else {
                 setLoadImage(6)
             }
-            setImageSelected(image_gallery[0])
+            setImageSelected(image_gallery?.[0])
         }, [image_gallery])
 
             
