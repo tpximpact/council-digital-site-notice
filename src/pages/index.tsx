@@ -1,17 +1,19 @@
+import { useEffect, useState } from 'react';
+import PlanningApplications from './app/planning-application'
+import Pagination from './app/pagination';
 import Input from '@/components/input'
 import {Button} from '@/components/button'
-import PlanningApplications from './app/planning-application'
 import {ArrowIcon} from "../../public/assets/icons"
 import { getActiveApplications, getActiveApplicationsPagination } from "../../util/client";
-import Pagination from './app/pagination';
-import { useEffect, useState } from 'react';
 import { PaginationType, Data } from '../../util/type';
 
 export const itemsPerPage = 6
 
 export async function getStaticProps() {
+
   const data = await getActiveApplications();
   const paginationData = await getActiveApplicationsPagination({itemsPerPage})
+
   return {
     props: {
       data,
@@ -22,15 +24,18 @@ export async function getStaticProps() {
 
 const Home = ({ data, paginationData }: PaginationType) => {
   const [displayData, setDisplayData] = useState<Data[]>()
-useEffect(() => {
+
+  
+  useEffect(() => {
     setDisplayData(paginationData)
-}, [data, paginationData])
+  }, [data, paginationData])
 
-async function onSelectPage({_id}: any) {
-  const res  = await getActiveApplicationsPagination({_id, itemsPerPage})
-  setDisplayData(res)
 
-}
+  async function onSelectPage({_id}: any) {
+    const res  = await getActiveApplicationsPagination({_id, itemsPerPage})
+    setDisplayData(res)
+  }
+
 
   return (
     <div className='wrap-home'>
@@ -44,10 +49,9 @@ async function onSelectPage({_id}: any) {
       {
         displayData && <PlanningApplications data={displayData} />
       }
-        
-        {
-          data?.length > itemsPerPage && <Pagination data={data} onSelectPage={(value: any) => onSelectPage(value)} itemsPerPage={itemsPerPage}/>
-        }
+      {
+        data?.length > itemsPerPage && <Pagination data={data} onSelectPage={(value: any) => onSelectPage(value)} itemsPerPage={itemsPerPage}/>
+      }
     </div>
   )
 }

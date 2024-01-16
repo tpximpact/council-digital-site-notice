@@ -1,17 +1,17 @@
-import Breadcrumbs from "@/components/breadcrumbs";
-import About from "./about";
-import Impact from "./impact";
-import Process from "./process";
-import { ContextApplication } from "@/context";
 import { useContext, useEffect } from "react";
+import { ContextApplication } from "@/context";
+import Breadcrumbs from "@/components/breadcrumbs";
+import About from "./components/about";
+import Impact from "./components/impact";
+import Process from "./components/process";
 import { getActiveApplications, getActiveApplicationById } from "../../../util/client";
 import { DataObj } from "../../../util/type";
-
 
 
 export async function getStaticProps(context: any) {
   const {id} = context.params;
   const data = await getActiveApplicationById(id)
+
   return {
     props: {
       data: data[0]
@@ -21,6 +21,7 @@ export async function getStaticProps(context: any) {
 
 export async function getStaticPaths() {
   const data = await getActiveApplications();
+  
   return {
   paths: data.map((doc: any) => ({params: {data: doc, id: doc._id}})),
   fallback: true,
@@ -28,9 +29,10 @@ export async function getStaticPaths() {
 }
 
 const Application = ({data}:DataObj) => {
-  const {setDataApplication} = useContext(ContextApplication)
+  const {setDataApplication, setQuestion} = useContext(ContextApplication)
 
   useEffect(() => {
+    setQuestion(0)
     setDataApplication(data)
     localStorage.setItem("application", JSON.stringify({
       'address': data?.address,
@@ -40,7 +42,7 @@ const Application = ({data}:DataObj) => {
       'id': data?._id,
       'reference': data?.reference
     }))
-  },[data, setDataApplication])
+  },[data, setDataApplication, setQuestion])
   
 
 const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: data?.name, href:""}]
