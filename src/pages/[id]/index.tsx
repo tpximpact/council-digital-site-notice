@@ -34,7 +34,8 @@ const Application = ({data}:DataObj) => {
     setDataApplication(data)
     localStorage.setItem("application", JSON.stringify({
       'address': data?.address,
-      'image': data?.image,
+      'image_head': data?.image_head,
+      'image_gallery': data?.image_gallery,
       'deadline': data?.commentDeadline,
       'name': data?.name,
       'id': data?._id
@@ -57,7 +58,7 @@ const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: da
         reference={data?.reference}
         commentDeadline={data?.commentDeadline}
         applicationType={data?.applicationType}
-        image={data?.image} />
+        image_gallery={data?.image_gallery} />
         <Impact />
         <Process id={data?._id} commentDeadline={data?.commentDeadline}/>
         </>

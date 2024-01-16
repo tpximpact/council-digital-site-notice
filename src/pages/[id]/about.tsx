@@ -1,4 +1,3 @@
-import ImageGallery from "react-image-gallery";
 import Details from "@/components/details";
 import Link from "next/link";
 import { descriptionDetail } from "../../../util/description_detail"
@@ -7,7 +6,6 @@ import { Data } from "../../../util/type";
 import { useEffect, useState } from "react";
 import Modal from "@/components/modal";
 import Gallery from "@/components/gallery";
-import { dummy_image } from "../../../util/dummy_image";
 
 function About({
         _id,
@@ -18,7 +16,7 @@ function About({
         reference, 
         commentDeadline, 
         applicationType, 
-        image}: 
+        image_gallery}: 
         Data) {
 
         const deadline = commentDeadline?.split(" ")[0].split("/")[2]
@@ -26,16 +24,15 @@ function About({
         const [isModalOpen, setIsModalOpen] = useState(false)
         const [imageSelected, setImageSelected] = useState()
 
-        const images = dummy_image(image)
 
         useEffect(() => {
-            if(images.length < 8) {
-                setLoadImage(images.length)
+            if(image_gallery.length < 8) {
+                setLoadImage(image_gallery.length)
             } else {
                 setLoadImage(6)
             }
-            setImageSelected(images[0].original)
-        }, [])
+            setImageSelected(image_gallery[0])
+        }, [image_gallery])
 
             
     return(
@@ -47,7 +44,7 @@ function About({
         <p className="govuk-body-m govuk-!-font-weight-bold">{address}</p>
     <div className="wrap-carousel-desktop">
 <Gallery 
-    images={images} 
+    images={image_gallery} 
     loadImage={loadImage} 
     setIsModalOpen={setIsModalOpen} 
     setLoadImage={setLoadImage}
