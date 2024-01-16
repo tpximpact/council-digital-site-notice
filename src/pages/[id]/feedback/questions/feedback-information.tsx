@@ -2,8 +2,11 @@
 import { Button } from "@/components/button"
 import Link from "next/link"
 import { ArrowIcon } from "../../../../../public/assets/icons"
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
 
-function FeedbackInformation({onChange}: any) {
+function FeedbackInformation() {
+            const { onChangeQuestion } = useContext(ContextApplication);
     return(
         <>
         <section style={{marginBottom: '20px'}}>
@@ -48,7 +51,7 @@ function FeedbackInformation({onChange}: any) {
             <p className="govuk-body">As part of this process, your comments will be posted online for the public to see. We will not include your name, address, telephone number or email address.</p>
             <p className="govuk-body">The case officer will summarise their findings in the officer's report and decision notice.</p>        
         </section>
-        <Button content="Comment on this application" icon={<ArrowIcon/>} onClick={() => onChange()} className="feedback-information-button" iconClass="feedback-information-icon"/>
+        <Button content="Comment on this application" icon={<ArrowIcon/>} onClick={() => onChangeQuestion()} className="feedback-information-button" iconClass="feedback-information-icon"/>
         </>
     )
 }

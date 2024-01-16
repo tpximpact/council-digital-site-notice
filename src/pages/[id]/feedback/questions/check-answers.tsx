@@ -1,14 +1,18 @@
 import { BackLink, Button, ButtonLink } from "@/components/button"
 import { questions } from "../../../../../util/questions_info"
 import { useState, useEffect } from "react"
-import { CommentForm, PersonalDetailsForm } from "../../../../../util/type"
+import { CommentForm } from "../../../../../util/type"
 import Details from "@/components/details";
 import { descriptionDetail } from "../../../../../util/description_detail";
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
+import {addFeedback} from "../../../../../util/client"
 
 export const questionId:number[] = [3,4,5,6,7,8,9,10]
 
-function CheckAnswers({setQuestion, selectedCheckbox, commentForm, personalDetailsForm, onChange, setSelectedCheckbox}: {setQuestion:(value:any) => void, commentForm:CommentForm, personalDetailsForm: PersonalDetailsForm, onChange: () => void, setSelectedCheckbox: any, selectedCheckbox: any }) {
-   const [ name, setName] = useState<string>('')
+function CheckAnswers() {
+    const { onChangeQuestion, selectedCheckbox, commentForm, personalDetailsForm, setQuestion, setSelectedCheckbox, feelingForm } = useContext(ContextApplication);
+    const [ name, setName] = useState<string>('')
    const [ postCode, setPostCode] = useState<string>('')
    const [ email, setEmail] = useState<string>()
    const [ address, setAddress] = useState<string>()
@@ -46,6 +50,23 @@ const onChangeQuestions = (label:number) => {
     }
     
 }
+
+const submit = () => {
+    // submit feedback form function
+    console.log('submited')
+    onChangeQuestion()
+    addFeedback({feelingForm, commentForm, personalDetailsForm})
+    localStorage.removeItem('feeling')
+    localStorage.removeItem('impact')
+    localStorage.removeItem('comment')
+    localStorage.removeItem('name')
+    localStorage.removeItem('address')
+    localStorage.removeItem('postcode')
+    localStorage.removeItem('email')
+    localStorage.removeItem('phone')
+    localStorage.removeItem('consent')
+}
+
 return(
     <section>
         <BackLink content='Back'onClick={() => setQuestion(11)}/>
@@ -93,7 +114,7 @@ return(
         }
         <Details summary="How we handle your data" description={descriptionDetail['consent']} />
 
-<Button content="Submit your comments" onClick={() => onChange()}/>
+<Button content="Submit your comments" onClick={() => submit()}/>
         
     </section>
 )

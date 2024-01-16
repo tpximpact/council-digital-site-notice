@@ -5,17 +5,14 @@ import Checkbox from "@/components/checkbox"
 import Details from "@/components/details"
 import { descriptionDetail } from "../../../../../util/description_detail"
 import { questions } from "../../../../../util/questions_info"
-import { ImpactType } from "../../../../../util/type"
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
 
 export const checkboxId:number[] = [3,4,5,6,7,8,9,10]
 
-const ImpactQuestion = ({
-        setQuestion,
-        onChange, 
-        setSelectedCheckbox, 
-        selectedCheckbox
-    }: ImpactType) => {
+const ImpactQuestion = () => {
     const [defaultValue, setDefaultValue] = useState<number[]>([])
+    const { onChangeQuestion, setQuestion, selectedCheckbox, setSelectedCheckbox } = useContext(ContextApplication);
 
     useEffect(() => {
         const getStorage = localStorage.getItem("impact")
@@ -49,7 +46,7 @@ const ImpactQuestion = ({
                     )
                 }
         
-        <Button content="Next" className="button-impact-question" onClick={() => onChange()}/>
+        <Button content="Next" className="button-impact-question" onClick={() => onChangeQuestion()}/>
         </section>
     )
 }

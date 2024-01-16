@@ -6,14 +6,19 @@ import { useEffect, useState } from "react";
 import { PersonalDetailsType } from "../../../../../util/type";
 import Validation from "@/components/validation"
 import Checkbox from "@/components/checkbox";
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
 
-function PersonalDetails({
-        onChange, 
-        setPersonalDetailsForm, 
-        personalDetailsForm,
-        setQuestion,
-        selectedCheckbox
-    }: PersonalDetailsType) {
+function PersonalDetails(
+    // {
+    //     onChange, 
+    //     setPersonalDetailsForm, 
+    //     personalDetailsForm,
+    //     setQuestion,
+    //     selectedCheckbox
+    // }: PersonalDetailsType
+    ) {
+        const { onChangeQuestion, setQuestion, selectedCheckbox, personalDetailsForm, setPersonalDetailsForm } = useContext(ContextApplication);
         const [isError, setIsError] = useState<boolean>(false)
         const [isConsentError, setIsConsentError] = useState<boolean>(false)
     
@@ -58,7 +63,7 @@ function PersonalDetails({
                 const phoneValidation = phoneForm !== "" ? phoneRegex.test(phoneForm) : true
                 const emailValidation = emailForm !== "" ? emailForm.includes('@'): true
                 if(phoneValidation && emailValidation) {
-                    onChange()
+                    onChangeQuestion()
                 } else {
                     setIsError(true)
                 }
