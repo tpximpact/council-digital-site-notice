@@ -1,12 +1,10 @@
-import {Button} from "@/components/button"
-import { useEffect, useState } from "react"
+import { useEffect, useContext } from "react"
+import { ContextApplication } from "@/context";
 import Details from "@/components/details"
+import {Button} from "@/components/button"
 import { Love, Neutral, Opposed } from "../../../../../public/assets/icons"
 import {descriptionDetail} from "../../../../../util/description_detail"
-import Validation from "@/components/validation"
-import { FeelingType } from "../../../../../util/type"
-import { useContext } from "react";
-import { ContextApplication } from "@/context";
+
 
 function Feeling(){
     const { onChangeQuestion, feelingForm, setFeelingForm } = useContext(ContextApplication);
