@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import {Button} from "@/components/button"
-import {ArrowIcon} from "../../../public/assets/icons"
-import { deadline } from "../../../util/client";
+import {ArrowIcon} from "../../../../public/assets/icons"
+import { deadline } from "../../../../util/client";
 
 function Process({id, commentDeadline}: {id: string, commentDeadline: string}) {
 

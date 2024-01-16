@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Details from "@/components/details";
-import { descriptionDetail } from "../../../util/description_detail"
+import { descriptionDetail } from "../../../../util/description_detail"
 
 function Impact() {
     return(
