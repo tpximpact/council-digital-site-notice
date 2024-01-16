@@ -7,7 +7,7 @@ import { urlFor } from "../../../../util/client";
 
 
 const FeedbackMessage = () => {
-    const { dataApplication: {address, image, reference, setQuestion} } = useContext(ContextApplication);
+    const { dataApplication: {address, image, reference} } = useContext(ContextApplication);
     const [addressAplication, setAddressAplication] = useState()
     const [imageAplication, setImageAplication] = useState()
     const [referenceAplication, setReferenceAplication] = useState()
@@ -24,7 +24,7 @@ const FeedbackMessage = () => {
             setReferenceAplication(JSON.parse(initialValue).reference)
         }
 
-    },[address, image, reference, setQuestion])
+    },[address, image, reference])
 
     return(
         <section>
