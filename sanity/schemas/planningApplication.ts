@@ -23,13 +23,13 @@ export default defineType({
     }),
     defineField({
       title: "Address",
-      name: "development_address",
+      name: "address",
       type: "string",
       readOnly: true,
     }),
     defineField({
       title: "Application Type",
-      name: "application_type",
+      name: "applicationType",
       type: "string",
     }),
     defineField({
@@ -44,7 +44,7 @@ export default defineType({
     }),
     defineField({
       title: "Description",
-      name: "development_description",
+      name: "description",
       type: "string",
     }),
     defineField({
@@ -133,7 +133,7 @@ export default defineType({
       name: "commentDeadline",
       type: "string",
     }),
-    {
+    defineField({
       title: 'Housing',
       name: 'housing',
       type: 'object',
@@ -150,41 +150,44 @@ export default defineType({
           type: 'number'
         },
       ]
-    },
-    {
+    }),
+    defineField({
+      title: "Open Space Gardens",
+      name: "openSpaceGardens",
+      type: "boolean",
+    }),
+    defineField({
       title: 'Open space area in square metres',
       name: 'openSpaceArea',
       type: 'number',
       hidden: ({document}) => !document?.showOpenSpace,
       validation: Rule => Rule.custom(({field, context}: any) => (context.document.showOpenSpace && field === undefined) ? "This field must not be empty if the open space impact option is selected" : true),
-    },
-
-    {
+    }),
+    defineField({
       title: 'Additional healthcare demand',
       description: 'As a percentage',
       name: 'healthcareDemand',
       type: 'number',
       hidden: ({document}) => !document?.showHealthcare,
       validation: Rule => Rule.custom(({field, context}: any) => (context.document.showHealthcare && field === undefined) ? "This field must not be empty if the healthcare impact option is selected" : true),
-    },
-
+    }),
     defineField({
       title: 'Housing impact',
       name: 'showHousing',
       type: 'boolean'
     }),
-    {
+    defineField({
       title: 'Carbon impact',
       name: 'showCarbon',
       type: 'boolean'
-    },
-    {
+    }),
+    defineField({
       title: 'Percentage change in CO2 emissions',
       name: 'carbonEmissions',
       type: 'number',
       hidden: ({document}) => !document?.showCarbon,
       validation: Rule => Rule.custom(({field, context}: any) => (context.document.showCarbon && field === undefined) ? "This field must not be empty if the carbon impact option is selected" : true),
-    },
+    }),
     defineField({
       title: "Air Quality",
       name: "airQuality",
@@ -208,26 +211,29 @@ export default defineType({
       type: 'boolean',
       initialValue: true
     }),
-
-    {
+    defineField({
+      title: "C02 Emissions",
+      name: "c02Emissions",
+      type: "string",
+    }),
+    defineField({
       title: 'Pedestrian and vehicle access',
       name: 'showAccess',
       type: 'boolean'
-    },
-    {
+    }),
+    defineField({
       title: 'Pedestrian and vehicle access',
       name: 'access',
       type: 'text',
       hidden: ({document}) => !document?.showAccess,
       validation: Rule => Rule.custom(({field, context}: any) => (context.document.showAccess && field === undefined) ? "This field must not be empty if the pedestrian and vehicle access impact option is selected" : true),
-    },
-
-    {
+    }),
+    defineField({
       title: 'Jobs impact',
       name: 'showJobs',
       type: 'boolean'
-    },
-    {
+    }),
+    defineField({
       title: 'New jobs',
       name: 'jobs',
       type: 'object',
@@ -244,8 +250,7 @@ export default defineType({
           type: 'number'
         }
       ]
-    },
-    
+    }),
     defineField({
       name: 'commments',
       title: 'Comments',

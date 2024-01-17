@@ -74,7 +74,7 @@ export default async function handler(
   }
 
   const { 
-    reference, 
+    applicationNumber, 
     description, 
     address, 
     applicationType,
@@ -86,7 +86,7 @@ export default async function handler(
   } = req.body;
 
   const data = {
-    reference,
+    applicationNumber,
     description,
     address,
     applicationType,
