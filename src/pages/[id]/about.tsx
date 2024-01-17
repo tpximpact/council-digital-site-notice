@@ -26,8 +26,8 @@ function About({
 
 
         useEffect(() => {
-            if(image_gallery.length < 8) {
-                setLoadImage(image_gallery.length)
+            if(image_gallery?.length < 8) {
+                setLoadImage(image_gallery?.length)
             } else {
                 setLoadImage(6)
             }
@@ -43,6 +43,8 @@ function About({
         <h1 className="govuk-heading-l">{name}</h1>
         <p className="govuk-body-m govuk-!-font-weight-bold">{address}</p>
     <div className="wrap-carousel-desktop">
+{
+    image_gallery && 
 <Gallery 
     images={image_gallery} 
     loadImage={loadImage} 
@@ -51,6 +53,7 @@ function About({
     setImageSelected={setImageSelected}
     imageSelected={imageSelected}
 />
+}
         <div>
         <h2 className="govuk-heading-m">About this development</h2>
         <p className="govuk-body-s">{description}</p>
