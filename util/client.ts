@@ -34,7 +34,7 @@ export async function getActiveApplicationById(id: string) {
 }
 
 export async function getConcernInfo() {
-    const info = await client.fetch('*[_type == "concern-info"]')
+    const info = await client.fetch('*[_type == "comment-information"]')
     return info
 }
   

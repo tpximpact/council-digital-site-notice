@@ -14,8 +14,8 @@ function FeedbackInformation({onChange}: any) {
         (async() => {
             const res = await getConcernInfo()
             if(res[0]?.url) {
-                setUrl(res[0].url)
-            } else if(res[0]?.conten) {
+                setUrl(res[0].concernUrl)
+            } else if(res[0]?.concernConten) {
                 setUrl('/concern-info')
             }
         })

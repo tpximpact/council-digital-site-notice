@@ -13,7 +13,7 @@ const ConcernInfo = (data: any) => {
 
     return(
         <>
-        {data[0]?.content}
+        {data[0]?.concernContent}
         </>
     )
 }

@@ -1,19 +1,19 @@
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-    title: "ConcernInfo",
-    name: "concern-info",
+    title: "CommentInformation",
+    name: "comment-information",
     type: "object",
     fields: [
         defineField({
-            title: "url",
-            name: "url",
+            title: "ConcernUrl",
+            name: "concernUrl",
             type: "string",
             // readOnly: true,
           }),
           defineField({
-            title: "content",
-            name: "content",
+            title: "ConcernContent",
+            name: "concernContent",
             type: "string",
             // readOnly: true,
           })
