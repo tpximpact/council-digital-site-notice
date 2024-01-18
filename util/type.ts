@@ -9,7 +9,8 @@ export type Data = {
     reference: string
     commentDeadline: string
     applicationType: string
-    image: string
+    image_head?: string
+    image_gallery: any[]
 }
 
 export type DataObj = {

@@ -1,10 +1,11 @@
-import ImageGallery from "react-image-gallery";
 import Details from "@/components/details";
 import Link from "next/link";
 import { descriptionDetail } from "../../../util/description_detail"
 import {ArrowIcon} from "../../../public/assets/icons"
-import { urlFor } from "../../../util/client";
 import { Data } from "../../../util/type";
+import { useEffect, useState } from "react";
+import Modal from "@/components/modal";
+import Gallery from "@/components/gallery";
 
 function About({
         _id,
@@ -15,35 +16,44 @@ function About({
         reference, 
         commentDeadline, 
         applicationType, 
-        image}: 
+        image_gallery}: 
         Data) {
 
         const deadline = commentDeadline?.split(" ")[0].split("/")[2]
+        const [loadImage, setLoadImage] = useState(0)
+        const [isModalOpen, setIsModalOpen] = useState(false)
+        const [imageSelected, setImageSelected] = useState()
 
-        const images = [
-            {
-                original: image && urlFor(image)?.url(),
-                thumbnail: image && urlFor(image)?.url(),
-            },
-            {
-              original: image && urlFor(image)?.url(),
-              thumbnail: image && urlFor(image)?.url(),
-            },
-            {
-              original: image && urlFor(image)?.url(),
-              thumbnail: image && urlFor(image)?.url(),
-            },
-          ];
+
+        useEffect(() => {
+            if(image_gallery?.length < 8) {
+                setLoadImage(image_gallery?.length)
+            } else {
+                setLoadImage(6)
+            }
+            setImageSelected(image_gallery?.[0])
+        }, [image_gallery])
+
             
     return(
         <div className="wrap-about">
+            {
+                isModalOpen && <Modal setIsModalOpen={setIsModalOpen} image={imageSelected}/>
+            }
         <h1 className="govuk-heading-l">{name}</h1>
         <p className="govuk-body-m govuk-!-font-weight-bold">{address}</p>
     <div className="wrap-carousel-desktop">
-        <div className="carousel-wrap">
-        <ImageGallery items={images} showFullscreenButton={false} showPlayButton={false}/>
-
-        </div>
+{
+    image_gallery && 
+<Gallery 
+    images={image_gallery} 
+    loadImage={loadImage} 
+    setIsModalOpen={setIsModalOpen} 
+    setLoadImage={setLoadImage}
+    setImageSelected={setImageSelected}
+    imageSelected={imageSelected}
+/>
+}
         <div>
         <h2 className="govuk-heading-m">About this development</h2>
         <p className="govuk-body-s">{description}</p>

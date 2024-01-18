@@ -7,15 +7,15 @@ import { PaginationType } from "../../../util/type";
 const PlanningApplications = ({ data }: (PaginationType)) => {
   return (
     <section className="wrap-planning-application">
-      {data && data.map(({_id, image, name, address}: any) => {
+      {data && data.map(({_id, image_head, name, address}: any) => {
         return (
           <Link
             key={_id}
             href={`/${_id}`}
             className="govuk-body planning-application-link"
           >
-            {image && (
-              <Image width={330} height={223} alt="" src={urlFor(image).url()} />
+            {image_head && (
+              <Image width={330} height={223} alt="" src={urlFor(image_head).url()} />
             )}
             <div>
               <h3>{name}</h3>
