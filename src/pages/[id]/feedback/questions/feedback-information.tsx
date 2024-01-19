@@ -2,7 +2,7 @@
 import { Button } from "@/components/button"
 import Link from "next/link"
 import { ArrowIcon } from "../../../../../public/assets/icons"
-import { getConcernInfo } from "../../../../../util/client"
+import { getCommentInfo } from "../../../../../util/client"
 import { useEffect, useState } from "react"
 
 
@@ -12,7 +12,7 @@ function FeedbackInformation({onChange}: any) {
 
     useEffect(() => {
         (async() => {
-            const res = await getConcernInfo()
+            const res = await getCommentInfo()
             if(res[0]?.url) {
                 setUrl(res[0].concernUrl)
             } else if(res[0]?.concernConten) {

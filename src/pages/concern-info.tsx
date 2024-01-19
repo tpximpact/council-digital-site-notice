@@ -1,7 +1,7 @@
-import { getConcernInfo } from "../../util/client";
+import { getCommentInfo } from "../../util/client";
 
 export async function getStaticProps() {
-    const data = await getConcernInfo()
+    const data = await getCommentInfo()
     return {
       props: {
         data: data
