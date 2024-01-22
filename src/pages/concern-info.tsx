@@ -9,8 +9,7 @@ export async function getStaticProps() {
     };
   }
 
-const ConcernInfo = (data: any) => {
-
+const ConcernInfo = ({data}: any) => {
     return(
         <>
         {data[0]?.concernContent}

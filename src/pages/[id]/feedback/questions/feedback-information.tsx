@@ -13,14 +13,16 @@ function FeedbackInformation({onChange}: any) {
     useEffect(() => {
         (async() => {
             const res = await getCommentInfo()
-            if(res[0]?.url) {
-                setUrl(res[0].concernUrl)
-            } else if(res[0]?.concernConten) {
+            if(res[0]?.concernUrl !== undefined) {
+                const newURL = res[0].concernUrl.includes('http') ? res[0].concernUrl : `https://${res[0].concernUrl}`
+                setUrl(newURL)
+            } else if(res[0]?.concernContent !== undefined) {
                 setUrl('/concern-info')
             }
         })
         ()
     },[])
+
     return(
         <>
         <section style={{marginBottom: '20px'}}>
@@ -42,7 +44,7 @@ function FeedbackInformation({onChange}: any) {
             </ul>
             <p className="govuk-body">Strength of local opposition to a planning application can’t be considered. This means that if a comment you’d like to raise has already been made, you don’t need to repeat it.</p>
            { url !== "" &&
-            <Link href={url} target="_blank" className="govuk govuk-link">What can you do if these things concern you?</Link>
+            <Link href={url} target="_blank" className="govuk govuk-link" >What can you do if these things concern you?</Link>
            }
             
         </section>
