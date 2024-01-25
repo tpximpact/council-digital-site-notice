@@ -11,7 +11,7 @@ const PlanningApplications = ({ data, location }: {data : Data[], location: any}
       {data && data.map(({_id, image, name, address, longitude, latitude}: any) => {
 
         let distance;
-        
+
         if(location != null && latitude != null && longitude != null) {
           distance = distanceInMiles(location, { longitude, latitude })
         }
@@ -26,8 +26,9 @@ const PlanningApplications = ({ data, location }: {data : Data[], location: any}
                   <p>
                     <LocalIcon /> {address}
                     {
-                      distance != null && 
+                      distance != undefined && 
                       <span>
+                        <br />
                         {distance} mile 
                       </span>
                     }

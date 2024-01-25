@@ -218,12 +218,12 @@ export default defineType({
     defineField({
       title: "Longitude",
       name: "longitude",
-      type: "string"
+      type: "number"
     }),
     defineField({
       title: "Latitude",
       name: "latitude",
-      type: "string"
+      type: "number"
     }),
     defineField({
       name: 'isActive',

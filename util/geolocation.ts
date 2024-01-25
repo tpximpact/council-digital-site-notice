@@ -1,4 +1,5 @@
-export async function distanceInMiles(point1: any, point2: any) {
+export function distanceInMiles(point1: any, point2: any) {
+
   var R = 3958.8; // Radius of the Earth in miles
   var rlat1 = point1.latitude * (Math.PI / 180); // Convert degrees to radians
   var rlat2 = point2.latitude * (Math.PI / 180); // Convert degrees to radians
@@ -17,7 +18,8 @@ export async function distanceInMiles(point1: any, point2: any) {
             Math.sin(difflon / 2)
       )
     );
-  return d;
+
+  return d.toFixed(2);;
 }
 
 export async function getLocationFromPostcode(postcode: string) {

@@ -48,6 +48,8 @@ const Home = ({ dataId, data }: PaginationType) => {
 
     setLocation(location)
 
+    console.log(location)
+
     const res = await getActiveApplicationsPagination({itemsPerPage, location});
     console.log(res)
     setDisplayData(res);
