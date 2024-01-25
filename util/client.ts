@@ -42,10 +42,18 @@ export async function getActiveApplicationsPagination({_id, itemsPerPage, locati
 export async function getCMSApplicationsPagination({ _id, itemsPerPage, location,}: {_id?: any; itemsPerPage: number; location: any;}) : Promise<any[]> {
   let posts;
 
+  let order = 'order(_id)'
+
+  if(location != null) {
+    order = `order(geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude})) asc)`
+  }
+
+  console.log(order)
+  
   if (_id === undefined) {
-    posts = await client.fetch(`*[_type == "planning-application" && isActive == true && !(_id in path('drafts.**'))] | order(_id) [0...${itemsPerPage}] {...}`);
+    posts = await client.fetch(`*[_type == "planning-application" && isActive == true && !(_id in path('drafts.**'))] | ${order} [0...${itemsPerPage}] {...}`);
   } else {
-    posts = await client.fetch(`*[_type == "planning-application" && isActive == true && _id >= $_id && !(_id in path('drafts.**'))] | order(_id) [0...${itemsPerPage}] {...}`,
+    posts = await client.fetch(`*[_type == "planning-application" && isActive == true && _id >= $_id && !(_id in path('drafts.**'))] | ${order} [0...${itemsPerPage}] {...}`,
      { _id });
   }
 

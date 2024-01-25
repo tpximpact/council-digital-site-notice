@@ -18,7 +18,8 @@ export default defineType({
       title: "Application number",
       name: "applicationNumber",
       type: "string",
-      validation: (Rule: any) => Rule.required()
+      validation: (Rule: any) => Rule.required(),
+      readOnly: true
     }),
     defineField({
       title: "Address",
@@ -216,6 +217,11 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      title: "Location",
+      name: "location",
+      type: "geopoint"
+    }),
+    defineField({
       title: "Longitude",
       name: "longitude",
       type: "number"
@@ -229,7 +235,7 @@ export default defineType({
       name: 'isActive',
       title: 'IsActive',
       type: 'boolean',
-      initialValue: true
+      initialValue: false
     }),
     defineField({
       title: "C02 Emissions",
