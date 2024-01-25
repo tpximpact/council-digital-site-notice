@@ -222,16 +222,6 @@ export default defineType({
       type: "geopoint"
     }),
     defineField({
-      title: "Longitude",
-      name: "longitude",
-      type: "number"
-    }),
-    defineField({
-      title: "Latitude",
-      name: "latitude",
-      type: "number"
-    }),
-    defineField({
       name: 'isActive',
       title: 'IsActive',
       type: 'boolean',

@@ -47,11 +47,7 @@ const Home = ({ dataId, data }: PaginationType) => {
     }
 
     setLocation(location)
-
-    console.log(location)
-
     const res = await getActiveApplicationsPagination({itemsPerPage, location});
-    console.log(res)
     setDisplayData(res);
   };
 
@@ -81,7 +77,7 @@ const Home = ({ dataId, data }: PaginationType) => {
           content="Sign up for alerts on applications near you "
         />
       </section>
-      {displayData && <PlanningApplications data={displayData} location={location} />}
+      {displayData && <PlanningApplications data={displayData} searchLocation={location} />}
 
       {dataId?.length > itemsPerPage && (
         <Pagination

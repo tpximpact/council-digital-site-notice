@@ -47,8 +47,6 @@ export async function getCMSApplicationsPagination({ _id, itemsPerPage, location
   if(location != null) {
     order = `order(geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude})) asc)`
   }
-
-  console.log(order)
   
   if (_id === undefined) {
     posts = await client.fetch(`*[_type == "planning-application" && isActive == true && !(_id in path('drafts.**'))] | ${order} [0...${itemsPerPage}] {...}`);

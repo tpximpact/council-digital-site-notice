@@ -1,5 +1,8 @@
 export function distanceInMiles(point1: any, point2: any) {
 
+  console.log(point1)
+  console.log(point2)
+  
   var R = 3958.8; // Radius of the Earth in miles
   var rlat1 = point1.latitude * (Math.PI / 180); // Convert degrees to radians
   var rlat2 = point2.latitude * (Math.PI / 180); // Convert degrees to radians

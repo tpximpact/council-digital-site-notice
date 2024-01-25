@@ -5,15 +5,15 @@ import { urlFor } from "../../../util/client";
 import { Data } from "../../../util/type";
 import { distanceInMiles } from '../../../util/geolocation'
 
-const PlanningApplications = ({ data, location }: {data : Data[], location: any}) => {
+const PlanningApplications = ({ data, searchLocation }: {data : Data[], searchLocation: any}) => {
   return (
     <section className="wrap-planning-application">
-      {data && data.map(({_id, image, name, address, longitude, latitude}: any) => {
+      {data && data.map(({_id, image, name, address, location}: any) => {
 
         let distance;
 
-        if(location != null && latitude != null && longitude != null) {
-          distance = distanceInMiles(location, { longitude, latitude })
+        if(searchLocation != null && location != null && location.lat != null && location.lng != null) {
+          distance = distanceInMiles(searchLocation, { longitude : location.lng, latitude : location.lat })
         }
 
         return (
