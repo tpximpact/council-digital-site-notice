@@ -27,6 +27,7 @@ export async function getStaticProps() {
 const Home = ({ dataId, data }: PaginationType) => {
   const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
+  const [locationError, setLocationError] = useState<boolean>(false);
   const [displayData, setDisplayData] = useState<Data[]>();
 
   useEffect(() => {
@@ -43,7 +44,12 @@ const Home = ({ dataId, data }: PaginationType) => {
     let location;
 
     if(postcode != null) {
+      setLocationError(false)
       location = await getLocationFromPostcode(postcode);
+
+      if(location !== null) {
+        setLocationError(true)
+      }
     }
 
     setLocation(location)
