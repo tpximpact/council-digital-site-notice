@@ -43,9 +43,9 @@ export async function getCMSApplicationsPagination({ _id, itemsPerPage, location
   let posts;
 
   if (_id === undefined) {
-    posts = await client.fetch(`*[_type == "planning-application" && isActive == true] | order(_id) [0...${itemsPerPage}] {...}`);
+    posts = await client.fetch(`*[_type == "planning-application" && isActive == true && !(_id in path('drafts.**'))] | order(_id) [0...${itemsPerPage}] {...}`);
   } else {
-    posts = await client.fetch(`*[_type == "planning-application" && isActive == true && _id >= $_id] | order(_id) [0...${itemsPerPage}] {...}`,
+    posts = await client.fetch(`*[_type == "planning-application" && isActive == true && _id >= $_id && !(_id in path('drafts.**'))] | order(_id) [0...${itemsPerPage}] {...}`,
      { _id });
   }
 

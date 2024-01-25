@@ -8,7 +8,7 @@ import { distanceInMiles } from '../../../util/geolocation'
 const PlanningApplications = ({ data, location }: {data : Data[], location: any}) => {
   return (
     <section className="wrap-planning-application">
-      {data && data.map(({_id, image, name, development_address, longitude, latitude}: any) => {
+      {data && data.map(({_id, image, name, address, longitude, latitude}: any) => {
 
         let distance;
         
@@ -21,15 +21,19 @@ const PlanningApplications = ({ data, location }: {data : Data[], location: any}
             {image && (<Image width={330} height={223} alt="" src={urlFor(image).url()} />)}
             <div>
               <h3>{name}</h3>
-              {
-                distance != null && 
+              
                 <span className="planning-application-text">
                   <p>
-                    <LocalIcon />
-                    {distance} mile {development_address}
+                    <LocalIcon /> {address}
+                    {
+                      distance != null && 
+                      <span>
+                        {distance} mile 
+                      </span>
+                    }
                   </p>
                 </span>
-              }
+
             </div>
             </Link>
         );
