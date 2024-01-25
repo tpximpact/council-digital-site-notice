@@ -2,30 +2,34 @@ import Link from "next/link";
 import Image from "next/image";
 import { LocalIcon } from "../../../public/assets/icons";
 import { urlFor } from "../../../util/client";
-import { DataTypeArray } from "../../../util/type";
+import { Data } from "../../../util/type";
+import { distanceInMiles } from '../../../util/geolocation'
 
-const PlanningApplications = ({ data }: (DataTypeArray)) => {
+const PlanningApplications = ({ data, location }: {data : Data[], location: any}) => {
   return (
     <section className="wrap-planning-application">
-      {data && data.map(({_id, image, name, development_address}: any) => {
-        return (
-          <Link
-            key={_id}
-            href={`/${_id}`}
-            className="planning-application-link"
-          >
+      {data && data.map(({_id, image, name, development_address, longitude, latitude}: any) => {
 
-            {image && (
-              <Image width={330} height={223} alt="" src={urlFor(image).url()} />
-            )}
+        let distance;
+        
+        if(location != null && latitude != null && longitude != null) {
+          distance = distanceInMiles(location, { longitude, latitude })
+        }
+
+        return (
+          <Link key={_id} href={`/${_id}`} className="planning-application-link">
+            {image && (<Image width={330} height={223} alt="" src={urlFor(image).url()} />)}
             <div>
               <h3>{name}</h3>
-              <span className="planning-application-text">
-                <p>
-                  <LocalIcon />
-                  1 mile {development_address}
-                </p>
-              </span>
+              {
+                distance != null && 
+                <span className="planning-application-text">
+                  <p>
+                    <LocalIcon />
+                    {distance} mile {development_address}
+                  </p>
+                </span>
+              }
             </div>
             </Link>
         );

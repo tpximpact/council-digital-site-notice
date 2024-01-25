@@ -194,14 +194,14 @@ export default defineType({
       type: "string",
     }),
     defineField({
-      title: "Eastings",
-      name: "eastings",
+      title: "Longitude",
+      name: "longitude",
       type: "string",
       readOnly: true,
     }),
     defineField({
-      title: "Northings",
-      name: "northings",
+      title: "Latitude",
+      name: "latitude",
       type: "string",
       readOnly: true,
     }),

@@ -8,6 +8,7 @@ import {
   formatDistanceStrict,
 } from "date-fns";
 import { groq } from "next-sanity";
+import { getLocationFromPostcode } from "./geolocation";
 
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -19,69 +20,43 @@ export const client = createClient({
 
 const builder = imageUrlBuilder(client);
 
-export async function getCMSApplications() {
-  const posts = await client.fetch(
-    '*[_type == "planning-application" && isActive == true] {_id}'
-  );
+export async function getActiveApplications() {
+  const posts = await client.fetch( '*[_type == "planning-application" && isActive == true] {_id}');
   return posts;
 }
 
-export async function getCMSandOpenDataApplications() {
-  const posts = await client.fetch('*[_type == "planning-application"] {_id}');
-  return posts;
+export async function getActiveApplicationsPagination({_id, itemsPerPage, location}: {_id?: string; itemsPerPage: number; location?: any;}) {
+
+  var cmsData = await getCMSApplicationsPagination({ _id, itemsPerPage, location });
+
+  if (process.env.NEXT_PUBLIC_DATA_PROVIDER == "OpenData") {
+    let openDataPosts = getOpenDataApplicationsPagination({ cmsData, location })
+    return openDataPosts;
+  } 
+  else {
+    return cmsData;
+  }
 }
 
-export async function getCMSApplicationsPagination({
-  _id,
-  itemsPerPage,
-  postcode,
-}: {
-  _id?: any;
-  itemsPerPage: number;
-  postcode: string;
-}) {
+
+export async function getCMSApplicationsPagination({ _id, itemsPerPage, location,}: {_id?: any; itemsPerPage: number; location: any;}) : Promise<any[]> {
   let posts;
+
   if (_id === undefined) {
-    posts = await client.fetch(
-      `*[_type == "planning-application" && isActive == true] | order(_id) [0...${itemsPerPage}] {_id, image, development_address, name}`
-    );
+    posts = await client.fetch(`*[_type == "planning-application" && isActive == true] | order(_id) [0...${itemsPerPage}] {...}`);
   } else {
-    posts = await client.fetch(
-      `*[_type == "planning-application" && isActive == true && _id >= $_id] | order(_id) [0...${itemsPerPage}] {_id, image, development_address, name}`,
-      { _id }
-    );
+    posts = await client.fetch(`*[_type == "planning-application" && isActive == true && _id >= $_id] | order(_id) [0...${itemsPerPage}] {...}`,
+     { _id });
   }
 
   return posts;
 }
 
-export async function getCMSandOpenDataApplicationsPagination({
-  _id,
-  itemsPerPage,
-  postcode,
-}: {
-  _id?: string;
-  itemsPerPage: number;
-  postcode: string;
-}) {
+export async function getOpenDataApplicationsPagination({cmsData, location,}: {cmsData: any[], location: any;}) {
+
   // Helper method to convert a JS array to a string for a SOQL query
-  const arrayToSoqlString = (arr: []) =>
-    "'" + arr.toString().replace(/,/g, "','") + "'";
+  const arrayToSoqlString = (arr: any[]) => "'" + arr.toString().replace(/,/g, "','") + "'";
   const limit = 50;
-
-  // First, fetch the data from the CMS
-
-  let cmsData: any = [];
-  if (_id === undefined) {
-    cmsData = await client.fetch(
-      groq`*[_type == "planning-application"] | order(_id) [0...${itemsPerPage}] {...}`
-    );
-  } else {
-    cmsData = await client.fetch(
-      groq`*[_type == "planning-application" && _id >= $_id] | order(_id) [0...${itemsPerPage}] {...}`,
-      { _id }
-    );
-  }
 
   // Then fetch the matching data from Camden's API
   const ids = cmsData.map((development: any) => development.applicationNumber);
@@ -89,32 +64,11 @@ export async function getCMSandOpenDataApplicationsPagination({
   let whereQuery = `application_number in(${arrayToSoqlString(ids)})`;
   let orderQuery = `registered_date DESC, last_uploaded DESC`;
 
-  // If the user has searched by postcode, we need to tweak the request to
-  // Camden's API to filter by location.
-  const postCodeRegex =
-    /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/;
-  if (postCodeRegex.test(postcode)) {
-    // Verify that it's a real postcode and get its geolocation
-    const postcodeRes = await fetch(
-      `https://api.postcodes.io/postcodes/${postcode}`
-    );
-    const postcodeData = await postcodeRes.json();
-
-    if (postcodeData.error) {
-      orderQuery;
-    } else {
-      postcode = postcodeData.result;
-      // TBD whether we only want to order by location or also filter out
-      // developments that are too far away. For now there won't be too many site
-      // notices, so leaving this out.
-      // whereQuery += ` and within_circle(location, ${postcodeData.result.latitude}, ${postcodeData.result.longitude}, ${distance})`;
-      orderQuery = `distance_in_meters(location, 'POINT (${postcodeData.result.longitude} ${postcodeData.result.latitude})')`;
-    }
+  if(location != null) {
+    orderQuery = `distance_in_meters(location, 'POINT (${location.longitude} ${location.latitude})')`;
   }
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}.json?$limit=${limit}&$where=${whereQuery}&$order=${orderQuery}`
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}.json?$limit=${limit}&$where=${whereQuery}&$order=${orderQuery}`);
   const data = await res.json();
 
   // Build up the array of developments from the CMS data and the data from Camden's API, mapping from Camden's API so we know we're only showing
@@ -139,30 +93,6 @@ export async function getCMSandOpenDataApplicationsPagination({
   });
 
   return developments;
-}
-
-export async function getActiveApplications() {
-  const posts =
-    process.env.NEXT_PUBLIC_DATA_PROVIDER === "OpenData"
-      ? getCMSandOpenDataApplications()
-      : getCMSApplications();
-  return posts;
-}
-
-export async function getActiveApplicationsPagination({
-  _id,
-  itemsPerPage,
-  postcode,
-}: {
-  _id?: string;
-  itemsPerPage: number;
-  postcode?: any;
-}) {
-  const posts =
-    process.env.NEXT_PUBLIC_DATA_PROVIDER == "OpenData"
-      ? getCMSandOpenDataApplicationsPagination({ _id, itemsPerPage, postcode })
-      : getCMSApplicationsPagination({ _id, itemsPerPage, postcode });
-  return posts;
 }
 
 export async function getApplicationById(id: string) {
