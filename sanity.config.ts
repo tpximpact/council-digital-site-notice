@@ -9,6 +9,7 @@ import {deskTool} from 'sanity/desk'
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import {apiVersion, dataset, projectId} from './sanity/env'
 import {schema} from './sanity/schema'
+import parentChild from './sanity/parentChildren'
 
 // Define the actions that should be available for singleton documents
 const singletonActions = new Set(["publish", "discardChanges", "restore"])
@@ -22,11 +23,12 @@ export default defineConfig({
   dataset,
   plugins: [
     deskTool({
-      structure: (S) =>
+      structure: (S, context) =>
         S.list()
           .title("Content")
           .items([
-
+            parentChild(['planning-application', 'gallery'], S, context.documentStore),
+            S.divider(),
             // Our singleton type has a list item with a custom child
             S.listItem()
               .title("Settings")
@@ -41,7 +43,7 @@ export default defineConfig({
               ),
 
             // Regular document types
-            S.documentTypeListItem("planning-application").title("Planning application"),
+            // S.documentTypeListItem("planning-application").title("Planning application"),
             S.documentTypeListItem("comment-information").title("CommentInformation"),
           ]),
     }),
@@ -52,8 +54,22 @@ export default defineConfig({
     types: schema,
 
     // Filter out singleton types from the global “New document” menu options
-    templates: (templates) =>
-      templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+    // templates: (templates) =>
+    //   templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
+    templates: (prev) => {
+      const categoryChild = {
+        id: 'category-child',
+        title: 'Category: Child',
+        schemaType: 'category',
+        parameters: [{name: `parentId`, title: `Parent ID`, type: `string`}],
+        // This value will be passed-in from desk structure
+        value: ({parentId}: {parentId: string}) => ({
+          parent: {_type: 'reference', _ref: parentId},
+        }),
+      }
+  
+      return [...prev, categoryChild]
+    },
   },
 
   document: {

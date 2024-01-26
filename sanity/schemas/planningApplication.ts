@@ -1,9 +1,11 @@
 import { defineField, defineType } from "sanity";
+import {TagIcon} from 'lucide-react'
 
 export default defineType({
-  title: "Planning application",
   name: "planning-application",
+  title: "Planning application",
   type: "document",
+  icon: TagIcon,
   fields: [
     defineField({
       title: "Reference",
@@ -16,7 +18,7 @@ export default defineType({
       title: "Address",
       name: "address",
       type: "string",
-      readOnly: true,
+      // readOnly: true,
     }),
     defineField({
       title: "Application Type",
@@ -178,8 +180,10 @@ export default defineType({
   preview: {
     select: {
       title: 'reference',
-      subtitle: 'name'
-    }
-  }
+    },
+    prepare: ({title}) => ({
+      title
+    }),
+  },
 });
 
