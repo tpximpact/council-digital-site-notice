@@ -5,14 +5,14 @@ import Process from "./process";
 import { ContextApplication } from "@/context";
 import { useContext, useEffect, useState } from "react";
 import { DataDetails } from "../../../util/type";
-import { getActiveApplications, getActiveApplicationById } from "../../../util/client";
+import { getActiveApplications, getApplicationById } from "../../../util/client";
 import moment from 'moment'
 
 
 
 export async function getStaticProps(context: any) {
   const {id} = context.params;
-  const data = await getActiveApplicationById(id)
+  const data = await getApplicationById(id)
   return {
     props: {
       data: data[0]
