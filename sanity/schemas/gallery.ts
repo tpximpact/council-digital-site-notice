@@ -20,12 +20,18 @@ export default defineType({
           }
         ]
       }),
+      {
+        name: 'reference',
+        type: 'reference',
+        title: 'Reference',
+        to: [{type: 'planning-application' }]
+      }
      
   ],
   // Customize the preview so parents are visualized in the studio
   preview: {
     select: {
-      title: 'title',
+      title: 'reference',
     },
     prepare: ({title}) => ({
       title

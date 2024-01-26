@@ -35,9 +35,9 @@ export default function parentChild(
                     .title('Planning Information')
                     .filter(filter)
                     // Use this list for displaying from search results
-                    .canHandleIntent(
-                      (intentName, params) => intentName === 'edit' && params.type === 'planning-application'
-                    )
+                    // .canHandleIntent(
+                    //   (intentName, params) => intentName === 'edit' && params.type === 'planning-application'
+                    // )
                     .child((id) => S.document().documentId(id).schemaType(schemaType[0]))
                 )
                 ,
@@ -51,9 +51,9 @@ export default function parentChild(
                   .title('Gallery')
                   .filter(filter1)
                   // Use this list for displaying from search results
-                  .canHandleIntent(
-                    (intentName, params) => intentName === 'edit' && params.type === 'gallery'
-                  )
+                  // .canHandleIntent(
+                  //   (intentName, params) => intentName === 'edit' && params.type === 'planning-application'
+                  // )
                   .child((id) => S.document().documentId(id).schemaType(schemaType[1]))
               )
               ,
