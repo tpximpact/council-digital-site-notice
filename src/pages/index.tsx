@@ -59,10 +59,10 @@ const Home = ({ dataId, data }: PaginationType) => {
 
   return (
     <div className="wrap-home">
-      <h1 className="govuk-heading-l" role="heading">
+      <h1 className="govuk-heading-xl" role="heading">
         Find planning applications near you
       </h1>
-      <p className="govuk-body">
+      <p className="govuk-body-l">
         Find, review and leave your comments on planning applications in Lambeth
       </p>
       <section className="search-grid">
@@ -70,7 +70,9 @@ const Home = ({ dataId, data }: PaginationType) => {
           label="Enter a postcode to find planning applications nearby"
           type="text"
           value={postcode}
+          style={{fontSize: '24px'}}
           onChange={(e) => setPostcode(e)}
+          locationError={locationError}
         />
         <Button
           className="grid-button-search"

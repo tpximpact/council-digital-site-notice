@@ -17,21 +17,19 @@ const PlanningApplications = ({ data, searchLocation }: {data : Data[], searchLo
         }
 
         return (
-          <Link key={_id} href={`/${_id}`} className="planning-application-link">
+          <Link key={_id} href={`/${_id}`} className="govuk-body planning-application-link">
             {image && (<Image width={330} height={223} alt="" src={urlFor(image).url()} />)}
             <div>
               <h3>{name}</h3>
               
-                <span className="planning-application-text">
+                <span className="govuk-body-s planning-application-text">
                   <p>
-                    <LocalIcon /> {address}
-                    {
+                    <LocalIcon />                   {
                       distance != undefined && 
-                      <span>
-                        <br />
-                        {distance} mile 
+                      <span style={{marginRight: '2px'}}>
+                        {distance} {parseFloat(distance) > 0 ? 'miles' : 'mile'} &#x2022;
                       </span>
-                    }
+                    }{address}
                   </p>
                 </span>
 
