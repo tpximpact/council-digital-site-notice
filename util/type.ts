@@ -22,13 +22,18 @@ export type ProposedLandUse = {
 export type Data = {
     _id: Id
     name: string
-    development_address: string
-    image: string
+    address: string
+    description: string
+    height: number
+    reference: string
+    commentDeadline: string
+    applicationType: string
+    image_head?: string
+    image_gallery: any[]
 }
 
 export type DataDetails = {
     _id: string
-    massings: string
     name: string
     development_description?: string
     development_address: string
@@ -49,8 +54,15 @@ export type DataDetails = {
     carbonEmissions?: number
     showAccess?: boolean
     access?: string
-    system_status: string,
+    system_status: string
     valid_from_date: string
+    image_head?: string
+    image_gallery: any[]
+    commentDeadline: string
+    applicationType: string
+    address: string
+    description: string
+    reference: string
 }
 
 export type DataTypeArray = {
@@ -60,6 +72,7 @@ export type DataTypeArray = {
 export type PaginationType = {
     dataId: {_id: string}[]
     data: Data[]
+    paginationData?: Data[]
 }
 
 export type CommentForm = {
@@ -68,12 +81,24 @@ export type CommentForm = {
 
 export type PersonalDetailsForm = {
     name : string,
+    address: string,
     email: string,
     phone: string,
-    postcode: string
+    postcode: string,
+    consent: boolean
 }
 
-export type PersonalDetailsType =  {
+export type CommentType = {
+    onChange: () => void, 
+    label: string, 
+    commentForm: CommentForm, 
+    setCommentForm: (value: any) => void, 
+    setQuestion: (value:number) => void, 
+    selectedCheckbox: number[], 
+    question: number
+}
+
+export type PersonalDetailsType = {
     onChange: () => void, 
     personalDetailsForm: PersonalDetailsForm, 
     setPersonalDetailsForm: (value: any) => void, 
@@ -94,21 +119,11 @@ export type ImpactType = {
     onChange: () => void, 
     setSelectedCheckbox: (value: number[]) => void, 
     selectedCheckbox: number[], 
-    setQuestion: (value: number) => void
+    setQuestion: (value: number) => void 
 }
 
-export type FeelingsType = {
+export type FeelingType = {
     onChange: () => void, 
     feelingForm: string, 
     setFeelingForm: (value: string) => void
-}
-
-export type CommentType = {
-    onChange: () => void, 
-    label: string, 
-    commentForm: CommentForm, 
-    setCommentForm: (value: any) => void, 
-    setQuestion: (value:number) => void, 
-    selectedCheckbox: number[], 
-    question: number
 }

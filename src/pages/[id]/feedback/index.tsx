@@ -10,7 +10,7 @@ import { ContextApplication } from "@/context";
 
 const Feedback = () => {
     const { dataApplication } = useContext(ContextApplication);
-    const [question, setQuestion] = useState<number>(1)
+    const [question, setQuestion] = useState<number>(0)
     const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([])
     const [id, setId] = useState('')
     const [name, setName] = useState('')
@@ -28,22 +28,20 @@ const Feedback = () => {
     }
     }, [dataApplication])
 
-    
-
     const onChangeQuestion = () => {
 
-        if(question === 1 || question === 11) 
+        if(question === 0 || question === 1 || question === 12) 
         {setQuestion(question + 1)}
 
-        else if(question === 2){
+        else if(question === 2){ 
             setQuestion(selectedCheckbox[0])
         } 
 
-        else if(question === 12) {
-            setQuestion(1)
+        else if(question === 13) {
+            setQuestion(0)
         } 
 
-        else if(question === selectedCheckbox[selectedCheckbox.length -1 ]) {
+        else if(question === selectedCheckbox[selectedCheckbox.length -1 ]) { 
             setQuestion(11)
         }
         else {
@@ -67,7 +65,7 @@ const Feedback = () => {
     return(
         <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
-        {question !== 12 && <Instructions data={dataApplication}/>}
+        {(question !== 0 && question !== 13) && <Instructions data={dataApplication}/>}
         <Questions 
             setQuestion={setQuestion}
             question={question} 

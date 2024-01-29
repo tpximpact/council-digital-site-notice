@@ -27,7 +27,7 @@ export async function getStaticProps() {
 const Home = ({ dataId, data }: PaginationType) => {
   const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
-  const [locationError, setLocationError] = useState<boolean>(false);
+  const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
   const [displayData, setDisplayData] = useState<Data[]>();
 
   useEffect(() => {
@@ -44,11 +44,11 @@ const Home = ({ dataId, data }: PaginationType) => {
     let location;
 
     if(postcode != null) {
-      setLocationError(false)
+      setLocationNotFound(false)
       location = await getLocationFromPostcode(postcode);
 
       if(location !== null) {
-        setLocationError(true)
+        setLocationNotFound(true)
       }
     }
 
@@ -72,7 +72,7 @@ const Home = ({ dataId, data }: PaginationType) => {
           value={postcode}
           style={{fontSize: '24px'}}
           onChange={(e) => setPostcode(e)}
-          locationError={locationError}
+          locationError={locationNotFound}
         />
         <Button
           className="grid-button-search"

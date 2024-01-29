@@ -1,56 +1,56 @@
-import ImageGallery from "react-image-gallery";
 import Details from "@/components/details";
-import {Button} from "@/components/button";
 import Link from "next/link";
 import { descriptionDetail } from "../../../util/description_detail"
 import {ArrowIcon} from "../../../public/assets/icons"
-import { urlFor } from "../../../util/client";
 import { DataDetails } from "../../../util/type";
+import { useEffect, useState } from "react";
+import Modal from "@/components/modal";
+import Gallery from "@/components/gallery";
 
 function About({data} : {data: DataDetails}) {
 
-    let images: any = []
+        const deadline = data.commentDeadline?.split(" ")[0].split("/")[2]
+        const [loadImage, setLoadImage] = useState(0)
+        const [isModalOpen, setIsModalOpen] = useState(false)
+        const [imageSelected, setImageSelected] = useState()
 
-    if(data?.massings) {
-        images = [
-            {
-                original: data?.massings && urlFor(data?.massings)?.url(),
-                thumbnail: data?.massings && urlFor(data?.massings)?.url(),
-            },
-            {
-              original: data?.massings && urlFor(data?.massings)?.url(),
-              thumbnail: data?.massings && urlFor(data?.massings)?.url(),
-            },
-            {
-              original: data?.massings && urlFor(data?.massings)?.url(),
-              thumbnail: data?.massings && urlFor(data?.massings)?.url(),
-            },
-          ]
-    } else {
-        images = []
-    }
+
+        useEffect(() => {
+            if(data.image_gallery?.length < 8) {
+                setLoadImage(data.image_gallery?.length)
+            } else {
+                setLoadImage(6)
+            }
+            setImageSelected(data.image_gallery?.[0])
+        }, [data.image_gallery])
 
             
     return(
         <div className="wrap-about">
-        <h1 className="govuk-heading-l">{data?.name}</h1>
-        <p className="govuk-body-m govuk-!-font-weight-bold">{data?.development_address}</p>
-    <div className="wrap-carousel-desktop">
-        <div className="carousel-wrap">
             {
-                data?.massings && <ImageGallery items={images} showFullscreenButton={false} showPlayButton={false}/>
+                isModalOpen && <Modal setIsModalOpen={setIsModalOpen} image={imageSelected}/>
             }
-        
-
+        <h1 className="govuk-heading-l">{data.name}</h1>
+        <p className="govuk-body-m govuk-!-font-weight-bold">{data.address}</p>
+        <div className="wrap-carousel-desktop">
+            {
+                data.image_gallery && 
+                <Gallery 
+                images={data.image_gallery} 
+                loadImage={loadImage} 
+                setIsModalOpen={setIsModalOpen} 
+                setLoadImage={setLoadImage}
+                setImageSelected={setImageSelected}
+                imageSelected={imageSelected}
+                />
+            }
+            <div>
+                <h2 className="govuk-heading-m">About this development</h2>
+                <p className="govuk-body-s">{data.description}</p>
+            </div>
         </div>
-        <div>
-        <h2 className="govuk-heading-m">About this development</h2>
-        <p className="govuk-body-s">{data?.development_description
-}</p>
-        </div>
-</div>
 <div className="wrap-comment-application">
-        <Button content="Comment on this application" icon={<ArrowIcon/>}/>
+    <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
         <Link href="#" style={{marginTop: "-15px"}} className="govuk-link">Sign up for updates about this application</Link>
         </div>
         <h3 className="govuk-heading-m">Application type</h3>

@@ -39,11 +39,13 @@ const Application = ({data}: {data: DataDetails} ) => {
     setCommentDeadline(deadlineTime)
     setDataApplication({...data, commentDeadline: deadlineTime})
     localStorage.setItem("application", JSON.stringify({
-      'development_address': data?.development_address,
-      'massings': data?.massings,
-      'deadline': commentDeadline,
+      'address': data?.address,
+      'image_head': data?.image_head,
+      'image_gallery': data?.image_gallery,
+      'deadline': data?.commentDeadline,
       'name': data?.name,
       'id': data?._id,
+      'reference': data?.reference,
       'system_status': data?.system_status
     }))
   },[data, setDataApplication, commentDeadline])
@@ -57,10 +59,7 @@ const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: da
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         <About data={data}/>
         <Impact data={data}/>
-        <Process id={data?._id} 
-        system_status ={data?.system_status}
-        commentDeadline={commentDeadline}
-        />
+        <Process id={data?._id} commentDeadline={data?.commentDeadline} system_status={data?.system_status}/>
         </>
     )
 }
