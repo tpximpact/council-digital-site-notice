@@ -4,20 +4,20 @@ import { urlFor } from "../../../../util/client";
 import { useEffect, useState } from "react";
 import { DataDetails } from "../../../../util/type";
 
-const Instructions = ({data}: {data:DataDetails}) => {
+function Instructions({data} : {data: DataDetails}) {
     const [image, setImage] = useState<string |undefined>(undefined)
     const [address, setAddress] = useState<string>('')
 
     useEffect(() => {
        const getStorage = localStorage.getItem("application")
        if(Object.keys(data).length > 0 || getStorage === null) {
-        const {development_address, massings} = data
-          setImage(massings)
-            setAddress(development_address)
+        const {address, image_head} = data
+          setImage(image_head)
+            setAddress(address)
        }else {
-        const {development_address, massings} = JSON.parse(getStorage)
-        setImage(massings)
-        setAddress(development_address)
+        const {image_head, address} = JSON.parse(getStorage)
+        setImage(image_head)
+        setAddress(address)
        }
     }, [data])
 

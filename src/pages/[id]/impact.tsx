@@ -17,10 +17,10 @@ function Impact({
                 <div>
                     {data?.showHousing && (
                         <>
-                <div className="wrap-impact-item">
-                <h2 className="govuk-heading-m heading-center">New homes</h2>
-                <Image src="/assets/images/icon-homes.png" width={64} height={64} alt="icon homes"/>
-                </div>
+                    <div className="wrap-impact-item">
+                    <h2 className="govuk-heading-m heading-center">New homes</h2>
+                    <Image src="/assets/images/icon-homes.png" width={64} height={64} alt="icon homes"/>
+                    </div>
                 
                         <>
                         <p className="govuk-body small-margin-top"><span className="govuk-!-font-weight-bold">{data?.housing?.residentialUnits}</span> new homes</p>
@@ -28,10 +28,17 @@ function Impact({
                         </>
                     
                 
-                <Details summary='How did we calculate this?' color='white' className="impact-details" description={descriptionDetail['home']}/>
+                    <Details summary='How did we calculate this?' color='white' className="impact-details" description={descriptionDetail['home']}/>
                         </>
                     )}
 
+                </div>
+
+                <div>
+                    <p className="govuk-body small-margin-top">
+                        <span className="govuk-!-font-weight-bold">12% </span>additional demand on GPs and hospitals
+                    </p>
+                    <Details summary='How did we calculate this?' color='white' className="impact-details" description={descriptionDetail['healthcare']}/>
                 </div>
 
                 <div>
@@ -48,6 +55,8 @@ function Impact({
                         )
                     }
                 </div>
+
+
                 <div>
                     {
                         data?.showOpenSpace && (

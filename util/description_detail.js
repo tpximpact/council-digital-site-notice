@@ -68,9 +68,13 @@ export const descriptionDetail = {
         <p className="govuk-body-s">The case officer will summarise their findings in the officer's report and/or decision notice.</p>
         <p className="govuk-body-s">We won't acknowledge receipt of your comments, or get in touch with you directly about the issues you've raised. You can check the officer's report or decision notice to see if your, and other, comments have been logged.</p>
 </>,
-"personal-details": <>
-    <p className="govuk-body-s">Your comments will also be made available online for the public to see. We'll include your name and address, but we won’t display your telephone number or email address.</p>
-    <p className="govuk-body-s">We'll make sure any other personal or sensitive information is removed where needed, in line with the <Link href="" style={{color:"black"}}>General Data Protection Regulation</Link> (GDPR). If you have concerns about any data you have sent being published, <Link href="" style={{color:"black"}}>contact the Planning Advice and Information Service.</Link></p>
-    <p className="govuk-body-s">Read our <Link href="" style={{color:"black"}}>corporate privacy statement</Link> and our <Link href="" style={{color:"black"}}>planning service privacy statement</Link> for more information.</p>
+"consent": <>
+<p>We need your name and contact information because can only formally explore comments coming from people who live close to the proposed development. We will also use this to contact you if the planning decision regarding this application is appealed.</p>
+
+<p>Your comments will be made available online for the public to see. We will not include your name, address, telephone number or email address.</p>
+
+<p>We'll make sure any other personal or sensitive information is removed where needed, in line with the <Link href="" style={{color:"black"}}>General Data Protection Regulation</Link> (GDPR). If you have concerns about any data you have sent being published, <Link href="" style={{color:"black"}}>contact the Planning Advice and Information Service.</Link></p>
+
+<p>Read our <Link href="" style={{color:"black"}}>corporate privacy statement</Link> and our <Link href="" style={{color:"black"}}>planning service privacy statement</Link> for more information.</p>
 </>
 }

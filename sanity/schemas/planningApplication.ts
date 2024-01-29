@@ -48,14 +48,19 @@ export default defineType({
       type: "string",
     }),
     defineField({
-      title: "Massings image",
-      name: "massings",
-      type: "image",
+      title: "Image Head",
+      name: "image_head",
+      type: 'image'
     }),
     defineField({
-      title: "Image",
-      name: "image",
-      type: "image",
+      title: "Image Gallery",
+      name: "image_gallery",
+      type: 'array',
+      of: [
+        {
+          type: 'image'
+        }
+      ]
     }),
     defineField({
       title: "Height",

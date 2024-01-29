@@ -8,21 +8,26 @@ import { distanceInMiles } from '../../../util/geolocation'
 const PlanningApplications = ({ data, searchLocation }: {data : Data[], searchLocation: any}) => {
   return (
     <section className="wrap-planning-application">
-      {data && data.map(({_id, image, name, address, location}: any) => {
+      {data && data.map(({_id, image_head, name, address, location}: any) => {
 
-        let distance;
+      let distance;
 
-        if(searchLocation != null && location != null && location.lat != null && location.lng != null) {
-          distance = distanceInMiles(searchLocation, { longitude : location.lng, latitude : location.lat })
-        }
+      if(searchLocation != null && location != null && location.lat != null && location.lng != null) {
+        distance = distanceInMiles(searchLocation, { longitude : location.lng, latitude : location.lat })
+      }
 
         return (
-          <Link key={_id} href={`/${_id}`} className="govuk-body planning-application-link">
-            {image && (<Image width={330} height={223} alt="" src={urlFor(image).url()} />)}
+          <Link
+            key={_id}
+            href={`/${_id}`}
+            className="govuk-body planning-application-link"
+          >
+            {image_head && (
+              <Image width={330} height={223} alt="" src={urlFor(image_head).url()} />
+            )}
             <div>
               <h3>{name}</h3>
-              
-                <span className="govuk-body-s planning-application-text">
+              <span className="govuk-body-s planning-application-text">
                   <p>
                     <LocalIcon />                   {
                       distance != undefined && 
@@ -32,7 +37,6 @@ const PlanningApplications = ({ data, searchLocation }: {data : Data[], searchLo
                     }{address}
                   </p>
                 </span>
-
             </div>
             </Link>
         );
