@@ -33,7 +33,7 @@ const Application = ({data}: {data: DataDetails} ) => {
   const [commentDeadline, setCommentDeadline] = useState('')
 
   useEffect(() => {
-    const deadline = moment(data.valid_from_date).add(21, 'days')
+    const deadline = moment(data?.valid_from_date).add(21, 'days')
     const today = moment().hour(0).minute(0).second(0)
     const deadlineTime = moment.duration(today.diff(deadline)).asDays().toFixed(0)
     setCommentDeadline(deadlineTime)
