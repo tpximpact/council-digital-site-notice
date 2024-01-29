@@ -50,7 +50,7 @@ function About({data} : {data: DataDetails}) {
             </div>
         </div>
 <div className="wrap-comment-application">
-    <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${_id}/feedback`}>Comment on this application <ArrowIcon /></Link>
+    <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
         <Link href="#" style={{marginTop: "-15px"}} className="govuk-link">Sign up for updates about this application</Link>
         </div>
         <h3 className="govuk-heading-m">Application type</h3>

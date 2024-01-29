@@ -24,7 +24,6 @@ const FeedbackQuestions = ({
 
         const submit = () => {
             // submit feedback form function
-            console.log('submited')
             onChangeQuestion()
             addFeedback({feelingForm, commentForm, personalDetailsForm})
             localStorage.removeItem('feeling')
