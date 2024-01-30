@@ -68,8 +68,6 @@ export default async function handler(
     return;
   }
 
-  console.log("YO")
-  
   let successApplications = [];
   let failedCreationApplcaitons = [];
   let failedValidationApplcaitons = [];
@@ -77,7 +75,7 @@ export default async function handler(
   for (var key in req.body) {
     if (req.body.hasOwnProperty(key)) {
       const {
-        reference,
+        applicationNumber,
         description,
         address,
         applicationType,
@@ -91,13 +89,13 @@ export default async function handler(
       const validationErrors = await validatePlanningParams(req.body[key]);
       if (validationErrors.errors.length > 0) {
         failedValidationApplcaitons.push(
-          `An error occurred while validating the application ${reference}`
+          `An error occurred while validating the application ${applicationNumber}`
         );
         continue;
       }
 
       const data = {
-        reference,
+        applicationNumber,
         description,
         address,
         applicationType,
@@ -106,16 +104,16 @@ export default async function handler(
         developmentType,
         commentDeadline,
         openSpaceGardens,
-        isActive: true,
+        isActive: false,
         _type: "planning-application",
       };
 
       try {
         await createApplication(data);
-        successApplications.push(`Applciation ${reference} created`);
+        successApplications.push(`Applciation ${applicationNumber} created`);
       } catch (error) {
         failedCreationApplcaitons.push(
-          `An error occurred while creating the application ${reference}`
+          `An error occurred while creating the application ${applicationNumber}`
         );
       }
     }

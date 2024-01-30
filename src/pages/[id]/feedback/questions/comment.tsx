@@ -23,8 +23,8 @@ function CommentQuestion() {
     return(
         <section>
             <BackLink content='Back'onClick={() => setQuestion(backComponent)}/>
-            <h1 className="govuk-heading-l">Comment on:</h1>
             <TextArea 
+            hint={`${selectedCheckbox?.indexOf(question) + 1} of ${selectedCheckbox?.length}`}
                 label={label} 
                 onChange={(value:any) => onComment(value)} 
                 value={commentForm[question] || ""}
