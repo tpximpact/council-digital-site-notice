@@ -30,7 +30,7 @@ const Feedback = () => {
 
     const onChangeQuestion = () => {
 
-        if(question === 0 || question === 1 || question === 12) 
+        if(question === 0 || question === 1 || question === 11 || question === 12) 
         {setQuestion(question + 1)}
 
         else if(question === 2){ 

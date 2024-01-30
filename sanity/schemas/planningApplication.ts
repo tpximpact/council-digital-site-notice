@@ -4,13 +4,22 @@ export default defineType({
   title: "Planning application",
   name: "planning-application",
   type: "document",
+  initialValue: {
+    proposedLandUse: {
+      classB: false,
+      classC: false,
+      classE: false,
+      classF: false,
+      suiGeneris: false
+    }
+  },
   fields: [
     defineField({
-      title: "Reference",
-      name: "reference",
+      title: "Application number",
+      name: "applicationNumber",
       type: "string",
       validation: (Rule: any) => Rule.required(),
-      readOnly: true,
+      readOnly: true
     }),
     defineField({
       title: "Address",
@@ -122,19 +131,28 @@ export default defineType({
       type: "string",
     }),
     defineField({
-      title: "New Homes",
-      name: "newHomes",
-      type: "string",
-    }),
-    defineField({
       title: "Open Space Gardens",
       name: "openSpaceGardens",
       type: "boolean",
     }),
     defineField({
-      title: "Affordable Housing",
-      name: "affordableHousing",
-      type: "boolean",
+      title: 'Open space impact',
+      name: 'showOpenSpace',
+      type: 'boolean'
+    }),
+    defineField({
+      title: 'Open space area in square metres',
+      name: 'openSpaceArea',
+      type: 'number',
+      hidden: ({document}) => !document?.showOpenSpace,
+      validation: Rule => Rule.custom((openSpaceArea, context) => {
+
+        if (openSpaceArea && context.document?.showOpenSpace === undefined) {
+          return 'This field must not be empty if the open space impact option is selected'
+        }
+        
+        return true
+      })
     }),
     defineField({
       title: 'Healthcare impact',
@@ -142,14 +160,61 @@ export default defineType({
       type: 'boolean'
     }),
     defineField({
+      title: 'Additional healthcare demand',
+      description: 'As a percentage',
+      name: 'healthcareDemand',
+      type: 'number',
+      hidden: ({document}) => !document?.showHealthcare,
+      validation: Rule => Rule.custom((healthcareDemand, context) => {
+
+        if (healthcareDemand && context.document?.showHealthcare === undefined) {
+          return 'This field must not be empty if the healthcare impact option is selected'
+        }
+        
+        return true
+      })
+    }),
+    defineField({
       title: 'Housing impact',
       name: 'showHousing',
       type: 'boolean'
     }),
     defineField({
-      title: "C02 Emissions",
-      name: "c02Emissions",
-      type: "string",
+      title: 'Housing',
+      name: 'housing',
+      type: 'object',
+      hidden: ({document}) => !document?.showHousing,
+      fields: [
+        {
+          title: 'New residential homes',
+          name: 'residentialUnits',
+          type: 'number',
+        },
+        {
+          title: 'Affordable residential homes',
+          name: 'affordableResidentialUnits',
+          type: 'number'
+        },
+      ]
+    }),
+    defineField({
+      title: 'Carbon impact',
+      name: 'showCarbon',
+      type: 'boolean'
+    }),
+    defineField({
+      title: 'Percentage change in CO2 emissions',
+      name: 'carbonEmissions',
+      type: 'number',
+      hidden: ({document}) => !document?.showCarbon,
+      validation: Rule => Rule.custom((carbonEmissions, context) => {
+
+        if (carbonEmissions && context.document?.showCarbon === undefined) {
+          return 'This field must not be empty if the carbon impact option is selected'
+        }
+        
+        return true
+      })
     }),
     defineField({
       title: "Air Quality",
@@ -157,22 +222,62 @@ export default defineType({
       type: "string",
     }),
     defineField({
-      title: "Eastings",
-      name: "eastings",
-      type: "string",
-      readOnly: true,
-    }),
-    defineField({
-      title: "Northings",
-      name: "northings",
-      type: "string",
-      readOnly: true,
+      title: "Location",
+      name: "location",
+      type: "geopoint"
     }),
     defineField({
       name: 'isActive',
       title: 'IsActive',
       type: 'boolean',
-      initialValue: true
+      initialValue: false
+    }),
+    defineField({
+      title: "C02 Emissions",
+      name: "c02Emissions",
+      type: "string",
+    }),
+    defineField({
+      title: 'Pedestrian and vehicle access',
+      name: 'showAccess',
+      type: 'boolean'
+    }),
+    defineField({
+      title: 'Pedestrian and vehicle access',
+      name: 'access',
+      type: 'text',
+      hidden: ({document}) => !document?.showAccess,
+      validation: Rule => Rule.custom((access, context) => {
+
+        if (access && context.document?.showAccess === undefined) {
+          return 'This field must not be empty if the pedestrian and vehicle access impact option is selected'
+        }
+        
+        return true
+      })
+    }),
+    defineField({
+      title: 'Jobs impact',
+      name: 'showJobs',
+      type: 'boolean'
+    }),
+    defineField({
+      title: 'New jobs',
+      name: 'jobs',
+      type: 'object',
+      hidden: ({document}) => !document?.showJobs,
+      fields: [
+        {
+          title: 'Minimum',
+          name: 'min',
+          type: 'number'
+        },
+        {
+          title: 'Maximum',
+          name: 'max',
+          type: 'number'
+        }
+      ]
     }),
     defineField({
       name: 'commments',
@@ -187,7 +292,7 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'reference',
+      title: 'applicationNumber',
       subtitle: 'name'
     }
   }

@@ -3,15 +3,16 @@ import About from "./about";
 import Impact from "./impact";
 import Process from "./process";
 import { ContextApplication } from "@/context";
-import { useContext, useEffect } from "react";
-import { getActiveApplications, getActiveApplicationById } from "../../../util/client";
-import { DataObj } from "../../../util/type";
+import { useContext, useEffect, useState } from "react";
+import { DataDetails } from "../../../util/type";
+import { getActiveApplications, getApplicationById } from "../../../util/client";
+import moment from 'moment'
 
 
 
 export async function getStaticProps(context: any) {
   const {id} = context.params;
-  const data = await getActiveApplicationById(id)
+  const data = await getApplicationById(id)
   return {
     props: {
       data: data[0]
@@ -27,11 +28,16 @@ export async function getStaticPaths() {
   }
 }
 
-const Application = ({data}:DataObj) => {
+const Application = ({data}: {data: DataDetails} ) => {
   const {setDataApplication} = useContext(ContextApplication)
+  const [commentDeadline, setCommentDeadline] = useState('')
 
   useEffect(() => {
-    setDataApplication(data)
+    const deadline = moment(data?.valid_from_date).add(21, 'days')
+    const today = moment().hour(0).minute(0).second(0)
+    const deadlineTime = moment.duration(today.diff(deadline)).asDays().toFixed(0)
+    setCommentDeadline(deadlineTime)
+    setDataApplication({...data, commentDeadline: deadlineTime})
     localStorage.setItem("application", JSON.stringify({
       'address': data?.address,
       'image_head': data?.image_head,
@@ -39,9 +45,10 @@ const Application = ({data}:DataObj) => {
       'deadline': data?.commentDeadline,
       'name': data?.name,
       'id': data?._id,
-      'reference': data?.reference
+      'reference': data?.reference,
+      'system_status': data?.system_status
     }))
-  },[data, setDataApplication])
+  },[data, setDataApplication, commentDeadline])
   
 
 const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: data?.name, href:""}]
@@ -50,18 +57,9 @@ const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: da
     return (
         <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
-        <About 
-        _id={data?._id}
-        name={data?.name}
-        address={data?.address}
-        description={data?.description}
-        height={data?.height}
-        reference={data?.reference}
-        commentDeadline={data?.commentDeadline}
-        applicationType={data?.applicationType}
-        image_gallery={data?.image_gallery} />
-        <Impact />
-        <Process id={data?._id} commentDeadline={data?.commentDeadline}/>
+        <About data={data}/>
+        <Impact data={data}/>
+        <Process id={data?._id} commentDeadline={data?.commentDeadline} system_status={data?.system_status}/>
         </>
     )
 }

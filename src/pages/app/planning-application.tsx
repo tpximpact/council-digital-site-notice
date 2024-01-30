@@ -2,12 +2,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { LocalIcon } from "../../../public/assets/icons";
 import { urlFor } from "../../../util/client";
-import { PaginationType } from "../../../util/type";
+import { Data } from "../../../util/type";
+import { distanceInMiles } from '../../../util/geolocation'
 
-const PlanningApplications = ({ data }: (PaginationType)) => {
+const PlanningApplications = ({ data, searchLocation }: {data : Data[], searchLocation: any}) => {
   return (
     <section className="wrap-planning-application">
-      {data && data.map(({_id, image_head, name, address}: any) => {
+      {data && data.map(({_id, image_head, name, address, location}: any) => {
+
+      let distance;
+
+      if(searchLocation != null && location != null && location.lat != null && location.lng != null) {
+        distance = distanceInMiles(searchLocation, { longitude : location.lng, latitude : location.lat })
+      }
+
         return (
           <Link
             key={_id}
@@ -20,11 +28,15 @@ const PlanningApplications = ({ data }: (PaginationType)) => {
             <div>
               <h3>{name}</h3>
               <span className="govuk-body-s planning-application-text">
-                <p>
-                  <LocalIcon />
-                  1 mile {address}
-                </p>
-              </span>
+                  <p>
+                    <LocalIcon />                   {
+                      distance != undefined && 
+                      <span style={{marginRight: '2px'}}>
+                        {distance} {parseFloat(distance) > 0 ? 'miles' : 'mile'} &#x2022;
+                      </span>
+                    }{address}
+                  </p>
+                </span>
             </div>
             </Link>
         );

@@ -5,12 +5,9 @@ import Message from "../message"
 import Comment from "./comment"
 import PersonalDetails from "./personal-details"
 import {addFeedback} from "../../../../../util/client"
-import { CommentForm, PersonalDetailsForm } from "../../../../../util/type"
+import { CommentForm, PersonalDetailsForm, FeedbackQuestionType } from "../../../../../util/type"
 import FeedbackInformation from "./feedback-information"
 import CheckAnswers from "./check-answers"
-
-
-
 
 const FeedbackQuestions = ({
     question, 
@@ -19,7 +16,7 @@ const FeedbackQuestions = ({
     selectedCheckbox, 
     setSelectedCheckbox, 
     label}: 
-    {question:number, onChangeQuestion: () => void, selectedCheckbox: number[], setSelectedCheckbox: (value: number[]) => void, label: string, setQuestion: (value:any) => void}) => {
+    FeedbackQuestionType) => {
 
         const [feelingForm, setFeelingForm] = useState<string>("")
         const [commentForm, setCommentForm] = useState<CommentForm>({})
@@ -27,7 +24,6 @@ const FeedbackQuestions = ({
 
         const submit = () => {
             // submit feedback form function
-            console.log('submited')
             onChangeQuestion()
             addFeedback({feelingForm, commentForm, personalDetailsForm})
             localStorage.removeItem('feeling')
