@@ -1,7 +1,7 @@
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-    title: "CommentInformation",
+    title: "Comment Information",
     name: "comment-information",
     type: "document",
     fields: [
