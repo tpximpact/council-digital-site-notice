@@ -6,6 +6,7 @@ import Input from "@/components/input";
 import Validation from "@/components/validation"
 import Checkbox from "@/components/checkbox";
 import { descriptionDetail } from "../../../../../util/description_detail";
+import { phoneRegex, postCodeRegex } from "../../../../../util/regex";
 
 const PersonalDetails = () => {
     const { onChangeQuestion, setQuestion, selectedCheckbox, personalDetailsForm, setPersonalDetailsForm } = useContext(ContextApplication);
@@ -47,8 +48,6 @@ const PersonalDetails = () => {
         const emailForm = personalDetailsForm['email'];
         const consentForm = personalDetailsForm['consent'];
 
-        const phoneRegex = /^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$/
-        const postCodeRegex = /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/
 
         if(nameForm !== "" && postCodeRegex.test(postcodeForm) && addressForm !== "") {
             const phoneValidation = phoneForm !== "" ? phoneRegex.test(phoneForm) : true
