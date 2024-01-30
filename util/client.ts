@@ -44,7 +44,7 @@ export async function getCMSApplicationsPagination({ _id, itemsPerPage, location
 
   let order = 'order(_id)'
 
-  if(location != null  && process.env.NEXT_PUBLIC_DATA_PROVIDER == "SanityData") {
+  if(location != null  && process.env.NEXT_PUBLIC_DATA_PROVIDER == "CMS") {
     order = `order(geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude})) asc)`
   }
 
@@ -54,6 +54,8 @@ export async function getCMSApplicationsPagination({ _id, itemsPerPage, location
     posts = await client.fetch(`*[_type == "planning-application" && isActive == true && _id >= $_id && !(_id in path('drafts.**'))] | ${order} [0...${itemsPerPage}] {...}`,
      { _id });
   }
+
+  console.log(posts)
 
   return posts;
 }
