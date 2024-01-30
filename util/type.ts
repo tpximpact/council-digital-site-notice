@@ -1,4 +1,23 @@
-import { Id, Image } from "sanity"
+import { Id } from "sanity"
+
+export type Housing = {
+    affordableResidentialUnits: number
+    residentialUnits: number
+}
+
+export type Jobs = {
+    min: number
+    max: number
+}
+
+export type ProposedLandUse = {
+    classB: boolean
+    classC: boolean
+    classE: boolean
+    classF: boolean
+    suiGeneris: boolean
+    suiGenerisDetail: string
+}
 
 export type Data = {
     _id: Id
@@ -9,14 +28,49 @@ export type Data = {
     reference: string
     commentDeadline: string
     applicationType: string
-    image: string
+    image_head?: string
+    image_gallery: any[]
 }
 
-export type DataObj = {
-    data: Data
+export type DataDetails = {
+    _id: string
+    name: string
+    development_description?: string
+    development_address: string
+    application_type?: string
+    proposedLandUse?: ProposedLandUse
+    height?: number
+    constructionTime?: string
+    applicationNumber?: string
+    housing: Housing
+    showHousing?: boolean
+    showHealthcare?: boolean
+    healthcareDemand?: number
+    showOpenSpace?: boolean
+    openSpaceArea?: number
+    showJobs?: boolean
+    jobs?: Jobs
+    showCarbon?: boolean
+    carbonEmissions?: number
+    showAccess?: boolean
+    access?: string
+    system_status: string
+    valid_from_date: string
+    image_head?: string
+    image_gallery: any[]
+    commentDeadline: string
+    applicationType: string
+    address: string
+    description: string
+    reference: string
+}
+
+export type DataTypeArray = {
+    data: Data[]
   }
 
 export type PaginationType = {
+    dataId: {_id: string}[]
     data: Data[]
     paginationData?: Data[]
 }
@@ -50,6 +104,15 @@ export type PersonalDetailsType = {
     setPersonalDetailsForm: (value: any) => void, 
     setQuestion:(value:any) => void, 
     selectedCheckbox: number[]
+}
+
+export type FeedbackQuestionType = {
+    question:number, 
+    onChangeQuestion: () => void, 
+    selectedCheckbox: number[], 
+    setSelectedCheckbox: (value: number[]) => void, 
+    label: string, 
+    setQuestion: (value:any) => void
 }
 
 export type ImpactType = {
