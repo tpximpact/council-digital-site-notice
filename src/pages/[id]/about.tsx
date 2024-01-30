@@ -9,20 +9,20 @@ import Gallery from "@/components/gallery";
 
 function About({data} : {data: DataDetails}) {
 
-        const deadline = data.commentDeadline?.split(" ")[0].split("/")[2]
+        const deadline = data?.commentDeadline?.split(" ")[0].split("/")[2]
         const [loadImage, setLoadImage] = useState(0)
         const [isModalOpen, setIsModalOpen] = useState(false)
         const [imageSelected, setImageSelected] = useState()
 
 
         useEffect(() => {
-            if(data.image_gallery?.length < 8) {
-                setLoadImage(data.image_gallery?.length)
+            if(data?.image_gallery?.length < 8) {
+                setLoadImage(data?.image_gallery?.length)
             } else {
                 setLoadImage(6)
             }
-            setImageSelected(data.image_gallery?.[0])
-        }, [data.image_gallery])
+            setImageSelected(data?.image_gallery?.[0])
+        }, [data?.image_gallery])
 
             
     return(
@@ -30,13 +30,13 @@ function About({data} : {data: DataDetails}) {
             {
                 isModalOpen && <Modal setIsModalOpen={setIsModalOpen} image={imageSelected}/>
             }
-        <h1 className="govuk-heading-l">{data.name}</h1>
-        <p className="govuk-body-m govuk-!-font-weight-bold">{data.address}</p>
+        <h1 className="govuk-heading-l">{data?.name}</h1>
+        <p className="govuk-body-m govuk-!-font-weight-bold">{data?.address}</p>
         <div className="wrap-carousel-desktop">
             {
-                data.image_gallery && 
+                data?.image_gallery && 
                 <Gallery 
-                images={data.image_gallery} 
+                images={data?.image_gallery} 
                 loadImage={loadImage} 
                 setIsModalOpen={setIsModalOpen} 
                 setLoadImage={setLoadImage}
@@ -46,11 +46,11 @@ function About({data} : {data: DataDetails}) {
             }
             <div>
                 <h2 className="govuk-heading-m">About this development</h2>
-                <p className="govuk-body-s">{data.description}</p>
+                <p className="govuk-body-s">{data?.description}</p>
             </div>
         </div>
 <div className="wrap-comment-application">
-    <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
+    <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data?._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
         <Link href="#" style={{marginTop: "-15px"}} className="govuk-link">Sign up for updates about this application</Link>
         </div>
         <h3 className="govuk-heading-m">Application type</h3>
