@@ -1,3 +1,4 @@
+import { postCodeRegex } from "./regex";
 export function distanceInMiles(point1: any, point2: any) {
 
   var R = 3958.8; // Radius of the Earth in miles
@@ -23,7 +24,6 @@ export function distanceInMiles(point1: any, point2: any) {
 }
 
 export async function getLocationFromPostcode(postcode: string) {
-  const postCodeRegex = /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/;
   if (postCodeRegex.test(postcode)) {
     const postcodeRes = await fetch(
       `https://api.postcodes.io/postcodes/${postcode}`

@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import {Button} from "@/components/button"
-import {ArrowIcon} from "../../../public/assets/icons"
+import {ArrowIcon} from "../../../../public/assets/icons"
 
 function Process({id, 
     system_status,

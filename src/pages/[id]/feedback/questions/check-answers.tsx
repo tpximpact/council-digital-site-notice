@@ -1,19 +1,24 @@
+import { useEffect, useContext } from "react"
+import { ContextApplication } from "@/context";
 import { BackLink, Button, ButtonLink } from "@/components/button"
-import { questions } from "../../../../../util/questions_info"
-import { useState, useEffect } from "react"
-import { CommentForm, PersonalDetailsForm } from "../../../../../util/type"
 import Details from "@/components/details";
+import { questions } from "../../../../../util/questions_info"
 import { descriptionDetail } from "../../../../../util/description_detail";
+import {addFeedback} from "../../../../../util/client"
 
 export const questionId:number[] = [3,4,5,6,7,8,9,10]
 
-function CheckAnswers({setQuestion, selectedCheckbox, commentForm, personalDetailsForm, onChange, setSelectedCheckbox}: {setQuestion:(value:any) => void, commentForm:CommentForm, personalDetailsForm: PersonalDetailsForm, onChange: () => void, setSelectedCheckbox: any, selectedCheckbox: any }) {
-   const [ name, setName] = useState<string>('')
-   const [ postCode, setPostCode] = useState<string>('')
-   const [ email, setEmail] = useState<string>()
-   const [ address, setAddress] = useState<string>()
-   const [ phone, setPhone] = useState<string>()
-   const [comment, setComment] = useState<CommentForm>({})
+function CheckAnswers() {
+    const { onChangeQuestion,   
+            selectedCheckbox, 
+            commentForm, 
+            personalDetailsForm, 
+            setQuestion, 
+            setSelectedCheckbox, 
+            feelingForm, 
+            setPersonalDetailsForm, 
+            setCommentForm } = useContext(ContextApplication);
+
 
     useEffect(() => {
         const initialValueName = localStorage.getItem("name") || ''
@@ -23,17 +28,18 @@ function CheckAnswers({setQuestion, selectedCheckbox, commentForm, personalDetai
         const initialValueAddress = localStorage.getItem("address") || ''
         const initialValueComment = localStorage.getItem('comment')
 
-        const {name, email, phone, postcode, address} = personalDetailsForm
+        setPersonalDetailsForm({
+            name: initialValueName,
+            address: initialValueAddress,
+            email: initialValueEmail,
+            phone: initialValuePhone,
+            postcode: initialValuePostcode,
+            consent: personalDetailsForm?.consent
+        })
 
-        setName(name || initialValueName)
-        setPostCode(postcode || initialValuePostcode)
-        setEmail(email || initialValueEmail)
-        setPhone(phone || initialValuePhone)
-        setAddress(address || initialValueAddress)
+        setCommentForm(initialValueComment)
 
-        setComment(commentForm || initialValueComment)
-
-    }, [personalDetailsForm, commentForm])
+    }, [personalDetailsForm?.consent, setCommentForm, setPersonalDetailsForm])
 
 const onChangeQuestions = (label:number) => {
     const selected = selectedCheckbox?.filter((el:any) => el === label)
@@ -46,6 +52,23 @@ const onChangeQuestions = (label:number) => {
     }
     
 }
+
+const submit = () => {
+    // submit feedback form function
+    console.log('submited')
+    onChangeQuestion()
+    addFeedback({feelingForm, commentForm, personalDetailsForm})
+    localStorage.removeItem('feeling')
+    localStorage.removeItem('impact')
+    localStorage.removeItem('comment')
+    localStorage.removeItem('name')
+    localStorage.removeItem('address')
+    localStorage.removeItem('postcode')
+    localStorage.removeItem('email')
+    localStorage.removeItem('phone')
+    localStorage.removeItem('consent')
+}
+
 return(
     <section>
         <BackLink content='Back'onClick={() => setQuestion(11)}/>
@@ -55,7 +78,7 @@ return(
             return (
                 <div key={label} className="wrap-answers">
                 <p className="govuk-body govuk-body govuk-!-font-weight-bold">{questions[label]}</p>
-                <p className="govuk-body">{comment[label] ? comment[label] : 'No comment'}</p>
+                <p className="govuk-body">{commentForm[label] ? commentForm[label] : 'No comment'}</p>
                 <ButtonLink content="Change" onClick={() => onChangeQuestions(label)}/>
                 </div>
             )
@@ -64,36 +87,36 @@ return(
         <h2 className="govuk-heading-m">Your Details</h2>
         <div className="wrap-answers">
             <h2 className="govuk-heading-s">Name</h2>
-            <p className="govuk-body">{name}</p>
+            <p className="govuk-body">{personalDetailsForm?.name}</p>
             <ButtonLink content="Change" onClick={() => setQuestion(11)}/>
         </div>
         <div className="wrap-answers">
             <h2 className="govuk-heading-s">Address</h2>
-            <p className="govuk-body">{address}</p>
+            <p className="govuk-body">{personalDetailsForm?.address}</p>
             <ButtonLink content="Change" onClick={() => setQuestion(11)}/>
         </div>
                 <div className="wrap-answers">
             <h2 className="govuk-heading-s">Postcode</h2>
-            <p className="govuk-body">{postCode}</p>
+            <p className="govuk-body">{personalDetailsForm?.postcode}</p>
             <ButtonLink content="Change" onClick={() => setQuestion(11)}/>
         </div>
         {
-            email &&                 <div className="wrap-answers">
+            personalDetailsForm?.email &&                 <div className="wrap-answers">
             <h2 className="govuk-heading-s">Email</h2>
-            <p className="govuk-body">{email}</p>
+            <p className="govuk-body">{personalDetailsForm?.email}</p>
             <ButtonLink content="Change" onClick={() => setQuestion(11)}/>
         </div>
         }
         {
-            phone &&  <div className="wrap-answers">
+            personalDetailsForm?.phone &&  <div className="wrap-answers">
             <h2 className="govuk-heading-s">Telephone number</h2>
-            <p className="govuk-body">{phone}</p>
+            <p className="govuk-body">{personalDetailsForm?.phone}</p>
             <ButtonLink content="Change" onClick={() => setQuestion(11)}/>
         </div>
         }
         <Details summary="How we handle your data" description={descriptionDetail['consent']} />
 
-<Button content="Submit your comments" onClick={() => onChange()}/>
+<Button content="Submit your comments" onClick={() => submit()}/>
         
     </section>
 )

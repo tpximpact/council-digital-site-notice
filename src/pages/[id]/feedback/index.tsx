@@ -1,17 +1,12 @@
+import { useEffect, useState, useContext } from "react"
+import { ContextApplication } from "@/context";
 import Breadcrumbs from "@/components/breadcrumbs"
 import Instructions from "./instructions"
 import Questions from "./questions"
-import { useEffect, useState } from "react"
-import { questions } from "../../../../util/questions_info"
-import { useContext } from "react";
-import { ContextApplication } from "@/context";
-
 
 
 const Feedback = () => {
-    const { dataApplication } = useContext(ContextApplication);
-    const [question, setQuestion] = useState<number>(0)
-    const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([])
+    const { dataApplication, question } = useContext(ContextApplication);
     const [id, setId] = useState('')
     const [name, setName] = useState('')
 
@@ -28,29 +23,6 @@ const Feedback = () => {
     }
     }, [dataApplication])
 
-    const onChangeQuestion = () => {
-
-        if(question === 0 || question === 1 || question === 11 || question === 12) 
-        {setQuestion(question + 1)}
-
-        else if(question === 2){ 
-            setQuestion(selectedCheckbox[0])
-        } 
-
-        else if(question === 13) {
-            setQuestion(0)
-        } 
-
-        else if(question === selectedCheckbox[selectedCheckbox.length -1 ]) { 
-            setQuestion(11)
-        }
-        else {
-            const questionIndex = selectedCheckbox?.indexOf(question)
-            const newQuestion = selectedCheckbox[questionIndex + 1]
-            setQuestion(newQuestion)
-            } 
-        }
-
     const breadcrumbs_array = [
         {
             name: "Planning application", href: "/"
@@ -66,14 +38,7 @@ const Feedback = () => {
         <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         {(question !== 0 && question !== 13) && <Instructions data={dataApplication}/>}
-        <Questions 
-            setQuestion={setQuestion}
-            question={question} 
-            onChangeQuestion={onChangeQuestion} 
-            selectedCheckbox={selectedCheckbox} 
-            setSelectedCheckbox={setSelectedCheckbox}
-            label={questions[question]}
-            />
+        <Questions question={question} />
         </>
     )
 }

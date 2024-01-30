@@ -1,32 +1,23 @@
 
 import {Button, BackLink} from "@/components/button"
-import {useState, useEffect} from "react"
+import {useEffect} from "react"
 import Checkbox from "@/components/checkbox"
 import Details from "@/components/details"
 import { descriptionDetail } from "../../../../../util/description_detail"
 import { questions } from "../../../../../util/questions_info"
-import { ImpactType } from "../../../../../util/type"
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
 
 export const checkboxId:number[] = [3,4,5,6,7,8,9,10]
 
-const ImpactQuestion = ({
-        setQuestion,
-        onChange, 
-        setSelectedCheckbox, 
-        selectedCheckbox
-    }: ImpactType) => {
-    const [defaultValue, setDefaultValue] = useState<number[]>([])
+const ImpactQuestion = () => {
+    const { onChangeQuestion, setQuestion, selectedCheckbox, setSelectedCheckbox } = useContext(ContextApplication);
 
     useEffect(() => {
-        const getStorage = localStorage.getItem("impact")
-        if(selectedCheckbox.length > 0 || getStorage === null) {
-            setDefaultValue(selectedCheckbox)
-        } else {
-            const initialValue = JSON.parse(getStorage)
-            setDefaultValue(initialValue)
-            setSelectedCheckbox(initialValue)
-        } 
-},[selectedCheckbox, setSelectedCheckbox])
+        const getStorage = localStorage.getItem("impact") || '[]'
+        const initialValue = JSON.parse(getStorage)
+        setSelectedCheckbox(initialValue)
+},[setSelectedCheckbox])
 
 
     const onChecked = (e:any) => {
@@ -45,11 +36,11 @@ const ImpactQuestion = ({
             <Details summary="What happens to your comments" description={descriptionDetail['impact']}/>
                 {
                     checkboxId.map(el => 
-                        <Checkbox label={questions[el]} id={el.toString()} onChange={(e) => onChecked(e)} key={el} checked={defaultValue.includes(el)}/>
+                        <Checkbox label={questions[el]} id={el.toString()} onChange={(e) => onChecked(e)} key={el} checked={selectedCheckbox.includes(el)}/>
                     )
                 }
         
-        <Button content="Next" className="button-impact-question" onClick={() => onChange()}/>
+        <Button content="Next" className="button-impact-question" onClick={() => onChangeQuestion()}/>
         </section>
     )
 }

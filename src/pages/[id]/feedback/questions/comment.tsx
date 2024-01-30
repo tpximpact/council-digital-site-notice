@@ -1,31 +1,19 @@
+import { useEffect, useContext } from "react"
+import { ContextApplication } from "@/context";
 import TextArea from "@/components/text-area"
 import {Button, BackLink} from "@/components/button"
-import { useEffect, useState } from "react"
-import { CommentType } from "../../../../../util/type"
+import { questions } from "../../../../../util/questions_info";
 
-function CommentQuestion({
-    onChange, 
-    label,
-    commentForm,
-    setCommentForm, 
-    setQuestion, 
-    selectedCheckbox,
-    question}: 
-    CommentType) {
-    const [defaultValue, setDefaultValue] = useState('')
+function CommentQuestion() {
+        const { onChangeQuestion, commentForm, setCommentForm, setQuestion, selectedCheckbox, question } = useContext(ContextApplication);
         const indexComponent = selectedCheckbox?.indexOf(question)
         const backComponent = indexComponent > 0 ? selectedCheckbox[indexComponent - 1] : 2
+        const label = questions[question]
 
     useEffect(() => {
-        const initialValue = localStorage.getItem("comment")
-        if ( Object.keys(commentForm)?.length > 0  || initialValue === null) {
-            setDefaultValue(commentForm[question] !== undefined ? commentForm[question] : "")
-        } else {
-
-        setDefaultValue(JSON.parse(initialValue)[question])
+        const initialValue = localStorage.getItem("comment") || ""
         setCommentForm(JSON.parse(initialValue))
-        }
-    }, [commentForm, question, setDefaultValue, setCommentForm])
+    }, [setCommentForm])
 
     const onComment = (value:any) => {
         setCommentForm({...commentForm,[question]: value})
@@ -39,10 +27,10 @@ function CommentQuestion({
             hint={`${selectedCheckbox?.indexOf(question) + 1} of ${selectedCheckbox?.length}`}
                 label={label} 
                 onChange={(value:any) => onComment(value)} 
-                value={defaultValue}
+                value={commentForm[question] || ""}
                 id={question}/>
 
-            <Button content="Next" onClick={() => onChange()}/>
+            <Button content="Next" onClick={() => onChangeQuestion()}/>
         </section>
     )
 }

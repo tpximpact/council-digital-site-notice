@@ -1,13 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Button } from "@/components/button"
+import { useContext } from "react";
 import Link from "next/link"
+import { ContextApplication } from "@/context";
+import { Button } from "@/components/button"
 import { ArrowIcon } from "../../../../../public/assets/icons"
 import { getCommentInfo } from "../../../../../util/client"
 import { useEffect, useState } from "react"
 
 
 
-function FeedbackInformation({onChange}: any) {
+
+function FeedbackInformation() {
+    const { onChangeQuestion } = useContext(ContextApplication);
     const [url, setUrl] = useState('')
 
     useEffect(() => {
@@ -70,7 +74,7 @@ function FeedbackInformation({onChange}: any) {
             <p className="govuk-body">As part of this process, your comments will be posted online for the public to see. We will not include your name, address, telephone number or email address.</p>
             <p className="govuk-body">The case officer will summarise their findings in the officer's report and decision notice.</p>        
         </section>
-        <Button content="Comment on this application" icon={<ArrowIcon/>} onClick={() => onChange()} className="feedback-information-button" iconClass="feedback-information-icon"/>
+        <Button content="Comment on this application" icon={<ArrowIcon/>} onClick={() => onChangeQuestion()} className="feedback-information-button" iconClass="feedback-information-icon"/>
         </>
     )
 }

@@ -1,14 +1,11 @@
-import Input from "@/components/input";
-import { Button } from "@/components/button";
-import PlanningApplications from "./app/planning-application";
-import { ArrowIcon } from "../../public/assets/icons";
-import {
-  getActiveApplications,
-  getActiveApplicationsPagination,
-} from "../../util/client";
-import Pagination from "./app/pagination";
-import { useEffect, useState } from "react";
-import { PaginationType, Data } from "../../util/type";
+import { useEffect, useState } from 'react';
+import PlanningApplications from './app/planning-application'
+import Pagination from './app/pagination';
+import Input from '@/components/input'
+import {Button} from '@/components/button'
+import {ArrowIcon} from "../../public/assets/icons"
+import { getActiveApplications, getActiveApplicationsPagination } from "../../util/client";
+import { PaginationType, Data } from '../../util/type';
 import { getLocationFromPostcode } from "../../util/geolocation";
 
 export const itemsPerPage = 6;

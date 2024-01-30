@@ -1,12 +1,13 @@
-import {Button} from "@/components/button"
-import { useEffect, useState } from "react"
+import { useEffect, useContext } from "react"
+import { ContextApplication } from "@/context";
 import Details from "@/components/details"
+import {Button} from "@/components/button"
 import { Love, Neutral, Opposed } from "../../../../../public/assets/icons"
 import {descriptionDetail} from "../../../../../util/description_detail"
-import Validation from "@/components/validation"
-import { FeelingType } from "../../../../../util/type"
 
-function Feeling({onChange, feelingForm, setFeelingForm}: FeelingType){
+
+function Feeling(){
+    const { onChangeQuestion, feelingForm, setFeelingForm } = useContext(ContextApplication);
 
     useEffect(() => {
             const initialValue = localStorage.getItem("feeling") || ''
@@ -40,7 +41,7 @@ function Feeling({onChange, feelingForm, setFeelingForm}: FeelingType){
             </div>
             <Details summary="Why your feedback is important" description={descriptionDetail['feeling']}/>
         
-            <Button content="Next" onClick={() => onChange()}/>
+            <Button content="Next" onClick={() => onChangeQuestion()}/>
         </section>
     )
 }
