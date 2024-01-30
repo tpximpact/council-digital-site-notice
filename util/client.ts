@@ -55,8 +55,6 @@ export async function getCMSApplicationsPagination({ _id, itemsPerPage, location
      { _id });
   }
 
-  console.log(posts)
-
   return posts;
 }
 
