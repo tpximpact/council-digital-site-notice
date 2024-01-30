@@ -13,10 +13,10 @@ function FeedbackInformation({onChange}: any) {
     useEffect(() => {
         (async() => {
             const res = await getCommentInfo()
-            if(res[0]?.concernUrl !== undefined) {
-                const newURL = res[0].concernUrl.includes('http') ? res[0].concernUrl : `https://${res[0].concernUrl}`
+            if(res?.concernUrl !== undefined) {
+                const newURL = res.concernUrl.includes('http') ? res.concernUrl : `https://${res.concernUrl}`
                 setUrl(newURL)
-            } else if(res[0]?.concernContent !== undefined) {
+            } else if(res?.concernContent !== undefined) {
                 setUrl('/concern-info')
             }
         })

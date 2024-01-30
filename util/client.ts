@@ -35,7 +35,7 @@ export async function getActiveApplicationById(id: string) {
 
 export async function getCommentInfo() {
     const info = await client.fetch('*[_type == "comment-information"]')
-    return info
+    return info[0]
 }
   
 export async function createApplication(post: any) {
