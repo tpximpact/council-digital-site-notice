@@ -2,8 +2,27 @@
 import { Button } from "@/components/button"
 import Link from "next/link"
 import { ArrowIcon } from "../../../../../public/assets/icons"
+import { getCommentInfo } from "../../../../../util/client"
+import { useEffect, useState } from "react"
+
+
 
 function FeedbackInformation({onChange}: any) {
+    const [url, setUrl] = useState('')
+
+    useEffect(() => {
+        (async() => {
+            const res = await getCommentInfo()
+            if(res?.concernUrl !== undefined) {
+                const newURL = res.concernUrl.includes('http') ? res.concernUrl : `https://${res.concernUrl}`
+                setUrl(newURL)
+            } else if(res?.concernContent !== undefined) {
+                setUrl('/concern-info')
+            }
+        })
+        ()
+    },[])
+
     return(
         <>
         <section style={{marginBottom: '20px'}}>
@@ -24,7 +43,10 @@ function FeedbackInformation({onChange}: any) {
                 <li className="govuk-body" style={{marginBottom: 0}}>rights of way</li>
             </ul>
             <p className="govuk-body">Strength of local opposition to a planning application can’t be considered. This means that if a comment you’d like to raise has already been made, you don’t need to repeat it.</p>
-            <Link href="" className="govuk govuk-link">What can you do if these things convern you?</Link>
+           { url !== "" &&
+            <Link href={url} target="_blank" className="govuk govuk-link" >What can you do if these things concern you?</Link>
+           }
+            
         </section>
         <section>
             <h2 className="govuk-heading-l">Why your comments are important</h2>
