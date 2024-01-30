@@ -6,13 +6,13 @@ export default defineType({
     type: "document",
     fields: [
         defineField({
-            title: "ConcernUrl",
+            title: "Concern Url",
             name: "concernUrl",
             type: "string",
             // readOnly: true,
           }),
           defineField({
-            title: "ConcernContent",
+            title: "Concern Content",
             name: "concernContent",
             type: "string",
             // readOnly: true,
