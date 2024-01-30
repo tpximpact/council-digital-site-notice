@@ -47,7 +47,7 @@ const Home = ({ dataId, data }: PaginationType) => {
       setLocationNotFound(false)
       location = await getLocationFromPostcode(postcode);
 
-      if(location !== null) {
+      if(location == null) {
         setLocationNotFound(true)
       }
     }

@@ -31,12 +31,8 @@ export async function getLocationFromPostcode(postcode: string) {
     const postcodeData = await postcodeRes.json();
 
     if (postcodeData.error) {
-      return {
-        props: {
-          error: postcodeData.error,
-          currentPostcode: postcode,
-        },
-      };
+      console.log(postcodeData.error)
+      return null;
     }
 
     return postcodeData.result;
