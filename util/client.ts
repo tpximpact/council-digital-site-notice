@@ -142,6 +142,11 @@ export async function getApplicationById(id: string) {
   }
 }
 
+export async function getCommentInfo() {
+    const info = await client.fetch('*[_type == "comment-information"][0]')
+    return info
+}
+  
 export async function createApplication(post: any) {
   const result = client.create(post);
   return result;
