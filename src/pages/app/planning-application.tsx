@@ -18,8 +18,9 @@ const PlanningApplications = ({ data, searchLocation }: {data : Data[], searchLo
 
 const indexValue = (parseFloat((data.length/3).toFixed()) * 3)
         return (
-          <div
+          <Link
             key={_id}
+            href={`/${_id}`}
             className={`planning-application-link ${indexValue <= index && 'planning-application-last-line'}`}
           >
             {image_head && (
@@ -38,7 +39,7 @@ const indexValue = (parseFloat((data.length/3).toFixed()) * 3)
                   </p>
                 </span>
             </div>
-            </div>
+            </Link>
         );
       })}
     </section>
