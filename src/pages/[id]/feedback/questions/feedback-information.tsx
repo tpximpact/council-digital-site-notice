@@ -11,8 +11,9 @@ import { useEffect, useState } from "react"
 
 
 function FeedbackInformation() {
-    const { onChangeQuestion } = useContext(ContextApplication);
+    const { onChangeQuestion, dataApplication } = useContext(ContextApplication);
     const [url, setUrl] = useState('')
+    const id = dataApplication?._id
 
     useEffect(() => {
         (async() => {
@@ -29,10 +30,12 @@ function FeedbackInformation() {
 
     return(
         <>
-        <section style={{marginBottom: '20px'}}>
+        <section>
             <div className="info-header">
-            <h1 className='govuk-heading-xl'>What you need to know before you comment</h1>
+            <h1 className='govuk-heading-xl' style={{marginBottom: 0}}>What you need to know before you comment</h1>
             </div>
+            <Link href={`/${id}`}className={`govuk-back-link`} data-module="govuk-button">Back
+        </Link>
             <h2 className="govuk-heading-l">What isn’t considered in planning approval</h2>
             <p className="govuk-body">There are some things planning officers can’t consider when approving or rejecting an application, even if they are important. These include:</p>
             <ul>

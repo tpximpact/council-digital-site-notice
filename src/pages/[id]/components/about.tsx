@@ -46,7 +46,7 @@ function About({data} : {data: DataDetails}) {
             }
             <div>
                 <h2 className="govuk-heading-m">About this development</h2>
-                <p className="govuk-body-s">{data?.description}</p>
+                <p className="govuk-body">{data?.description}</p>
             </div>
         </div>
 <div className="wrap-comment-application">
@@ -54,19 +54,19 @@ function About({data} : {data: DataDetails}) {
         <Link href="#" style={{marginTop: "-15px"}} className="govuk-link">Sign up for updates about this application</Link>
         </div>
         <h3 className="govuk-heading-m">Application type</h3>
-        <p className="govuk-body-s">
+        <p className="govuk-body">
         {data?.application_type}
         </p>
         <Details summary='Learn more about application types' description={descriptionDetail["about"]}/>
         <h3 className="govuk-heading-m">How the site will be used</h3>
-        <div className="govuk-body-s">
+        <div className="govuk-body">
             {
                 data?.proposedLandUse && (
                     <ul>
                         {data?.proposedLandUse.classB && <li>Industrial</li>} 
                         {data?.proposedLandUse.classC && <li>Residential</li>}
                         {data?.proposedLandUse.classE && <li>Commercial</li>}
-                        {data?.proposedLandUse.classF && <li>Industrial</li>}
+                        {data?.proposedLandUse.classF && <li>Community</li>}
                         {data?.proposedLandUse.suiGeneris && <li>{data?.proposedLandUse.suiGenerisDetail}</li>}
                 </ul>
                 )
@@ -76,20 +76,20 @@ function About({data} : {data: DataDetails}) {
         {
             data?.height && (<>
             <h3 className="govuk-heading-m">Height</h3>
-            <p className="govuk-body-s">Maximum {data?.height} storeys</p>
+            <p className="govuk-body">Maximum {data?.height} storeys</p>
             </>)
         }
         {
             data?.constructionTime && (
                 <>
                 <h3 className="govuk-heading-m">Estimated construction time</h3>
-                <p className="govuk-body-s">{data?.constructionTime}</p>
+                <p className="govuk-body">{data?.constructionTime}</p>
                 </>
             )
         }
 
         <h3 className="govuk-heading-m">Application reference</h3>
-        <p className="govuk-body-s">{data?.applicationNumber
+        <p className="govuk-body">{data?.applicationNumber
 }</p>
         </div>
     )
