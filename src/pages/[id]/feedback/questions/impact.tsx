@@ -1,8 +1,9 @@
 
 import {Button, BackLink} from "@/components/button"
-import {useEffect} from "react"
+import {useEffect, useState} from "react"
 import Checkbox from "@/components/checkbox"
 import Details from "@/components/details"
+import Validation from "@/components/validation"
 import { descriptionDetail } from "../../../../../util/description_detail"
 import { questions } from "../../../../../util/questions_info"
 import { useContext } from "react";
@@ -12,6 +13,7 @@ export const checkboxId:number[] = [3,4,5,6,7,8,9,10]
 
 const ImpactQuestion = () => {
     const { onChangeQuestion, setQuestion, selectedCheckbox, setSelectedCheckbox } = useContext(ContextApplication);
+    const [isError, setIsError] = useState<boolean>(false)
 
     useEffect(() => {
         const getStorage = localStorage.getItem("impact") || '[]'
@@ -25,6 +27,7 @@ const ImpactQuestion = () => {
         checked ? 
             (setSelectedCheckbox([...selectedCheckbox, parseInt(id)]), localStorage.setItem('impact', JSON.stringify([...selectedCheckbox, parseInt(id)]))): 
             (setSelectedCheckbox([...selectedCheckbox?.filter(el => el !== parseInt(id))]), localStorage.setItem('impact', JSON.stringify([...selectedCheckbox?.filter(el => el !== parseInt(id))])))
+        selectedCheckbox.length > 0 ? setIsError(false) : setIsError(true)
     }
 
 
@@ -39,8 +42,10 @@ const ImpactQuestion = () => {
                         <Checkbox label={questions[el]} id={el.toString()} onChange={(e) => onChecked(e)} key={el} checked={selectedCheckbox.includes(el)}/>
                     )
                 }
-        
-        <Button content="Next" className="button-impact-question" onClick={() => onChangeQuestion()}/>
+        {
+            isError && <Validation message="Please select at least one topic"/>
+        }
+        <Button content="Next" className="button-impact-question" onClick={() => {selectedCheckbox.length > 0 ? onChangeQuestion() : setIsError(true)}}/>
         </section>
     )
 }

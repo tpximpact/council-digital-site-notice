@@ -1,12 +1,11 @@
 .wrap-feedback {
     background-color: #1D70B8;
-    padding: 20px 100px;
-    margin: 0 -100px 15px -100px;
+    padding: 20px 200px;
+    margin: 0 -200px 15px -200px;
 }
 
 .wrap-feedback * {
     color: white;
-    max-width: 50rem;
 }
 
 .wrap-image-legend-feedback {
@@ -15,6 +14,11 @@
 }
 
 .wrap-image-legend-feedback h3 {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.wrap-image-legend-feedback p {
     padding-left: 20px;
 }
 
@@ -43,7 +47,6 @@
 .wrap-icons-feeling {
     display: flex;  
     justify-content: space-between;
-    margin-bottom: 40px;
     max-width: 55rem;
 }
 

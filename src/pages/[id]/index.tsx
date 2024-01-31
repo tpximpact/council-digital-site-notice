@@ -48,7 +48,8 @@ const Application = ({data}: {data: DataDetails} ) => {
       'name': data?.name,
       'id': data?._id,
       'reference': data?.reference,
-      'system_status': data?.system_status
+      'system_status': data?.system_status,
+      'application_number': data?.applicationNumber
     }))
   },[data, setDataApplication, setQuestion, commentDeadline])
   
