@@ -56,6 +56,7 @@ export type DataDetails = {
     access?: string
     system_status: string
     valid_from_date: string
+    systemStatus: string
     image_head?: string
     image_gallery: any[]
     commentDeadline: string
