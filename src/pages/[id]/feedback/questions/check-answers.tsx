@@ -17,7 +17,7 @@ function CheckAnswers() {
             setSelectedCheckbox, 
             feelingForm, 
             setPersonalDetailsForm, 
-            setCommentForm } = useContext(ContextApplication);
+            setCommentForm, clearContext } = useContext(ContextApplication);
 
 
     useEffect(() => {
@@ -36,8 +36,7 @@ function CheckAnswers() {
             postcode: initialValuePostcode,
             consent: personalDetailsForm?.consent
         })
-
-        setCommentForm(initialValueComment)
+if (initialValueComment !== null) setCommentForm(JSON.parse(initialValueComment))
 
     }, [personalDetailsForm?.consent, setCommentForm, setPersonalDetailsForm])
 
@@ -55,7 +54,6 @@ const onChangeQuestions = (label:number) => {
 
 const submit = () => {
     // submit feedback form function
-    console.log('submited')
     onChangeQuestion()
     addFeedback({feelingForm, commentForm, personalDetailsForm})
     localStorage.removeItem('feeling')
@@ -67,10 +65,11 @@ const submit = () => {
     localStorage.removeItem('email')
     localStorage.removeItem('phone')
     localStorage.removeItem('consent')
+    clearContext()
 }
 
 return(
-    <section>
+    <div style={{maxWidth: '64rem'}}>
         <BackLink content='Back'onClick={() => setQuestion(11)}/>
         <h1 className="govuk-heading-xl">Check your responses before submitting</h1>
         <h2 className="govuk-heading-l">Your Comments</h2>
@@ -118,7 +117,7 @@ return(
 
 <Button content="Submit your comments" onClick={() => submit()}/>
         
-    </section>
+    </div>
 )
 }
 
