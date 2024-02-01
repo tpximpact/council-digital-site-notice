@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { CommentForm, PersonalDetailsForm } from "../../util/type";
 
 interface ContextApplicationProps {
@@ -14,7 +14,8 @@ interface ContextApplicationProps {
     commentForm: CommentForm;
     setCommentForm: (value: any) => void;
     personalDetailsForm : PersonalDetailsForm;
-    setPersonalDetailsForm: (value: any) => void
+    setPersonalDetailsForm: (value: any) => void;
+    clearContext: () => void
 }
 
 export const ContextApplication = createContext<ContextApplicationProps>({
@@ -30,7 +31,8 @@ export const ContextApplication = createContext<ContextApplicationProps>({
     commentForm: {},
     setCommentForm: () => {},
     personalDetailsForm: {name: "", address: "", email: "", phone: "", postcode:"", consent: false},
-    setPersonalDetailsForm: () => {}
+    setPersonalDetailsForm: () => {},
+    clearContext: () => {}
 });
 
 function Context({children}:any) {
@@ -60,6 +62,14 @@ function Context({children}:any) {
             } 
         }
 
+        const clearContext = () => {
+            setSelectedCheckbox([])
+            setFeelingForm("")
+            setCommentForm({})
+            setPersonalDetailsForm({
+                name: "", address: "", email: "", phone: "", postcode:"", consent: false
+            })
+        }
     return(
         <ContextApplication.Provider value={{
             dataApplication: currentData,
@@ -74,7 +84,8 @@ function Context({children}:any) {
             commentForm: commentForm,
             setCommentForm: setCommentForm,
             personalDetailsForm: personalDetailsForm,
-            setPersonalDetailsForm: setPersonalDetailsForm
+            setPersonalDetailsForm: setPersonalDetailsForm,
+            clearContext: clearContext
 
         }}>
             {children}

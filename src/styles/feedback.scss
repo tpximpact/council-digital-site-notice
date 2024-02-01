@@ -72,7 +72,7 @@
     margin-bottom: 20px;
 }
 
-.impact-validation :last-child {
+.impact-validation :nth-child(2) {
     color: #D4351C; 
     text-decoration: underline
 }
@@ -85,6 +85,11 @@
 .consent-label {
     padding-top: 0;
     margin-bottom: 10px;
+}
+
+.error-line {
+    color: #D4351C;
+    text-decoration: underline
 }
 
 //check answers
