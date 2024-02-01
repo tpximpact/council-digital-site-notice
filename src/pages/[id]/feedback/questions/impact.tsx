@@ -27,9 +27,7 @@ const ImpactQuestion = () => {
         checked ? 
             (setSelectedCheckbox([...selectedCheckbox, parseInt(id)]), localStorage.setItem('impact', JSON.stringify([...selectedCheckbox, parseInt(id)]))): 
             (setSelectedCheckbox([...selectedCheckbox?.filter(el => el !== parseInt(id))]), localStorage.setItem('impact', JSON.stringify([...selectedCheckbox?.filter(el => el !== parseInt(id))])))
-        selectedCheckbox.length > 0 ? setIsError(false) : setIsError(true)
     }
-
 
     return(
         <section>

@@ -39,7 +39,7 @@ function CommentQuestion() {
             {
                 isError && <Validation message="Please leave a comment"/>
             }
-            <Button content="Next" onClick={() => {commentForm[question] !== '' ? onChangeQuestion() : setIsError(true)}}/>
+            <Button content="Next" onClick={() => {commentForm[question] != undefined ? onChangeQuestion() : setIsError(true)}}/>
         </section>
     )
 }
