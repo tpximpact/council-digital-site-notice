@@ -1,31 +1,48 @@
-import Image from "next/image"
-import Link from "next/link"
-import { LocalIcon } from "../../../public/assets/icons"
-import {dummy_data} from "../../help/dummy_data"
+import Link from "next/link";
+import Image from "next/image";
+import { LocalIcon } from "../../../public/assets/icons";
+import { urlFor } from "../../../util/client";
+import { Data } from "../../../util/type";
+import { distanceInMiles } from '../../../util/geolocation'
 
-const PlanningApplications = () => {
-    return(
-        <section className="wrap-planning-application">
-        {
-            dummy_data.map(el => {
-                return(
-                    <Link key={el.key} href={`/${el.key}`} className="planning-application-link">
-                        {el.image && <Image width={330} height={223} alt="" src={el?.image}/>}
-                        <div>
-                        <h3>{el.name}</h3>
-                        <span className="planning-application-text">
-                        <p>
-                            <LocalIcon />
-                            {el.distance} {el.address}</p>
+const PlanningApplications = ({ data, searchLocation }: {data : Data[], searchLocation: any}) => {
+  return (
+    <section className="wrap-planning-application">
+      {data && data.map(({_id, image_head, name, address, location}: any) => {
 
-                        </span>
-                        </div>
-                    </Link>
-                )
-            })
-        }
-        </section>
-    )
-}
+      let distance;
 
-export default PlanningApplications
+      if(searchLocation != null && location != null && location.lat != null && location.lng != null) {
+        distance = distanceInMiles(searchLocation, { longitude : location.lng, latitude : location.lat })
+      }
+
+        return (
+          <Link
+            key={_id}
+            href={`/${_id}`}
+            className="govuk-body planning-application-link"
+          >
+            {image_head && (
+              <Image width={330} height={223} alt="" src={urlFor(image_head).url()} />
+            )}
+            <div>
+              <h3>{name}</h3>
+              <span className="govuk-body-s planning-application-text">
+                  <p>
+                    <LocalIcon />                   {
+                      distance != undefined && 
+                      <span style={{marginRight: '2px'}}>
+                        {distance} {parseFloat(distance) > 0 ? 'miles' : 'mile'} &#x2022;
+                      </span>
+                    }{address}
+                  </p>
+                </span>
+            </div>
+            </Link>
+        );
+      })}
+    </section>
+  );
+};
+
+export default PlanningApplications;
