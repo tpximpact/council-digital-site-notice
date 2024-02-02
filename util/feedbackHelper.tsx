@@ -1,4 +1,4 @@
-import { phoneRegex, postCodeRegex } from "../../../../../util/regex";
+import { phoneRegex, postCodeRegex } from "./regex";
 
 export function messageError(personalDetailsForm: any) {
 

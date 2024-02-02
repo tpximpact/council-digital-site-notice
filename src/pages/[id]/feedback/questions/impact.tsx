@@ -4,8 +4,8 @@ import {useEffect, useState} from "react"
 import Checkbox from "@/components/checkbox"
 import Details from "@/components/details"
 import Validation from "@/components/validation"
-import { descriptionDetail } from "../../../../../util/description_detail"
-import { questions } from "../../../../../util/questions_info"
+import { descriptionDetail } from "../../../../../util/descriptionDetail"
+import { questions } from "../../../../../util/questionsInfo"
 import { useContext } from "react";
 import { ContextApplication } from "@/context";
 

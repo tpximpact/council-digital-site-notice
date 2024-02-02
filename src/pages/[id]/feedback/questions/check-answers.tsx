@@ -2,8 +2,8 @@ import { useEffect, useContext } from "react"
 import { ContextApplication } from "@/context";
 import { BackLink, Button, ButtonLink } from "@/components/button"
 import Details from "@/components/details";
-import { questions } from "../../../../../util/questions_info"
-import { descriptionDetail } from "../../../../../util/description_detail";
+import { questions } from "../../../../../util/questionsInfo"
+import { descriptionDetail } from "../../../../../util/descriptionDetail";
 import {addFeedback} from "../../../../../util/client"
 
 export const questionId:number[] = [3,4,5,6,7,8,9,10]

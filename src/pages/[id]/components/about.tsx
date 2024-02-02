@@ -1,6 +1,6 @@
 import Details from "@/components/details";
 import Link from "next/link";
-import { descriptionDetail } from "../../../../util/description_detail"
+import { descriptionDetail } from "../../../../util/descriptionDetail"
 import {ArrowIcon} from "../../../../public/assets/icons"
 import { DataDetails } from "../../../../util/type";
 import { useEffect, useState } from "react";
