@@ -118,11 +118,26 @@
 .process-consultation-result {
     display: flex;
     justify-content: flex-start;
+    width: fit-content;
+}
+
+.approved-status {
+    background-color: #CCE2D8;
+    color: #005A30;
+}
+
+.rejected-status {
+    background-color: #F6D7D2;
+    color: #942514;
+    ;
+}
+
+.default-status {
+    background-color: #1D70B8;
+    color: white;
 }
 
 .process-consultation-result span{
-    background-color: #1D70B8;
-    color: white;
     padding: 5px 10px;
     font-weight: 700;
     align-self: center;

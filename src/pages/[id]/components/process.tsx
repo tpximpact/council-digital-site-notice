@@ -3,6 +3,17 @@ import Link from "next/link"
 import {Button} from "@/components/button"
 import {ArrowIcon} from "../../../../public/assets/icons"
 
+const systemStatusStyle = (value: string) => {
+
+    const style:{[key: string]: string} = {
+    'approved': 'approved-status',
+    'pending approval': 'approved-status',
+    'refused': 'rejected-status'
+    }
+
+    return style[value.toLowerCase()] || 'default-status'
+}
+
 function Process({id, 
     system_status,
     commentDeadline
@@ -18,7 +29,7 @@ function Process({id,
             <div className="wrap-grid-button">
                 <div className="process-grid">
                     <p className="govuk-body govuk-!-font-weight-bold process-consultation">Consultation</p>
-                    <p className="govuk-body-s process-consultation-result"><span>{system_status?.toUpperCase()}</span></p>
+                    <p className={`govuk-body-s process-consultation-result ${systemStatusStyle('refused')}`}><span>{system_status?.toUpperCase()}</span></p>
                     <p className="govuk-body application-days">{commentDeadline && commentDeadline} {parseFloat(commentDeadline) > 1 ? 'days' : 'day'} left</p>
                     <p className="govuk-body">
                     People in the local community share feedback and comment on the proposed plans.
