@@ -17,7 +17,7 @@ function CheckAnswers() {
             setSelectedCheckbox, 
             feelingForm, 
             setPersonalDetailsForm, 
-            setCommentForm, clearContext } = useContext(ContextApplication);
+            setCommentForm } = useContext(ContextApplication);
 
 
     useEffect(() => {
@@ -65,7 +65,6 @@ const submit = () => {
     localStorage.removeItem('email')
     localStorage.removeItem('phone')
     localStorage.removeItem('consent')
-    clearContext()
 }
 
 return(

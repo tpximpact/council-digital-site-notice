@@ -1,39 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import { CommentForm, PersonalDetailsForm } from "../../util/type";
+import { ContextApplicationProps } from "../../util/type";
+import { defaultValue } from "./helper";
 
-interface ContextApplicationProps {
-    dataApplication: any;
-    setDataApplication: (dataApplication : any) => void;
-    question: number;
-    setQuestion: (value: number) => void;
-    selectedCheckbox: number[];
-    setSelectedCheckbox: (value: any) => void;
-    onChangeQuestion: () => void;
-    feelingForm: string,
-    setFeelingForm: (value: string) => void;
-    commentForm: CommentForm;
-    setCommentForm: (value: any) => void;
-    personalDetailsForm : PersonalDetailsForm;
-    setPersonalDetailsForm: (value: any) => void;
-    clearContext: () => void
-}
 
-export const ContextApplication = createContext<ContextApplicationProps>({
-    dataApplication: {}, 
-    setDataApplication: () => {}, 
-    question:0, 
-    setQuestion: () => {},
-    selectedCheckbox: [],
-    setSelectedCheckbox: () => {},
-    onChangeQuestion:() => {},
-    feelingForm: "",
-    setFeelingForm: () => {},
-    commentForm: {},
-    setCommentForm: () => {},
-    personalDetailsForm: {name: "", address: "", email: "", phone: "", postcode:"", consent: false},
-    setPersonalDetailsForm: () => {},
-    clearContext: () => {}
-});
+export const ContextApplication = createContext<ContextApplicationProps>(defaultValue);
 
 function Context({children}:any) {
     const [currentData, setCurrentData] = useState({})
@@ -51,6 +22,12 @@ function Context({children}:any) {
         } 
         else if(question === 13) {
             setQuestion(0)
+            setSelectedCheckbox([])
+            setFeelingForm("")
+            setCommentForm({})
+            setPersonalDetailsForm({
+                name: "", address: "", email: "", phone: "", postcode:"", consent: false
+            })
         } 
         else if(question === selectedCheckbox[selectedCheckbox.length -1 ]) { 
             setQuestion(11)
@@ -62,30 +39,21 @@ function Context({children}:any) {
             } 
         }
 
-        const clearContext = () => {
-            setSelectedCheckbox([])
-            setFeelingForm("")
-            setCommentForm({})
-            setPersonalDetailsForm({
-                name: "", address: "", email: "", phone: "", postcode:"", consent: false
-            })
-        }
     return(
         <ContextApplication.Provider value={{
             dataApplication: currentData,
             setDataApplication: setCurrentData,
-            question: question,
-            setQuestion: setQuestion,
-            selectedCheckbox: selectedCheckbox,
-            setSelectedCheckbox: setSelectedCheckbox,
-            onChangeQuestion: onChangeQuestion,
-            feelingForm: feelingForm,
-            setFeelingForm: setFeelingForm,
-            commentForm: commentForm,
-            setCommentForm: setCommentForm,
-            personalDetailsForm: personalDetailsForm,
-            setPersonalDetailsForm: setPersonalDetailsForm,
-            clearContext: clearContext
+            question,
+            setQuestion,
+            selectedCheckbox,
+            setSelectedCheckbox,
+            onChangeQuestion,
+            feelingForm,
+            setFeelingForm,
+            commentForm,
+            setCommentForm,
+            personalDetailsForm,
+            setPersonalDetailsForm
 
         }}>
             {children}

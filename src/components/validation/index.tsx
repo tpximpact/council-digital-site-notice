@@ -2,10 +2,10 @@ function Validation ({message, invalidPostCode, optionalValidation, consentError
     return(
         <div className="impact-validation">
         <p className="govuk-body-l govuk-!-font-weight-bold">There is a problem</p>
-        <p className="govuk-body govuk-!-font-weight-bold">{message}</p>
-        <p className={`govuk-body govuk-!-font-weight-bold ${(message && invalidPostCode) && `error-line`}`}>{invalidPostCode}</p>
-        <p className={`govuk-body govuk-!-font-weight-bold ${((message || invalidPostCode) && optionalValidation) && `error-line`}`}>{optionalValidation}</p>
-        <p className={`govuk-body govuk-!-font-weight-bold ${((message || invalidPostCode || optionalValidation) && consentError) && `error-line`}`}>{consentError}</p>
+        <p className="govuk-body govuk-!-font-weight-bold error-message">{message}</p>
+        <p className={`govuk-body govuk-!-font-weight-bold error-message`}>{invalidPostCode}</p>
+        <p className={`govuk-body govuk-!-font-weight-bold error-message`}>{optionalValidation}</p>
+        <p className={`govuk-body govuk-!-font-weight-bold error-message `}>{consentError}</p>
     </div>
     )
 }
