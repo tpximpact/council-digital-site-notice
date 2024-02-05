@@ -8,7 +8,9 @@ const systemStatusStyle = (value: string) => {
     const style:{[key: string]: string} = {
     'approved': 'approved-status',
     'pending approval': 'approved-status',
-    'refused': 'rejected-status'
+    'refused': 'rejected-status',
+    'successful': 'approved-status',
+    'unsuccessful': 'refected-status'
     }
 
     return style[value.toLowerCase()] || 'default-status'
