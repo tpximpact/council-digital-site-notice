@@ -13,6 +13,7 @@ export const itemsPerPage = 6;
 export async function getStaticProps() {
   const dataId = await getActiveApplications();
   const data = await getActiveApplicationsPagination({ itemsPerPage });
+
   return {
     props: {
       dataId,

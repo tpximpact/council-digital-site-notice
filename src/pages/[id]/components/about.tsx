@@ -54,8 +54,8 @@ function About({data} : {data: DataDetails}) {
         <Link href="#" style={{marginTop: "-15px"}} className="govuk-link">Sign up for updates about this application</Link>
         </div>
         <h3 className="govuk-heading-m">Application type</h3>
-        <p className="govuk-body">
-        {data?.application_type}
+        <p className="govuk-body-s">
+        {data?.applicationType}
         </p>
         <Details summary='Learn more about application types' description={descriptionDetail["about"]}/>
         <h3 className="govuk-heading-m">How the site will be used</h3>
@@ -89,8 +89,7 @@ function About({data} : {data: DataDetails}) {
         }
 
         <h3 className="govuk-heading-m">Application reference</h3>
-        <p className="govuk-body">{data?.applicationNumber
-}</p>
+        <p className="govuk-body-s">{data?.applicationNumber}</p>
         </div>
     )
 }
