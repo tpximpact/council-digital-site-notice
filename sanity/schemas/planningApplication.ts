@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { consultation, assessment, decision, appeal } from "../structure/helper";
 
 export default defineType({
   title: "Planning application",
@@ -32,11 +33,7 @@ export default defineType({
       name: "applicationType",
       type: "string",
     }),
-    defineField({
-      title: "Application Stage",
-      name: "applicationStage",
-      type: "string",
-    }),
+
     defineField({
       title: "Name of development",
       name: "name",
