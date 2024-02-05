@@ -40,6 +40,8 @@ const Application = ({data}: {data: DataDetails} ) => {
     const deadlineTime = moment.duration(today.diff(deadline)).asDays().toFixed(0)
     setCommentDeadline(deadlineTime)
     setDataApplication({...data, commentDeadline: deadlineTime})
+
+    console.log(data)
     localStorage.setItem("application", JSON.stringify({
       'address': data?.address,
       'image_head': data?.image_head,
@@ -48,7 +50,7 @@ const Application = ({data}: {data: DataDetails} ) => {
       'name': data?.name,
       'id': data?._id,
       'reference': data?.reference,
-      'applicatonStage': data?.applicatonStage
+      'applicationStage': data?.applicationStage
     }))
   },[data, setDataApplication, setQuestion, commentDeadline])
   
@@ -61,7 +63,7 @@ const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: da
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         <About data={data}/>
         <Impact data={data}/>
-        <Process id={data?._id} commentDeadline={data?.commentDeadline} applicatonStage={data?.applicatonStage}/>
+        <Process id={data?._id} commentDeadline={data?.commentDeadline} applicationStage={data?.applicationStage}/>
         </>
     )
 }
