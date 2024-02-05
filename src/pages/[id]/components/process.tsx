@@ -51,16 +51,13 @@ function Process({id,
     applicationStage,
     commentDeadline
 }: {id: string, 
-    applicationStage: {
-        stage: string,
-        status: any
-    }
+    applicationStage: any
     commentDeadline: string
 }) {
 
     const applicationStageValue = applicationStage?.stage
     const applicationStatusValue = applicationStage?.status
-    const singleApplicationStatus = applicationStatusValue[applicationStageValue.toLowerCase()]
+    const singleApplicationStatus = applicationStatusValue[applicationStageValue?.toLowerCase()]
 
     return(
         <section className="process-wrap">

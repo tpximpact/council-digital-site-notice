@@ -54,7 +54,7 @@ export type DataDetails = {
     carbonEmissions?: number
     showAccess?: boolean
     access?: string
-    applicationStage: string
+    applicationStage: any
     valid_from_date: string
     image_head?: string
     image_gallery: any[]
@@ -64,6 +64,7 @@ export type DataDetails = {
     description: string
     reference: string
 }
+
 
 export type DataTypeArray = {
     data: Data[]

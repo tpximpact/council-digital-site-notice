@@ -96,7 +96,7 @@ export default defineType({
               options: {
                 list: consultation
               },
-              hidden: ({document}) => document?.applicationStage?.stage !== 'Consultation',
+              hidden: ({document}: any) => document?.applicationStage?.stage !== 'Consultation',
             },
             {
               title: 'Assessment',
@@ -105,7 +105,7 @@ export default defineType({
               options: {
                 list: assessment
               },
-              hidden: ({document}) => document?.applicationStage?.stage !== 'Assessment'
+              hidden: ({document}: any) => document?.applicationStage?.stage !== 'Assessment'
             },
             {
               title: 'Decision',
@@ -114,7 +114,7 @@ export default defineType({
               options: {
                 list: decision
               },
-              hidden: ({document}) => document?.applicationStage?.stage !== 'Decision'
+              hidden: ({document}: any) => document?.applicationStage?.stage !== 'Decision'
             },
             {
               title: 'Appeal',
@@ -123,7 +123,7 @@ export default defineType({
               options: {
                 list: appeal
               },
-              hidden: ({document}) => document?.applicationStage?.stage !== 'Appeal'
+              hidden: ({document}: any) => document?.applicationStage?.stage !== 'Appeal'
             }
           ],
         }
