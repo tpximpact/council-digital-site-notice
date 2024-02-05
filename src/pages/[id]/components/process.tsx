@@ -13,7 +13,7 @@ const aplicationStageStyle = (value: string) => {
     'unsuccessful': 'refected-status'
     }
 
-    return style[value.toLowerCase()] || 'default-status'
+    return style[value?.toLowerCase()] || 'default-status'
 }
 
 const applicationStageMessage = (stage:string, status:string ) => {
@@ -55,9 +55,7 @@ function Process({id,
     commentDeadline: string
 }) {
 
-    const applicationStageValue = applicationStage?.stage
-    const applicationStatusValue = applicationStage?.status
-    const singleApplicationStatus = applicationStatusValue[applicationStageValue?.toLowerCase()]
+    const singleApplicationStatus = applicationStage?.status[applicationStage?.stage?.toLowerCase()]
 
     return(
         <section className="process-wrap">
@@ -65,11 +63,11 @@ function Process({id,
             <Link className="govuk-link" href="#">Find out more about the planning process</Link>
             <div className="wrap-grid-button">
                 <div className="process-grid">
-                    <p className="govuk-body govuk-!-font-weight-bold process-consultation">{applicationStageValue}</p>
+                    <p className="govuk-body govuk-!-font-weight-bold process-consultation">{applicationStage?.stage}</p>
                     <p className={`govuk-body-s process-consultation-result ${aplicationStageStyle(singleApplicationStatus)}`}><span>{singleApplicationStatus?.toUpperCase()}</span></p>
                     <p className="govuk-body application-days">{commentDeadline && commentDeadline} {parseFloat(commentDeadline) > 1 ? 'days' : 'day'} left</p>
                     <p className="govuk-body">
-                        {applicationStageMessage(applicationStageValue, singleApplicationStatus)}
+                        {applicationStageMessage(applicationStage?.stage, singleApplicationStatus)}
                     </p>
                 </div>
                 <div>
