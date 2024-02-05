@@ -54,9 +54,8 @@ export type DataDetails = {
     carbonEmissions?: number
     showAccess?: boolean
     access?: string
-    system_status: string
+    applicatonStage: string
     valid_from_date: string
-    systemStatus: string
     image_head?: string
     image_gallery: any[]
     commentDeadline: string

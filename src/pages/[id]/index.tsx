@@ -48,7 +48,7 @@ const Application = ({data}: {data: DataDetails} ) => {
       'name': data?.name,
       'id': data?._id,
       'reference': data?.reference,
-      'systemStatus': data?.systemStatus
+      'applicatonStage': data?.applicatonStage
     }))
   },[data, setDataApplication, setQuestion, commentDeadline])
   
@@ -61,7 +61,7 @@ const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: da
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         <About data={data}/>
         <Impact data={data}/>
-        <Process id={data?._id} commentDeadline={data?.commentDeadline} systemStatus={data?.systemStatus}/>
+        <Process id={data?._id} commentDeadline={data?.commentDeadline} applicatonStage={data?.applicatonStage}/>
         </>
     )
 }

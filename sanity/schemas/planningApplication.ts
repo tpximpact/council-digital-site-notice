@@ -92,11 +92,6 @@ export default defineType({
       type: "string",
     }),
     defineField({
-      title: "System Status",
-      name: "systemStatus",
-      type: "string",
-    }),
-    defineField({
       title: "C02 Emissions",
       name: "c02Emissions",
       type: "string",

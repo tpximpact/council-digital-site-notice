@@ -139,7 +139,7 @@ export async function getApplicationById(id: string) {
         applicationType: development.application_type,
         description: development.development_description,
         address: development.development_address,
-        systemStatus: development.system_status,
+        applicatonStage: development.system_status,
         name: siteNotice.name ? siteNotice.name : development.development_description,
         location : { lng : development.longitude, lat : development.latitude }
       };

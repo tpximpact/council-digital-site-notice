@@ -4,10 +4,10 @@ import {Button} from "@/components/button"
 import {ArrowIcon} from "../../../../public/assets/icons"
 
 function Process({id, 
-    systemStatus,
+    applicatonStage,
     commentDeadline
 }: {id: string, 
-    systemStatus: string
+    applicatonStage: string
     commentDeadline: string
 }) {
 
@@ -18,7 +18,7 @@ function Process({id,
             <div className="wrap-grid-button">
                 <div className="process-grid">
                     <p className="govuk-body govuk-!-font-weight-bold process-consultation">Consultation</p>
-                    <p className="govuk-body-s process-consultation-result"><span>{systemStatus?.toUpperCase()}</span></p>
+                    <p className="govuk-body-s process-consultation-result"><span>{applicatonStage?.toUpperCase()}</span></p>
                     <p className="govuk-body application-days">{commentDeadline && commentDeadline} {parseFloat(commentDeadline) > 1 ? 'days' : 'day'} left</p>
                     <p className="govuk-body">
                     People in the local community share feedback and comment on the proposed plans.
