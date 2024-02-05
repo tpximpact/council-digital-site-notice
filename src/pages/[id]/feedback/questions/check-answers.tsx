@@ -2,8 +2,8 @@ import { useEffect, useContext } from "react"
 import { ContextApplication } from "@/context";
 import { BackLink, Button, ButtonLink } from "@/components/button"
 import Details from "@/components/details";
-import { questions } from "../../../../../util/questions_info"
-import { descriptionDetail } from "../../../../../util/description_detail";
+import { questions } from "../../../../../util/questionsInfo"
+import { descriptionDetail } from "../../../../../util/descriptionDetail";
 import {addFeedback} from "../../../../../util/client"
 
 export const questionId:number[] = [3,4,5,6,7,8,9,10]
@@ -36,8 +36,7 @@ function CheckAnswers() {
             postcode: initialValuePostcode,
             consent: personalDetailsForm?.consent
         })
-
-        setCommentForm(initialValueComment)
+if (initialValueComment !== null) setCommentForm(JSON.parse(initialValueComment))
 
     }, [personalDetailsForm?.consent, setCommentForm, setPersonalDetailsForm])
 
@@ -55,7 +54,6 @@ const onChangeQuestions = (label:number) => {
 
 const submit = () => {
     // submit feedback form function
-    console.log('submited')
     onChangeQuestion()
     addFeedback({feelingForm, commentForm, personalDetailsForm})
     localStorage.removeItem('feeling')
@@ -70,7 +68,7 @@ const submit = () => {
 }
 
 return(
-    <section>
+    <div style={{maxWidth: '64rem'}}>
         <BackLink content='Back'onClick={() => setQuestion(11)}/>
         <h1 className="govuk-heading-xl">Check your responses before submitting</h1>
         <h2 className="govuk-heading-l">Your Comments</h2>
@@ -118,7 +116,7 @@ return(
 
 <Button content="Submit your comments" onClick={() => submit()}/>
         
-    </section>
+    </div>
 )
 }
 

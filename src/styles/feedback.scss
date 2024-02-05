@@ -1,12 +1,11 @@
 .wrap-feedback {
     background-color: #1D70B8;
-    padding: 20px 100px;
-    margin: 0 -100px 15px -100px;
+    padding: 20px 200px;
+    margin: 0 -200px 15px -200px;
 }
 
 .wrap-feedback * {
     color: white;
-    max-width: 50rem;
 }
 
 .wrap-image-legend-feedback {
@@ -16,23 +15,27 @@
 
 .wrap-image-legend-feedback h3 {
     padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.wrap-image-legend-feedback p {
+    padding-left: 20px;
 }
 
 // feedback info
 
 .info-header {
-    margin: 0 -100px 0 -100px;
+    margin: 0 -200px;
 }
 .info-header h1{
     background-color:#1D70B8;
     color: white;
-    padding: 20px 100px;
+    padding: 20px 200px;
     margin-top: 20px
     ;
 }
 
 .feedback-information-button {
-    width: 100%;
     font-weight: bold;
 }
 
@@ -44,7 +47,6 @@
 .wrap-icons-feeling {
     display: flex;  
     justify-content: space-between;
-    margin-bottom: 40px;
     max-width: 55rem;
 }
 
@@ -70,8 +72,7 @@
     margin-bottom: 20px;
 }
 
-.impact-validation :last-child {
-    color: #D4351C; 
+.impact-validation :nth-child(2) {
     text-decoration: underline
 }
 
@@ -83,6 +84,11 @@
 .consent-label {
     padding-top: 0;
     margin-bottom: 10px;
+}
+
+.error-message {
+    color: #D4351C;
+    text-decoration: underline
 }
 
 //check answers

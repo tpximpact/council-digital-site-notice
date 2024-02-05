@@ -5,8 +5,8 @@ import Details from "@/components/details";
 import Input from "@/components/input";
 import Validation from "@/components/validation"
 import Checkbox from "@/components/checkbox";
-import { descriptionDetail } from "../../../../../util/description_detail";
-import { phoneRegex, postCodeRegex } from "../../../../../util/regex";
+import { descriptionDetail } from "../../../../../util/descriptionDetail";
+import { messageError, optionalValidation, isErrorValidation, isConsentValidation, isOptionValidation, postcodeMessageError } from "../../../../../util/feedbackHelper";
 
 const PersonalDetails = () => {
     const { onChangeQuestion, setQuestion, selectedCheckbox, personalDetailsForm, setPersonalDetailsForm } = useContext(ContextApplication);
@@ -17,53 +17,47 @@ const PersonalDetails = () => {
 
     useEffect(() => {
         
-        const initialValueName = localStorage.getItem("name") || ''
-        const initialValueAddress = localStorage.getItem("address") || ''
-        const initialValueEmail = localStorage.getItem("email") || ''
-        const initialValuePhone = localStorage.getItem("phone") || ''
-        const initialValuePostcode = localStorage.getItem("postcode") || ''
-        const initialValueConsent = Boolean(localStorage.getItem("consent")) || false
+    const initialValueName = localStorage.getItem("name") || ''
+    const initialValueAddress = localStorage.getItem("address") || ''
+    const initialValueEmail = localStorage.getItem("email") || ''
+    const initialValuePhone = localStorage.getItem("phone") || ''
+    const initialValuePostcode = localStorage.getItem("postcode") || ''
+    const consentStorageValue = localStorage.getItem("consent")
+    let initialValueConsent = false
+    if(consentStorageValue !== null) initialValueConsent = JSON.parse(consentStorageValue) || false
 
-        setPersonalDetailsForm({
-            name: initialValueName,
-            address: initialValueAddress,
-            email: initialValueEmail,
-            phone: initialValuePhone,
-            postcode: initialValuePostcode,
-            consent: initialValueConsent
-        })
+    setPersonalDetailsForm({
+        name: initialValueName,
+        address: initialValueAddress,
+        email: initialValueEmail,
+        phone: initialValuePhone,
+        postcode: initialValuePostcode,
+        consent: initialValueConsent
+    })
 
-    }, [setPersonalDetailsForm])
+}, [setPersonalDetailsForm])
 
-    const onChangeDetails = (value:any, key:any) => {
-        setPersonalDetailsForm({...personalDetailsForm, [key]: value})
-        localStorage.setItem(key, value)
-        }
+const onChangeDetails = (value: any, key: string) => {
+    setPersonalDetailsForm({...personalDetailsForm, [key]: value})
+    localStorage.setItem(key, value)
 
-    const nextPage = () => {
-        const nameForm = personalDetailsForm['name'];
-        const addressForm = personalDetailsForm['address']
-        const postcodeForm = personalDetailsForm['postcode'];
-        const phoneForm = personalDetailsForm['phone'];
-        const emailForm = personalDetailsForm['email'];
-        const consentForm = personalDetailsForm['consent'];
+}
+
+const nextPage = () => {
+    const errorValidation = isErrorValidation(personalDetailsForm)
+    const errorConsent = isConsentValidation(personalDetailsForm)
+    const optionValidation = isOptionValidation(personalDetailsForm)
+
+    errorValidation ? setIsError(false) : setIsError(true)
+    errorConsent ? setIsConsentError(false) : setIsConsentError(true)
+    optionValidation ? setIsError(false) : setIsError(true)
+
+    errorConsent && errorConsent && optionValidation && onChangeQuestion()
+
+}
 
 
-        if(nameForm !== "" && postCodeRegex.test(postcodeForm) && addressForm !== "") {
-            const phoneValidation = phoneForm !== "" ? phoneRegex.test(phoneForm) : true
-            const emailValidation = emailForm !== "" ? emailForm.includes('@'): true
-            if(phoneValidation && emailValidation) {
-                onChangeQuestion()
-            } else {
-                setIsError(true)
-            }
-                setIsError(false)
-        } else {
-            setIsError(true)
-        }
 
-            consentForm === false ? setIsConsentError(true) : setIsConsentError(false)
-        }
 
     return(
         <section className="wrap-personal-details">
@@ -78,14 +72,17 @@ const PersonalDetails = () => {
         <Checkbox labelClass='consent-label' 
         label='I consent to Lambeth Council using my data for the purposes of assessing this planning application' 
         id='consent' 
-        onChange={(e) => {setPersonalDetailsForm({...personalDetailsForm, consent: e.target.checked}), localStorage.setItem('consent', e.target.checked)}} checked={personalDetailsForm?.consent}/>
+        onChange={(e) => onChangeDetails(e.target.checked, 'consent')} checked={personalDetailsForm?.consent}/>
         </div>
         {
-            isError && <Validation message='Name, address and postcode can not be empty'/>   
+            (isError || isConsentError) && <Validation 
+            message={messageError(personalDetailsForm)} 
+            invalidPostCode={postcodeMessageError(personalDetailsForm)} 
+            optionalValidation={optionalValidation(personalDetailsForm)}
+            consentError={isConsentError && `you need to check the consent box`}
+            />   
         }
-        {
-            isConsentError && <Validation message='You need to check the consent box'/>   
-        }
+
         <Details summary="How we handle your data" description={descriptionDetail['consent']} />
         <Button content="Next" onClick={() => nextPage()}/>
         </section>

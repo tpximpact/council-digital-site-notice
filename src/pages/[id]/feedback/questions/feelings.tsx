@@ -2,8 +2,7 @@ import { useEffect, useContext } from "react"
 import { ContextApplication } from "@/context";
 import Details from "@/components/details"
 import {Button} from "@/components/button"
-import { Love, Neutral, Opposed } from "../../../../../public/assets/icons"
-import {descriptionDetail} from "../../../../../util/description_detail"
+import { Happy, Neutral, Opposed } from "../../../../../public/assets/icons"
 
 
 function Feeling(){
@@ -27,7 +26,7 @@ function Feeling(){
     const colors = {
         "Opposed": feelingForm === "Opposed" ? "#AA2A16" : "white",
         "Neutral": feelingForm === "Neutral" ? "#1D70B8" : "white",
-        "inFavor": feelingForm === "inFavor" ? "#D53880" : "white"
+        "Support": feelingForm === "Support" ? "#00703C" : "white"
     }
 
     return(
@@ -37,10 +36,8 @@ function Feeling(){
             <div className="wrap-icons-feeling">
             <div><Opposed onClick={() => {onChangeFeeling('Opposed')}} color={colors['Opposed']}/><span className="govuk-body">Opposed</span></div>
             <div><Neutral onClick={() => {onChangeFeeling('Neutral')}} color={colors['Neutral']}/><span className="govuk-body">Neutral</span></div>
-            <div><Love onClick={() => {onChangeFeeling('inFavor')}} color={colors['inFavor']}/><span className="govuk-body">In favor</span></div>
+            <div><Happy onClick={() => {onChangeFeeling('Support')}} color={colors['Support']}/><span className="govuk-body">Support</span></div>
             </div>
-            <Details summary="Why your feedback is important" description={descriptionDetail['feeling']}/>
-        
             <Button content="Next" onClick={() => onChangeQuestion()}/>
         </section>
     )

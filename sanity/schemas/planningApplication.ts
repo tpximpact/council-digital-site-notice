@@ -151,7 +151,20 @@ export default defineType({
           options: {
             layout: 'checkbox'
           }
-        }
+        },
+        {
+          title: 'SG - Sui Generis Detail',
+          description: 'Please specify the use class for Sui Generis',
+          name: 'suiGenerisDetail',
+          type: 'string',
+          hidden: ({document}:any) => !document?.proposedLandUse?.suiGeneris,
+          validation: (Rule) => Rule.custom((field, context :any) => {
+            if(context.document?.proposedLandUse?.suiGeneris && field === undefined){
+              return "This field must not be empty."
+            }
+            return true
+          }
+          )},
       ]
     }),
     defineField({

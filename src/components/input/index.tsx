@@ -2,7 +2,7 @@ const Input = ({label, hint, onChange, value, type, style, locationError}:{locat
     return (
         <div className={`govuk-form-group ${ locationError && 'govuk-form-group--error'}`}>
         <h1 className="govuk-label-wrapper">
-          <label className={`govuk-label govuk-label--m ${locationError && 'govuk-error-message'}`} htmlFor="event-name" role="definition" style={{...style}}>
+          <label className={`govuk-label govuk-label--l ${locationError && 'govuk-error-message'}`} htmlFor="event-name" role="definition" style={{...style}}>
               {label}
           </label>
         </h1>

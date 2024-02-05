@@ -7,24 +7,24 @@ import { urlFor } from "../../../../util/client";
 
 
 const FeedbackMessage = () => {
-    const { dataApplication: {address, image, reference} } = useContext(ContextApplication);
+    const { dataApplication: {address, image, applicationNumber} } = useContext(ContextApplication);
     const [addressAplication, setAddressAplication] = useState()
     const [imageAplication, setImageAplication] = useState()
     const [referenceAplication, setReferenceAplication] = useState()
 
     useEffect(() => {
         const initialValue = localStorage.getItem("application")
-        if(address !== undefined || image !== undefined || reference !== undefined || initialValue === null) {
+        if(address !== undefined || image !== undefined || applicationNumber !== undefined || initialValue === null) {
             setAddressAplication(address)
             setImageAplication(image)
-            setReferenceAplication(reference)
+            setReferenceAplication(applicationNumber)
         } else {
             setAddressAplication(JSON.parse(initialValue).address)
             setImageAplication(JSON.parse(initialValue).image)
-            setReferenceAplication(JSON.parse(initialValue).reference)
+            setReferenceAplication(JSON.parse(initialValue).application_number)
         }
 
-    },[address, image, reference])
+    },[address, image, applicationNumber])
 
     return(
         <section>

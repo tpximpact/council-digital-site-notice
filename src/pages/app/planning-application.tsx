@@ -8,7 +8,7 @@ import { distanceInMiles } from '../../../util/geolocation'
 const PlanningApplications = ({ data, searchLocation }: {data : Data[], searchLocation: any}) => {
   return (
     <section className="wrap-planning-application">
-      {data && data.map(({_id, image_head, name, address, location}: any) => {
+      {data && data.map(({_id, image_head, name, address, location}: any, index) => {
 
       let distance;
 
@@ -16,19 +16,20 @@ const PlanningApplications = ({ data, searchLocation }: {data : Data[], searchLo
         distance = distanceInMiles(searchLocation, { longitude : location.lng, latitude : location.lat })
       }
 
+const indexValue = (parseFloat((data.length/3).toFixed()) * 3)
         return (
           <Link
             key={_id}
             href={`/${_id}`}
-            className="govuk-body planning-application-link"
+            className={`planning-application-link ${indexValue <= index && 'planning-application-last-line'}`}
           >
             {image_head && (
-              <Image width={330} height={223} alt="" src={urlFor(image_head).url()} />
+              <Image width={310} height={223} alt="" src={urlFor(image_head).url()} />
             )}
-            <div>
-              <h3>{name}</h3>
-              <span className="govuk-body-s planning-application-text">
-                  <p>
+            <div style={{paddingTop: '20px'}}>
+              <Link href={`/${_id}`} className="govuk-link govuk-link--no-visited-state link-application">{name}</Link>
+              <span className="planning-application-text">
+                  <p className="govuk-body" style={{marginBottom: 0}}>
                     <LocalIcon />                   {
                       distance != undefined && 
                       <span style={{marginRight: '2px'}}>

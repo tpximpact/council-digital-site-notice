@@ -1,23 +1,29 @@
-import { useEffect, useContext } from "react"
+import { useEffect, useContext, useState } from "react"
 import { ContextApplication } from "@/context";
 import TextArea from "@/components/text-area"
+import Validation from "@/components/validation";
 import {Button, BackLink} from "@/components/button"
-import { questions } from "../../../../../util/questions_info";
+import { questions } from "../../../../../util/questionsInfo";
 
 function CommentQuestion() {
         const { onChangeQuestion, commentForm, setCommentForm, setQuestion, selectedCheckbox, question } = useContext(ContextApplication);
+        const [isError, setIsError] = useState(false)
         const indexComponent = selectedCheckbox?.indexOf(question)
         const backComponent = indexComponent > 0 ? selectedCheckbox[indexComponent - 1] : 2
         const label = questions[question]
 
     useEffect(() => {
-        const initialValue = localStorage.getItem("comment") || ""
-        setCommentForm(JSON.parse(initialValue))
+        const initialValue = localStorage.getItem("comment") || null
+        if(initialValue !== '' && initialValue !== null) {
+            setCommentForm(JSON.parse(initialValue))
+        }
+        
     }, [setCommentForm])
 
     const onComment = (value:any) => {
         setCommentForm({...commentForm,[question]: value})
         localStorage.setItem('comment', JSON.stringify({...commentForm,[question]: value}))
+        commentForm[question] !== '' ? setIsError(false) : setIsError(true)
     }
 
     return(
@@ -30,7 +36,10 @@ function CommentQuestion() {
                 value={commentForm[question] || ""}
                 id={question}/>
 
-            <Button content="Next" onClick={() => onChangeQuestion()}/>
+            {
+                isError && <Validation message="Please leave a comment"/>
+            }
+            <Button content="Next" onClick={() => {commentForm[question] != undefined ? onChangeQuestion() : setIsError(true)}}/>
         </section>
     )
 }
