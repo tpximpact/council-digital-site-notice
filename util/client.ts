@@ -30,7 +30,7 @@ export async function getActiveApplicationsPagination({_id, itemsPerPage, locati
   var cmsData = await getCMSApplicationsPagination({ _id, itemsPerPage, location });
 
   if (process.env.NEXT_PUBLIC_DATA_PROVIDER == "OpenData") {
-    let openDataPosts = getOpenDataApplicationsPagination({ cmsData, location })
+    let openDataPosts = await getOpenDataApplicationsPagination({ cmsData, location })
     return openDataPosts;
   } 
   else {
@@ -59,6 +59,7 @@ export async function getCMSApplicationsPagination({ _id, itemsPerPage, location
 }
 
 export async function getOpenDataApplicationsPagination({cmsData, location,}: {cmsData: any[], location: any;}) {
+
 
   // Helper method to convert a JS array to a string for a SOQL query
   const arrayToSoqlString = (arr: any[]) => "'" + arr.toString().replace(/,/g, "','") + "'";
@@ -89,13 +90,16 @@ export async function getOpenDataApplicationsPagination({cmsData, location,}: {c
       return;
     }
 
-    return {
-      development_address: development.development_address,
-      name: siteNotice.name
-        ? siteNotice.name
-        : development.development_description,
-      _id: siteNotice._id,
+    let application = {
+      ...siteNotice,
+      applicationType: development.application_type,
+      description: development.development_description,
+      address: development.development_address,
+      name: siteNotice.name ? siteNotice.name : development.development_description,
+      location : { lng : development.longitude, lat : development.latitude }
     };
+
+    return application;
   });
 
   return developments;
@@ -129,11 +133,18 @@ export async function getApplicationById(id: string) {
       if (!siteNotice) {
         return;
       }
-      return {
-        ...development,
-        ...post[0],
-        _id: siteNotice._id,
+
+      let application = {
+        ...siteNotice,
+        applicationType: development.application_type,
+        description: development.development_description,
+        address: development.development_address,
+        applicationStage: development.system_status,
+        name: siteNotice.name ? siteNotice.name : development.development_description,
+        location : { lng : development.longitude, lat : development.latitude }
       };
+  
+      return application;
     });
 
     return developments;

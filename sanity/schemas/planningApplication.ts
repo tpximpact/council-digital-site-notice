@@ -16,6 +16,13 @@ export default defineType({
   },
   fields: [
     defineField({
+      name: 'isActive',
+      title: 'IsActive',
+      type: 'boolean',
+      initialValue: false,
+      description: 'When set to true will show on the website. Will be hidden if false.'
+    }),
+    defineField({
       title: "Application number",
       name: "applicationNumber",
       type: "string",
@@ -38,11 +45,18 @@ export default defineType({
       title: "Name of development",
       name: "name",
       type: "string",
+      description: 'Use a short name that is used to identify this development or the plot of land, e.g. The Shard or Murphy\'s Yard',
     }),
     defineField({
       title: "Description",
       name: "description",
       type: "string",
+    }),
+    defineField({
+      title: "Address",
+      name: "address",
+      type: "string",
+      //readOnly: true,
     }),
     defineField({
       title: "Image Head",
@@ -60,9 +74,20 @@ export default defineType({
       ]
     }),
     defineField({
+      title: "Application Type",
+      name: "applicationType",
+      type: "string",
+    }),
+    defineField({
+      title: "Application Stage",
+      name: "applicationStage",
+      type: "string",
+    }),
+    defineField({
       title: "Height",
       name: "height",
       type: "number",
+      description: 'Enter the maximum height in storeys',
     }),
     defineField({
       title: "Development Type",
@@ -73,6 +98,26 @@ export default defineType({
       title: 'Estimated construction time',
       name: 'constructionTime',
       type: 'string'
+    }),
+    defineField({
+      title: "Comment Deadline",
+      name: "commentDeadline",
+      type: "string",
+    }),
+    defineField({
+      title: "C02 Emissions",
+      name: "c02Emissions",
+      type: "string",
+    }),
+    defineField({
+      title: "Air Quality",
+      name: "airQuality",
+      type: "string",
+    }),
+    defineField({
+      title: "Location",
+      name: "location",
+      type: "geopoint"
     }),
     defineField({
       title: 'Proposed land use',
@@ -121,11 +166,6 @@ export default defineType({
           }
         }
       ]
-    }),
-    defineField({
-      title: "Comment Deadline",
-      name: "commentDeadline",
-      type: "string",
     }),
     defineField({
       title: "Open Space Gardens",
@@ -212,27 +252,6 @@ export default defineType({
         
         return true
       })
-    }),
-    defineField({
-      title: "Air Quality",
-      name: "airQuality",
-      type: "string",
-    }),
-    defineField({
-      title: "Location",
-      name: "location",
-      type: "geopoint"
-    }),
-    defineField({
-      name: 'isActive',
-      title: 'IsActive',
-      type: 'boolean',
-      initialValue: false
-    }),
-    defineField({
-      title: "C02 Emissions",
-      name: "c02Emissions",
-      type: "string",
     }),
     defineField({
       title: 'Pedestrian and vehicle access',

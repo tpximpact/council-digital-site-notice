@@ -55,7 +55,7 @@ function About({data} : {data: DataDetails}) {
         </div>
         <h3 className="govuk-heading-m">Application type</h3>
         <p className="govuk-body-s">
-        {data?.application_type}
+        {data?.applicationType}
         </p>
         <Details summary='Learn more about application types' description={descriptionDetail["about"]}/>
         <h3 className="govuk-heading-m">How the site will be used</h3>
@@ -89,8 +89,7 @@ function About({data} : {data: DataDetails}) {
         }
 
         <h3 className="govuk-heading-m">Application reference</h3>
-        <p className="govuk-body-s">{data?.applicationNumber
-}</p>
+        <p className="govuk-body-s">{data?.applicationNumber}</p>
         </div>
     )
 }

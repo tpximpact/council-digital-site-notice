@@ -17,13 +17,12 @@ const systemStatusStyle = (value: string) => {
 }
 
 function Process({id, 
-    system_status,
+    applicationStage,
     commentDeadline
 }: {id: string, 
-    system_status: string
+    applicationStage: string
     commentDeadline: string
 }) {
-
     return(
         <section className="process-wrap">
             <h2 className="govuk-heading-l">Where are we in the process?</h2>
@@ -31,7 +30,7 @@ function Process({id,
             <div className="wrap-grid-button">
                 <div className="process-grid">
                     <p className="govuk-body govuk-!-font-weight-bold process-consultation">Consultation</p>
-                    <p className={`govuk-body-s process-consultation-result ${systemStatusStyle('refused')}`}><span>{system_status?.toUpperCase()}</span></p>
+                    <p className={`govuk-body-s process-consultation-result ${systemStatusStyle('refused')}`}><span>{applicationStage?.toUpperCase()}</span></p>
                     <p className="govuk-body application-days">{commentDeadline && commentDeadline} {parseFloat(commentDeadline) > 1 ? 'days' : 'day'} left</p>
                     <p className="govuk-body">
                     People in the local community share feedback and comment on the proposed plans.
