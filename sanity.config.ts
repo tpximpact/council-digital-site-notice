@@ -26,23 +26,22 @@ export default defineConfig({
         S.list()
           .title("Content")
           .items([
-
             // Our singleton type has a list item with a custom child
             S.listItem()
-              .title("Settings")
-              .id("settings")
+              .title("Global Content")
+              .id("globalContent")
               .child(
                 // Instead of rendering a list of documents, we render a single
                 // document, specifying the `documentId` manually to ensure
                 // that we're editing the single instance of the document
                 S.document()
-                  .schemaType("settings")
-                  .documentId("settings")
+                  .schemaType("comment-information")
+                  .documentId("commentinformation")
+                  .title("Comment Information")
               ),
-
+            S.divider(),
             // Regular document types
-            S.documentTypeListItem("planning-application").title("Planning application"),
-            S.documentTypeListItem("comment-information").title("CommentInformation"),
+            S.documentTypeListItem("planning-application").title("Planning applications"),
           ]),
     }),
     visionTool({defaultApiVersion: apiVersion}),
