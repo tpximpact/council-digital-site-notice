@@ -17,6 +17,10 @@ const PersonalDetails = () => {
     const [isEmailError, setIsEmailErros] = useState<boolean>(false)
     const [isPhoneError, setIsPhoneErros] = useState<boolean>(false)
     const [isConsentError, setIsConsentErros] = useState<boolean>(false)
+    const [generalMessage, setGeneralMessage] = useState<any>('')
+    const [invalidPostcodeMessage, setInvalidPostcodeMessage] = useState<any>('')
+    const [optionalValidationMessage, setOptionalValidationMessage] = useState<any>('')
+    const [consentErrorMessage, setConsentErrorMessage] = useState<any>('')
     
     const backComponent = selectedCheckbox && selectedCheckbox[selectedCheckbox?.length - 1]
 
@@ -61,14 +65,17 @@ const nextPage = () => {
     setIsError(true)
     personalDetailsForm?.name == '' ? setIsNameErros(true) : setIsNameErros(false)
     personalDetailsForm?.address == '' ? setIsAddressErros(true) : setIsAddressErros(false)
+    setGeneralMessage(messageError(personalDetailsForm))
     !postcodeValidation(personalDetailsForm?.postcode) ? setIsPostcodeErros(true) : setIsPostcodeErros(false)
+    setInvalidPostcodeMessage(postcodeMessageError(personalDetailsForm))
     !emailValidation(personalDetailsForm?.email) ? setIsEmailErros(true) : setIsEmailErros(false)
     !phoneValidation(personalDetailsForm?.phone) ? setIsPhoneErros(true) : setIsPhoneErros(false)
+    setOptionalValidationMessage(optionalValidation(personalDetailsForm))
     !personalDetailsForm['consent'] ? setIsConsentErros(true) : setIsConsentErros(false)
+    setConsentErrorMessage(!personalDetailsForm['consent'] && `you need to check the consent box`)
 
 }
 }
-console.log({personalDetailsForm})
 
     return(
         <section className="wrap-personal-details">
@@ -94,10 +101,10 @@ console.log({personalDetailsForm})
         </div>
         {
             (isError) && <Validation 
-            message={messageError(personalDetailsForm)} 
-            invalidPostCode={postcodeMessageError(personalDetailsForm)} 
-            optionalValidation={optionalValidation(personalDetailsForm)}
-            consentError={!personalDetailsForm['consent'] && `you need to check the consent box`}
+            message={generalMessage} 
+            invalidPostCode={invalidPostcodeMessage} 
+            optionalValidation={optionalValidationMessage}
+            consentError={consentErrorMessage}
             />   
         }
 
