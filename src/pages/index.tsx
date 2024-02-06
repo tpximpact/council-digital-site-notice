@@ -69,7 +69,8 @@ const Home = ({ dataId, data }: PaginationType) => {
           type="text"
           value={postcode}
           onChange={(e) => setPostcode(e)}
-          locationError={locationNotFound}
+          isError={locationNotFound}
+          messageError='Please enter a valid postcode'
         />
         <Button
           className="grid-button-search"
