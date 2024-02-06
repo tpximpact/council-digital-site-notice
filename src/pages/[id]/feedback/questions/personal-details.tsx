@@ -47,7 +47,7 @@ const onChangeDetails = (value: any, key: string) => {
     localStorage.setItem(key, value)
 
 }
-const generalMessageError = messageError(personalDetailsForm)
+
 
 const nextPage = () => {
     const errorValidation = isErrorValidation(personalDetailsForm) 
@@ -68,7 +68,7 @@ const nextPage = () => {
 
 }
 }
-
+console.log({personalDetailsForm})
 
     return(
         <section className="wrap-personal-details">

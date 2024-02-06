@@ -7,24 +7,26 @@ import { urlFor } from "../../../../util/client";
 
 
 const FeedbackMessage = () => {
-    const { dataApplication: {address, image, applicationNumber} } = useContext(ContextApplication);
+    const { dataApplication: {address, image_head, applicationNumber, _id} } = useContext(ContextApplication);
     const [addressAplication, setAddressAplication] = useState()
     const [imageAplication, setImageAplication] = useState()
     const [referenceAplication, setReferenceAplication] = useState()
 
     useEffect(() => {
         const initialValue = localStorage.getItem("application")
-        if(address !== undefined || image !== undefined || applicationNumber !== undefined || initialValue === null) {
+        if((address !== undefined || image_head !== undefined || applicationNumber !== undefined) || initialValue === null) {
             setAddressAplication(address)
-            setImageAplication(image)
+            setImageAplication(image_head)
             setReferenceAplication(applicationNumber)
+
         } else {
             setAddressAplication(JSON.parse(initialValue).address)
-            setImageAplication(JSON.parse(initialValue).image)
+            setImageAplication(JSON.parse(initialValue).image_head)
             setReferenceAplication(JSON.parse(initialValue).application_number)
+
         }
 
-    },[address, image, applicationNumber])
+    },[address, image_head, applicationNumber])
 
     return(
         <section>
@@ -38,7 +40,7 @@ const FeedbackMessage = () => {
                 {imageAplication && <Image src={urlFor(imageAplication)?.url()} alt="development-image" width={80} height={56}/>}
             
             <div style={{marginLeft: '15px'}}>
-            <Link className="govuk-body govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" href="" style={{marginBottom: '5px', textDecoration:'none'}}>{addressAplication}</Link>
+            <Link className="govuk-body govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" href={`/${referenceAplication}`} style={{marginBottom: '5px', textDecoration:'none'}}>{addressAplication}</Link>
             <p className="govuk-body-s govuk-!-font-weight-bold" style={{marginBottom: 0}}>Application reference </p>
             <p className="govuk-body-s">{referenceAplication}</p>
             </div>

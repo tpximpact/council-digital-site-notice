@@ -11,5 +11,6 @@ export const defaultValue = {
     commentForm: {},
     setCommentForm: () => {},
     personalDetailsForm: {name: "", address: "", email: "", phone: "", postcode:"", consent: false},
-    setPersonalDetailsForm: () => {}
+    setPersonalDetailsForm: () => {},
+    contextCleaner: () => {},
 }
