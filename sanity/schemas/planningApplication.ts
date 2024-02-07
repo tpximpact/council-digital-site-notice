@@ -70,6 +70,7 @@ export default defineType({
     defineField({
       title: "Application Stage",
       name: "applicationStage",
+      validation: (Rule: any) => Rule.required(),
       type: "object",
       fields: [
         {
