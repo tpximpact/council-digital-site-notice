@@ -5,20 +5,6 @@ import { ContextApplication } from "@/context"
 import {ArrowIcon} from "../../../../public/assets/icons"
 import { DataDetails } from "../../../../util/type";
 
-function Process({data}: {data: DataDetails}) {
-    const {globalInfo} = useContext(ContextApplication)
-    const [planningProcessUrl, setPlanningProcessUrl] = useState()
-
-    useEffect(() => {
-        const globalContent = localStorage.getItem('globalInfo')
-        if(globalContent !== null) {
-            setPlanningProcessUrl(JSON.parse(globalContent).planningProcessUrl)
-        } else {
-            setPlanningProcessUrl(globalInfo?.planningProcessUrl)
-        }
-    }, [globalInfo?.planningProcessUrl])
-
-
 const aplicationStageStyle = (value: string) => {
 
     const style:{[key: string]: string} = {
@@ -63,15 +49,21 @@ const applicationStageMessage = (stage:string, status:string ) => {
     return message[stage]
 }
 
-function Process({id, 
-    applicationStage,
-    commentDeadline
-}: {id: string, 
-    applicationStage: any
-    commentDeadline: string
-}) {
+function Process({data}: {data: DataDetails}) {
 
-    const singleApplicationStatus = applicationStage?.status[applicationStage?.stage?.toLowerCase()]
+    const {globalInfo} = useContext(ContextApplication)
+    const [planningProcessUrl, setPlanningProcessUrl] = useState()
+
+    useEffect(() => {
+        const globalContent = localStorage.getItem('globalInfo')
+        if(globalContent !== null) {
+            setPlanningProcessUrl(JSON.parse(globalContent).planningProcessUrl)
+        } else {
+            setPlanningProcessUrl(globalInfo?.planningProcessUrl)
+        }
+    }, [globalInfo?.planningProcessUrl])
+
+    const singleApplicationStatus = data.applicationStage?.status[data.applicationStage?.stage?.toLowerCase()]
 
     return(
         <section className="process-wrap">
@@ -82,11 +74,11 @@ function Process({id,
             }
             <div className="wrap-grid-button">
                 <div className="process-grid">
-                    <p className="govuk-body govuk-!-font-weight-bold process-consultation">{applicationStage?.stage}</p>
+                    <p className="govuk-body govuk-!-font-weight-bold process-consultation">{data.applicationStage?.stage}</p>
                     <p className={`govuk-body-s process-consultation-result ${aplicationStageStyle(singleApplicationStatus)}`}><span>{singleApplicationStatus?.toUpperCase()}</span></p>
-                    <p className="govuk-body application-days">{commentDeadline && commentDeadline} {parseFloat(commentDeadline) > 1 ? 'days' : 'day'} left</p>
+                    <p className="govuk-body application-days">{data.commentDeadline && data.commentDeadline} {parseFloat(data.commentDeadline) > 1 ? 'days' : 'day'} left</p>
                     <p className="govuk-body">
-                        {applicationStageMessage(applicationStage?.stage, singleApplicationStatus)}
+                        {applicationStageMessage(data.applicationStage?.stage, singleApplicationStatus)}
                     </p>
                 </div>
                 <div>{
