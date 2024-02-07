@@ -50,20 +50,20 @@ const Application = ({data}: {data: DataDetails} ) => {
       'name': data?.name,
       'id': data?._id,
       'reference': data?.reference,
-      'applicationStage': data?.applicationStage
+      'applicationStage': data?.applicationStage,
+      'applicationUpdatesUrl': data?.applicationUpdatesUrl
     }))
   },[data, setDataApplication, setQuestion, commentDeadline])
   
 
 const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: data?.name, href:""}]
 
-
     return (
         <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         <About data={data}/>
         <Impact data={data}/>
-        <Process id={data?._id} commentDeadline={data?.commentDeadline} applicationStage={data?.applicationStage}/>
+        <Process data={data}/>
         </>
     )
 }

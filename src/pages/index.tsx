@@ -7,6 +7,7 @@ import {ArrowIcon} from "../../public/assets/icons"
 import { getActiveApplications, getActiveApplicationsPagination, getGlobalContent } from "../../util/client";
 import { PaginationType, Data } from '../../util/type';
 import { getLocationFromPostcode } from "../../util/geolocation";
+import { ContextApplication } from '@/context';
 import Link from 'next/link';
 
 export const itemsPerPage = 6;
@@ -26,6 +27,7 @@ export async function getStaticProps() {
 }
 
 const Home = ({ dataId, data, globalContent }: PaginationType) => {
+  const {setGlobalInfo} = useContext(ContextApplication)
   const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
   const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
@@ -34,9 +36,10 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
 
   useEffect(() => {
     setDisplayData(data);
+    setGlobalInfo(globalContent)
     localStorage.setItem('globalInfo', JSON.stringify(globalContent))
 
-  }, [dataId, data, globalContent]);
+  }, [dataId, data, globalContent, setGlobalInfo]);
 
 
   async function onSelectPage({ _id }: any) {

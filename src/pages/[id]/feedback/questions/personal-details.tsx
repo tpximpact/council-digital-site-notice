@@ -9,13 +9,22 @@ import { descriptionDetail } from "../../../../../util/descriptionDetail";
 import { messageError, optionalValidation, isErrorValidation, isConsentValidation, isOptionValidation, postcodeMessageError } from "../../../../../util/feedbackHelper";
 
 const PersonalDetails = () => {
-    const { onChangeQuestion, setQuestion, selectedCheckbox, personalDetailsForm, setPersonalDetailsForm } = useContext(ContextApplication);
+    const { onChangeQuestion, setQuestion, selectedCheckbox, personalDetailsForm, setPersonalDetailsForm, globalInfo } = useContext(ContextApplication);
     const [isError, setIsError] = useState<boolean>(false)
     const [isConsentError, setIsConsentError] = useState<boolean>(false)
+    const [councilName, setCouncilName] = useState()
     
     const backComponent = selectedCheckbox && selectedCheckbox[selectedCheckbox?.length - 1]
 
     useEffect(() => {
+
+        const initialGlobalValue = localStorage.getItem("globalInfo")
+        
+        if(initialGlobalValue !== null) {
+            setCouncilName(JSON.parse(initialGlobalValue).councilName)
+        } else {
+            setCouncilName(globalInfo.councilName)
+        }
         
     const initialValueName = localStorage.getItem("name") || ''
     const initialValueAddress = localStorage.getItem("address") || ''
@@ -35,7 +44,7 @@ const PersonalDetails = () => {
         consent: initialValueConsent
     })
 
-}, [setPersonalDetailsForm])
+}, [globalInfo.councilName, setPersonalDetailsForm])
 
 const onChangeDetails = (value: any, key: string) => {
     setPersonalDetailsForm({...personalDetailsForm, [key]: value})
@@ -70,7 +79,7 @@ const nextPage = () => {
         <Input label="Telephone number" hint="Optional" onChange={(value: any) => onChangeDetails(value, 'phone')} value={personalDetailsForm?.phone} type='tel'/>
         <div >
         <Checkbox labelClass='consent-label' 
-        label='I consent to Lambeth Council using my data for the purposes of assessing this planning application' 
+        label={`I consent to ${councilName} Council using my data for the purposes of assessing this planning application`}
         id='consent' 
         onChange={(e) => onChangeDetails(e.target.checked, 'consent')} checked={personalDetailsForm?.consent}/>
         </div>

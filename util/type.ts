@@ -63,6 +63,8 @@ export type DataDetails = {
     address: string
     description: string
     reference: string
+    applicationUpdatesUrl: string
+    applicationDocumentsUrl: string
 }
 
 export type DataTypeArray = {
@@ -143,4 +145,6 @@ export type ContextApplicationProps = {
     setCommentForm: (value: any) => void;
     personalDetailsForm : PersonalDetailsForm;
     setPersonalDetailsForm: (value: any) => void;
+    globalInfo: any;
+    setGlobalInfo: (value:any) => void
 }

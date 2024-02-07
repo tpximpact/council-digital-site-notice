@@ -27,8 +27,23 @@ export default defineType({
             validation: Rule => Rule.required(),
           }),
           defineField({
-            name: 'SignUpUrl',
+            name: 'signUpUrl',
             title: 'Sign Up Url',
+            type: 'string',
+          }),
+          defineField({
+            name: 'planningProcessUrl',
+            title: 'Planning Process Url',
+            type: 'string',
+          }),
+          defineField({
+            name: 'materialConsiderationUrl',
+            title: 'Material Consideration Url',
+            type: 'string',
+          }),
+          defineField({
+            name: 'howToGetInvolveUrl',
+            title: 'How To Get Involve Url',
             type: 'string',
           }),
           defineField({

@@ -46,6 +46,16 @@ export default defineType({
       //readOnly: true,
     }),
     defineField({
+      title: 'Application Updates Url',
+      name: 'applicationUpdatesUrl',
+      type: 'string'
+    }),
+    defineField({
+      title: 'Application Documents Url',
+      name: 'applicationDocumentsUrl',
+      type: 'string'
+    }),
+    defineField({
       title: "Image Head",
       name: "image_head",
       type: 'image'
