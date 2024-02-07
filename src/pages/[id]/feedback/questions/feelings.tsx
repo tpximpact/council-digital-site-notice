@@ -1,12 +1,13 @@
-import { useEffect, useContext } from "react"
+import { useEffect, useContext, useState } from "react"
 import { ContextApplication } from "@/context";
-import Details from "@/components/details"
 import {Button} from "@/components/button"
 import { Happy, Neutral, Opposed } from "../../../../../public/assets/icons"
+import Validation from "@/components/validation";
 
 
 function Feeling(){
     const { onChangeQuestion, feelingForm, setFeelingForm } = useContext(ContextApplication);
+    const [isError, setIsError] = useState(false)
 
     useEffect(() => {
             const initialValue = localStorage.getItem("feeling") || ''
@@ -29,6 +30,15 @@ function Feeling(){
         "Support": feelingForm === "Support" ? "#00703C" : "white"
     }
 
+function onNextPage() {
+    if(feelingForm !== ""){
+        setIsError(false)
+        onChangeQuestion()
+    } else {
+        setIsError(true)
+    }
+}
+
     return(
         <section>
         
@@ -38,7 +48,10 @@ function Feeling(){
             <div><Neutral onClick={() => {onChangeFeeling('Neutral')}} color={colors['Neutral']}/><span className="govuk-body">Neutral</span></div>
             <div><Happy onClick={() => {onChangeFeeling('Support')}} color={colors['Support']}/><span className="govuk-body">Support</span></div>
             </div>
-            <Button content="Next" onClick={() => onChangeQuestion()}/>
+            {
+                isError && <Validation message="Please select one"/>
+            }
+            <Button content="Next" onClick={() => onNextPage()}/>
         </section>
     )
 }

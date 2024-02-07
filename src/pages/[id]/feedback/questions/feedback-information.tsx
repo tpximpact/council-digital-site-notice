@@ -30,7 +30,7 @@ function FeedbackInformation() {
 
     return(
         <>
-        <section>
+        <section style={{paddingBottom: '25px'}}>
             <div className="info-header">
             <h1 className='govuk-heading-xl' style={{marginBottom: 0}}>What you need to know before you comment</h1>
             </div>
@@ -51,7 +51,7 @@ function FeedbackInformation() {
             </ul>
             <p className="govuk-body">Strength of local opposition to a planning application can’t be considered. This means that if a comment you’d like to raise has already been made, you don’t need to repeat it.</p>
            { url !== "" &&
-            <Link href={url} target="_blank" className="govuk govuk-link" >What can you do if these things concern you?</Link>
+            <Link href={url} target="_blank" className="govuk govuk-link govuk-link--no-visited-state" >What can you do if these things concern you?</Link>
            }
             
         </section>

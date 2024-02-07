@@ -2,10 +2,6 @@
     max-width: 64rem;
 }
 
-.gallery-image-button {
-    width: 100%;
-}
-
 .carousel-wrap {
     width: auto; 
     margin-bottom: 20px;
@@ -43,8 +39,8 @@
 // impact style
 .impact-wrap {
     background-color: #1D70B8;
-    padding: 20px 200px;
-    margin: 40px -200px 0
+    padding: 20px;
+    margin: 20px -20px
 }
 
 .impact-wrap * {
@@ -59,7 +55,8 @@
     margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    column-gap: 15px;
 }
 
 .impact-item-container {

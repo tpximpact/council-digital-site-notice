@@ -17,7 +17,7 @@ const Gallery = ({images, loadImage, setIsModalOpen, setLoadImage, setImageSelec
                     })}
 </div>
 {
-    images?.length > loadImage && <Button onClick={() => setLoadImage(images?.length)} content={`Load ${images?.length - loadImage} more images`} className="govuk-button--secondary gallery-image-button"/>
+    images?.length > loadImage && <Button onClick={() => setLoadImage(images?.length)} content={`Load ${images?.length - loadImage} more images`} className="govuk-button--secondary"/>
 }
 
         </div>

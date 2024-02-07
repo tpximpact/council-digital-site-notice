@@ -142,4 +142,5 @@ export type ContextApplicationProps = {
     setCommentForm: (value: any) => void;
     personalDetailsForm : PersonalDetailsForm;
     setPersonalDetailsForm: (value: any) => void;
+    contextCleaner: () => void;
 }
