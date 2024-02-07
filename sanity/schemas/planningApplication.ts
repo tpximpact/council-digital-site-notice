@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+import { appeal, assessment, consultation, decision } from "../structure/helper";
 
 export default defineType({
   title: "Planning application",
@@ -26,8 +27,20 @@ export default defineType({
       name: "applicationNumber",
       type: "string",
       validation: (Rule: any) => Rule.required(),
-      //readOnly: true
+      readOnly: true
     }),
+    defineField({
+      title: "Address",
+      name: "address",
+      type: "string",
+      readOnly: true,
+    }),
+    defineField({
+      title: "Application Type",
+      name: "applicationType",
+      type: "string",
+    }),
+
     defineField({
       title: "Name of development",
       name: "name",
@@ -38,12 +51,6 @@ export default defineType({
       title: "Description",
       name: "description",
       type: "string",
-    }),
-    defineField({
-      title: "Address",
-      name: "address",
-      type: "string",
-      //readOnly: true,
     }),
     defineField({
       title: "Image Head",
@@ -61,14 +68,71 @@ export default defineType({
       ]
     }),
     defineField({
-      title: "Application Type",
-      name: "applicationType",
-      type: "string",
-    }),
-    defineField({
       title: "Application Stage",
       name: "applicationStage",
-      type: "string",
+      validation: (Rule: any) => Rule.required(),
+      type: "object",
+      fields: [
+        {
+          title: 'State',
+          description: 'please select the stage of application',
+          name: 'stage',
+          type: 'string',
+          options: {
+            list: ['Consultation', 'Assessment', 'Decision', 'Appeal'],
+            layout: "radio",
+            direction: "horizontal",
+          }
+        },
+        {
+          title: 'Status',
+          description: 'please select the status of the stage',
+          name: 'status',
+          type: 'object',
+          fields: [
+            {
+              title: 'Consultation',
+              name: 'consultation',
+              type: 'string',
+              options: {
+                list: consultation
+              },
+              hidden: ({document}: any) => document?.applicationStage?.stage !== 'Consultation',
+            },
+            {
+              title: 'Assessment',
+              name: 'assessment',
+              type: 'string',
+              options: {
+                list: assessment
+              },
+              hidden: ({document}: any) => document?.applicationStage?.stage !== 'Assessment'
+            },
+            {
+              title: 'Decision',
+              name: 'decision',
+              type: 'string',
+              options: {
+                list: decision
+              },
+              hidden: ({document}: any) => document?.applicationStage?.stage !== 'Decision'
+            },
+            {
+              title: 'Appeal',
+              name: 'appeal',
+              type: 'string',
+              options: {
+                list: appeal
+              },
+              hidden: ({document}: any) => document?.applicationStage?.stage !== 'Appeal'
+            }
+          ],
+        }
+      ],
+      initialValue: {
+        stage: 'Consultation',
+        status: {Consultation: 'in progress'}
+      }
     }),
     defineField({
       title: "Height",
