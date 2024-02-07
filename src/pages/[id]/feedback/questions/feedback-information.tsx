@@ -4,7 +4,7 @@ import Link from "next/link"
 import { ContextApplication } from "@/context";
 import { Button } from "@/components/button"
 import { ArrowIcon } from "../../../../../public/assets/icons"
-import { getCommentInfo } from "../../../../../util/client"
+import { getGlobalContent } from "../../../../../util/client"
 import { useEffect, useState } from "react"
 
 
@@ -17,7 +17,7 @@ function FeedbackInformation() {
 
     useEffect(() => {
         (async() => {
-            const res = await getCommentInfo()
+            const res = await getGlobalContent()
             if(res?.concernUrl !== undefined) {
                 const newURL = res.concernUrl.includes('http') ? res.concernUrl : `https://${res.concernUrl}`
                 setUrl(newURL)

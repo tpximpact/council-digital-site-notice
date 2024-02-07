@@ -73,6 +73,7 @@ export type PaginationType = {
     dataId: {_id: string}[]
     data: Data[]
     paginationData?: Data[]
+    globalContent: any
 }
 
 export type CommentForm = {

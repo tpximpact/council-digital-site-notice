@@ -1,14 +1,5 @@
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
-import {
-  parse,
-  getYear,
-  getMonth,
-  getDate,
-  formatDistanceStrict,
-} from "date-fns";
-import { groq } from "next-sanity";
-import { getLocationFromPostcode } from "./geolocation";
 
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -153,8 +144,8 @@ export async function getApplicationById(id: string) {
   }
 }
 
-export async function getCommentInfo() {
-    const info = await client.fetch('*[_type == "comment-information"][0]')
+export async function getGlobalContent() {
+    const info = await client.fetch('*[_type == "global-content"][0]')
     return info
 }
   
