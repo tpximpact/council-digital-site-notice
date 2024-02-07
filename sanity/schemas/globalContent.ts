@@ -31,6 +31,11 @@ export default defineType({
             title: 'Sign Up Url',
             type: 'string',
           }),
+          defineField({
+            name: 'logo',
+            title: 'Logo',
+            type: 'image',
+          }),
     ],
     
 });
