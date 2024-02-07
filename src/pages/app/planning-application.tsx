@@ -27,7 +27,7 @@ const indexValue = (parseFloat((data.length/3).toFixed()) * 3)
               <Image width={310} height={223} alt="" src={urlFor(image_head).url()} />
             )}
             <div style={{paddingTop: '20px'}}>
-              <Link href={`/${_id}`} className="govuk-link govuk-link--no-visited-state link-application">{name}</Link>
+              <span className="govuk-link govuk-link--no-visited-state link-application">{name}</span>
               <span className="planning-application-text">
                   <p className="govuk-body" style={{marginBottom: 0}}>
                     <LocalIcon />                   {
