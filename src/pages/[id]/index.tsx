@@ -41,6 +41,7 @@ const Application = ({data}: {data: DataDetails} ) => {
     setCommentDeadline(deadlineTime)
     setDataApplication({...data, commentDeadline: deadlineTime})
 
+    console.log(data)
     localStorage.setItem("application", JSON.stringify({
       'address': data?.address,
       'image_head': data?.image_head,

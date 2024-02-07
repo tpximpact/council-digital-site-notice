@@ -18,7 +18,6 @@ import { verifyApiKey } from "../../../util/apiKey";
  *             description: string
  *             address: string
  *             applicationType: string
- *             applicationStage: string
  *             height: string
  *             developmentType: string
  *             commentDeadline: string
@@ -31,7 +30,6 @@ import { verifyApiKey } from "../../../util/apiKey";
  *             description: Lorem ipsum dolor sit amet, consectetur adipiscing elit 
  *             address: 123 Example Street Name Town Name City 
  *             applicationType: Full Planning Permission
- *             applicationStage: PCO
  *             height: 14
  *             developmentType: Change of Use
  *             commentDeadline: 31/12/2023 12:00:00 am
@@ -78,7 +76,6 @@ export default async function handler(
     description, 
     address, 
     applicationType,
-    applicationStage,
     height,
     developmentType,
     commentDeadline,
@@ -90,7 +87,6 @@ export default async function handler(
     description,
     address,
     applicationType,
-    applicationStage,
     height,
     developmentType,
     commentDeadline,
