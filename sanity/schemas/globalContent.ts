@@ -47,9 +47,10 @@ export default defineType({
             type: 'string',
           }),
           defineField({
-            name: 'logo',
             title: 'Logo',
+            name: 'logo',
             type: 'image',
+            validation: Rule => Rule.required(),
           }),
     ],
     

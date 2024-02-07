@@ -23,7 +23,7 @@ const PersonalDetails = () => {
         if(initialGlobalValue !== null) {
             setCouncilName(JSON.parse(initialGlobalValue).councilName)
         } else {
-            setCouncilName(globalInfo.councilName)
+            setCouncilName(globalInfo?.councilName)
         }
         
     const initialValueName = localStorage.getItem("name") || ''
@@ -44,7 +44,7 @@ const PersonalDetails = () => {
         consent: initialValueConsent
     })
 
-}, [globalInfo.councilName, setPersonalDetailsForm])
+}, [globalInfo?.councilName, setPersonalDetailsForm])
 
 const onChangeDetails = (value: any, key: string) => {
     setPersonalDetailsForm({...personalDetailsForm, [key]: value})

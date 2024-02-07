@@ -24,7 +24,7 @@ const FeedbackMessage = () => {
             setCouncilName(JSON.parse(initialGlobalValue).councilName)
         } else {
             setInvolveUrl(globalInfo?.howToGetInvolveUrl)
-            setCouncilName(globalInfo.councilName)
+            setCouncilName(globalInfo?.councilName)
         }
 
         if(address !== undefined || image !== undefined || applicationNumber !== undefined || applicationUpdatesUrl || initialValue === null) {
@@ -51,7 +51,7 @@ const FeedbackMessage = () => {
             </div>
             <div style={{display: 'flex', marginTop: '25px'}}>
                 {imageAplication && <Image src={urlFor(imageAplication)?.url()} alt="development-image" width={80} height={56}/>}
-            
+             
             <div style={{marginLeft: '15px'}}>
             <p className="govuk-body govuk-!-font-weight-bold" style={{marginBottom: '5px'}}>{addressAplication}</p>
             <p className="govuk-body-s govuk-!-font-weight-bold" style={{marginBottom: 0}}>Application reference </p>

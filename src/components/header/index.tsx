@@ -1,20 +1,25 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import Image from "next/image";
 import { urlFor } from "../../../util/client";
 import { urlForImage } from "../../../sanity/lib/image";
+import { ContextApplication } from "@/context";
 
 const Header = () => {
+  const {globalInfo} = useContext(ContextApplication)
   const [logoCouncil, setLogoCouncil] = useState("")
 
   useEffect(() => {
+    console.log(globalInfo?.logo)
     const initialValue = localStorage.getItem("globalInfo")
     if(initialValue !== null) {
       const image = JSON.parse(initialValue)?.logo
         // setLogoCouncil(urlFor(image))
+    } else {
+      // setLogoCouncil(urlFor(globalInfo?.logo))
     }
 
-},[])
-console.log(logoCouncil)
+},[globalInfo?.logo])
+
     return (
  <header className="govuk-header" role="banner" data-module="govuk-header">
   <div className="govuk-header__container govuk-width-container">

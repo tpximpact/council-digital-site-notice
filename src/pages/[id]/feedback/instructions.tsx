@@ -6,7 +6,7 @@ import { urlFor } from "../../../../util/client";
 import { DataDetails } from "../../../../util/type";
 
 function Instructions({data} : {data: DataDetails}) {
-    const { dataApplication: {globalInfo} } = useContext(ContextApplication);
+    const { globalInfo } = useContext(ContextApplication);
     const [image, setImage] = useState<string |undefined>(undefined)
     const [addressData, setAddressData] = useState<string>('')
     const [applicationNumberData, setApplicationNumberData] = useState<string | undefined>(undefined)
@@ -18,7 +18,7 @@ function Instructions({data} : {data: DataDetails}) {
         if(initialGlobalValue !== null) {
             setCouncilName(JSON.parse(initialGlobalValue).councilName)
         } else {
-            setCouncilName(globalInfo.councilName)
+            setCouncilName(globalInfo?.councilName)
         }
 
        const getStorage = localStorage.getItem("application")
@@ -33,7 +33,7 @@ function Instructions({data} : {data: DataDetails}) {
         setAddressData(address)
         setApplicationNumberData(application_number)
        }
-    }, [data, globalInfo.councilName])
+    }, [data, globalInfo?.councilName])
 
 
      
