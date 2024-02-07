@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { CommentForm, PersonalDetailsForm } from "../../util/type";
 import { ContextApplicationProps } from "../../util/type";
 import { defaultValue } from "./helper";
@@ -23,12 +23,6 @@ function Context({children}:any) {
         } 
         else if(question === 13) {
             setQuestion(0)
-            setSelectedCheckbox([])
-            setFeelingForm("")
-            setCommentForm({})
-            setPersonalDetailsForm({
-                name: "", address: "", email: "", phone: "", postcode:"", consent: false
-            })
         } 
         else if(question === selectedCheckbox[selectedCheckbox.length -1 ]) { 
             setQuestion(11)
@@ -39,6 +33,15 @@ function Context({children}:any) {
             setQuestion(newQuestion)
             } 
         }
+
+    function contextCleaner() {
+        setSelectedCheckbox([])
+        setFeelingForm("")
+        setCommentForm({})
+        setPersonalDetailsForm({
+            name: "", address: "", email: "", phone: "", postcode:"", consent: false
+        })
+    }
 
     return(
         <ContextApplication.Provider value={{
@@ -56,7 +59,8 @@ function Context({children}:any) {
             personalDetailsForm,
             setPersonalDetailsForm,
             globalInfo,
-            setGlobalInfo
+            setGlobalInfo,
+            contextCleaner
 
         }}>
             {children}

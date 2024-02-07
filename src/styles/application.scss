@@ -2,10 +2,6 @@
     max-width: 64rem;
 }
 
-.gallery-image-button {
-    width: 100%;
-}
-
 .carousel-wrap {
     width: auto; 
     margin-bottom: 20px;
@@ -43,8 +39,8 @@
 // impact style
 .impact-wrap {
     background-color: #1D70B8;
-    padding: 20px 200px;
-    margin: 40px -200px 0
+    padding: 20px;
+    margin: 20px -20px
 }
 
 .impact-wrap * {
@@ -59,7 +55,8 @@
     margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    column-gap: 15px;
 }
 
 .impact-item-container {
@@ -110,11 +107,26 @@
 .process-consultation-result {
     display: flex;
     justify-content: flex-start;
+    width: fit-content;
+}
+
+.approved-status {
+    background-color: #CCE2D8;
+    color: #005A30;
+}
+
+.rejected-status {
+    background-color: #F6D7D2;
+    color: #942514;
+    ;
+}
+
+.default-status {
+    background-color: #1D70B8;
+    color: white;
 }
 
 .process-consultation-result span{
-    background-color: #1D70B8;
-    color: white;
     padding: 5px 10px;
     font-weight: 700;
     align-self: center;

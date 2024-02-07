@@ -1,7 +1,7 @@
 .wrap-feedback {
     background-color: #1D70B8;
-    padding: 20px 200px;
-    margin: 0 -200px 15px -200px;
+    padding: 20px;
+    margin: 0 -20px 15px -20px;
 }
 
 .wrap-feedback * {
@@ -25,7 +25,7 @@
 // feedback info
 
 .info-header {
-    margin: 0 -200px;
+    margin: 0 -20px;
 }
 .info-header h1{
     background-color:#1D70B8;
@@ -47,7 +47,7 @@
 .wrap-icons-feeling {
     display: flex;  
     justify-content: space-between;
-    max-width: 55rem;
+    max-width: 25rem;
 }
 
 .wrap-icons-feeling > div {
@@ -107,6 +107,7 @@
     background-color: #00703C;
     padding: 15px 25px;
     text-align: center;
+    width: fit-content;
 }
 
 .wrap-message-reference h1{

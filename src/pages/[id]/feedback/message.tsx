@@ -7,10 +7,11 @@ import { urlFor } from "../../../../util/client";
 
 
 const FeedbackMessage = () => {
-    const { dataApplication: {address, image, applicationNumber, applicationUpdatesUrl , globalInfo} } = useContext(ContextApplication);
+    const { dataApplication: {address, image_head, applicationNumber, applicationUpdatesUrl , _id, globalInfo} } = useContext(ContextApplication);
     const [addressAplication, setAddressAplication] = useState()
     const [imageAplication, setImageAplication] = useState()
     const [referenceAplication, setReferenceAplication] = useState()
+    const [applicationId, setApplicationId] = useState()
     const [updatesUrl, setUpdatesUrl] = useState()
     const [involveUrl, setInvolveUrl] = useState()
     const [councilName, setCouncilName] = useState()
@@ -27,19 +28,22 @@ const FeedbackMessage = () => {
             setCouncilName(globalInfo?.councilName)
         }
 
-        if(address !== undefined || image !== undefined || applicationNumber !== undefined || applicationUpdatesUrl || initialValue === null) {
+        if(address !== undefined || image_head !== undefined || applicationNumber !== undefined || applicationUpdatesUrl !== undefined || initialValue === null) {
             setAddressAplication(address)
-            setImageAplication(image)
+            setImageAplication(image_head)
             setReferenceAplication(applicationNumber)
             setUpdatesUrl(applicationUpdatesUrl)
+            setApplicationId(_id)
+
         } else {
             setAddressAplication(JSON.parse(initialValue).address)
-            setImageAplication(JSON.parse(initialValue).image)
+            setImageAplication(JSON.parse(initialValue).image_head)
             setReferenceAplication(JSON.parse(initialValue).application_number)
             setUpdatesUrl(JSON.parse(initialValue).applicationUpdatesUrl)
+            setApplicationId(JSON.parse(initialValue)._id)
         }
 
-    },[address, image, applicationNumber, applicationUpdatesUrl, globalInfo?.howToGetInvolveUrl, globalInfo?.councilName])
+    },[address, image_head, applicationNumber, applicationUpdatesUrl, globalInfo?.howToGetInvolveUrl, globalInfo?.councilName, _id])
 
     return(
         <section>
@@ -53,7 +57,7 @@ const FeedbackMessage = () => {
                 {imageAplication && <Image src={urlFor(imageAplication)?.url()} alt="development-image" width={80} height={56}/>}
              
             <div style={{marginLeft: '15px'}}>
-            <p className="govuk-body govuk-!-font-weight-bold" style={{marginBottom: '5px'}}>{addressAplication}</p>
+            <Link className="govuk-body govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" href={`/${applicationId}`} style={{marginBottom: '5px', textDecoration:'none'}}>{addressAplication}</Link>
             <p className="govuk-body-s govuk-!-font-weight-bold" style={{marginBottom: 0}}>Application reference </p>
             <p className="govuk-body-s">{referenceAplication}</p>
             </div>

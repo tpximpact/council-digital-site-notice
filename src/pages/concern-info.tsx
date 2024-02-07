@@ -11,9 +11,9 @@ export async function getStaticProps() {
 
 const ConcernInfo = ({data}: any) => {
     return(
-        <>
+        <p className="govuk-body">
         {data?.concernContent}
-        </>
+        </p>
     )
 }
 

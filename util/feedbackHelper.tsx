@@ -15,6 +15,9 @@ export function messageError(personalDetailsForm: any) {
 
     return  !!messageArr.length && `${messageArrSize[messageArr.length]} can not be empty`
 }
+export const postcodeValidation = (postcode: string) => {
+   return postcode == "" || postCodeRegex.test(postcode)
+}
 
 export function postcodeMessageError(personalDetailsForm: any) {
     const postcode = personalDetailsForm['postcode'] 
@@ -35,6 +38,16 @@ export function optionalValidation(personalDetailsForm: any) {
     return messageValidationArrSize[validationMessageArr.length]
 }
 
+export const emailValidation = (emailForm: string) => {
+   return (emailForm !== "" && emailForm.includes('@')) || emailForm == ""
+}
+
+export const phoneValidation = (phoneForm: string) => {
+
+    return (phoneForm !== "" && phoneRegex.test(phoneForm))|| phoneForm == ""
+ }
+
+
 export const isErrorValidation = (personalDetailsForm: any) => { 
     const postcode = personalDetailsForm['postcode']
     const validPostCode = postcode !== '' && postCodeRegex.test(postcode)
@@ -47,9 +60,9 @@ export const isOptionValidation = (personalDetailsForm: any) => {
 
     const phoneForm = personalDetailsForm['phone']
     const emailForm = personalDetailsForm['email'] 
-    const phoneValidation = phoneForm !== "" && phoneRegex.test(phoneForm)
-    const emailValidation = emailForm !== "" && emailForm.includes('@')
+    
+     
 
-    return (phoneValidation === true || phoneForm == "" && emailValidation === true || emailForm == "") ? true : false
+    return (phoneValidation(phoneForm)  && emailValidation(emailForm)) ? true : false
 
 }

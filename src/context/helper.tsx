@@ -13,5 +13,6 @@ export const defaultValue = {
     personalDetailsForm: {name: "", address: "", email: "", phone: "", postcode:"", consent: false},
     setPersonalDetailsForm: () => {},
     globalInfo: {},
-    setGlobalInfo: () => {}
+    setGlobalInfo: () => {},
+    contextCleaner: () => {},
 }

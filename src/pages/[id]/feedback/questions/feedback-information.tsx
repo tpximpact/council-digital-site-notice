@@ -4,7 +4,6 @@ import Link from "next/link"
 import { ContextApplication } from "@/context";
 import { Button } from "@/components/button"
 import { ArrowIcon } from "../../../../../public/assets/icons"
-import { getGlobalContent } from "../../../../../util/client"
 import { useEffect, useState } from "react"
 
 
@@ -30,21 +29,11 @@ function FeedbackInformation() {
             globalInfo?.concernContent && setUrlConcern('/concern-info')
             setMaterialConsiderationLink(globalInfo?.materialConsiderationUrl)
         }
-        // (async() => {
-        //     const res = await getGlobalContent()
-        //     if(res?.concernUrl !== undefined) {
-        //         const newURL = res.concernUrl.includes('http') ? res.concernUrl : `https://${res.concernUrl}`
-        //         setUrl(newURL)
-        //     } else if(res?.concernContent !== undefined) {
-        //         setUrl('/concern-info')
-        //     }
-        // })
-        // ()
     },[globalInfo?.concernContent, globalInfo?.concernUrl, globalInfo?.materialConsiderationUrl])
 
     return(
         <>
-        <section>
+        <section style={{paddingBottom: '25px'}}>
             <div className="info-header">
             <h1 className='govuk-heading-xl' style={{marginBottom: 0}}>What you need to know before you comment</h1>
             </div>
@@ -65,7 +54,7 @@ function FeedbackInformation() {
             </ul>
             <p className="govuk-body">Strength of local opposition to a planning application can’t be considered. This means that if a comment you’d like to raise has already been made, you don’t need to repeat it.</p>
            { urlConcern !== "" &&
-            <Link href={urlConcern} target="_blank" className="govuk govuk-link" >What can you do if these things concern you?</Link>
+            <Link href={urlConcern} target="_blank" className="govuk govuk-link govuk-link--no-visited-state" >What can you do if these things concern you?</Link>
            }
             
         </section>

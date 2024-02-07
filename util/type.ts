@@ -54,7 +54,7 @@ export type DataDetails = {
     carbonEmissions?: number
     showAccess?: boolean
     access?: string
-    applicationStage: string
+    applicationStage: any
     valid_from_date: string
     image_head?: string
     image_gallery: any[]
@@ -66,6 +66,7 @@ export type DataDetails = {
     applicationUpdatesUrl: string
     applicationDocumentsUrl: string
 }
+
 
 export type DataTypeArray = {
     data: Data[]
@@ -147,4 +148,5 @@ export type ContextApplicationProps = {
     setPersonalDetailsForm: (value: any) => void;
     globalInfo: any;
     setGlobalInfo: (value:any) => void
+    contextCleaner: () => void;
 }
