@@ -11,6 +11,7 @@ const FeedbackMessage = () => {
     const [addressAplication, setAddressAplication] = useState()
     const [imageAplication, setImageAplication] = useState()
     const [referenceAplication, setReferenceAplication] = useState()
+    const [applicationId, setApplicationId] = useState()
 
     useEffect(() => {
         const initialValue = localStorage.getItem("application")
@@ -18,15 +19,16 @@ const FeedbackMessage = () => {
             setAddressAplication(address)
             setImageAplication(image_head)
             setReferenceAplication(applicationNumber)
+            setApplicationId(_id)
 
         } else {
             setAddressAplication(JSON.parse(initialValue).address)
             setImageAplication(JSON.parse(initialValue).image_head)
             setReferenceAplication(JSON.parse(initialValue).application_number)
-
+            setApplicationId(JSON.parse(initialValue)._id)
         }
 
-    },[address, image_head, applicationNumber])
+    },[address, image_head, applicationNumber, _id])
 
     return(
         <section>
@@ -40,7 +42,7 @@ const FeedbackMessage = () => {
                 {imageAplication && <Image src={urlFor(imageAplication)?.url()} alt="development-image" width={80} height={56}/>}
             
             <div style={{marginLeft: '15px'}}>
-            <Link className="govuk-body govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" href={`/${referenceAplication}`} style={{marginBottom: '5px', textDecoration:'none'}}>{addressAplication}</Link>
+            <Link className="govuk-body govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" href={`/${applicationId}`} style={{marginBottom: '5px', textDecoration:'none'}}>{addressAplication}</Link>
             <p className="govuk-body-s govuk-!-font-weight-bold" style={{marginBottom: 0}}>Application reference </p>
             <p className="govuk-body-s">{referenceAplication}</p>
             </div>
