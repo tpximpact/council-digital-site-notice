@@ -30,12 +30,6 @@ export default defineType({
       readOnly: true
     }),
     defineField({
-      title: "Address",
-      name: "address",
-      type: "string",
-      readOnly: true,
-    }),
-    defineField({
       title: "Application Type",
       name: "applicationType",
       type: "string",
@@ -55,8 +49,7 @@ export default defineType({
     defineField({
       title: "Address",
       name: "address",
-      type: "string",
-      //readOnly: true,
+      type: "string"
     }),
     defineField({
       title: 'Application Updates Url',
