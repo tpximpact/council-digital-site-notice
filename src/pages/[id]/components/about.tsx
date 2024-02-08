@@ -9,10 +9,9 @@ import Gallery from "@/components/gallery";
 
 function About({data} : {data: DataDetails}) {
 
-        const deadline = data?.commentDeadline?.split(" ")[0].split("/")[2]
         const [loadImage, setLoadImage] = useState(0)
         const [isModalOpen, setIsModalOpen] = useState(false)
-        const [imageSelected, setImageSelected] = useState()
+        const [imageSelected, setImageSelected] = useState<any>()
 
 
         useEffect(() => {
@@ -21,8 +20,8 @@ function About({data} : {data: DataDetails}) {
             } else {
                 setLoadImage(6)
             }
-            setImageSelected(data?.image_gallery?.[0])
-        }, [data?.image_gallery])
+            data?.image_head ? setImageSelected(data?.image_head) : setImageSelected(data?.image_gallery?.[0])
+        }, [data?.image_gallery, data?.image_head])
 
             
     return(
@@ -34,8 +33,9 @@ function About({data} : {data: DataDetails}) {
         <p className="govuk-body-m govuk-!-font-weight-bold">{data?.address}</p>
         <div className="wrap-carousel-desktop">
             {
-                data?.image_gallery && 
+                (data?.image_head || data?.image_gallery) && 
                 <Gallery 
+                image_head={data?.image_head}
                 images={data?.image_gallery} 
                 loadImage={loadImage} 
                 setIsModalOpen={setIsModalOpen} 
