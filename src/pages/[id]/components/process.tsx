@@ -63,7 +63,7 @@ function Process({data}: {data: DataDetails}) {
         }
     }, [globalInfo?.planningProcessUrl])
 
-    const singleApplicationStatus = data.applicationStage?.status[data.applicationStage?.stage?.toLowerCase()]
+    const singleApplicationStatus = data?.applicationStage?.status[data?.applicationStage?.stage?.toLowerCase()]
 
     return(
         <section className="process-wrap">
@@ -74,11 +74,11 @@ function Process({data}: {data: DataDetails}) {
             }
             <div className="wrap-grid-button">
                 <div className="process-grid">
-                    <p className="govuk-body govuk-!-font-weight-bold process-consultation">{data.applicationStage?.stage}</p>
+                    <p className="govuk-body govuk-!-font-weight-bold process-consultation">{data?.applicationStage?.stage}</p>
                     <p className={`govuk-body-s process-consultation-result ${aplicationStageStyle(singleApplicationStatus)}`}><span>{singleApplicationStatus?.toUpperCase()}</span></p>
-                    <p className="govuk-body application-days">{data.commentDeadline && data.commentDeadline} {parseFloat(data.commentDeadline) > 1 ? 'days' : 'day'} left</p>
+                    <p className="govuk-body application-days">{data?.commentDeadline && data?.commentDeadline} {parseFloat(data?.commentDeadline) > 1 ? 'days' : 'day'} left</p>
                     <p className="govuk-body">
-                        {applicationStageMessage(data.applicationStage?.stage, singleApplicationStatus)}
+                        {applicationStageMessage(data?.applicationStage?.stage, singleApplicationStatus)}
                     </p>
                 </div>
                 <div>{
