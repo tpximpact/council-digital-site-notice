@@ -22,7 +22,7 @@ const Header = () => {
       <div className="govuk-header__container govuk-width-container">
         <div className="govuk-header__logo">
           <a href="#" className="govuk-header__link govuk-header__link--homepage">
-            <span className="govuk-header__logotype" style={{display: 'flex', alignItems: 'center'}}>
+            <span className="govuk-header__logotype" style={{display: 'flex', alignItems: 'center', width: '22rem', gap:'2px'}}>
               {
                 logoCouncil !== undefined ? <Image width={110} height={60} alt="" src={urlFor(logoCouncil)?.url()}/>: ''
               }

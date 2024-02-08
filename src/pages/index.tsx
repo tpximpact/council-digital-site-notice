@@ -67,7 +67,7 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
 
   return (
     <div className="wrap-home">
-      <h1 className="govuk-heading-xl" role="heading">
+      <h1 className="govuk-heading-xl" role="heading" style={{display: 'inline-block'}}>
         Find planning applications near you
       </h1>
       <p className="govuk-body-m">
