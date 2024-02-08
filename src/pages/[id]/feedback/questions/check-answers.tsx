@@ -5,6 +5,7 @@ import Details from "@/components/details";
 import { questions } from "../../../../../util/questionsInfo"
 import { descriptionDetail } from "../../../../../util/descriptionDetail";
 import {addFeedback} from "../../../../../util/client"
+import { savefeedbackToGoogleSheet } from "../../../../../util/google";
 
 export const questionId:number[] = [3,4,5,6,7,8,9,10]
 
@@ -52,21 +53,44 @@ const onChangeQuestions = (label:number) => {
     
 }
 
-const submit = () => {
+const submit = async () => {
     // submit feedback form function
     onChangeQuestion()
     addFeedback({feelingForm, commentForm, personalDetailsForm})
-    localStorage.removeItem('feeling')
-    localStorage.removeItem('impact')
-    localStorage.removeItem('comment')
-    localStorage.removeItem('name')
-    localStorage.removeItem('address')
-    localStorage.removeItem('postcode')
-    localStorage.removeItem('email')
-    localStorage.removeItem('phone')
-    localStorage.removeItem('consent')
 
-    contextCleaner()
+    let formId = crypto.randomUUID();
+    localStorage.setItem('formId', formId)
+
+    let data = {
+        'id' : formId,
+        'feeling' : localStorage.getItem('feeling'),
+        'impact' : localStorage.getItem('impact'),
+        'comment' : localStorage.getItem('comment'),
+        'name' : localStorage.getItem('name'),
+        'address' : localStorage.getItem('address'),
+        'postcode' : localStorage.getItem('postcode'),
+        'email' : localStorage.getItem('email'),
+    }
+
+    let dataSavedToGoogle = await savefeedbackToGoogleSheet(data);
+
+    if(dataSavedToGoogle) {
+        localStorage.removeItem('feeling')
+        localStorage.removeItem('impact')
+        localStorage.removeItem('comment')
+        localStorage.removeItem('name')
+        localStorage.removeItem('address')
+        localStorage.removeItem('postcode')
+        localStorage.removeItem('email')
+        localStorage.removeItem('phone')
+        localStorage.removeItem('consent')
+    
+        contextCleaner()
+    } else {
+        console.log("error saving form")
+    }
+
+
 }
 
 return(
