@@ -8,6 +8,7 @@ export const ContextApplication = createContext<ContextApplicationProps>(default
 
 function Context({children}:any) {
     const [currentData, setCurrentData] = useState({})
+    const [globalInfo, setGlobalInfo] = useState({})
     const [question, setQuestion] = useState<number>(0)
     const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([])
     const [feelingForm, setFeelingForm] = useState<string>("")
@@ -57,6 +58,8 @@ function Context({children}:any) {
             setCommentForm,
             personalDetailsForm,
             setPersonalDetailsForm,
+            globalInfo,
+            setGlobalInfo,
             contextCleaner
 
         }}>

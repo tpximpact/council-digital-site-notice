@@ -4,29 +4,32 @@ import Link from "next/link"
 import { ContextApplication } from "@/context";
 import { Button } from "@/components/button"
 import { ArrowIcon } from "../../../../../public/assets/icons"
-import { getCommentInfo } from "../../../../../util/client"
 import { useEffect, useState } from "react"
 
 
 
 
 function FeedbackInformation() {
-    const { onChangeQuestion, dataApplication } = useContext(ContextApplication);
-    const [url, setUrl] = useState('')
+    const { onChangeQuestion, dataApplication, globalInfo } = useContext(ContextApplication);
+    const [urlConcern, setUrlConcern] = useState('')
+    const [materialConsiderationLink, setMaterialConsiderationLink] = useState('')
     const id = dataApplication?._id
 
     useEffect(() => {
-        (async() => {
-            const res = await getCommentInfo()
-            if(res?.concernUrl !== undefined) {
-                const newURL = res.concernUrl.includes('http') ? res.concernUrl : `https://${res.concernUrl}`
-                setUrl(newURL)
-            } else if(res?.concernContent !== undefined) {
-                setUrl('/concern-info')
-            }
-        })
-        ()
-    },[])
+        const globalContent = localStorage.getItem('globalInfo')
+
+        if(globalContent !== null) {
+            const {concernUrl,concernContent, materialConsiderationUrl} = JSON.parse(globalContent)
+
+            concernUrl && setUrlConcern(concernUrl)
+            concernContent && setUrlConcern('/concern-info')
+            setMaterialConsiderationLink(materialConsiderationUrl)
+        } else {
+            globalInfo?.concernUrl && setUrlConcern(globalInfo?.concernUrl)
+            globalInfo?.concernContent && setUrlConcern('/concern-info')
+            setMaterialConsiderationLink(globalInfo?.materialConsiderationUrl)
+        }
+    },[globalInfo?.concernContent, globalInfo?.concernUrl, globalInfo?.materialConsiderationUrl])
 
     return(
         <>
@@ -50,8 +53,8 @@ function FeedbackInformation() {
                 <li className="govuk-body" style={{marginBottom: 0}}>rights of way</li>
             </ul>
             <p className="govuk-body">Strength of local opposition to a planning application can’t be considered. This means that if a comment you’d like to raise has already been made, you don’t need to repeat it.</p>
-           { url !== "" &&
-            <Link href={url} target="_blank" className="govuk govuk-link govuk-link--no-visited-state" >What can you do if these things concern you?</Link>
+           { urlConcern !== "" &&
+            <Link href={urlConcern} target="_blank" className="govuk govuk-link govuk-link--no-visited-state" >What can you do if these things concern you?</Link>
            }
             
         </section>
@@ -73,7 +76,7 @@ function FeedbackInformation() {
         </section>
         <section>
             <h2 className="govuk-heading-l">What happens to your comments</h2>
-            <p className="govuk-body">The case officer will take all comments which are <Link href='' className="govuk govuk-link">material considerations</Link> into account when deciding whether or not to approve the application.</p>
+            <p className="govuk-body">The case officer will take all comments which are {materialConsiderationLink ? <Link href={materialConsiderationLink} className="govuk govuk-link govuk-link--no-visited-state" target="_blank">material considerations</Link> : 'material considerations'} into account when deciding whether or not to approve the application.</p>
             <p className="govuk-body">As part of this process, your comments will be posted online for the public to see. We will not include your name, address, telephone number or email address.</p>
             <p className="govuk-body">The case officer will summarise their findings in the officer's report and decision notice.</p>        
         </section>

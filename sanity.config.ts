@@ -35,9 +35,9 @@ export default defineConfig({
                 // document, specifying the `documentId` manually to ensure
                 // that we're editing the single instance of the document
                 S.document()
-                  .schemaType("comment-information")
-                  .documentId("commentinformation")
-                  .title("Comment Information")
+                  .schemaType("global-content")
+                  .documentId("globalContent")
+                  .title("Global Content")
               ),
             S.divider(),
             // Regular document types

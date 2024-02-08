@@ -63,6 +63,8 @@ export type DataDetails = {
     address: string
     description: string
     reference: string
+    applicationUpdatesUrl: string
+    applicationDocumentsUrl: string
 }
 
 
@@ -74,6 +76,7 @@ export type PaginationType = {
     dataId: {_id: string}[]
     data: Data[]
     paginationData?: Data[]
+    globalContent: any
 }
 
 export type CommentForm = {
@@ -143,5 +146,7 @@ export type ContextApplicationProps = {
     setCommentForm: (value: any) => void;
     personalDetailsForm : PersonalDetailsForm;
     setPersonalDetailsForm: (value: any) => void;
+    globalInfo: any;
+    setGlobalInfo: (value:any) => void
     contextCleaner: () => void;
 }

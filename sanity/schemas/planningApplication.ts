@@ -30,12 +30,6 @@ export default defineType({
       readOnly: true
     }),
     defineField({
-      title: "Address",
-      name: "address",
-      type: "string",
-      readOnly: true,
-    }),
-    defineField({
       title: "Application Type",
       name: "applicationType",
       type: "string",
@@ -51,6 +45,21 @@ export default defineType({
       title: "Description",
       name: "description",
       type: "string",
+    }),
+    defineField({
+      title: "Address",
+      name: "address",
+      type: "string"
+    }),
+    defineField({
+      title: 'Application Updates Url',
+      name: 'applicationUpdatesUrl',
+      type: 'string'
+    }),
+    defineField({
+      title: 'Application Documents Url',
+      name: 'applicationDocumentsUrl',
+      type: 'string'
     }),
     defineField({
       title: "Image Head",
