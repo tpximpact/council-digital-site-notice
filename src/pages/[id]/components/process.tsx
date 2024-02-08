@@ -77,7 +77,7 @@ function Process({data, commentDeadline}: {data: DataDetails, commentDeadline: s
                     <p className="govuk-body govuk-!-font-weight-bold process-consultation">{data?.applicationStage?.stage}</p>
                     <p className={`govuk-body-s process-consultation-result ${aplicationStageStyle(singleApplicationStatus)}`}><span>{singleApplicationStatus?.toUpperCase()}</span></p>
                     {
-                        data?.allowComments?.enableComments == "yes" && <p className="govuk-body application-days">{commentDeadline} {parseFloat(commentDeadline) > 1 ? 'days' : 'day'} left</p>
+                        data?.enableComments && <p className="govuk-body application-days">{commentDeadline} {parseFloat(commentDeadline) > 1 ? 'days' : 'day'} left</p>
                     }
                     
                     <p className="govuk-body">
@@ -92,7 +92,7 @@ function Process({data, commentDeadline}: {data: DataDetails, commentDeadline: s
                     }
                     <div className="wrap-button">
                         {
-                            data?.allowComments?.enableComments == 'yes' && <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data?._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
+                            data?.enableComments && <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data?._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
                         }
                         
                         {

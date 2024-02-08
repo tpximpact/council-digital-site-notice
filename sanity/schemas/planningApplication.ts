@@ -160,33 +160,6 @@ export default defineType({
       type: 'string'
     }),
     defineField({
-      title: "Allow Comments",
-      name: "allowComments",
-      type: "object",
-      fields: [
-        {
-        title: "Enable Comments",
-        name: "enableComments",
-        type: 'string',
-        options: {
-          list: ['yes', 'no'],
-          layout: "radio",
-          direction: 'horizontal'
-        },
-        validation: (Rule: any) => Rule.required(),
-      },
-      {
-        title: 'Comment Deadline',
-        name: 'commentDeadline',
-        type: 'date',
-        hidden: ({document}: any) => document.allowComments?.enableComments === 'no',
-        validation: (Rule: any) => Rule.required(),
-      }
-      
-      ]
-
-    }),
-    defineField({
       title: "C02 Emissions",
       name: "c02Emissions",
       type: "string",
@@ -389,6 +362,24 @@ export default defineType({
           type: 'number'
         }
       ]
+    }),
+    defineField({
+      title: 'Enable Comments',
+      name: 'enableComments',
+      type: 'boolean',
+      initialValue: false
+    }),
+    defineField({
+      title: 'Comment Deadline',
+      name: 'commentDeadline',
+      type: 'date',
+      hidden: ({document}: any) => !document?.enableComments,
+      validation: (Rule) => Rule.custom((field, context :any) => {
+        if(context.document?.enableComments && field === undefined){
+          return "This field must not be empty."
+        }
+        return true
+      })
     }),
     defineField({
       name: 'commments',

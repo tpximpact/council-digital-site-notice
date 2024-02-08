@@ -35,17 +35,22 @@ const Application = ({data}: {data: DataDetails} ) => {
 
   useEffect(() => {
     setQuestion(0)
-    const deadline = moment(data?.allowComments.commentDeadline)
-    const today = moment().hour(0).minute(0).second(0)
-    const deadlineTime = moment.duration(deadline.diff(today)).asDays().toFixed(0)
-    setCommentDeadline(deadlineTime)
+
+    let deadlineTime;
+
+    if(data?.enableComments) {
+      const deadline = moment(data?.commentDeadline)
+      const today = moment().hour(0).minute(0).second(0)
+      deadlineTime = moment.duration(deadline.diff(today)).asDays().toFixed(0)
+      setCommentDeadline(deadlineTime)
+    }
     setDataApplication({...data, commentDeadline: deadlineTime})
 
     localStorage.setItem("application", JSON.stringify({
       'address': data?.address,
       'image_head': data?.image_head,
       'image_gallery': data?.image_gallery,
-      'deadline': data?.allowComments.commentDeadline,
+      'deadline': data?.commentDeadline,
       'name': data?.name,
       'id': data?._id,
       'reference': data?.reference,

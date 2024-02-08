@@ -50,7 +50,7 @@ function About({data} : {data: DataDetails}) {
         </div>
 <div className="wrap-comment-application">
     {
-        data?.allowComments?.enableComments == 'yes' && <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data?._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
+        data?.enableComments && <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data?._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
     }
     
        {

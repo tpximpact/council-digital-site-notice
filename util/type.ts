@@ -58,7 +58,8 @@ export type DataDetails = {
     valid_from_date: string
     image_head?: string
     image_gallery: any[]
-    allowComments: any
+    enableComments?: boolean
+    commentDeadline: string
     applicationType: string
     address: string
     description: string
