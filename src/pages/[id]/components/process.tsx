@@ -49,7 +49,7 @@ const applicationStageMessage = (stage:string, status:string ) => {
     return message[stage]
 }
 
-function Process({data}: {data: DataDetails}) {
+function Process({data, commentDeadline}: {data: DataDetails, commentDeadline: string}) {
 
     const {globalInfo} = useContext(ContextApplication)
     const [planningProcessUrl, setPlanningProcessUrl] = useState()
@@ -76,7 +76,10 @@ function Process({data}: {data: DataDetails}) {
                 <div className="process-grid">
                     <p className="govuk-body govuk-!-font-weight-bold process-consultation">{data?.applicationStage?.stage}</p>
                     <p className={`govuk-body-s process-consultation-result ${aplicationStageStyle(singleApplicationStatus)}`}><span>{singleApplicationStatus?.toUpperCase()}</span></p>
-                    <p className="govuk-body application-days">{data?.commentDeadline && data?.commentDeadline} {parseFloat(data?.commentDeadline) > 1 ? 'days' : 'day'} left</p>
+                    {
+                        data?.enableComments && <p className="govuk-body application-days">{commentDeadline} {parseFloat(commentDeadline) > 1 ? 'days' : 'day'} left</p>
+                    }
+                    
                     <p className="govuk-body">
                         {applicationStageMessage(data?.applicationStage?.stage, singleApplicationStatus)}
                     </p>
@@ -88,7 +91,10 @@ function Process({data}: {data: DataDetails}) {
                 </div>
                     }
                     <div className="wrap-button">
-                        <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data?._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
+                        {
+                            data?.enableComments && <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data?._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
+                        }
+                        
                         {
                             data?.applicationUpdatesUrl && <Link className="govuk-link process-link govuk-link--no-visited-state" target="_blank" href={data?.applicationUpdatesUrl}>Sign up for updates about this application</Link>
                         }
