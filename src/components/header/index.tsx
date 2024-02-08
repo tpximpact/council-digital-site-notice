@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from "react"
 import Image from "next/image";
+import Link from "next/link";
 import { ContextApplication } from "@/context";
 import { urlFor } from "../../../util/client";
 
@@ -21,7 +22,7 @@ const Header = () => {
     <header className="govuk-header" role="banner" data-module="govuk-header">
       <div className="govuk-header__container govuk-width-container">
         <div className="govuk-header__logo">
-          <a href="#" className="govuk-header__link govuk-header__link--homepage">
+          <Link href="/" style={{color:"white", textDecoration: "none", fontWeight: 'bold'}}>
             <span className="govuk-header__logotype" style={{display: 'flex', alignItems: 'center', width: '22rem', gap:'2px'}}>
               {
                 logoCouncil !== undefined ? <Image width={110} height={60} alt="" src={urlFor(logoCouncil)?.url()}/>: ''
@@ -30,7 +31,7 @@ const Header = () => {
                 Planning applications
               </span>
             </span>
-          </a>
+          </Link>
         </div>
       </div>
     </header>
