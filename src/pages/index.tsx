@@ -61,8 +61,6 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
       }
     }
 
-    await savefeedbackToGoogleSheet({applicationNumber : postcode})
-
     setLocation(location)
     const res = await getActiveApplicationsPagination({itemsPerPage, location});
     setDisplayData(res);
