@@ -9,7 +9,6 @@ import Gallery from "@/components/gallery";
 
 function About({data} : {data: DataDetails}) {
 
-        const deadline = data?.commentDeadline?.split(" ")[0].split("/")[2]
         const [loadImage, setLoadImage] = useState(0)
         const [isModalOpen, setIsModalOpen] = useState(false)
         const [imageSelected, setImageSelected] = useState()
@@ -50,7 +49,10 @@ function About({data} : {data: DataDetails}) {
             </div>
         </div>
 <div className="wrap-comment-application">
-    <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data?._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
+    {
+        data?.allowComments?.enableComments == 'yes' && <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data?._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
+    }
+    
        {
         data?.applicationUpdatesUrl && <Link href={data?.applicationUpdatesUrl} style={{marginTop: "-15px"}} className="govuk-link govuk-link--no-visited-state" target="_blank">Sign up for updates about this application</Link>
        }

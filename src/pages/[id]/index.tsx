@@ -35,18 +35,17 @@ const Application = ({data}: {data: DataDetails} ) => {
 
   useEffect(() => {
     setQuestion(0)
-    const deadline = moment(data?.valid_from_date).add(21, 'days')
+    const deadline = moment(data?.allowComments.commentDeadline)
     const today = moment().hour(0).minute(0).second(0)
-    const deadlineTime = moment.duration(today.diff(deadline)).asDays().toFixed(0)
+    const deadlineTime = moment.duration(deadline.diff(today)).asDays().toFixed(0)
     setCommentDeadline(deadlineTime)
     setDataApplication({...data, commentDeadline: deadlineTime})
 
-    console.log(data)
     localStorage.setItem("application", JSON.stringify({
       'address': data?.address,
       'image_head': data?.image_head,
       'image_gallery': data?.image_gallery,
-      'deadline': data?.commentDeadline,
+      'deadline': data?.allowComments.commentDeadline,
       'name': data?.name,
       'id': data?._id,
       'reference': data?.reference,
@@ -63,7 +62,7 @@ const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: da
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         <About data={data}/>
         <Impact data={data}/>
-        <Process data={data}/>
+        <Process data={data} commentDeadline={commentDeadline}/>
         </>
     )
 }
