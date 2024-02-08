@@ -9,6 +9,7 @@ import { PaginationType, Data } from '../../util/type';
 import { getLocationFromPostcode } from "../../util/geolocation";
 import { ContextApplication } from '@/context';
 import Link from 'next/link';
+import { savefeedbackToGoogleSheet } from '../../util/google';
 
 export const itemsPerPage = 6;
 
@@ -59,6 +60,8 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
         setLocationNotFound(true)
       }
     }
+
+    await savefeedbackToGoogleSheet({applicationNumber : postcode})
 
     setLocation(location)
     const res = await getActiveApplicationsPagination({itemsPerPage, location});

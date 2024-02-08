@@ -1,6 +1,6 @@
 {
   "name": "council-digital-site-notice",
-"engines": {
+  "engines": {
     "node": ">=20"
   },
   "version": "0.1.0",
@@ -19,6 +19,8 @@
     "@sanity/vision": "^3.19.3",
     "@types/styled-components": "^5.1.30",
     "date-fns": "^2.30.0",
+    "google-auth-library": "^9.6.3",
+    "google-spreadsheet": "^4.1.1",
     "govuk-frontend": "^4.7.0",
     "govuk-react": "^0.10.6",
     "groq": "^3.19.3",
