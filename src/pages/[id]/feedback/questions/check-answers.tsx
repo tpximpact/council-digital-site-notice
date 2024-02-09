@@ -55,26 +55,39 @@ const onChangeQuestions = (label:number) => {
 
 const submit = async () => {
     // submit feedback form function
-    onChangeQuestion()
+
     addFeedback({feelingForm, commentForm, personalDetailsForm})
 
     let formId = crypto.randomUUID();
     localStorage.setItem('formId', formId)
 
+const localhostImpact:any = JSON.parse(localStorage.getItem('impact') || '[]')
+const localhostComment:any = JSON.parse(localStorage.getItem('comment') || '{}')
+let impact:any = []
+let comment:any = {}
+
+localhostImpact?.map((el:any) => {
+    impact.push(questions[el])
+    comment = {...comment,[questions[el]]: localhostComment[el]}
+})
+
     let data = {
         'id' : formId,
         'feeling' : localStorage.getItem('feeling'),
-        'impact' : localStorage.getItem('impact'),
-        'comment' : localStorage.getItem('comment'),
+        'impact' : JSON.stringify(impact),
+        'comment' : JSON.stringify(comment),
         'name' : localStorage.getItem('name'),
         'address' : localStorage.getItem('address'),
         'postcode' : localStorage.getItem('postcode'),
         'email' : localStorage.getItem('email'),
+        'phone' : localStorage.getItem('phone'),
+        'consent' : localStorage.getItem('consent'),
     }
 
     let dataSavedToGoogle = await savefeedbackToGoogleSheet(data);
 
     if(dataSavedToGoogle) {
+        onChangeQuestion()
         localStorage.removeItem('feeling')
         localStorage.removeItem('impact')
         localStorage.removeItem('comment')
