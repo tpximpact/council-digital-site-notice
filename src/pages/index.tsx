@@ -9,7 +9,6 @@ import { PaginationType, Data } from '../../util/type';
 import { getLocationFromPostcode } from "../../util/geolocation";
 import { ContextApplication } from '@/context';
 import Link from 'next/link';
-import { savefeedbackToGoogleSheet } from '../../util/google';
 
 export const itemsPerPage = 6;
 
