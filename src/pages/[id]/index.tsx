@@ -62,11 +62,14 @@ const Application = ({data}: {data: DataDetails} ) => {
 
 const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: data?.name, href:""}]
 
+const {showAccess, showCarbon, showHealthcare, showHousing, showJobs, showOpenSpace} = data || {}
     return (
         <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         <About data={data}/>
-        <Impact data={data}/>
+        {
+          (showAccess || showCarbon || showHealthcare || showHousing || showJobs || showOpenSpace) &&
+        <Impact data={data}/>}
         <Process data={data} commentDeadline={commentDeadline}/>
         </>
     )
