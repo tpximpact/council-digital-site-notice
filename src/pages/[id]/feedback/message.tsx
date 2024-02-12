@@ -15,10 +15,14 @@ const FeedbackMessage = () => {
     const [updatesUrl, setUpdatesUrl] = useState()
     const [involveUrl, setInvolveUrl] = useState()
     const [councilName, setCouncilName] = useState()
+    const [formId, setFormId] = useState<string|null>()
 
     useEffect(() => {
         const initialValue = localStorage.getItem("application")
         const initialGlobalValue = localStorage.getItem("globalInfo")
+
+        const formId = localStorage.getItem("formId");
+        setFormId(formId)
         
         if(initialGlobalValue !== null) {
             setInvolveUrl(JSON.parse(initialGlobalValue).howToGetInvolveUrl)
@@ -50,7 +54,7 @@ const FeedbackMessage = () => {
             <div className="wrap-message-reference">
                 <h1 className="govuk-heading-l"> Comment submitted</h1>
                 <h2 className="govuk-body-l"> Your reference number</h2>
-                <p className="govuk-body-l">HDJ2123F</p>
+                <p className="govuk-body-l">{formId}</p>
 
             </div>
             <div style={{display: 'flex', marginTop: '25px'}}>

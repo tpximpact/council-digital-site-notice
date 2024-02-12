@@ -17,6 +17,7 @@ function FeedbackInformation() {
 
     useEffect(() => {
         const globalContent = localStorage.getItem('globalInfo')
+        localStorage.removeItem('formId')
 
         if(globalContent !== null) {
             const {concernUrl,concernContent, materialConsiderationUrl} = JSON.parse(globalContent)
