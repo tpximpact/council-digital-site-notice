@@ -81,7 +81,7 @@ const nextPage = () => {
     !phoneValidation(personalDetailsForm?.phone) ? setIsPhoneErros(true) : setIsPhoneErros(false)
     setOptionalValidationMessage(optionalValidation(personalDetailsForm))
     !personalDetailsForm['consent'] ? setIsConsentErros(true) : setIsConsentErros(false)
-    setConsentErrorMessage(!personalDetailsForm['consent'] && `you need to check the consent box`)
+    setConsentErrorMessage(!personalDetailsForm['consent'] && `You need to check the consent box`)
 
 }
 }
