@@ -75,7 +75,7 @@ function Process({data, commentDeadline}: {data: DataDetails, commentDeadline: s
             <div className="wrap-grid-button">
                 <div className="process-grid">
                     <p className="govuk-body govuk-!-font-weight-bold process-consultation">{data?.applicationStage?.stage}</p>
-                    <p className={`govuk-body-s process-consultation-result ${aplicationStageStyle(singleApplicationStatus)}`}><span>{singleApplicationStatus?.toUpperCase()}</span></p>
+                    <p className={`govuk-body process-consultation-result ${aplicationStageStyle(singleApplicationStatus)}`}><span>{singleApplicationStatus?.toUpperCase()}</span></p>
                     {
                         data?.enableComments && <p className="govuk-body application-days">{commentDeadline} {parseFloat(commentDeadline) > 1 ? 'days' : 'day'} left</p>
                     }
