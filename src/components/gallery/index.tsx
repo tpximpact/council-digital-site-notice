@@ -5,7 +5,7 @@ const Gallery = ({images, loadImage, setIsModalOpen, setLoadImage, setImageSelec
     return(
         <>
                 <div className="carousel-wrap">
-                    <Image src={urlFor(image_head ? image_head : images?.[0])?.url()} alt="" width={323} height={240} onClick={() => {setIsModalOpen(true), setImageSelected(image_head || images[0])}}/>
+                    <Image src={urlFor(image_head ? image_head : images?.[0])?.url()} alt="" width={323} height={240} style={{maxWidth: '100%'}} onClick={() => {setIsModalOpen(true), setImageSelected(image_head || images[0])}}/>
                     <div className="carousel-image-list"> 
                     { images && images?.slice(0, loadImage).map((el:any, index :any)=> {
                         return (

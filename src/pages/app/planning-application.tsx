@@ -24,7 +24,7 @@ const indexValue = (parseFloat((data.length/3).toFixed()) * 3)
             className={`planning-application-link ${indexValue <= index && 'planning-application-last-line'}`}
           >
             {image_head && (
-              <Image width={310} height={223} alt="" src={urlFor(image_head).url()} />
+              <Image width={310} height={223} alt="" src={urlFor(image_head).url()} style={{maxWidth: '100%'}}/>
             )}
             <div style={{paddingTop: '20px'}}>
               <span className="govuk-link govuk-link--no-visited-state link-application">{name}</span>
