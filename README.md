@@ -49,6 +49,8 @@ Ensure that the .env or .env.local file also has the following environment Keys:
 | NEXT_PUBLIC_SHEET_ID            |     ###     |
 | NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL |     ###     |
 | GOOGLE_SERVICE_PRIVATE_KEY      |     ###     |
+| NEXT_PUBLIC_DATA_PROVIDER       |     CMS/OpenData     |
+| NEXT_PUBLIC_API_URL             |     ###     |
 
 ## CMS setp
 
