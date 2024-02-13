@@ -34,3 +34,24 @@ Update the test snapshots:
 ```bash
 yarn test:update
 ```
+
+## Environment setp
+
+Ensure that the .env or .env.local file also has the following environment Keys:
+
+|         Variable Name           |    Value    |
+| :----------------------------:  | :---------: |
+| NEXT_PUBLIC_SANITY_SECRET_TOKEN |     ###     |
+| NEXT_PUBLIC_SANITY_PROJECT_ID   |     ###     |
+| NEXT_PUBLIC_SANITY_DATASET      |     ###     |
+| NEXT_PUBLIC_API_KEY             |     ###     |
+| NEXT_PUBLIC_SPREADSHEET_ID      |     ###     |
+| NEXT_PUBLIC_SHEET_ID            |     ###     |
+| NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL |     ###     |
+| GOOGLE_SERVICE_PRIVATE_KEY      |     ###     |
+
+## CMS setp
+
+The application uses https://sanity.io/ as its cms. When the application is running navigate to http://localhost:3000/studio to get access to the CMS.
+
+Data schemas are stored in /sanity/schemas.
