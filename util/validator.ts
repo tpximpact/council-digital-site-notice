@@ -3,14 +3,14 @@ import { z } from 'zod';
 import {ValidationResult} from '../models/validationResult';
 
 const PlanningValidation = z.object({
-    reference: z.string().min(1),
+    applicationNumber: z.string().min(1),
     description: z.string().optional(),
     address: z.string().optional(),
     applicationType: z.string().optional(),
     applicationStage: z.string().optional(),
     height: z.number().optional(),
     developmentType: z.string().optional(),
-    commentDeadline: z.string().optional(),
+    commentDeadline: z.date().optional(),
     openSpaceGardens: z.boolean().optional(),
 });
 const ReferenceResult = z.object({
@@ -23,14 +23,14 @@ const ReferenceResult = z.object({
 type PlanningValidationType = z.infer<typeof PlanningValidation>;
 
 export async function validatePlanningParams(data: PlanningValidationType): Promise<ValidationResult> {
-    const { reference, description } = data;
+    const { applicationNumber, description } = data;
     let validationResult: ValidationResult = { status :200, errors: [] }
 
     try {
         PlanningValidation.parse(data);
 
-        // Check if the reference already exists in the database only if it's been supplied
-        const existingApplication = await checkExistingReference(reference);
+        // Check if the applicationNumber already exists in the database only if it's been supplied
+        const existingApplication = await checkExistingReference(applicationNumber);
         ReferenceResult.parse(existingApplication);
         
     } catch (error) {
