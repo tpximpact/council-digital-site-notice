@@ -42,7 +42,7 @@ const FeedbackMessage = () => {
         } else {
             setAddressAplication(JSON.parse(initialValue).address)
             setImageAplication(JSON.parse(initialValue).image_head)
-            setReferenceAplication(JSON.parse(initialValue).application_number)
+            setReferenceAplication(JSON.parse(initialValue).applicationNumber)
             setUpdatesUrl(JSON.parse(initialValue).applicationUpdatesUrl)
             setApplicationId(JSON.parse(initialValue)._id)
         }

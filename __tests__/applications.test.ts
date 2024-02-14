@@ -80,7 +80,7 @@ describe("Applications API", () => {
       method: "POST",
       body: [
         {
-          reference: "AAA_BBB_CCC_DDD",
+          applicationNumber: "AAA_BBB_CCC_DDD",
           description: "Sample description",
         },
       ],
@@ -102,10 +102,17 @@ describe("Applications API", () => {
 
     expect(validatePlanningParams).toHaveBeenCalledWith(req.body[0]);
     expect(createApplication).toHaveBeenCalledWith({
-      reference: "AAA_BBB_CCC_DDD",
-      description: "Sample description",
-      isActive: true,
-      _type: "planning-application",
+      applicationNumber: "AAA_BBB_CCC_DDD",
+     _type: 'planning-application',
+    address: undefined,
+    applicationStage: undefined,
+    applicationType: undefined,
+    commentDeadline: undefined,
+    description: 'Sample description',
+    developmentType: undefined,
+    height: undefined,
+    isActive: false,
+    openSpaceGardens: undefined,
     });
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({

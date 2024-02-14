@@ -87,7 +87,7 @@ describe("Applications API", () => {
     const req = {
       method: "POST",
       body: {
-        reference: "AAA_BBB_CCC_DDD",
+        applicationNumber: "AAA_BBB_CCC_DDD",
         description: "Sample description",
       },
       headers: {
@@ -108,7 +108,7 @@ describe("Applications API", () => {
 
     expect(validatePlanningParams).toHaveBeenCalledWith(req.body);
     expect(createApplication).toHaveBeenCalledWith({
-      reference: "AAA_BBB_CCC_DDD",
+      applicationNumber: "AAA_BBB_CCC_DDD",
       description: "Sample description",
       isActive: true,
       _type: "planning-application",
@@ -121,7 +121,7 @@ describe("Applications API", () => {
     const req = {
       method: "POST",
       body: {
-        reference: "AAA_BBB_CCC_DDD",
+        applicationNumber: "AAA_BBB_CCC_DDD",
         description: "Sample description",
       },
       headers: {
@@ -142,7 +142,7 @@ describe("Applications API", () => {
 
     expect(validatePlanningParams).toHaveBeenCalledWith(req.body);
     expect(createApplication).toHaveBeenCalledWith({
-      reference: "AAA_BBB_CCC_DDD",
+      applicationNumber: "AAA_BBB_CCC_DDD",
       description: "Sample description",
       isActive: true,
       _type: "planning-application",

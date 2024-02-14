@@ -6,27 +6,28 @@ exports[`renders homepage unchanged 1`] = `
     class="wrap-home"
   >
     <h1
-      class="govuk-heading-l"
+      class="govuk-heading-xl"
       role="heading"
+      style="display: inline-block;"
     >
       Find planning applications near you
     </h1>
     <p
-      class="govuk-body"
+      class="govuk-body-m"
     >
-      Find, review and leave your comments on planning applications in Lambeth
+      Find, review and leave your comments on planning applications in 
     </p>
     <section
       class="search-grid"
     >
       <div
-        class="govuk-form-group"
+        class="govuk-form-group false"
       >
         <h1
           class="govuk-label-wrapper"
         >
           <label
-            class="govuk-label govuk-label--m"
+            class="govuk-label govuk-label--l false"
             for="event-name"
             role="definition"
           >
@@ -34,11 +35,12 @@ exports[`renders homepage unchanged 1`] = `
           </label>
         </h1>
         <input
-          class="govuk-input"
+          class="govuk-input false"
           id="event-name"
           name="eventName"
           role="textbox"
           type="text"
+          value=""
         />
       </div>
       <button
@@ -47,6 +49,7 @@ exports[`renders homepage unchanged 1`] = `
       >
         Search
         <span
+          class="undefined"
           style="margin-left: 10px; vertical-align: middle;"
         >
           <svg
@@ -65,16 +68,7 @@ exports[`renders homepage unchanged 1`] = `
           </svg>
         </span>
       </button>
-      <button
-        class="govuk-button grid-button-signup govuk-button--secondary"
-        data-module="govuk-button"
-      >
-        Sign up for alerts on applications near you 
-      </button>
     </section>
-    <section
-      class="wrap-planning-application"
-    />
   </div>
 </div>
 `;

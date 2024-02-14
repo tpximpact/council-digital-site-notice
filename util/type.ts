@@ -25,7 +25,7 @@ export type Data = {
     address: string
     description: string
     height: number
-    reference: string
+    applicationNumber: string
     commentDeadline: string
     applicationType: string
     image_head?: string
@@ -63,7 +63,6 @@ export type DataDetails = {
     applicationType: string
     address: string
     description: string
-    reference: string
     applicationUpdatesUrl: string
     applicationDocumentsUrl: string
 }

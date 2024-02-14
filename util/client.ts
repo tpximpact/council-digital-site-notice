@@ -159,10 +159,10 @@ export async function updateApplicationToNotActive(_id: string) {
 }
 
 export async function checkExistingReference(
-  reference: string
+  applicationNumber: string
 ): Promise<{ exists: boolean }> {
-  const query = '*[_type == "planning-application" && reference == $reference]';
-  const posts = await client.fetch(query, { reference });
+  const query = '*[_type == "planning-application" && applicationNumber == $applicationNumber]';
+  const posts = await client.fetch(query, { applicationNumber });
   return { exists: posts.length > 0 };
 }
 
