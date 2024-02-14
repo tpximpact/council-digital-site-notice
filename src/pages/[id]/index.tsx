@@ -53,7 +53,7 @@ const Application = ({data}: {data: DataDetails} ) => {
       'deadline': data?.commentDeadline,
       'name': data?.name,
       'id': data?._id,
-      'reference': data?.reference,
+      'applicationNumber': data?.applicationNumber,
       'applicationStage': data?.applicationStage,
       'applicationUpdatesUrl': data?.applicationUpdatesUrl
     }))

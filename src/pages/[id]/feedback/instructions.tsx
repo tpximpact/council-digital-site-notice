@@ -28,10 +28,10 @@ function Instructions({data} : {data: DataDetails}) {
             setAddressData(address)
             setApplicationNumberData(applicationNumber)
        }else {
-        const {image_head, address, application_number} = JSON.parse(getStorage)
+        const {image_head, address, applicationNumber} = JSON.parse(getStorage)
         setImage(image_head)
         setAddressData(address)
-        setApplicationNumberData(application_number)
+        setApplicationNumberData(applicationNumber)
        }
     }, [data, globalInfo?.councilName])
 
