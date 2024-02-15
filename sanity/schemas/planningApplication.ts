@@ -27,7 +27,7 @@ export default defineType({
       name: "applicationNumber",
       type: "string",
       validation: (Rule: any) => Rule.required(),
-      readOnly: true
+      readOnly: false
     }),
     defineField({
       title: "Application Type",
