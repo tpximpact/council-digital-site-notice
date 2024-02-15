@@ -98,7 +98,12 @@ export async function getOpenDataApplicationsPagination({cmsData, location,}: {c
 
 export async function getApplicationById(id: string) {
   const query = '*[_type == "planning-application" && _id == $_id]';
-  const post = await client.fetch(query, { _id: id });
+  const post = await client.fetch(query, { _id: id },
+  { 
+    next: {
+      revalidate: 60,
+    }
+  });
 
   if (process.env.NEXT_PUBLIC_DATA_PROVIDER == "OpenData") {
     // Then fetch the matching data from Camden's API
