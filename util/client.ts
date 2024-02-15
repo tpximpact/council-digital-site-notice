@@ -98,12 +98,7 @@ export async function getOpenDataApplicationsPagination({cmsData, location,}: {c
 
 export async function getApplicationById(id: string) {
   const query = '*[_type == "planning-application" && _id == $_id]';
-  const post = await client.fetch(query, { _id: id },
-  { 
-    next: {
-      revalidate: 60,
-    }
-  });
+  const post = await client.fetch(query, { _id: id });
 
   if (process.env.NEXT_PUBLIC_DATA_PROVIDER == "OpenData") {
     // Then fetch the matching data from Camden's API
@@ -114,12 +109,7 @@ export async function getApplicationById(id: string) {
       "'" + arr.toString().replace(/,/g, "','") + "'";
     let whereQuery = `application_number in(${arrayToSoqlString(ids)})`;
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}.json?$where=${whereQuery}`,
-       { 
-        next: {
-          revalidate: 60,
-        }
-      }
+      `${process.env.NEXT_PUBLIC_API_URL}.json?$where=${whereQuery}`
     );
     const data = await res.json();
 
