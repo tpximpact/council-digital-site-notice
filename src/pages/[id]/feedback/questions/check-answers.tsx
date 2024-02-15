@@ -70,9 +70,11 @@ localhostImpact?.map((el:any) => {
     impact.push(questions[el])
     comment = {...comment,[questions[el]]: localhostComment[el]}
 })
-
+const application = localStorage.getItem("application");
+const applicationNumber = JSON.parse(application || '{}').applicationNumber;
     let data = {
         'id' : formId,
+        'applicationNumber': applicationNumber,
         'feeling' : localStorage.getItem('feeling'),
         'impact' : JSON.stringify(impact),
         'comment' : JSON.stringify(comment),
