@@ -75,7 +75,7 @@ function Process({data, commentDeadline}: {data: DataDetails, commentDeadline: s
             <div className="wrap-grid-button">
                 <div className="process-grid">
                     <p className="govuk-body govuk-!-font-weight-bold process-consultation">{data?.applicationStage?.stage}</p>
-                    <p className={`govuk-body-s process-consultation-result ${aplicationStageStyle(singleApplicationStatus)}`}><span>{singleApplicationStatus?.toUpperCase()}</span></p>
+                    <p className={`govuk-body process-consultation-result ${aplicationStageStyle(singleApplicationStatus)}`}><span>{singleApplicationStatus?.toUpperCase()}</span></p>
                     {
                         data?.enableComments && <p className="govuk-body application-days">{commentDeadline} {parseFloat(commentDeadline) > 1 ? 'days' : 'day'} left</p>
                     }
@@ -84,13 +84,13 @@ function Process({data, commentDeadline}: {data: DataDetails, commentDeadline: s
                         {applicationStageMessage(data?.applicationStage?.stage, singleApplicationStatus)}
                     </p>
                 </div>
-                <div>{
+                <div style={{marginTop: '20px'}}>{
                     data?.applicationDocumentsUrl && <div className="wrap-secondary-button-image">
                         <Link className="govuk-button govuk-button--secondary" data-module="govuk-button" href={data?.applicationDocumentsUrl}>View application documents and comments</Link>
                         <Image src="/assets/images/comments-and-docs.png" width={64} height={64} alt="summary and comment icon" style={{marginLeft: "20px"}}/>
                 </div>
                     }
-                    <div className="wrap-button">
+                    <div className={`${(data?.enableComments || data?.applicationDocumentsUrl) && "wrap-button"}`}>
                         {
                             data?.enableComments && <Link className="govuk-button govuk-!-font-weight-bold" style={{textDecoration:"none"}} href={`${data?._id}/feedback`}>Comment on this application <ArrowIcon /></Link>
                         }

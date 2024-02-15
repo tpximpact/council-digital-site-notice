@@ -2,9 +2,9 @@ import { phoneRegex, postCodeRegex } from "./regex";
 
 export function messageError(personalDetailsForm: any) {
 
-    const name = personalDetailsForm['name'] === "" ? 'name' : ""
-    const address = personalDetailsForm['address'] === "" ? 'address' : ""
-    const postcode = personalDetailsForm['postcode'] === "" ? 'postcode' : ""
+    const name = personalDetailsForm['name'] === "" ? 'Name' : ""
+    const address = personalDetailsForm['address'] === "" ? 'Address' : ""
+    const postcode = personalDetailsForm['postcode'] === "" ? 'Postcode' : ""
 
     let messageArr = [name, address, postcode].filter((el) => el !== "")
     const messageArrSize : any= {
@@ -16,19 +16,19 @@ export function messageError(personalDetailsForm: any) {
     return  !!messageArr.length && `${messageArrSize[messageArr.length]} can not be empty`
 }
 export const postcodeValidation = (postcode: string) => {
-   return postcode == "" || postCodeRegex.test(postcode)
+   return postcode !== "" && postCodeRegex.test(postcode)
 }
 
 export function postcodeMessageError(personalDetailsForm: any) {
     const postcode = personalDetailsForm['postcode'] 
     const postcodeValid = postCodeRegex.test(postcode)
 
-    return postcode !== "" && !postcodeValid && 'postcode is invalid'
+    return postcode !== "" && !postcodeValid && 'Postcode is invalid'
 }
 
 export function optionalValidation(personalDetailsForm: any) {
-    const phoneValidation = personalDetailsForm['phone'] !== "" ? phoneRegex.test(personalDetailsForm['phone']) == false ? 'telephone number' : '' : ''
-    const emailValidation = personalDetailsForm['email'] !== "" ? personalDetailsForm['email'].includes('@') == false ? 'email' : '' : ''
+    const phoneValidation = personalDetailsForm['phone'] !== "" ? phoneRegex.test(personalDetailsForm['phone']) == false ? 'Telephone Number' : '' : ''
+    const emailValidation = personalDetailsForm['email'] !== "" ? personalDetailsForm['email'].includes('@') == false ? 'Email' : '' : ''
     const validationMessageArr = [phoneValidation, emailValidation].filter((el) => el !== "")
   
     const messageValidationArrSize : any = {

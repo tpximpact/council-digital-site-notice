@@ -23,9 +23,10 @@ const Header = () => {
       <div className="govuk-header__container govuk-width-container">
         <div className="govuk-header__logo">
           <Link href="/" style={{color:"white", textDecoration: "none", fontWeight: 'bold'}}>
-            <span className="govuk-header__logotype" style={{display: 'flex', alignItems: 'center', width: '22rem', gap:'2px'}}>
+            <span className="govuk-header__logotype" style={{display: 'flex', alignItems: 'center', gap:'2px'}}>
               {
-                logoCouncil !== undefined ? <Image width={110} height={60} alt="" src={urlFor(logoCouncil)?.url()}/>: ''
+                
+                logoCouncil !== undefined ? <Image width={100} height={35} alt="" src={urlFor(logoCouncil)?.url()}/>: ''
               }
               <span className="govuk-header__logotype-text" role="definition">
                 Planning applications

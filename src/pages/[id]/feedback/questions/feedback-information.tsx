@@ -34,7 +34,7 @@ function FeedbackInformation() {
 
     return(
         <>
-        <section style={{paddingBottom: '25px'}}>
+        <section>
             <div className="info-header">
             <h1 className='govuk-heading-xl' style={{marginBottom: 0}}>What you need to know before you comment</h1>
             </div>
