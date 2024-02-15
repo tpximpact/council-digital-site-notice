@@ -109,7 +109,12 @@ export async function getApplicationById(id: string) {
       "'" + arr.toString().replace(/,/g, "','") + "'";
     let whereQuery = `application_number in(${arrayToSoqlString(ids)})`;
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}.json?$where=${whereQuery}`
+      `${process.env.NEXT_PUBLIC_API_URL}.json?$where=${whereQuery}`,
+       { 
+        next: {
+          revalidate: 60,
+        }
+      }
     );
     const data = await res.json();
 
