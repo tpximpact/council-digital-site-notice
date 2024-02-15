@@ -9,7 +9,7 @@ import { getActiveApplications, getApplicationById } from "../../../util/client"
 import moment from 'moment'
 
 
-export async function getStaticProps(context: any) {
+export async function getServerSideProps(context: any) {
   const {id} = context.params;
   const data = await getApplicationById(id)
   return {
@@ -19,14 +19,14 @@ export async function getStaticProps(context: any) {
   };
 }
 
-export async function getStaticPaths() {
-  const data = await getActiveApplications();
+// export async function getStaticPaths() {
+//   const data = await getActiveApplications();
   
-  return {
-  paths: data.map((doc: any) => ({params: {data: doc, id: doc._id}})),
-  fallback: true,
-  }
-}
+//   return {
+//   paths: data.map((doc: any) => ({params: {data: doc, id: doc._id}})),
+//   fallback: true,
+//   }
+// }
 
 
 const Application = ({data}: {data: DataDetails} ) => {
