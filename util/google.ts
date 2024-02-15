@@ -19,7 +19,7 @@ export async function savefeedbackToGoogleSheet(data : any): Promise<boolean> {
 
     const doc = new GoogleSpreadsheet(SPREADSHEET_ID, serviceAccountAuth);
     await doc.loadInfo();
-
+    
     const sheet = doc.sheetsByIndex[0];
     await sheet.addRow(data);
     return true;
