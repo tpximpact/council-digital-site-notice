@@ -23,7 +23,7 @@ function Impact({
                 
                         <>
                         <p className="govuk-body"><span className="govuk-!-font-weight-bold">{data?.housing?.residentialUnits}</span> new homes</p>
-                        <p className="govuk-body" style={{ marginTop: "-10px"}}>{(data?.housing?.affordableResidentialUnits * 100) / data?.housing?.residentialUnits}<span className="govuk-!-font-weight-bold"></span> affordable housing</p>
+                        <p className="govuk-body" style={{ marginTop: "-10px"}}><span className="govuk-!-font-weight-bold">{data?.housing?.affordableResidentialUnits}%</span> affordable housing</p>
                         </>
                     
                 
