@@ -22,9 +22,9 @@ max-width: 64rem;
 }
 
 .wrap-planning-application {
-    display: flex; 
-    justify-content: space-between; 
+    display: flex;  
     flex-wrap: wrap; 
+    gap: 0 13px
 }
 
 .planning-application-link {
