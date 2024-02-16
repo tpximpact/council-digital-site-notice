@@ -16,7 +16,8 @@ const PlanningApplications = ({ data, searchLocation }: {data : Data[], searchLo
         distance = distanceInMiles(searchLocation, { longitude : location.lng, latitude : location.lat })
       }
 
-const indexValue = (parseFloat((data.length/3).toFixed()) * 3)
+const indexValue = (Math.floor((data.length/3)) * 3)
+
         return (
           <Link
             key={_id}
