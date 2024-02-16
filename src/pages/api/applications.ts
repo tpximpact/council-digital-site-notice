@@ -81,9 +81,7 @@ export default async function handler(
         applicationType,
         applicationStage,
         height,
-        developmentType,
         commentDeadline,
-        openSpaceGardens,
       } = req.body[key];
 
       const validationErrors = await validatePlanningParams(req.body[key]);
@@ -101,9 +99,7 @@ export default async function handler(
         applicationType,
         applicationStage,
         height,
-        developmentType,
         commentDeadline,
-        openSpaceGardens,
         isActive: false,
         _type: "planning-application",
       };

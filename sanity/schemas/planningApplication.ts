@@ -144,30 +144,34 @@ export default defineType({
       }
     }),
     defineField({
+      title: 'Enable Comments',
+      name: 'enableComments',
+      type: 'boolean',
+      initialValue: false,
+      hidden: ({document}: any) => document?.applicationStage?.stage !== 'Consultation',
+    }),
+    defineField({
+      title: 'Comment Deadline',
+      name: 'commentDeadline',
+      type: 'date',
+      hidden: ({document}: any) => !document?.enableComments || document?.applicationStage?.stage !== 'Consultation',
+      validation: (Rule) => Rule.custom((field, context :any) => {
+        if(context.document?.enableComments && field === undefined){
+          return "This field must not be empty."
+        }
+        return true
+      })
+    }),
+    defineField({
       title: "Height",
       name: "height",
       type: "number",
       description: 'Enter the maximum height in storeys',
     }),
     defineField({
-      title: "Development Type",
-      name: "developmentType",
-      type: "string",
-    }),
-    defineField({
       title: 'Estimated construction time',
       name: 'constructionTime',
       type: 'string'
-    }),
-    defineField({
-      title: "C02 Emissions",
-      name: "c02Emissions",
-      type: "string",
-    }),
-    defineField({
-      title: "Air Quality",
-      name: "airQuality",
-      type: "string",
     }),
     defineField({
       title: "Location",
@@ -234,11 +238,6 @@ export default defineType({
           }
           )},
       ]
-    }),
-    defineField({
-      title: "Open Space Gardens",
-      name: "openSpaceGardens",
-      type: "boolean",
     }),
     defineField({
       title: 'Open space impact',
@@ -362,24 +361,6 @@ export default defineType({
           type: 'number'
         }
       ]
-    }),
-    defineField({
-      title: 'Enable Comments',
-      name: 'enableComments',
-      type: 'boolean',
-      initialValue: false
-    }),
-    defineField({
-      title: 'Comment Deadline',
-      name: 'commentDeadline',
-      type: 'date',
-      hidden: ({document}: any) => !document?.enableComments,
-      validation: (Rule) => Rule.custom((field, context :any) => {
-        if(context.document?.enableComments && field === undefined){
-          return "This field must not be empty."
-        }
-        return true
-      })
     }),
     defineField({
       name: 'commments',
