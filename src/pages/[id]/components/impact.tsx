@@ -34,7 +34,8 @@ function Impact({
 
 
     
-                    {
+                    {/* {
+                        this section will be uncomment when we start to have the health data
                     data?.showHealthcare && (
                         <div className="impact-item-container">
                                 <div className="wrap-impact-item">
@@ -45,7 +46,7 @@ function Impact({
                                 <Details summary='How did we calculate this?' color='white' description={descriptionDetail['healthcare']}/>
                             </div>
                         )
-                    }
+                    } */}
 
                     {
                         data?.showOpenSpace && (
