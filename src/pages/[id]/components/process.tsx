@@ -86,7 +86,7 @@ function Process({data, commentDeadline}: {data: DataDetails, commentDeadline: s
                 </div>
                 <div style={{marginTop: '20px'}}>{
                     data?.applicationDocumentsUrl && <div className="wrap-secondary-button-image">
-                        <Link className="govuk-button govuk-button--secondary" data-module="govuk-button" href={data?.applicationDocumentsUrl}>View application documents and comments</Link>
+                        <Link className="govuk-button govuk-button--secondary" data-module="govuk-button" href={data?.applicationDocumentsUrl} target="_blank">View application documents and comments</Link>
                         <Image src="/assets/images/comments-and-docs.png" width={64} height={64} alt="summary and comment icon" style={{marginLeft: "20px"}}/>
                 </div>
                     }
