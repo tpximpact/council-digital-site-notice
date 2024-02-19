@@ -42,7 +42,7 @@ function Impact({
                                 <h2 className="govuk-heading-m">Healthcare</h2> 
                                 <Image src="/assets/images/icon-healthcare.png" width={64} height={64} alt="icon healthcare"/>
                                 </div>
-                                <p className="govuk-body"><span className="govuk-!-font-weight-bold">{data?.healthcareDemand}</span> addicional demand on GPs and hospitals</p>
+                                <p className="govuk-body"><span className="govuk-!-font-weight-bold">{data?.healthcareDemand}</span> additional demand on GPs and hospitals</p>
                                 <Details summary='How did we calculate this?' color='white' description={descriptionDetail['healthcare']}/>
                             </div>
                         )
