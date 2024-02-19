@@ -21,6 +21,7 @@ export async function savefeedbackToGoogleSheet(data : any): Promise<boolean> {
     
     const sheet = doc.sheetsByIndex[0];
     await sheet.addRow(data);
+    console.log("Google sheet saved successfully")
     return true;
   } catch (e) {
     console.error('Error: ', e);
