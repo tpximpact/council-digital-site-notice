@@ -11,6 +11,7 @@ import { messageError, optionalValidation, isErrorValidation, isConsentValidatio
 const PersonalDetails = () => {
     const { onChangeQuestion, setQuestion, selectedCheckbox, personalDetailsForm, setPersonalDetailsForm, globalInfo } = useContext(ContextApplication);
     const [isError, setIsError] = useState<boolean>(false)
+    const [id, setId] = useState()
     const [councilName, setCouncilName] = useState()
     const [isNameError, setIsNameErros] = useState<boolean>(false)
     const [isAddressError, setIsAddressErros] = useState<boolean>(false)
@@ -28,6 +29,9 @@ const PersonalDetails = () => {
     useEffect(() => {
 
         const initialGlobalValue = localStorage.getItem("globalInfo")
+        const applicationStorage = localStorage.getItem("application") || '{}'
+        const idStorage = JSON.parse(applicationStorage).id
+        setId(idStorage)
         
         if(initialGlobalValue !== null) {
             setCouncilName(JSON.parse(initialGlobalValue).councilName)
@@ -35,21 +39,21 @@ const PersonalDetails = () => {
             setCouncilName(globalInfo?.councilName)
         }
         
-    const initialValueName = localStorage.getItem("name") || ''
-    const initialValueAddress = localStorage.getItem("address") || ''
-    const initialValueEmail = localStorage.getItem("email") || ''
-    const initialValuePhone = localStorage.getItem("phone") || ''
-    const initialValuePostcode = localStorage.getItem("postcode") || ''
-    const consentStorageValue = localStorage.getItem("consent")
+    const initialValueName = localStorage.getItem("name") || '{}'
+    const initialValueAddress = localStorage.getItem("address") || '{}'
+    const initialValueEmail = localStorage.getItem("email") || '{}'
+    const initialValuePhone = localStorage.getItem("phone") || '{}'
+    const initialValuePostcode = localStorage.getItem("postcode") || '{}'
+    const consentStorageValue = localStorage.getItem("consent") || '{}'
     let initialValueConsent = false
-    if(consentStorageValue !== null) initialValueConsent = JSON.parse(consentStorageValue) || false
+    if(consentStorageValue !== null) initialValueConsent = JSON.parse(consentStorageValue).value || false
 
     setPersonalDetailsForm({
-        name: initialValueName,
-        address: initialValueAddress,
-        email: initialValueEmail,
-        phone: initialValuePhone,
-        postcode: initialValuePostcode,
+        name: JSON.parse(initialValueName).value,
+        address: JSON.parse(initialValueAddress).value,
+        email: JSON.parse(initialValueEmail).value,
+        phone: JSON.parse(initialValuePhone).value,
+        postcode: JSON.parse(initialValuePostcode).value,
         consent: initialValueConsent
     })
 
@@ -57,7 +61,7 @@ const PersonalDetails = () => {
 
 const onChangeDetails = (value: any, key: string) => {
     setPersonalDetailsForm({...personalDetailsForm, [key]: value})
-    localStorage.setItem(key, value)
+    localStorage.setItem(key, JSON.stringify({id, value}))
 
 }
 

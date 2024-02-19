@@ -14,19 +14,23 @@ export const checkboxId:number[] = [3,4,5,6,7,8,9,10]
 const ImpactQuestion = () => {
     const { onChangeQuestion, setQuestion, selectedCheckbox, setSelectedCheckbox } = useContext(ContextApplication);
     const [isError, setIsError] = useState<boolean>(false)
+    const [idApplication, setId] = useState()
 
     useEffect(() => {
-        const getStorage = localStorage.getItem("impact") || '[]'
+        const getStorage = localStorage.getItem("impact") || '{}'
         const initialValue = JSON.parse(getStorage)
-        setSelectedCheckbox(initialValue)
+        const applicationStorage = localStorage.getItem("application") || '{}'
+        const idStorage = JSON.parse(applicationStorage).id
+        setId(idStorage)
+        initialValue?.id === idStorage ? setSelectedCheckbox(initialValue.value) : setSelectedCheckbox([])
 },[setSelectedCheckbox])
 
 
     const onChecked = (e:any) => {
         const {id, checked} = e.target
         checked ? 
-            (setSelectedCheckbox([...selectedCheckbox, parseInt(id)]), localStorage.setItem('impact', JSON.stringify([...selectedCheckbox, parseInt(id)]))): 
-            (setSelectedCheckbox([...selectedCheckbox?.filter(el => el !== parseInt(id))]), localStorage.setItem('impact', JSON.stringify([...selectedCheckbox?.filter(el => el !== parseInt(id))])))
+            (setSelectedCheckbox([...selectedCheckbox, parseInt(id)]), localStorage.setItem('impact', JSON.stringify({id: idApplication, value: [...selectedCheckbox, parseInt(id)]}))): 
+            (setSelectedCheckbox([...selectedCheckbox?.filter(el => el !== parseInt(id))]), localStorage.setItem('impact', JSON.stringify({id: idApplication, value: [...selectedCheckbox?.filter(el => el !== parseInt(id))]})))
     }
 
     return(
