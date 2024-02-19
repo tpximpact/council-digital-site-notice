@@ -49,52 +49,81 @@ export async function getCMSApplicationsPagination({ _id, itemsPerPage, location
   return posts;
 }
 
-export async function getOpenDataApplicationsPagination({cmsData, location,}: {cmsData: any[], location: any;}) {
-
-
-  // Helper method to convert a JS array to a string for a SOQL query
-  const arrayToSoqlString = (arr: any[]) => "'" + arr.toString().replace(/,/g, "','") + "'";
+export async function getOpenDataApplicationsPagination({ cmsData, location }: { cmsData: any[], location: any; }) {
   const limit = 50;
-
-  // Then fetch the matching data from Camden's API
+  const arrayToSoqlString = (arr: any[]) => "'" + arr.toString().replace(/,/g, "','") + "'";
+  // Fetch the matching data from Camden's API
   const ids = cmsData.map((development: any) => development.applicationNumber);
-
-  let whereQuery = `application_number in(${arrayToSoqlString(ids)})`;
-  let orderQuery = `registered_date DESC, last_uploaded DESC`;
-
-  if(location != null) {
-    orderQuery = `distance_in_meters(location, 'POINT (${location.longitude} ${location.latitude})')`;
-  }
-
+  const whereQuery = `application_number in(${arrayToSoqlString(ids)})`;
+  const orderQuery = location != null ? `distance_in_meters(location, 'POINT (${location.longitude} ${location.latitude})')` : `registered_date DESC, last_uploaded DESC`;
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}.json?$limit=${limit}&$where=${whereQuery}&$order=${orderQuery}`);
   const data = await res.json();
 
-  // Build up the array of developments from the CMS data and the data from Camden's API, mapping from Camden's API so we know we're only showing
-  // developments that exist in M3 and the Planning Explorer
-  const developments = data.map((development: any) => {
-    const siteNotice = cmsData.find(
-      (el: any) => el.applicationNumber == development.application_number
-    );
+  // Build up the array of developments from the CMS data and the data from Camden's API
+  const developments = cmsData.map((siteNotice: any) => {
+    const matchedData = data.find((development: any) => development.application_number === siteNotice.applicationNumber);
 
-    // Skip if there's no CMS data
-    if (!siteNotice) {
-      return;
+    if (matchedData) {
+      return {
+        ...siteNotice,
+        applicationType: matchedData.application_type,
+        description: matchedData.development_description,
+        address: matchedData.development_address,
+        name: siteNotice.name ? siteNotice.name : matchedData.development_address,
+        location: { lng: matchedData.longitude, lat: matchedData.latitude }
+      };
     }
 
-    let application = {
-      ...siteNotice,
-      applicationType: development.application_type,
-      description: development.development_description,
-      address: development.development_address,
-      name: siteNotice.name ? siteNotice.name : development.development_address,
-      location : { lng : development.longitude, lat : development.latitude }
-    };
-
-    return application;
+    return siteNotice;
   });
 
   return developments;
 }
+
+
+  // Helper method to convert a JS array to a string for a SOQL query
+//   const arrayToSoqlString = (arr: any[]) => "'" + arr.toString().replace(/,/g, "','") + "'";
+//   const limit = 50;
+
+//   // Then fetch the matching data from Camden's API
+//   const ids = cmsData.map((development: any) => development.applicationNumber);
+
+//   let whereQuery = `application_number in(${arrayToSoqlString(ids)})`;
+//   let orderQuery = `registered_date DESC, last_uploaded DESC`;
+
+//   if(location != null) {
+//     orderQuery = `distance_in_meters(location, 'POINT (${location.longitude} ${location.latitude})')`;
+//   }
+
+//   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}.json?$limit=${limit}&$where=${whereQuery}&$order=${orderQuery}`);
+//   const data = await res.json();
+
+//   // Build up the array of developments from the CMS data and the data from Camden's API, mapping from Camden's API so we know we're only showing
+//   // developments that exist in M3 and the Planning Explorer
+//   const developments = data.map((development: any) => {
+//     const siteNotice = cmsData.find(
+//       (el: any) => el.applicationNumber == development.application_number
+//     );
+
+//     // Skip if there's no CMS data
+//     // if (!siteNotice) {
+//     //   return;
+//     // }
+
+//     let application = {
+//       ...siteNotice,
+//       applicationType: development.application_type,
+//       description: development.development_description,
+//       address: development.development_address,
+//       name: siteNotice.name ? siteNotice.name : development.development_address,
+//       location : { lng : development.longitude, lat : development.latitude }
+//     };
+
+//     return application;
+//   });
+
+//   return developments;
+// }
 
 export async function getApplicationById(id: string) {
   const query = '*[_type == "planning-application" && _id == $_id]';
