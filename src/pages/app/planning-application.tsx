@@ -28,7 +28,7 @@ const indexValue = (Math.floor((data.length/3)) * 3)
               <Image width={310} height={223} alt="" src={urlFor(image_head).url()} style={{maxWidth: '100%'}}/>
             )}
             <div style={{paddingTop: '20px'}}>
-              <span className="govuk-link govuk-link--no-visited-state link-application">{name}</span>
+              <span className="govuk-link govuk-link--no-visited-state link-application">{name || address}</span>
               <span className="planning-application-text">
                   <p className="govuk-body" style={{marginBottom: 0}}>
                     <LocalIcon />                   {

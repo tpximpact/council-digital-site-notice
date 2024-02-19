@@ -86,7 +86,7 @@ export async function getOpenDataApplicationsPagination({cmsData, location,}: {c
       applicationType: development.application_type,
       description: development.development_description,
       address: development.development_address,
-      name: siteNotice.name ? siteNotice.name : development.development_description,
+      name: siteNotice.name ? siteNotice.name : development.development_address,
       location : { lng : development.longitude, lat : development.latitude }
     };
 
