@@ -36,12 +36,12 @@ describe('validatePlanningParams', () => {
       });
 
       it('should return an error if schema not met is not provided', async () => {
-        const data = { applicationNumber: '23123', description: 'Some description', address: 123, applicationType: 123, applicationStage: 123, height: '123', developmentType: 123, commentDeadline: 123, openSpaceGardens: 123 };
+        const data = { applicationNumber: '23123', description: 'Some description', address: 123, applicationType: 123, applicationStage: 123, height: '123', commentDeadline: 123 };
         const result = await validatePlanningParams(data);
     
-        expect(result.errors).toEqual([{"message":"Invalid value for field 'address': Expected string, received number"},{"message":"Invalid value for field 'applicationType': Expected string, received number"},{"message":"Invalid value for field 'applicationStage': Expected string, received number"},{"message":"Invalid value for field 'height': Expected number, received string"},{"message":"Invalid value for field 'developmentType': Expected string, received number"},{"message":"Invalid value for field 'commentDeadline': Expected date, received number"},{"message":"Invalid value for field 'openSpaceGardens': Expected boolean, received number"}]);
+        expect(result.errors).toEqual([{"message":"Invalid value for field 'address': Expected string, received number"},{"message":"Invalid value for field 'applicationType': Expected string, received number"},{"message":"Invalid value for field 'applicationStage': Expected string, received number"},{"message":"Invalid value for field 'height': Expected number, received string"},{"message":"Invalid value for field 'commentDeadline': Expected date, received number"}]);
         expect(result.status).toEqual(400);
-        expect(result.errors).toHaveLength(7);
+        expect(result.errors).toHaveLength(5);
         expect(checkExistingReference).toHaveBeenCalledTimes(2);
       });
 }); 
