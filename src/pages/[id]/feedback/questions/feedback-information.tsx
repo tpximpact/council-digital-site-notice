@@ -79,7 +79,7 @@ function FeedbackInformation() {
             <h2 className="govuk-heading-l">What happens to your comments</h2>
             <p className="govuk-body">The case officer will take all comments which are {materialConsiderationLink ? <Link href={materialConsiderationLink} className="govuk govuk-link govuk-link--no-visited-state" target="_blank">material considerations</Link> : 'material considerations'} into account when deciding whether or not to approve the application.</p>
             <p className="govuk-body">As part of this process, your comments will be posted online for the public to see. We will not include your name, address, telephone number or email address.</p>
-            <p className="govuk-body">The case officer will summarise their findings in the officer's report and decision notice.</p>        
+            <p className="govuk-body">The case officer will summarise their findings in the officer's report.</p>        
         </section>
         <Button content="Comment on this application" icon={<ArrowIcon/>} onClick={() => onChangeQuestion()} className="feedback-information-button" iconClass="feedback-information-icon"/>
         </>
