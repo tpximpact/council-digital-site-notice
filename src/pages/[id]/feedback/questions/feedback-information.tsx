@@ -41,19 +41,13 @@ function FeedbackInformation() {
             <Link href={`/${id}`}className={`govuk-back-link`} data-module="govuk-button">Back
         </Link>
             <h2 className="govuk-heading-l">What isn’t considered in planning approval</h2>
-            <p className="govuk-body">There are some things planning officers can’t consider when approving or rejecting an application, even if they are important. These include:</p>
+            <p className="govuk-body">There are issues that may be of concern to you, and are very important, but which generally cannot be considered as a material planning consideration when assessing a planning application. These include:</p>
             <ul>
-                <li className="govuk-body" style={{marginBottom: 0}}>who the applicant is or what their background is</li>
-                <li className="govuk-body" style={{marginBottom: 0}}>loss of views</li>
+                <li className="govuk-body" style={{marginBottom: 0}}>disputes about civil matters, such as building freeholds or the 'right to light'</li>
                 <li className="govuk-body" style={{marginBottom: 0}}>loss of property value</li>
-                <li className="govuk-body" style={{marginBottom: 0}}>loss of trade, or increased competition</li>
-                <li className="govuk-body" style={{marginBottom: 0}}>construction noise or disturbance during development</li>
-                <li className="govuk-body" style={{marginBottom: 0}}>fears of damage to property</li>
-                <li className="govuk-body" style={{marginBottom: 0}}>maintenance of property</li>
-                <li className="govuk-body" style={{marginBottom: 0}}>boundary disputes, covenants or other property rights</li>
-                <li className="govuk-body" style={{marginBottom: 0}}>rights of way</li>
+                <li className="govuk-body" style={{marginBottom: 0}}>issues which are dealt with by other forms of law, such as party wall matters. </li>
             </ul>
-            <p className="govuk-body">Strength of local opposition to a planning application can’t be considered. This means that if a comment you’d like to raise has already been made, you don’t need to repeat it.</p>
+            <p className="govuk-body">We cannot refuse permission because of construction noise. However, we can restrict the hours of work to reduce disturbance to residents and other sensitive neighbours.</p>
            { urlConcern !== "" &&
             <Link href={urlConcern} target="_blank" className="govuk govuk-link govuk-link--no-visited-state" >What can you do if these things concern you?</Link>
            }
