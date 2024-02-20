@@ -30,8 +30,8 @@ const PersonalDetails = () => {
 
         const initialGlobalValue = localStorage.getItem("globalInfo")
         const applicationStorage = localStorage.getItem("application") || '{}'
-        const idStorage = JSON.parse(applicationStorage).id
-        setId(idStorage)
+        const applicationIdStorage = JSON.parse(applicationStorage).id
+        setId(applicationIdStorage)
         
         if(initialGlobalValue !== null) {
             setCouncilName(JSON.parse(initialGlobalValue).councilName)

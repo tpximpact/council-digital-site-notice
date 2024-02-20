@@ -20,9 +20,9 @@ const ImpactQuestion = () => {
         const getStorage = localStorage.getItem("impact") || '{}'
         const initialValue = JSON.parse(getStorage)
         const applicationStorage = localStorage.getItem("application") || '{}'
-        const idStorage = JSON.parse(applicationStorage).id
-        setId(idStorage)
-        initialValue?.id === idStorage ? setSelectedCheckbox(initialValue.value) : setSelectedCheckbox([])
+        const applicationIdStorage = JSON.parse(applicationStorage).id
+        setId(applicationIdStorage)
+        initialValue?.id === applicationIdStorage ? setSelectedCheckbox(initialValue.value) : setSelectedCheckbox([])
 },[setSelectedCheckbox])
 
 

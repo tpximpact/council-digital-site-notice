@@ -77,9 +77,7 @@ export default async function handler(
     address, 
     applicationType,
     height,
-    developmentType,
     commentDeadline,
-    openSpaceGardens,
   } = req.body;
 
   const data = {
@@ -88,9 +86,7 @@ export default async function handler(
     address,
     applicationType,
     height,
-    developmentType,
     commentDeadline,
-    openSpaceGardens,
     isActive: true,
     _type: "planning-application",
   };

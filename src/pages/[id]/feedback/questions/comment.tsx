@@ -16,10 +16,10 @@ function CommentQuestion() {
     useEffect(() => {
         const initialValue = localStorage.getItem("comment") ||'{}'
         const applicationStorage = localStorage.getItem("application") || '{}'
-        const idStorage = JSON.parse(applicationStorage).id
-        setId(idStorage)
+        const applicationIdStorage = JSON.parse(applicationStorage).id
+        setId(applicationIdStorage)
         if(initialValue !== '' && initialValue !== null) {
-            JSON.parse(initialValue).id === idStorage ? setCommentForm(JSON.parse(initialValue).value) : setCommentForm({})
+            JSON.parse(initialValue).id === applicationIdStorage ? setCommentForm(JSON.parse(initialValue).value) : setCommentForm({})
         }
         
     }, [setCommentForm])

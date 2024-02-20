@@ -1,21 +1,21 @@
 import { useEffect, useContext, useState } from "react"
 import { ContextApplication } from "@/context";
-import {Button} from "@/components/button"
+import {Button, BackLink} from "@/components/button"
 import { Happy, Neutral, Opposed } from "../../../../../public/assets/icons"
 import Validation from "@/components/validation";
 
 
 function Feeling(){
-    const { onChangeQuestion, feelingForm, setFeelingForm } = useContext(ContextApplication);
+    const { onChangeQuestion, feelingForm, setFeelingForm, setQuestion } = useContext(ContextApplication);
     const [id, setId] = useState()
     const [isError, setIsError] = useState(false)
 
     useEffect(() => {
         const applicationStorage = localStorage.getItem("application") || '{}'
-        const idStorage = JSON.parse(applicationStorage).id
-        setId(idStorage)
+        const applicationIdStorage = JSON.parse(applicationStorage).id
+        setId(applicationIdStorage)
             const initialValue = localStorage.getItem("feeling") || '{}'
-            JSON.parse(initialValue).id === idStorage ? setFeelingForm(JSON.parse(initialValue).value) : setFeelingForm('')
+            JSON.parse(initialValue).id === applicationIdStorage ? setFeelingForm(JSON.parse(initialValue).value) : setFeelingForm('')
             
     },[setFeelingForm])
 
@@ -46,7 +46,7 @@ function onNextPage() {
 
     return(
         <section>
-        
+            <BackLink content='Back'onClick={() => setQuestion(0)}/>
             <h1 className="govuk-heading-l">How do you feel about this development?</h1>
             <div className="wrap-icons-feeling">
             <div><Opposed onClick={() => {onChangeFeeling('Opposed')}} color={colors['Opposed']}/><span className="govuk-body">Opposed</span></div>

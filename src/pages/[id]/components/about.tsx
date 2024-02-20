@@ -29,8 +29,14 @@ function About({data} : {data: DataDetails}) {
             {
                 isModalOpen && <Modal setIsModalOpen={setIsModalOpen} image={imageSelected}/>
             }
+            {
+                data?.name && 
         <h1 className="govuk-heading-l">{data?.name}</h1>
-        <p className="govuk-body-m govuk-!-font-weight-bold">{data?.address}</p>
+        }
+        {
+            data?.address && 
+        
+        <p className="govuk-body-m govuk-!-font-weight-bold">{data?.address}</p> }
         <div className="wrap-carousel-desktop">
             {
                 (data?.image_head || data?.image_gallery) && 
@@ -44,10 +50,12 @@ function About({data} : {data: DataDetails}) {
                 imageSelected={imageSelected}
                 />
             }
+            { data?.description && 
             <div>
                 <h2 className="govuk-heading-m">About this development</h2>
                 <p className="govuk-body">{data?.description}</p>
             </div>
+            }
         </div>
 <div className="wrap-comment-application">
     {
@@ -59,26 +67,36 @@ function About({data} : {data: DataDetails}) {
        }
         
         </div>
+        {data?.applicationType && 
+        <>
         <h3 className="govuk-heading-m">Application type</h3>
+        {console.log(data?.applicationType, data?.proposedLandUse)}
         <p className="govuk-body">
         {data?.applicationType}
         </p>
         <Details summary='Learn more about application types' description={descriptionDetail["about"]}/>
+        </>
+    }
+        {
+                (data?.proposedLandUse?.classB || data?.proposedLandUse?.classC || data?.proposedLandUse?.classE || data?.proposedLandUse?.classF || data?.proposedLandUse?.suiGeneris) && (
+                    <>
         <h3 className="govuk-heading-m">How the site will be used</h3>
         <div className="govuk-body">
-            {
-                data?.proposedLandUse && (
+
                     <ul>
-                        {data?.proposedLandUse.classB && <li>Industrial</li>} 
-                        {data?.proposedLandUse.classC && <li>Residential</li>}
-                        {data?.proposedLandUse.classE && <li>Commercial</li>}
-                        {data?.proposedLandUse.classF && <li>Community</li>}
-                        {data?.proposedLandUse.suiGeneris && <li>{data?.proposedLandUse.suiGenerisDetail}</li>}
+                        {data?.proposedLandUse?.classB && <li>Industrial</li>} 
+                        {data?.proposedLandUse?.classC && <li>Residential</li>}
+                        {data?.proposedLandUse?.classE && <li>Commercial</li>}
+                        {data?.proposedLandUse?.classF && <li>Community</li>}
+                        {data?.proposedLandUse?.suiGeneris && <li>{data?.proposedLandUse?.suiGenerisDetail}</li>}
                 </ul>
-                )
-            }
+                
+
 
         </div>
+        </>
+                        )
+                    }
         {
             data?.height && (<>
             <h3 className="govuk-heading-m">Height</h3>
