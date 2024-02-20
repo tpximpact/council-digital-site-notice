@@ -99,7 +99,7 @@ export async function getApplicationById(id: string) {
     );
     const data = await res.json();
 
-    //todo fixed for demo - this can be imroved
+    //todo fixed for demo - this can be improved
     if(data.length == 0) {
       return  post;
     } else {
