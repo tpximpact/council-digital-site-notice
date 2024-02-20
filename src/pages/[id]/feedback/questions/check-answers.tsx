@@ -88,27 +88,39 @@ const applicationNumber = JSON.parse(application || '{}').applicationNumber;
         'phone' : personalDetailsForm.phone,
         'consent' : personalDetailsForm.consent,
     }
-console.log({data})
-    let dataSavedToGoogle = await savefeedbackToGoogleSheet(data);
 
-    if(dataSavedToGoogle) {
-        onChangeQuestion()
-        localStorage.removeItem('feeling')
-        localStorage.removeItem('impact')
-        localStorage.removeItem('comment')
-        localStorage.removeItem('name')
-        localStorage.removeItem('address')
-        localStorage.removeItem('postcode')
-        localStorage.removeItem('email')
-        localStorage.removeItem('phone')
-        localStorage.removeItem('consent')
-    
-        contextCleaner()
-    } else {
-        console.log("error saving form")
+    try {
+        const response = await fetch('/api/comments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData);
+            onChangeQuestion()
+            localStorage.removeItem('feeling')
+            localStorage.removeItem('impact')
+            localStorage.removeItem('comment')
+            localStorage.removeItem('name')
+            localStorage.removeItem('address')
+            localStorage.removeItem('postcode')
+            localStorage.removeItem('email')
+            localStorage.removeItem('phone')
+            localStorage.removeItem('consent')
+        
+            contextCleaner()
+            
+        } else {
+            console.log('Error fetching data');
+        }
+    } catch (error) {
+        console.log('Error processing comments:', error);
     }
-
-
+    
 }
 
 return(
