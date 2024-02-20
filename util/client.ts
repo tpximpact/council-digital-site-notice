@@ -12,7 +12,7 @@ export const client = createClient({
 const builder = imageUrlBuilder(client);
 
 export async function getActiveApplications() {
-  const posts = await client.fetch( '*[_type == "planning-application" && isActive == true] {_id}');
+  const posts = await client.fetch( '*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] {_id}');
   return posts;
 }
 
