@@ -27,7 +27,7 @@ function CommentQuestion() {
     const onComment = (value:any) => {
         setCommentForm({...commentForm,[question]: value})
         localStorage.setItem('comment', JSON.stringify({id, 'value': {...commentForm,[question]: value}}))
-        commentForm[question] !== '' ? setIsError(false) : setIsError(true)
+        commentForm[question] !== '' && commentForm[question] !== undefined ? setIsError(false) : setIsError(true)
     }
 
     return(
@@ -43,7 +43,7 @@ function CommentQuestion() {
             {
                 isError && <Validation message="Please leave a comment"/>
             }
-            <Button content="Next" onClick={() => {commentForm[question] != undefined ? onChangeQuestion() : setIsError(true)}}/>
+            <Button content="Next" onClick={() => {commentForm[question] !== undefined && commentForm[question] !== '' ? onChangeQuestion() : setIsError(true)}}/>
         </section>
     )
 }
