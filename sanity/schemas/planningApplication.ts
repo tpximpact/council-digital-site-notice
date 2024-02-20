@@ -149,7 +149,7 @@ export default defineType({
       ],
       initialValue: {
         stage: 'Consultation',
-        status: {Consultation: 'in progress'}
+        status: {'consultation':'in progress'}
       }
     }),
     defineField({
