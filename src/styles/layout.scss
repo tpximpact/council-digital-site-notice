@@ -46,6 +46,14 @@ body {
             display: inline;
     }
 
+.backlink {
+    border: none; 
+    background-color: white
+}
+.backlink:hover {
+    cursor: pointer;
+}
+
 @media (max-width: 600px){
     .layout-wrap {
         padding: 0 20px;
