@@ -10,7 +10,7 @@ export const Button = ({content, icon, className, onClick, iconClass}:{iconClass
 
 export const BackLink = ({content, onClick}:{content:string, onClick?:() => void}) => {
     return(
-        <button className={`govuk-back-link`} data-module="govuk-button" onClick={onClick} style={{border: 'none', backgroundColor: 'white'}}>
+        <button className={`govuk-back-link backlink`} data-module="govuk-button" onClick={onClick}>
             {content}
         </button>
     )
