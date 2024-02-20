@@ -53,7 +53,8 @@ export default defineType({
       title: "Address",
       name: "address",
       type: "string",
-      description: 'Optional',
+      description: 'Required',
+      validation: (Rule:any) => Rule.required()
     }),
     defineField({
       title: 'Application Updates Url',
@@ -315,6 +316,7 @@ export default defineType({
         {
           title: 'Affordable residential homes',
           name: 'affordableResidentialUnits',
+          description: 'Affordable house percentage',
           type: 'number'
         },
       ]

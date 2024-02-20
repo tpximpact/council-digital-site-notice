@@ -70,7 +70,6 @@ function About({data} : {data: DataDetails}) {
         {data?.applicationType && 
         <>
         <h3 className="govuk-heading-m">Application type</h3>
-        {console.log(data?.applicationType, data?.proposedLandUse)}
         <p className="govuk-body">
         {data?.applicationType}
         </p>

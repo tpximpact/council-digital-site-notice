@@ -89,7 +89,7 @@ const nextPage = () => {
 
 }
 }
-console.log({personalDetailsForm})
+
     return(
         <section className="wrap-personal-details">
         <BackLink content='Back'onClick={() => setQuestion(backComponent)}/>
