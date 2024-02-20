@@ -1,3 +1,5 @@
+$govuk-font-family: Arial, Helvetica, sans-serif;
+
 @import "node_modules/govuk-frontend/govuk/all";
 @import "~react-image-gallery/styles/scss/image-gallery.scss";
 @import "./layout.scss";
@@ -6,4 +8,5 @@
 @import "./application.scss";
 
 $govuk-assets-path: 'public/assets/';
+
 
