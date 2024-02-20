@@ -39,21 +39,21 @@ const PersonalDetails = () => {
             setCouncilName(globalInfo?.councilName)
         }
         
-    const initialValueName = localStorage.getItem("name") || '{}'
+    const initialValueName = JSON.parse(localStorage.getItem("name") || '{}')
     const initialValueAddress = localStorage.getItem("address") || '{}'
     const initialValueEmail = localStorage.getItem("email") || '{}'
     const initialValuePhone = localStorage.getItem("phone") || '{}'
     const initialValuePostcode = localStorage.getItem("postcode") || '{}'
     const consentStorageValue = localStorage.getItem("consent") || '{}'
     let initialValueConsent = false
-    if(consentStorageValue !== null) initialValueConsent = JSON.parse(consentStorageValue).value || false
+    if(consentStorageValue !== null && JSON.parse(consentStorageValue).id == applicationIdStorage) initialValueConsent = JSON.parse(consentStorageValue).value || false
 
     setPersonalDetailsForm({
-        name: JSON.parse(initialValueName).value,
-        address: JSON.parse(initialValueAddress).value,
-        email: JSON.parse(initialValueEmail).value,
-        phone: JSON.parse(initialValuePhone).value,
-        postcode: JSON.parse(initialValuePostcode).value,
+        name: initialValueName.id == applicationIdStorage ? initialValueName.value : '',
+        address: JSON.parse(initialValueAddress).id == applicationIdStorage ? JSON.parse(initialValueAddress).value : '',
+        email: JSON.parse(initialValueEmail).id == applicationIdStorage ? JSON.parse(initialValueEmail).value : '',
+        phone: JSON.parse(initialValuePhone).id == applicationIdStorage ?  JSON.parse(initialValuePhone).value : '',
+        postcode: JSON.parse(initialValuePostcode).id == applicationIdStorage ? JSON.parse(initialValuePostcode).value : '',
         consent: initialValueConsent
     })
 
@@ -89,7 +89,7 @@ const nextPage = () => {
 
 }
 }
-
+console.log({personalDetailsForm})
     return(
         <section className="wrap-personal-details">
         <BackLink content='Back'onClick={() => setQuestion(backComponent)}/>

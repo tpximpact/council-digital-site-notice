@@ -36,12 +36,12 @@ function CheckAnswers() {
         setId(applicationIdStorage)
 
         setPersonalDetailsForm({
-            name: JSON.parse(initialValueName).id === applicationIdStorage && JSON.parse(initialValueName).value ,
-            address: JSON.parse(initialValueAddress).id == applicationIdStorage && JSON.parse(initialValueAddress).value,
-            email: JSON.parse(initialValueEmail).id === applicationIdStorage && JSON.parse(initialValueEmail).value,
-            phone: JSON.parse(initialValuePhone).id === applicationIdStorage && JSON.parse(initialValuePhone).value,
-            postcode: JSON.parse(initialValuePostcode).id === applicationIdStorage && JSON.parse(initialValuePostcode).value,
-            consent: JSON.parse(initialValueConsent).id === applicationIdStorage && JSON.parse(initialValueConsent).value,
+            name: JSON.parse(initialValueName).id === applicationIdStorage ? JSON.parse(initialValueName).value : '',
+            address: JSON.parse(initialValueAddress).id == applicationIdStorage ? JSON.parse(initialValueAddress).value : '',
+            email: JSON.parse(initialValueEmail).id == applicationIdStorage ? JSON.parse(initialValueEmail).value : '',
+            phone: JSON.parse(initialValuePhone).id == applicationIdStorage ? JSON.parse(initialValuePhone).value : '',
+            postcode: JSON.parse(initialValuePostcode).id === applicationIdStorage ? JSON.parse(initialValuePostcode).value : '',
+            consent: JSON.parse(initialValueConsent).id === applicationIdStorage ? JSON.parse(initialValueConsent).value : '',
         })
 if (initialValueComment !== null && JSON.parse(initialValueComment).id == applicationIdStorage) setCommentForm(JSON.parse(initialValueComment).value)
 
