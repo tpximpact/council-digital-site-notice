@@ -7,20 +7,25 @@ import Validation from "@/components/validation";
 
 function Feeling(){
     const { onChangeQuestion, feelingForm, setFeelingForm, setQuestion } = useContext(ContextApplication);
+    const [id, setId] = useState()
     const [isError, setIsError] = useState(false)
 
     useEffect(() => {
-            const initialValue = localStorage.getItem("feeling") || ''
-            setFeelingForm(initialValue)
+        const applicationStorage = localStorage.getItem("application") || '{}'
+        const applicationIdStorage = JSON.parse(applicationStorage).id
+        setId(applicationIdStorage)
+            const initialValue = localStorage.getItem("feeling") || '{}'
+            JSON.parse(initialValue).id === applicationIdStorage ? setFeelingForm(JSON.parse(initialValue).value) : setFeelingForm('')
+            
     },[setFeelingForm])
 
     const onChangeFeeling = (value:string) => {
         if(feelingForm === value) {
             setFeelingForm("")
-            localStorage.setItem('feeling', "")
+            localStorage.setItem('feeling', JSON.stringify({id, value: ''}))
         }else {
             setFeelingForm(value)
-            localStorage.setItem('feeling', value)
+            localStorage.setItem('feeling', JSON.stringify({id, value}))
         }
     }
 

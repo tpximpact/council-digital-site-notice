@@ -8,21 +8,25 @@ import { questions } from "../../../../../util/questionsInfo";
 function CommentQuestion() {
         const { onChangeQuestion, commentForm, setCommentForm, setQuestion, selectedCheckbox, question } = useContext(ContextApplication);
         const [isError, setIsError] = useState(false)
+        const [id, setId] = useState()
         const indexComponent = selectedCheckbox?.indexOf(question)
         const backComponent = indexComponent > 0 ? selectedCheckbox[indexComponent - 1] : 2
         const label = questions[question]
 
     useEffect(() => {
-        const initialValue = localStorage.getItem("comment") || null
+        const initialValue = localStorage.getItem("comment") ||'{}'
+        const applicationStorage = localStorage.getItem("application") || '{}'
+        const applicationIdStorage = JSON.parse(applicationStorage).id
+        setId(applicationIdStorage)
         if(initialValue !== '' && initialValue !== null) {
-            setCommentForm(JSON.parse(initialValue))
+            JSON.parse(initialValue).id === applicationIdStorage ? setCommentForm(JSON.parse(initialValue).value) : setCommentForm({})
         }
         
     }, [setCommentForm])
 
     const onComment = (value:any) => {
         setCommentForm({...commentForm,[question]: value})
-        localStorage.setItem('comment', JSON.stringify({...commentForm,[question]: value}))
+        localStorage.setItem('comment', JSON.stringify({id, 'value': {...commentForm,[question]: value}}))
         commentForm[question] !== '' ? setIsError(false) : setIsError(true)
     }
 

@@ -28,7 +28,7 @@ export function postcodeMessageError(personalDetailsForm: any) {
 
 export function optionalValidation(personalDetailsForm: any) {
     const phoneValidation = personalDetailsForm['phone'] !== "" ? phoneRegex.test(personalDetailsForm['phone']) == false ? 'Telephone Number' : '' : ''
-    const emailValidation = personalDetailsForm['email'] !== "" ? personalDetailsForm['email'].includes('@') == false ? 'Email' : '' : ''
+    const emailValidation = personalDetailsForm['email'] !== "" ? personalDetailsForm['email']?.includes('@') == false ? 'Email' : '' : ''
     const validationMessageArr = [phoneValidation, emailValidation].filter((el) => el !== "")
   
     const messageValidationArrSize : any = {
@@ -39,12 +39,12 @@ export function optionalValidation(personalDetailsForm: any) {
 }
 
 export const emailValidation = (emailForm: string) => {
-   return (emailForm !== "" && emailForm.includes('@')) || emailForm == ""
+   return (emailForm !== "" && emailForm?.includes('@')) || emailForm == undefined || emailForm == ''
 }
 
 export const phoneValidation = (phoneForm: string) => {
 
-    return (phoneForm !== "" && phoneRegex.test(phoneForm))|| phoneForm == ""
+    return (phoneForm !== "" && phoneRegex.test(phoneForm))|| phoneForm == undefined || phoneForm == ""
  }
 
 
