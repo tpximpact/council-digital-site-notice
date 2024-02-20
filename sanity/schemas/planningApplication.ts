@@ -156,7 +156,7 @@ export default defineType({
       title: 'Enable Comments',
       name: 'enableComments',
       type: 'boolean',
-      initialValue: false,
+      initialValue: true,
       description: 'Optional',
       hidden: ({document}: any) => document?.applicationStage?.stage !== 'Consultation',
     }),
