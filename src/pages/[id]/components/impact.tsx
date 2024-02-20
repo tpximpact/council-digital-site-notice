@@ -83,7 +83,7 @@ function Impact({
                                 <h2 className="govuk-heading-m">Carbon emissions</h2>
                                 <Image src="/assets/images/icon-co2.png" width={64} height={64} alt="icon carbon"/>
                                 </div>
-                                <p className="govuk-body large-margin-top"><span className="govuk-!-font-weight-bold">{data?.carbonEmissions}%</span> more CO2 emissions</p>
+                                <p className="govuk-body large-margin-top"><span className="govuk-!-font-weight-bold">{data?.carbonEmissions}%</span> less than minimum requirements</p>
                                 <Details summary='How did we calculate this?' color='white' description={descriptionDetail['carbon']}/>
                             </div>
                         )
