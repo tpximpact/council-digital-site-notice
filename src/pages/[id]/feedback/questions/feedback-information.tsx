@@ -45,7 +45,7 @@ function FeedbackInformation() {
             <ul>
                 <li className="govuk-body" style={{marginBottom: 0}}>disputes about civil matters, such as building freeholds or the 'right to light'</li>
                 <li className="govuk-body" style={{marginBottom: 0}}>loss of property value</li>
-                <li className="govuk-body" style={{marginBottom: 0}}>issues which are dealt with by other forms of law, such as party wall matters. </li>
+                <li className="govuk-body" style={{marginBottom: 0}}>issues which are dealt with by other forms of law, such as party wall matters </li>
             </ul>
             <p className="govuk-body">We cannot refuse permission because of construction noise. However, we can restrict the hours of work to reduce disturbance to residents and other sensitive neighbours.</p>
            { urlConcern !== "" &&
