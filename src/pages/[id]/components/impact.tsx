@@ -23,7 +23,7 @@ function Impact({
                 
                         <>
                         <p className="govuk-body"><span className="govuk-!-font-weight-bold">{data?.housing?.residentialUnits}</span> new homes</p>
-                        <p className="govuk-body" style={{ marginTop: "-10px"}}>{(data?.housing?.affordableResidentialUnits * 100) / data?.housing?.residentialUnits}<span className="govuk-!-font-weight-bold"></span> affordable housing</p>
+                        <p className="govuk-body" style={{ marginTop: "-10px"}}><span className="govuk-!-font-weight-bold">{data?.housing?.affordableResidentialUnits}%</span> affordable housing</p>
                         </>
                     
                 
@@ -42,7 +42,7 @@ function Impact({
                                 <h2 className="govuk-heading-m">Healthcare</h2> 
                                 <Image src="/assets/images/icon-healthcare.png" width={64} height={64} alt="icon healthcare"/>
                                 </div>
-                                <p className="govuk-body"><span className="govuk-!-font-weight-bold">{data?.healthcareDemand}</span> addicional demand on GPs and hospitals</p>
+                                <p className="govuk-body"><span className="govuk-!-font-weight-bold">{data?.healthcareDemand}</span> additional demand on GPs and hospitals</p>
                                 <Details summary='How did we calculate this?' color='white' description={descriptionDetail['healthcare']}/>
                             </div>
                         )

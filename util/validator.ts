@@ -9,9 +9,7 @@ const PlanningValidation = z.object({
     applicationType: z.string().optional(),
     applicationStage: z.string().optional(),
     height: z.number().optional(),
-    developmentType: z.string().optional(),
     commentDeadline: z.date().optional(),
-    openSpaceGardens: z.boolean().optional(),
 });
 const ReferenceResult = z.object({
     exists: z.boolean().refine(value => value == false, {

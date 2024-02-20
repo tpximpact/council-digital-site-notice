@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react"
+import { useEffect, useContext, useState } from "react"
 import { ContextApplication } from "@/context";
 import { BackLink, Button, ButtonLink } from "@/components/button"
 import Details from "@/components/details";
@@ -19,25 +19,31 @@ function CheckAnswers() {
             feelingForm, 
             setPersonalDetailsForm, 
             setCommentForm, contextCleaner } = useContext(ContextApplication);
+            const [id, setId] = useState()
 
 
     useEffect(() => {
-        const initialValueName = localStorage.getItem("name") || ''
-        const initialValueEmail = localStorage.getItem("email") || ''
-        const initialValuePhone = localStorage.getItem("phone") || ''
-        const initialValuePostcode = localStorage.getItem("postcode") || ''
-        const initialValueAddress = localStorage.getItem("address") || ''
-        const initialValueComment = localStorage.getItem('comment')
+        const initialValueName = localStorage.getItem("name") || '{}'
+        const initialValueEmail = localStorage.getItem("email") || '{}'
+        const initialValuePhone = localStorage.getItem("phone") || '{}'
+        const initialValuePostcode = localStorage.getItem("postcode") || '{}'
+        const initialValueConsent = localStorage.getItem("consent") || '{}'
+        const initialValueAddress = localStorage.getItem("address") || '{}'
+        const initialValueComment = localStorage.getItem('comment') || '{}'
+
+        const applicationStorage = localStorage.getItem("application") || '{}'
+        const applicationIdStorage = JSON.parse(applicationStorage).id
+        setId(applicationIdStorage)
 
         setPersonalDetailsForm({
-            name: initialValueName,
-            address: initialValueAddress,
-            email: initialValueEmail,
-            phone: initialValuePhone,
-            postcode: initialValuePostcode,
-            consent: personalDetailsForm?.consent
+            name: JSON.parse(initialValueName).id === applicationIdStorage ? JSON.parse(initialValueName).value : '',
+            address: JSON.parse(initialValueAddress).id == applicationIdStorage ? JSON.parse(initialValueAddress).value : '',
+            email: JSON.parse(initialValueEmail).id == applicationIdStorage ? JSON.parse(initialValueEmail).value : '',
+            phone: JSON.parse(initialValuePhone).id == applicationIdStorage ? JSON.parse(initialValuePhone).value : '',
+            postcode: JSON.parse(initialValuePostcode).id === applicationIdStorage ? JSON.parse(initialValuePostcode).value : '',
+            consent: JSON.parse(initialValueConsent).id === applicationIdStorage ? JSON.parse(initialValueConsent).value : '',
         })
-if (initialValueComment !== null) setCommentForm(JSON.parse(initialValueComment))
+if (initialValueComment !== null && JSON.parse(initialValueComment).id == applicationIdStorage) setCommentForm(JSON.parse(initialValueComment).value)
 
     }, [personalDetailsForm?.consent, setCommentForm, setPersonalDetailsForm])
 
@@ -48,42 +54,39 @@ const onChangeQuestions = (label:number) => {
     } else {
         setQuestion(label)
         setSelectedCheckbox([...selectedCheckbox, label])
-        localStorage.setItem('impact', JSON.stringify([...selectedCheckbox, label]))
+        localStorage.setItem('impact', JSON.stringify({id, value:[...selectedCheckbox, label]}))
     }
     
 }
 
 const submit = async () => {
-    // submit feedback form function
 
     addFeedback({feelingForm, commentForm, personalDetailsForm})
 
     let formId = crypto.randomUUID();
     localStorage.setItem('formId', formId)
 
-const localhostImpact:any = JSON.parse(localStorage.getItem('impact') || '[]')
-const localhostComment:any = JSON.parse(localStorage.getItem('comment') || '{}')
 let impact:any = []
 let comment:any = {}
 
-localhostImpact?.map((el:any) => {
+selectedCheckbox?.map((el:any) => {
     impact.push(questions[el])
-    comment = {...comment,[questions[el]]: localhostComment[el]}
+    comment = {...comment,[questions[el]]: commentForm[el]}
 })
 const application = localStorage.getItem("application");
 const applicationNumber = JSON.parse(application || '{}').applicationNumber;
     let data = {
         'id' : formId,
         'applicationNumber': applicationNumber,
-        'feeling' : localStorage.getItem('feeling'),
+        'feeling' : feelingForm,
         'impact' : JSON.stringify(impact),
         'comment' : JSON.stringify(comment),
-        'name' : localStorage.getItem('name'),
-        'address' : localStorage.getItem('address'),
-        'postcode' : localStorage.getItem('postcode'),
-        'email' : localStorage.getItem('email'),
-        'phone' : localStorage.getItem('phone'),
-        'consent' : localStorage.getItem('consent'),
+        'name' : personalDetailsForm.name,
+        'address' : personalDetailsForm.address,
+        'postcode' : personalDetailsForm.postcode,
+        'email' : personalDetailsForm.email,
+        'phone' : personalDetailsForm.phone,
+        'consent' : personalDetailsForm.consent,
     }
 
     try {
@@ -118,25 +121,6 @@ const applicationNumber = JSON.parse(application || '{}').applicationNumber;
         console.log('Error processing comments:', error);
     }
     
-    // let dataSavedToGoogle = await savefeedbackToGoogleSheet(data);
-    // if(dataSavedToGoogle) {
-    //     onChangeQuestion()
-    //     localStorage.removeItem('feeling')
-    //     localStorage.removeItem('impact')
-    //     localStorage.removeItem('comment')
-    //     localStorage.removeItem('name')
-    //     localStorage.removeItem('address')
-    //     localStorage.removeItem('postcode')
-    //     localStorage.removeItem('email')
-    //     localStorage.removeItem('phone')
-    //     localStorage.removeItem('consent')
-    
-    //     contextCleaner()
-    // } else {
-    //     console.log("error saving form")
-    // }
-
-
 }
 
 return(

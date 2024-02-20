@@ -16,7 +16,7 @@ const Input = ({label, hint, onChange, value, type, style, isError, messageError
           {messageError}
         </div>
         }
-        <input className={`govuk-input ${ isError && `govuk-input--error`}`} id="event-name" name="eventName" type={type} role="textbox" onChange={(e) => onChange(e.target.value)} defaultValue={value}/>
+        <input className={`govuk-input ${ isError && `govuk-input--error`}`} id="event-name" name="eventName" type={type} role="textbox" onChange={(e) => onChange(e.target.value)} value={value}/>
       </div>
     )
 }
