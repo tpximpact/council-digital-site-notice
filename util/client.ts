@@ -99,31 +99,36 @@ export async function getApplicationById(id: string) {
     );
     const data = await res.json();
 
-    // Build up the array of developments from the CMS data and the data from Camden's API, mapping from Camden's API so we know we're only showing
-    // developments that exist in M3 and the Planning Explorer
-    const developments = data.map((development: any) => {
-      const siteNotice = post.find(
-        (el: any) => el.applicationNumber == development.application_number
-      );
+    //todo fixed for demo - this can be improved
+    if(data.length == 0) {
+      return  post;
+    } else {
+        
+      // Build up the array of developments from the CMS data and the data from Camden's API, mapping from Camden's API so we know we're only showing
+      // developments that exist in M3 and the Planning Explorer
+      const developments = data.map((development: any) => {
+        const siteNotice = post.find(
+          (el: any) => el.applicationNumber == development.application_number
+        );
 
-      // Skip if there's no CMS data
-      if (!siteNotice) {
-        return;
-      }
+        // Skip if there's no CMS data
+        if (!siteNotice) {
+          return;
+        }
 
-      let application = {
-        ...siteNotice,
-        applicationType: development.application_type,
-        description: development.development_description,
-        address: development.development_address,
-        name: siteNotice.name ? siteNotice.name : development?.development_address,
-        location : { lng : development.longitude, lat : development.latitude }
-      };
-  
-      return application;
-    });
-
-    return developments;
+        let application = {
+          ...siteNotice,
+          applicationType: development.application_type,
+          description: development.development_description,
+          address: development.development_address,
+          name: siteNotice.name ? siteNotice.name : development?.development_address,
+          location : { lng : development.longitude, lat : development.latitude }
+        };
+    
+        return application;
+      });
+      return developments;
+    }
   } else {
     return post;
   }
