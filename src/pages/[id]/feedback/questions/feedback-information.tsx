@@ -10,15 +10,17 @@ import { useEffect, useState } from "react"
 
 
 function FeedbackInformation() {
-    const { onChangeQuestion, dataApplication, globalInfo } = useContext(ContextApplication);
+    const { onChangeQuestion, globalInfo } = useContext(ContextApplication);
     const [urlConcern, setUrlConcern] = useState('')
     const [materialConsiderationLink, setMaterialConsiderationLink] = useState('')
-    const id = dataApplication?._id
+    const [id, setId] = useState()
 
     useEffect(() => {
         const globalContent = localStorage.getItem('globalInfo')
+        const applicationContent = localStorage.getItem('application') || '{}'
         localStorage.removeItem('formId')
-
+        const applicationIdStorage = JSON.parse(applicationContent).id
+        setId(applicationIdStorage)
         if(globalContent !== null) {
             const {concernUrl,concernContent, materialConsiderationUrl} = JSON.parse(globalContent)
 
