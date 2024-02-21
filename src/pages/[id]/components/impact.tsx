@@ -69,7 +69,7 @@ function Impact({
                                 <h2 className="govuk-heading-m">New jobs</h2>
                                 <Image src="/assets/images/icon-office.png" width={64} height={64} alt="icon office"/>
                                 </div>
-                                <p className="govuk-body large-margin-top" ><span className="govuk-!-font-weight-bold">{data?.jobs?.min}-{data?.jobs?.max}</span> new roles</p>
+                                <p className="govuk-body large-margin-top" ><span className="govuk-!-font-weight-bold">{data?.jobs?.min && data?.jobs?.max ? data?.jobs?.min +'-'+ data?.jobs?.max : (data?.jobs?.min || data?.jobs?.max)}</span> new roles</p>
                                 <Details summary='How did we calculate this?' color='white' description={descriptionDetail['new jobs']}/>
                             </div>
                         )
