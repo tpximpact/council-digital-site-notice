@@ -55,7 +55,7 @@ function FeedbackInformation() {
            }
             
         </section>
-        <section>
+        <section style={{marginTop: '20px'}}>
             <h2 className="govuk-heading-l">Why your comments are important</h2>
             <p className="govuk-body">There are three main reasons we ask residents to comment on planning applications:</p>
             <div>
