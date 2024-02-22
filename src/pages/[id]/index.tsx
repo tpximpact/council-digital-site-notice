@@ -18,6 +18,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 
+//enable when go live happens
 // export async function getStaticPaths() {
 //   const data = await getActiveApplications();
   
