@@ -10,7 +10,8 @@ const Header = () => {
 
   useEffect(() => {
     const initialValue = localStorage.getItem("globalInfo")
-    if(initialValue !== null) {
+    console.log(initialValue == undefined)
+    if(initialValue !== null && initialValue !== 'undefined') {
       const image = JSON.parse(initialValue)?.logo
       setLogoCouncil(image)
     } else {
