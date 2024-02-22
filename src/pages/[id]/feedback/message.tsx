@@ -70,7 +70,7 @@ const FeedbackMessage = () => {
                 updatesUrl && <Link href={updatesUrl} className="govuk-button govuk-!-font-size-16" target="_blank">Sign up for updates about this application</Link>
             }
             <h1 className="govuk-heading-m">Discover other planning applications in your area</h1>
-            <p className="govuk-body">If you’re interested in learning more about planning applications in your area, you can view all currently active applications and provide comments on them .</p>
+            <p className="govuk-body">If you’re interested in learning more about planning applications in your area, you can view all currently active applications and provide comments on them.</p>
             <Link href="/" className="govuk-button govuk-button--secondary govuk-!-font-size-16">View local planning applications</Link>
             {
                 involveUrl &&
