@@ -1,5 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/undefined/feedback',
+        destination: '/',
+        permanent: true
+      },
+      {
+        source: '/undefined',
+        destination: '/',
+        permanent: true
+      }
+    ]
+  },
   reactStrictMode: true,
   images: {
     domains: ['cdn.sanity.io']
