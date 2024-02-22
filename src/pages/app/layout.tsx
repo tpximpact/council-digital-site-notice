@@ -12,12 +12,12 @@ import { urlFor } from "../../../util/client"
     children: React.ReactNode
   }) {
     const [isShowCookie, setIsShowCookie] = useState(true)
-    const [favicon, setFavicon] = useState('')
+    // const [favicon, setFavicon] = useState('')
     useEffect(() => {
       const getLocalStorageCookies = localStorage.getItem('cookies')
       const globalContent = localStorage.getItem('globalInfo') || '{}'
-      const {favicon} = JSON.parse(globalContent);
-      (favicon == null || favicon == undefined) ? setFavicon('/favicon_default.ico') : setFavicon(urlFor(favicon)?.url())
+      // const {favicon} = JSON.parse(globalContent);
+      // (favicon == null || favicon == undefined) ? setFavicon('/favicon_default.ico') : setFavicon(urlFor(favicon)?.url())
       if(getLocalStorageCookies !== null) {
         setIsShowCookie(JSON.parse(getLocalStorageCookies))
       }
@@ -31,7 +31,7 @@ import { urlFor } from "../../../util/client"
         <Banner />
         <Head>
         <title>Digital site notice</title>
-        <link rel="icon" href={favicon} sizes="any" />
+        {/* <link rel="icon" href={favicon} sizes="any" /> */}
       </Head>
         <div className='layout-wrap'>
             {children}
