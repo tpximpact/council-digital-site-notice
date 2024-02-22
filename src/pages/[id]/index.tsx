@@ -7,7 +7,6 @@ import Process from "./components/process";
 import { DataDetails } from "../../../util/type";
 import { getActiveApplications, getApplicationById } from "../../../util/client";
 import moment from 'moment'
-import Head from 'next/head';
 
 export async function getServerSideProps(context: any) {
   const {id} = context.params;
@@ -65,9 +64,6 @@ const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: da
 const {showAccess, showCarbon, showHealthcare, showHousing, showJobs, showOpenSpace} = data || {}
     return (
         <>
-         <Head>
-          <title>Digital site notice</title>
-        </Head>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         <About data={data}/>
         {

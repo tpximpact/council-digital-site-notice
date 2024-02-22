@@ -9,7 +9,6 @@ import { PaginationType, Data } from '../../util/type';
 import { getLocationFromPostcode } from "../../util/geolocation";
 import { ContextApplication } from '@/context';
 import Link from 'next/link';
-import Head from 'next/head';
 
 export const itemsPerPage = 6;
 
@@ -68,9 +67,6 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
 
   return (
     <div className="wrap-home">
-      <Head>
-        <title>Digital site notice</title>
-      </Head>
       <h1 className="govuk-heading-xl" role="heading" style={{display: 'inline-block'}}>
         Find planning applications near you
       </h1>
