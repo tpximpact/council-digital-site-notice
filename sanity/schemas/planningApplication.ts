@@ -274,12 +274,12 @@ export default defineType({
         return true
       })
     }),
-    defineField({
-      title: 'Healthcare impact',
-      name: 'showHealthcare',
-      type: 'boolean',
-      description: 'Optional',
-    }),
+    // defineField({
+    //   title: 'Healthcare impact',
+    //   name: 'showHealthcare',
+    //   type: 'boolean',
+    //   description: 'Optional',
+    // }),
     // defineField({
     //   title: 'Additional healthcare demand',
     //   description: 'Required - As a percentage',
