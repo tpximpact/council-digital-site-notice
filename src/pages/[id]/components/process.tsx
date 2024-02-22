@@ -56,7 +56,7 @@ function Process({data, commentDeadline}: {data: DataDetails, commentDeadline: s
 
     useEffect(() => {
         const globalContent = localStorage.getItem('globalInfo')
-        if(globalContent !== null) {
+        if(globalContent !== null && globalContent !== 'undefined') {
             setPlanningProcessUrl(JSON.parse(globalContent).planningProcessUrl)
         } else {
             setPlanningProcessUrl(globalInfo?.planningProcessUrl)

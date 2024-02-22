@@ -7,6 +7,8 @@ import Process from "./components/process";
 import { DataDetails } from "../../../util/type";
 import { getActiveApplications, getApplicationById } from "../../../util/client";
 import moment from 'moment'
+import { notFound } from "next/navigation";
+import NotFound from "../[...not-found]";
 
 
 export async function getServerSideProps(context: any) {
@@ -14,7 +16,7 @@ export async function getServerSideProps(context: any) {
   const data = await getApplicationById(id)
   return {
     props: {
-      data: data[0]
+      data: data.lenght > 0 ? data[0] : null
     },
   };
 }
@@ -57,6 +59,7 @@ const Application = ({data}: {data: DataDetails} ) => {
       'applicationStage': data?.applicationStage,
       'applicationUpdatesUrl': data?.applicationUpdatesUrl
     }))
+  // }
   },[data, setDataApplication, setQuestion, commentDeadline])
   
 
@@ -65,12 +68,17 @@ const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: da
 const {showAccess, showCarbon, showHealthcare, showHousing, showJobs, showOpenSpace} = data || {}
     return (
         <>
+        {
+          data == null ? <NotFound /> :
+        <>
         <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
         <About data={data}/>
         {
           (showAccess || showCarbon || showHealthcare || showHousing || showJobs || showOpenSpace) &&
         <Impact data={data}/>}
         <Process data={data} commentDeadline={commentDeadline}/>
+        </>
+      }
         </>
     )
 }
