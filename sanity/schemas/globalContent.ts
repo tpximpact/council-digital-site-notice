@@ -57,6 +57,12 @@ export default defineType({
             type: 'image',
             validation: Rule => Rule.required(),
           }),
+          defineField({
+            title: 'Favicon',
+            name: 'favicon',
+            type: 'image',
+            validation: Rule => Rule.required(),
+          }),
     ],
     
 });

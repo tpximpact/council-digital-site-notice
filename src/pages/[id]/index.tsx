@@ -8,7 +8,6 @@ import { DataDetails } from "../../../util/type";
 import { getActiveApplications, getApplicationById } from "../../../util/client";
 import moment from 'moment'
 
-
 export async function getServerSideProps(context: any) {
   const {id} = context.params;
   const data = await getApplicationById(id)
