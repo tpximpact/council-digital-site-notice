@@ -12,7 +12,7 @@ import Link from 'next/link';
 
 export const itemsPerPage = 6;
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const dataId = await getActiveApplications();
   const data = await getActiveApplicationsPagination({ itemsPerPage });
   const globalContent = await getGlobalContent()
