@@ -12,7 +12,7 @@ export async function getStaticProps(context: any) {
   const {id} = context.params;
   const data = await getApplicationById(id)
 
-  if(data.lenght == undefined) {
+  if(data.length == undefined) {
     return {
       redirect: {
         destination: '/',
