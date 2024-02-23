@@ -122,7 +122,8 @@ export async function getApplicationById(id: string) {
           description: development.development_description,
           address: development.development_address,
           name: siteNotice.name ? siteNotice.name : development?.development_address,
-          location : { lng : development.longitude, lat : development.latitude }
+          location : { lng : development.longitude, lat : development.latitude },
+          applicationDocumentsUrl: `http://camdocs.camden.gov.uk/HPRMWebDrawer/PlanRec?q=recContainer:%22${siteNotice.applicationNumber}%22`
         };
     
         return application;
