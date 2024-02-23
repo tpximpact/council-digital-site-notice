@@ -89,7 +89,7 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
           onClick={() => onSearchPostCode()}
         />
         {
-          globalContent?.signUpUrl && <Link className="govuk-button grid-button-signup govuk-button--secondary" target="_blank" style={{textDecoration:"none"}} href={`${globalContent?.SignUpUrl}`}>Sign up for alerts on applications near you</Link>
+          globalContent?.signUpUrl && <Link className="govuk-button grid-button-signup govuk-button--secondary" target="_blank" style={{textDecoration:"none"}} href={`${globalContent?.signUpUrl}`}>Sign up for alerts on applications near you</Link>
         }
         </section>
       {displayData && <PlanningApplications data={displayData} searchLocation={location} />}
