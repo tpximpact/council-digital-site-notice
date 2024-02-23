@@ -10,8 +10,7 @@ import moment from 'moment'
 import { notFound } from "next/navigation";
 import NotFound from "../[...not-found]";
 
-
-export async function getServerSideProps(context: any) {
+export async function getStaticProps(context: any) {
   const {id} = context.params;
   const data = await getApplicationById(id)
   return {
@@ -21,14 +20,14 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-// export async function getStaticPaths() {
-//   const data = await getActiveApplications();
+export async function getStaticPaths() {
+  const data = await getActiveApplications();
   
-//   return {
-//   paths: data.map((doc: any) => ({params: {data: doc, id: doc._id}})),
-//   fallback: true,
-//   }
-// }
+  return {
+  paths: data.map((doc: any) => ({params: {data: doc, id: doc._id}})),
+  fallback: true,
+  }
+}
 
 
 const Application = ({data}: {data: DataDetails} ) => {
