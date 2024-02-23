@@ -1,5 +1,6 @@
 import { defineField, defineType } from "sanity";
 import { appeal, assessment, consultation, decision } from "../structure/helper";
+import PopulateButton from "./PopulateButton";
 
 export default defineType({
   title: "Planning application",
@@ -20,7 +21,7 @@ export default defineType({
       title: 'IsActive',
       type: 'boolean',
       initialValue: false,
-      description: 'Optional - When set to true will show on the website. Will be hidden if false.'
+      description: 'Optional - When set to true will show on the website. Will be hidden if false.',
     }),
     defineField({
       title: "Application number",
@@ -29,6 +30,15 @@ export default defineType({
       description: 'Required',
       validation: (Rule: any) => Rule.required(),
       readOnly: false
+    }),
+    defineField({
+      name: 'populateApi',
+      title: 'Auto populate from OpenData API',
+      type: 'array',
+      of: [],
+      components: {
+        input: PopulateButton
+      }, 
     }),
     defineField({
       title: "Application Type",
