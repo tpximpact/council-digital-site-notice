@@ -5,8 +5,8 @@ import Details from "@/components/details";
 import Input from "@/components/input";
 import Validation from "@/components/validation"
 import Checkbox from "@/components/checkbox";
-import { descriptionDetail } from "../../../../../util/descriptionDetail";
-import { messageError, optionalValidation, isErrorValidation, isConsentValidation, isOptionValidation, postcodeMessageError, emailValidation, phoneValidation, postcodeValidation } from "../../../../../util/feedbackHelper";
+import { descriptionDetail } from "../../../../../../util/descriptionDetail";
+import { messageError, optionalValidation, isErrorValidation, isConsentValidation, isOptionValidation, postcodeMessageError, emailValidation, phoneValidation, postcodeValidation } from "../../../../../../util/feedbackHelper";
 
 const PersonalDetails = () => {
     const { onChangeQuestion, setQuestion, selectedCheckbox, personalDetailsForm, setPersonalDetailsForm, globalInfo } = useContext(ContextApplication);
