@@ -1,22 +1,37 @@
 // In your custom input component file (e.g., PopulateButton.js)
-import React from 'react';
-import { useFormValue, useDocumentOperation } from 'sanity';
+import React, { useState, useEffect } from 'react';
+import { useFormValue, useDocumentOperation, set } from 'sanity';
 // import PatchEvent, {set} from 'sanity';
+import { getGlobalContent } from '../../util/client';
+
 
 export default function PopulateButton(props) {
-  console.log(useFormValue(['applicationNumber']));
-  const formId = useFormValue(['_id']);
-  console.log(formId);
+const [intergrationMethod, setIntergrationMethod] = useState(false);
 
+  useEffect(() => {
+    const fetchGlobalContent = async () => {
+      try {
+        // setLoading(true);
+        const globalContent = await getGlobalContent();
+        // Do something with globalContent if needed
+        // console.log(globalContent);
+        setIntergrationMethod(globalContent.integrations);
+      } catch (error) {
+        console.error("Error fetching global content", error);
+      } finally {
+        // setLoading(false);
+      }
+    };
+
+    fetchGlobalContent();
+  }, []);
+  const formId = useFormValue(['_id']);
   const docId = typeof formId === "string"
   ? formId.replace("drafts.", "")
   : formId;
-  console.log(docId);
-  console.log("PROPS",props)
   const { patch, publish } = useDocumentOperation(docId as string, 'planning-application');
 
   const applicationNumber = useFormValue(['applicationNumber']);
-  // const form = useForm();
   const handlePopulate = async () => {
     try {
       console.log(props.id, props.type)
@@ -30,9 +45,16 @@ export default function PopulateButton(props) {
     }
     
   };
-  return (
-    <button type="button" onClick={handlePopulate}>
-      Fetch now
-    </button>
-  );
+  console.log(intergrationMethod)
+  if (typeof intergrationMethod === 'string' && intergrationMethod == "openAsdcPI") {
+    return (
+      <div>
+      <button type="button" onClick={handlePopulate}>
+        Fetch now
+      </button>
+      </div>
+    );
+  } else {
+    return null;
+  }
 }

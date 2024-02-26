@@ -1,6 +1,23 @@
 import { defineField, defineType } from "sanity";
 import { appeal, assessment, consultation, decision } from "../structure/helper";
 import PopulateButton from "./PopulateButton";
+import { getGlobalContent } from '../../util/client';
+// let isPopulateApiHidden = false;
+
+// // Fetch global content and update the state variable
+// const fetchGlobalContent = async () => {
+//   try {
+//     const globalContent = await getGlobalContent();
+//     const integrations = globalContent.integrations;
+//     console.log('integrations', integrations);
+
+//     return integrations !== 'opensAPI';
+//   } catch (error) {
+//     console.error("Error fetching global content", error);
+//     return true; 
+//   }
+// };
+// await fetchGlobalContent();
 
 export default defineType({
   title: "Planning application",
@@ -34,11 +51,11 @@ export default defineType({
     defineField({
       name: 'populateApi',
       title: 'Auto populate from OpenData API',
-      type: 'array',
-      of: [],
+      type: 'string',
+      // hidden: ({document}: any) => document?.datasource !== 'OpenData API',
       components: {
         input: PopulateButton
-      }, 
+      },
     }),
     defineField({
       title: "Application Type",
