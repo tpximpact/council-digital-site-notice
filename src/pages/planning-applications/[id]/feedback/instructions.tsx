@@ -2,8 +2,8 @@
 import Image from "next/image"
 import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
-import { urlFor } from "../../../../util/client";
-import { DataDetails } from "../../../../util/type";
+import { urlFor } from "../../../../../util/client";
+import { DataDetails } from "../../../../../util/type";
 
 function Instructions({data} : {data: DataDetails}) {
     const { globalInfo } = useContext(ContextApplication);
