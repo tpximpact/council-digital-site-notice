@@ -28,7 +28,7 @@ const Feedback = () => {
             name: "Planning application", href: "/"
         },
         {
-            name: name, href: `/${id}`
+            name: name, href: `/planning-applications/${id}`
         },
         {
             name: "Tell us what you think", href:""
