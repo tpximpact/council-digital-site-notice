@@ -73,8 +73,8 @@ export const descriptionDetail = {
 
 <p>Your comments will be made available online for the public to see. We will not include your name, address, telephone number or email address.</p>
 
-<p>We'll make sure any other personal or sensitive information is removed where needed, in line with the <Link href="" style={{color:"black"}}>General Data Protection Regulation</Link> (GDPR). If you have concerns about any data you have sent being published, <Link href="" style={{color:"black"}}>contact the Planning Advice and Information Service.</Link></p>
+<p>We'll make sure any other personal or sensitive information is removed where needed, in line with the <Link href='https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/key-definitions/what-is-personal-data/' target="_blank" style={{color:"black"}}>General Data Protection Regulation</Link> (GDPR). If you have concerns about any data you have sent being published, <Link href='https://www.camden.gov.uk/contact-the-planning-advice-and-information-service' target='_blank' style={{color:"black"}}>contact the Planning Advice and Information Service.</Link></p>
 
-<p>Read our <Link href="" style={{color:"black"}}>corporate privacy statement</Link> and our <Link href="" style={{color:"black"}}>planning service privacy statement</Link> for more information.</p>
+<p>Read our <Link href='https://www.camden.gov.uk/data-protection-privacy-and-cookies' target='_blank' style={{color:"black"}}>corporate privacy statement</Link> and our <Link href='https://www.camden.gov.uk/documents/20142/2247044/Privacy+Notice_regenerationandplanning+-+updated+May19.pdf/23506373-1b95-2cc5-55b2-55897cfe4b42' target='_blank' style={{color:"black"}}>planning service privacy statement</Link> for more information.</p>
 </>
-}
+} 

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import Link from "next/link"
 import { ContextApplication } from "@/context";
 import { Button } from "@/components/button"
-import { ArrowIcon } from "../../../../../public/assets/icons"
+import { ArrowIcon } from "../../../../../../public/assets/icons"
 import { useEffect, useState } from "react"
 
 
@@ -40,7 +40,7 @@ function FeedbackInformation() {
             <div className="info-header">
             <h1 className='govuk-heading-xl' style={{marginBottom: 0}}>What you need to know before you comment</h1>
             </div>
-            <Link href={`/${id}`}className={`govuk-back-link`} data-module="govuk-button">Back
+            <Link href={`/planning-applications/${id}`}className={`govuk-back-link`} data-module="govuk-button">Back
         </Link>
             <h2 className="govuk-heading-l">What isn’t considered in planning approval</h2>
             <p className="govuk-body">There are issues that may be of concern to you, and are very important, but which generally cannot be considered as a material planning consideration when assessing a planning application. These include:</p>

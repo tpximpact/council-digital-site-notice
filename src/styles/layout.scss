@@ -69,6 +69,9 @@ body {
 .error-title h1 {
     margin-bottom: 0;
 }
+.govuk-breadcrumbs__list-item {
+    min-height: 20px;
+}
 
 @media (max-width: 600px){
     .layout-wrap {

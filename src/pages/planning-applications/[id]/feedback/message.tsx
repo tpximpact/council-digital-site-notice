@@ -3,7 +3,7 @@ import Link from "next/link"
 import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
 import Image from "next/image";
-import { urlFor } from "../../../../util/client";
+import { urlFor } from "../../../../../util/client";
 
 
 const FeedbackMessage = () => {

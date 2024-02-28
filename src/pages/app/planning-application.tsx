@@ -21,7 +21,7 @@ const indexValue = (Math.floor((data.length/3)) * 3)
         return (
           <Link
             key={_id}
-            href={`/${_id}`}
+            href={`/planning-applications/${_id}`}
             className={`planning-application-link ${indexValue <= index && 'planning-application-last-line'}`}
           >
             {image_head && (
