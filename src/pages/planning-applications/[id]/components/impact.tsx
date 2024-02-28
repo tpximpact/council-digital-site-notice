@@ -22,8 +22,8 @@ function Impact({
                     </div>
                 
                         <>
-                        <p className="govuk-body"><span className="govuk-!-font-weight-bold">{data?.housing?.residentialUnits}</span> new homes</p>
-                        <p className="govuk-body" style={{ marginTop: "-10px"}}><span className="govuk-!-font-weight-bold">{data?.housing?.affordableResidentialUnits}%</span> affordable housing</p>
+                       {data?.housing?.residentialUnits && <p className="govuk-body"><span className="govuk-!-font-weight-bold">{data?.housing?.residentialUnits}</span> new homes</p>} 
+                       {data?.housing?.affordableResidentialUnits && <p className="govuk-body" style={{ marginTop: "-10px"}}><span className="govuk-!-font-weight-bold">{data?.housing?.affordableResidentialUnits}%</span> affordable housing</p>}
                         </>
                     
                 
