@@ -12,10 +12,10 @@ export async function getStaticProps(context: any) {
   const {id} = context.params;
   const data = await getApplicationById(id)
 
-  if(data.length == undefined) {
+  if(!data || data.length === 0) {
     return {
       redirect: {
-        destination: '/',
+        destination: '/404',
         permanent: false
       }
     }
