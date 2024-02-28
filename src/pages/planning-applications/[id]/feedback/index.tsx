@@ -13,8 +13,8 @@ const Feedback = () => {
     useEffect(() => {
         const getStorage = localStorage.getItem("application")
         if(Object.keys(dataApplication).length > 0 || getStorage === null) {
-            const {name, _id} = dataApplication
-            setName(name)
+            const {name, _id, address} = dataApplication
+            setName(name || address)
             setId(_id)
     }else {
         const {name, id} = JSON.parse(getStorage)

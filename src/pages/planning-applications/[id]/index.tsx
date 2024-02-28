@@ -50,7 +50,7 @@ const Application = ({data}: {data: DataDetails} ) => {
       'image_head': data?.image_head,
       'image_gallery': data?.image_gallery,
       'deadline': data?.commentDeadline,
-      'name': data?.name,
+      'name': data?.name || data?.address,
       'id': data?._id,
       'applicationNumber': data?.applicationNumber,
       'applicationStage': data?.applicationStage,
@@ -59,7 +59,7 @@ const Application = ({data}: {data: DataDetails} ) => {
   },[data, setDataApplication, setQuestion, commentDeadline])
   
 
-const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: data?.name, href:""}]
+const breadcrumbs_array = [{name: "Planning applications", href: "/"}, {name: data?.name || data?.address, href:""}]
 
 const {showAccess, showCarbon, showHealthcare, showHousing, showJobs, showOpenSpace} = data || {}
     return (
