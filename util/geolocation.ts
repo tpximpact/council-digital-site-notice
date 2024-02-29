@@ -1,6 +1,5 @@
 import { postCodeRegex } from "./regex";
 export function distanceInMiles(point1: any, point2: any) {
-
   var R = 3958.8; // Radius of the Earth in miles
   var rlat1 = point1.latitude * (Math.PI / 180); // Convert degrees to radians
   var rlat2 = point2.latitude * (Math.PI / 180); // Convert degrees to radians
@@ -16,22 +15,22 @@ export function distanceInMiles(point1: any, point2: any) {
           Math.cos(rlat1) *
             Math.cos(rlat2) *
             Math.sin(difflon / 2) *
-            Math.sin(difflon / 2)
-      )
+            Math.sin(difflon / 2),
+      ),
     );
 
-  return d.toFixed(2);;
+  return d.toFixed(2);
 }
 
 export async function getLocationFromPostcode(postcode: string) {
   if (postCodeRegex.test(postcode)) {
     const postcodeRes = await fetch(
-      `https://api.postcodes.io/postcodes/${postcode}`
+      `https://api.postcodes.io/postcodes/${postcode}`,
     );
     const postcodeData = await postcodeRes.json();
 
     if (postcodeData.error) {
-      console.log(postcodeData.error)
+      console.log(postcodeData.error);
       return null;
     }
 

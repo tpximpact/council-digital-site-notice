@@ -46,7 +46,7 @@ import { verifyApiKey } from "../../../util/apiKey";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const { method } = req;
 
@@ -87,7 +87,7 @@ export default async function handler(
       const validationErrors = await validatePlanningParams(req.body[key]);
       if (validationErrors.errors.length > 0) {
         failedValidationApplcaitons.push(
-          `An error occurred while validating the application ${applicationNumber}`
+          `An error occurred while validating the application ${applicationNumber}`,
         );
         continue;
       }
@@ -109,7 +109,7 @@ export default async function handler(
         successApplications.push(`Applciation ${applicationNumber} created`);
       } catch (error) {
         failedCreationApplcaitons.push(
-          `An error occurred while creating the application ${applicationNumber}`
+          `An error occurred while creating the application ${applicationNumber}`,
         );
       }
     }
@@ -121,7 +121,10 @@ export default async function handler(
   if (successApplications.length == 0) {
     status = 400;
     message = "An error has occured";
-  } else if (failedCreationApplcaitons.length > 0 || failedValidationApplcaitons.length > 0) {
+  } else if (
+    failedCreationApplcaitons.length > 0 ||
+    failedValidationApplcaitons.length > 0
+  ) {
     status = 207;
     message = "Partial success";
   }

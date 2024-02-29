@@ -27,8 +27,8 @@ import { verifyApiKey } from "../../../util/apiKey";
  *             airQuality: string
  *           example:
  *             reference: 00/12345/ABC
- *             description: Lorem ipsum dolor sit amet, consectetur adipiscing elit 
- *             address: 123 Example Street Name Town Name City 
+ *             description: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+ *             address: 123 Example Street Name Town Name City
  *             applicationType: Full Planning Permission
  *             height: 14
  *             developmentType: Change of Use
@@ -41,7 +41,7 @@ import { verifyApiKey } from "../../../util/apiKey";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const { method } = req;
 
@@ -66,15 +66,13 @@ export default async function handler(
 
   const validationErrors = await validatePlanningParams(req.body);
   if (validationErrors.errors.length > 0) {
-    return res.status(validationErrors.status).json(
-      validationErrors
-    );
+    return res.status(validationErrors.status).json(validationErrors);
   }
 
-  const { 
-    applicationNumber, 
-    description, 
-    address, 
+  const {
+    applicationNumber,
+    description,
+    address,
     applicationType,
     height,
     commentDeadline,
