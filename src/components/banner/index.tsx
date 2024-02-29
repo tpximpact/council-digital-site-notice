@@ -4,7 +4,7 @@ const Banner = () => {
     useEffect(() => {
         const globalInfo = localStorage.getItem('globalInfo')
 
-        if(globalInfo !== null) {
+        if(globalInfo !== null && globalInfo !== 'undefined') {
             setFeedbackUrl(JSON.parse(globalInfo)?.feedbackUrl)
         }
     },[])

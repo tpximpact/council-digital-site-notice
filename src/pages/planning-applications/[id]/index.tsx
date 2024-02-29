@@ -11,11 +11,20 @@ import moment from 'moment'
 export async function getStaticProps(context: any) {
   const {id} = context.params;
   const data = await getApplicationById(id)
-  return {
-    props: {
-      data: data[0]
-    },
-  };
+
+  if(!data || data.length === 0) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false
+      }
+    }
+  } 
+    return {
+      props: {
+        data: data[0]
+      }
+    }
 }
 
 export async function getStaticPaths() {
@@ -23,7 +32,7 @@ export async function getStaticPaths() {
   
   return {
   paths: data.map((doc: any) => ({params: {data: doc, id: doc._id}})),
-  fallback: true,
+  fallback: 'blocking',
   }
 }
 
@@ -33,6 +42,7 @@ const Application = ({data}: {data: DataDetails} ) => {
   const [commentDeadline, setCommentDeadline] = useState('')
 
   useEffect(() => {
+
     setQuestion(0)
 
     let deadlineTime;
