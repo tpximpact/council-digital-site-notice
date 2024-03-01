@@ -9,16 +9,16 @@ const Feedback = () => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
 
-    useEffect(() => {
-        const getStorage = localStorage.getItem("application")
-        if(Object.keys(dataApplication).length > 0 || getStorage === null) {
-            const {name, _id, address} = dataApplication
-            setName(name || address)
-            setId(_id)
-    }else {
-        const {name, id} = JSON.parse(getStorage)
-        setName(name)
-        setId(id)
+  useEffect(() => {
+    const getStorage = localStorage.getItem("application");
+    if (Object.keys(dataApplication).length > 0 || getStorage === null) {
+      const { name, _id, address } = dataApplication;
+      setName(name || address);
+      setId(_id);
+    } else {
+      const { name, id } = JSON.parse(getStorage);
+      setName(name);
+      setId(id);
     }
   }, [dataApplication]);
 
