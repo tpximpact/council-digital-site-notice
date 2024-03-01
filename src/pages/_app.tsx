@@ -8,9 +8,17 @@ export default function App({ Component, pageProps }: AppProps) {
     const govUk = require("govuk-frontend")
     govUk.initAll()
   }
-  return <Context>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-          </Context>
+  let displayComponent;
+  
+  if(Component.displayName === 'StudioPage') {
+    displayComponent = <Component {...pageProps} />
+  } else {
+    displayComponent = <Context>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+    </Context>
+  }
+  
+  return displayComponent
 }
