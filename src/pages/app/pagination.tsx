@@ -1,27 +1,25 @@
-import ReactPaginate from 'react-paginate';
-import { NextIcon, PreviewIcon } from '../../../public/assets/icons';
+import ReactPaginate from "react-paginate";
+import { NextIcon, PreviewIcon } from "../../../public/assets/icons";
 
+const Pagination = ({ data, onSelectPage, itemsPerPage }: any) => {
+  const pageCount = Math.ceil(data?.length / itemsPerPage);
 
-const Pagination = ({data, onSelectPage, itemsPerPage}: any) => {
-
-const pageCount = Math.ceil(data?.length / itemsPerPage);
-
-const handlePageClick = (event: any) => {
+  const handlePageClick = (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % data?.length;
-    const newId = data[newOffset]
-    onSelectPage(newId)
+    const newId = data[newOffset];
+    onSelectPage(newId);
   };
 
-return(
+  return (
     <div className="wrap-pagination">
-        <ReactPaginate
+      <ReactPaginate
         breakLabel="..."
-        nextLabel={<NextIcon/>}
+        nextLabel={<NextIcon />}
         onPageChange={handlePageClick}
         pageRangeDisplayed={2}
         marginPagesDisplayed={1}
         pageCount={pageCount}
-        previousLabel={<PreviewIcon/>}
+        previousLabel={<PreviewIcon />}
         pageClassName="page-item"
         pageLinkClassName="page-link"
         previousClassName="page-item"
@@ -34,9 +32,8 @@ return(
         activeClassName="active"
         renderOnZeroPageCount={null}
       />
-
     </div>
-)
-}
+  );
+};
 
 export default Pagination;

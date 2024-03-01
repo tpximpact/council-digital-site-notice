@@ -55,6 +55,20 @@ body {
     cursor: pointer;
 }
 
+.error-container {
+    max-width: 1020px; 
+}
+
+.error-title {
+    background-color: #FFDD00;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.error-title h1 {
+    margin-bottom: 0;
+}
 .govuk-breadcrumbs__list-item {
     min-height: 20px;
 }

@@ -1,14 +1,13 @@
-import { useEffect, useState, useContext } from "react"
+import { useEffect, useState, useContext } from "react";
 import { ContextApplication } from "@/context";
-import Breadcrumbs from "@/components/breadcrumbs"
-import Instructions from "./instructions"
-import Questions from "./questions"
-
+import Breadcrumbs from "@/components/breadcrumbs";
+import Instructions from "./instructions";
+import Questions from "./questions";
 
 const Feedback = () => {
-    const { dataApplication, question } = useContext(ContextApplication);
-    const [id, setId] = useState('')
-    const [name, setName] = useState('')
+  const { dataApplication, question } = useContext(ContextApplication);
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
 
     useEffect(() => {
         const getStorage = localStorage.getItem("application")
@@ -21,26 +20,31 @@ const Feedback = () => {
         setName(name)
         setId(id)
     }
-    }, [dataApplication])
+  }, [dataApplication]);
 
-    const breadcrumbs_array = [
-        {
-            name: "Planning application", href: "/"
-        },
-        {
-            name: name, href: `/planning-applications/${id}`
-        },
-        {
-            name: "Tell us what you think", href:""
-        }
-    ]
-    return(
-        <>
-        <Breadcrumbs breadcrumbs_info={breadcrumbs_array}/>
-        {(question !== 0 && question !== 13) && <Instructions data={dataApplication}/>}
-        <Questions question={question} />
-        </>
-    )
-}
+  const breadcrumbs_array = [
+    {
+      name: "Planning application",
+      href: "/",
+    },
+    {
+      name: name,
+      href: `/planning-applications/${id}`,
+    },
+    {
+      name: "Tell us what you think",
+      href: "",
+    },
+  ];
+  return (
+    <>
+      <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
+      {question !== 0 && question !== 13 && (
+        <Instructions data={dataApplication} />
+      )}
+      <Questions question={question} />
+    </>
+  );
+};
 
-export default Feedback
+export default Feedback;
