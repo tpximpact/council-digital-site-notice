@@ -3,7 +3,7 @@ import { ContextApplication } from "@/context";
 import { BackLink, Button, ButtonLink } from "@/components/button"
 import Details from "@/components/details";
 import { questions } from "../../../../../../util/questionsInfo"
-import { descriptionDetail } from "../../../../../../util/descriptionDetail";
+import { descriptionDetail } from "../../../../../../util/description-detail";
 import {addFeedback} from "../../../../../../util/client"
 import { savefeedbackToGoogleSheet } from "../../../../../../util/google";
 

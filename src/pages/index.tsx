@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
-import PlanningApplications from './app/planning-application'
-import Pagination from './app/pagination';
+import PlanningApplications from '../components/planning-application'
+import Pagination from '../components/pagination';
 import Input from '@/components/input'
 import {Button} from '@/components/button'
 import {ArrowIcon} from "../../public/assets/icons"

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Details from "@/components/details";
-import { descriptionDetail } from "../../../../../util/descriptionDetail"
+import { descriptionDetail } from "../../../../../util/description-detail"
 import { DataDetails } from "../../../../../util/type";
 
 function Impact({
