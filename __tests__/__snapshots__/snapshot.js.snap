@@ -15,7 +15,8 @@ exports[`renders homepage unchanged 1`] = `
     <p
       class="govuk-body-m"
     >
-      Find, review and leave your comments on planning applications in 
+      Find, review and leave your comments on planning applications in
+       
     </p>
     <section
       class="search-grid"
