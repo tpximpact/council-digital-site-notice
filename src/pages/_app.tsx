@@ -1,7 +1,7 @@
-import '@/styles/app.scss'
-import Layout from '../components/layout'
-import type { AppProps } from 'next/app'
-import Context from '@/context'
+import "@/styles/app.scss";
+import Layout from "../components/layout";
+import type { AppProps } from "next/app";
+import Context from "@/context";
 
 export default function App({ Component, pageProps }: AppProps) {
   if (typeof window !== "undefined") {

@@ -2,9 +2,9 @@ import { useEffect, useContext, useState } from "react";
 import { ContextApplication } from "@/context";
 import { BackLink, Button, ButtonLink } from "@/components/button";
 import Details from "@/components/details";
-import { questions } from "../../../util/questionsInfo"
+import { questions } from "../../../util/questionsInfo";
 import { descriptionDetail } from "../../../util/description-detail";
-import {addFeedback} from "../../../util/client"
+import { addFeedback } from "../../../util/client";
 import { savefeedbackToGoogleSheet } from "../../../util/google";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
@@ -75,9 +75,12 @@ function CheckAnswers() {
     if (selected.length > 0) {
       setQuestion(label);
     } else {
-        setQuestion(label)
-        setSelectedCheckbox([...selectedCheckbox, label])
-        localStorage.setItem('topics', JSON.stringify({id, value:[...selectedCheckbox, label]}))
+      setQuestion(label);
+      setSelectedCheckbox([...selectedCheckbox, label]);
+      localStorage.setItem(
+        "topics",
+        JSON.stringify({ id, value: [...selectedCheckbox, label] }),
+      );
     }
   };
 
@@ -87,28 +90,28 @@ function CheckAnswers() {
     let formId = crypto.randomUUID();
     localStorage.setItem("formId", formId);
 
-let topics:any = []
-let comment:any = {}
+    let topics: any = [];
+    let comment: any = {};
 
-selectedCheckbox?.map((el:any) => {
-    topics.push(questions[el])
-    comment = {...comment,[questions[el]]: commentForm[el]}
-})
-const application = localStorage.getItem("application");
-const applicationNumber = JSON.parse(application || '{}').applicationNumber;
+    selectedCheckbox?.map((el: any) => {
+      topics.push(questions[el]);
+      comment = { ...comment, [questions[el]]: commentForm[el] };
+    });
+    const application = localStorage.getItem("application");
+    const applicationNumber = JSON.parse(application || "{}").applicationNumber;
     let data = {
-        id : formId,
-        applicationNumber: applicationNumber,
-        feeling : feelingForm,
-        topics : JSON.stringify(topics),
-        comment : JSON.stringify(comment),
-        name : personalDetailsForm.name,
-        address : personalDetailsForm.address,
-        postcode : personalDetailsForm.postcode,
-        email : personalDetailsForm.email,
-        phone : personalDetailsForm.phone,
-        consent : personalDetailsForm.consent,
-    }
+      id: formId,
+      applicationNumber: applicationNumber,
+      feeling: feelingForm,
+      topics: JSON.stringify(topics),
+      comment: JSON.stringify(comment),
+      name: personalDetailsForm.name,
+      address: personalDetailsForm.address,
+      postcode: personalDetailsForm.postcode,
+      email: personalDetailsForm.email,
+      phone: personalDetailsForm.phone,
+      consent: personalDetailsForm.consent,
+    };
 
     try {
       const response = await fetch("/api/comments", {
@@ -119,25 +122,24 @@ const applicationNumber = JSON.parse(application || '{}').applicationNumber;
         body: JSON.stringify(data),
       });
 
-        if (response.ok) {
-            const responseData = await response.json();
-            console.log(responseData);
-            onChangeQuestion()
-            localStorage.removeItem('feeling')
-            localStorage.removeItem('topics')
-            localStorage.removeItem('comment')
-            localStorage.removeItem('name')
-            localStorage.removeItem('address')
-            localStorage.removeItem('postcode')
-            localStorage.removeItem('email')
-            localStorage.removeItem('phone')
-            localStorage.removeItem('consent')
-        
-            contextCleaner()
-            
-        } else {
-            console.log('Error fetching data');
-        }
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        onChangeQuestion();
+        localStorage.removeItem("feeling");
+        localStorage.removeItem("topics");
+        localStorage.removeItem("comment");
+        localStorage.removeItem("name");
+        localStorage.removeItem("address");
+        localStorage.removeItem("postcode");
+        localStorage.removeItem("email");
+        localStorage.removeItem("phone");
+        localStorage.removeItem("consent");
+
+        contextCleaner();
+      } else {
+        console.log("Error fetching data");
+      }
     } catch (error) {
       console.log("Error processing comments:", error);
     }

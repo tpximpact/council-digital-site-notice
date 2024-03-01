@@ -6,7 +6,17 @@ import Input from "@/components/input";
 import Validation from "@/components/validation";
 import Checkbox from "@/components/checkbox";
 import { descriptionDetail } from "../../../util/description-detail";
-import { messageError, optionalValidation, isErrorValidation, isConsentValidation, isOptionValidation, postcodeMessageError, emailValidation, phoneValidation, postcodeValidation } from "../../../util/feedbackHelper";
+import {
+  messageError,
+  optionalValidation,
+  isErrorValidation,
+  isConsentValidation,
+  isOptionValidation,
+  postcodeMessageError,
+  emailValidation,
+  phoneValidation,
+  postcodeValidation,
+} from "../../../util/feedbackHelper";
 
 const PersonalDetails = () => {
   const {

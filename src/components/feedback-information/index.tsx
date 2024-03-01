@@ -2,12 +2,9 @@
 import { useContext } from "react";
 import Link from "next/link";
 import { ContextApplication } from "@/context";
-import { Button } from "@/components/button"
-import { ArrowIcon } from "../../../public/assets/icons"
-import { useEffect, useState } from "react"
-
-
-
+import { Button } from "@/components/button";
+import { ArrowIcon } from "../../../public/assets/icons";
+import { useEffect, useState } from "react";
 
 function FeedbackInformation() {
   const { onChangeQuestion, globalInfo } = useContext(ContextApplication);

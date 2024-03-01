@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
 import { ReactElement } from "react";
-export const descriptionDetail: {[key: string]: ReactElement} =  {
+export const descriptionDetail: { [key: string]: ReactElement } = {
   about: (
     <>
       <p style={{ fontWeight: 700, marginBottom: 0 }}>
@@ -27,29 +27,56 @@ export const descriptionDetail: {[key: string]: ReactElement} =  {
         details.
       </p>
 
-        <p className="govuk-body-s govuk-!-font-weight-bold govuk-!-margin-0">To make sure we balance our priorities</p>
-        <p className="govuk-body-s">A single development is unlikely to fulfil all the priorities for the local area. It's useful to be able to demonstrate which priorities are important to residents, so they can push developers to be more ambitious with their targets. Telling us what your priorities are can help planners make that decision.</p>
-            </>),
-    topics: <>
-        <p className="govuk-body-s" >As part of the negotiation, the case officer can take into consideration all comments which are ‘material considerations’ to the proposed development. These include (but aren't limited to):</p>
-        <ul className="govuk-body-s">
-            <li>overlooking/loss of privacy</li>
-            <li>loss of light or overshadowing</li>
-            <li>traffic parking</li>
-            <li>highway safety</li>
-            <li>noise from new uses or plant equipment</li>
-            <li>effect on listed building and conservation area</li>
-            <li>scale of buildings and structures</li>
-            <li>layout and density of building</li>
-            <li>design, appearance and materials</li>
-            <li>disabled persons' access</li>
-            <li>previous planning decisions (including appeal decisions)</li>
-            <li>trees and nature conservation</li>
-        </ul>
-        <p className="govuk-body-s">Issues such as loss of private view or negative impact on property values, or civil matters like ‘right to light’, party walls and property damage are not considered ‘material planning considerations’.</p>
-        <p className="govuk-body-s">The case officer will summarise their findings in the officer's report and/or decision notice.</p>
-        <p className="govuk-body-s">We won't acknowledge receipt of your comments, or get in touch with you directly about the issues you've raised. You can check the officer's report or decision notice to see if your, and other, comments have been logged.</p>
-</>,
+      <p className="govuk-body-s govuk-!-font-weight-bold govuk-!-margin-0">
+        To make sure we balance our priorities
+      </p>
+      <p className="govuk-body-s">
+        A single development is unlikely to fulfil all the priorities for the
+        local area. It's useful to be able to demonstrate which priorities are
+        important to residents, so they can push developers to be more ambitious
+        with their targets. Telling us what your priorities are can help
+        planners make that decision.
+      </p>
+    </>
+  ),
+  topics: (
+    <>
+      <p className="govuk-body-s">
+        As part of the negotiation, the case officer can take into consideration
+        all comments which are ‘material considerations’ to the proposed
+        development. These include (but aren't limited to):
+      </p>
+      <ul className="govuk-body-s">
+        <li>overlooking/loss of privacy</li>
+        <li>loss of light or overshadowing</li>
+        <li>traffic parking</li>
+        <li>highway safety</li>
+        <li>noise from new uses or plant equipment</li>
+        <li>effect on listed building and conservation area</li>
+        <li>scale of buildings and structures</li>
+        <li>layout and density of building</li>
+        <li>design, appearance and materials</li>
+        <li>disabled persons' access</li>
+        <li>previous planning decisions (including appeal decisions)</li>
+        <li>trees and nature conservation</li>
+      </ul>
+      <p className="govuk-body-s">
+        Issues such as loss of private view or negative impact on property
+        values, or civil matters like ‘right to light’, party walls and property
+        damage are not considered ‘material planning considerations’.
+      </p>
+      <p className="govuk-body-s">
+        The case officer will summarise their findings in the officer's report
+        and/or decision notice.
+      </p>
+      <p className="govuk-body-s">
+        We won't acknowledge receipt of your comments, or get in touch with you
+        directly about the issues you've raised. You can check the officer's
+        report or decision notice to see if your, and other, comments have been
+        logged.
+      </p>
+    </>
+  ),
   home: (
     <>
       <p className="govuk-body">
@@ -68,11 +95,11 @@ export const descriptionDetail: {[key: string]: ReactElement} =  {
       </p>
     </>
   ),
-  healthcare:
+  healthcare: (
     <>
       <p className="govuk-body">An explanation would go here</p>
     </>
-  ,
+  ),
   "open space": (
     <>
       <p className="govuk-body">

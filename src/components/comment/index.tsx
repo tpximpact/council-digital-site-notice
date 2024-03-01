@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import { ContextApplication } from "@/context";
 import TextArea from "@/components/text-area";
 import Validation from "@/components/validation";
-import {Button, BackLink} from "@/components/button"
+import { Button, BackLink } from "@/components/button";
 import { questions } from "../../../util/questionsInfo";
 
 function CommentQuestion() {

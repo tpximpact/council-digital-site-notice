@@ -1,8 +1,8 @@
-import Image from "next/image"
-import Link from "next/link"
-import { useContext, useState, useEffect } from "react"
-import { ContextApplication } from "@/context"
-import {ArrowIcon} from "../../../public/assets/icons"
+import Image from "next/image";
+import Link from "next/link";
+import { useContext, useState, useEffect } from "react";
+import { ContextApplication } from "@/context";
+import { ArrowIcon } from "../../../public/assets/icons";
 import { DataDetails } from "../../../util/type";
 
 const aplicationStageStyle = (value: string) => {

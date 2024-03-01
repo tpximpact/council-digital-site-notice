@@ -1,11 +1,15 @@
-import { useEffect, useState, useContext } from 'react';
-import PlanningApplications from '../components/planning-application'
-import Pagination from '../components/pagination';
-import Input from '@/components/input'
-import {Button} from '@/components/button'
-import {ArrowIcon} from "../../public/assets/icons"
-import { getActiveApplications, getActiveApplicationsPagination, getGlobalContent } from "../../util/client";
-import { PaginationType, Data } from '../../util/type';
+import { useEffect, useState, useContext } from "react";
+import PlanningApplications from "../components/planning-application";
+import Pagination from "../components/pagination";
+import Input from "@/components/input";
+import { Button } from "@/components/button";
+import { ArrowIcon } from "../../public/assets/icons";
+import {
+  getActiveApplications,
+  getActiveApplicationsPagination,
+  getGlobalContent,
+} from "../../util/client";
+import { PaginationType, Data } from "../../util/type";
 import { getLocationFromPostcode } from "../../util/geolocation";
 import { ContextApplication } from "@/context";
 import Link from "next/link";

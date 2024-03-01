@@ -1,9 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import { ContextApplication } from "@/context";
-import Breadcrumbs from "@/components/breadcrumbs"
-import Instructions from "./instructions"
-import Questions from "../../../../components/questions"
-
+import Breadcrumbs from "@/components/breadcrumbs";
+import Instructions from "./instructions";
+import Questions from "../../../../components/questions";
 
 const Feedback = () => {
   const { dataApplication, question } = useContext(ContextApplication);
