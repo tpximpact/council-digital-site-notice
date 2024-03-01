@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
 import Breadcrumbs from "@/components/breadcrumbs";
-import About from "./components/about";
-import Impact from "./components/impact";
-import Process from "./components/process";
+import About from "../../../components/about";
+import Impact from "../../../components/impact";
+import Process from "../../../components/process";
 import { DataDetails } from "../../../../util/type";
 import { getActiveApplications, getApplicationById } from "../../../../util/client";
 import moment from 'moment'
