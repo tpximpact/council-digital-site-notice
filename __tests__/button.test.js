@@ -1,8 +1,8 @@
-import {Button} from "../src/components/button";
-import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { Button } from "../src/components/button";
+import { render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
 
 test("it should render correctly", () => {
-    render(<Button content="Next test"/>)
-    expect(screen.getByText('Next test'))
-})
+  render(<Button content="Next test" />);
+  expect(screen.getByText("Next test"));
+});
