@@ -1,24 +1,26 @@
-import '@/styles/app.scss'
-import Layout from './app/layout'
-import type { AppProps } from 'next/app'
-import Context from '@/context'
+import "@/styles/app.scss";
+import Layout from "./app/layout";
+import type { AppProps } from "next/app";
+import Context from "@/context";
 
 export default function App({ Component, pageProps }: AppProps) {
   if (typeof window !== "undefined") {
-    const govUk = require("govuk-frontend")
-    govUk.initAll()
+    const govUk = require("govuk-frontend");
+    govUk.initAll();
   }
   let displayComponent;
-  
-  if(Component.displayName === 'StudioPage') {
-    displayComponent = <Component {...pageProps} />
+
+  if (Component.displayName === "StudioPage") {
+    displayComponent = <Component {...pageProps} />;
   } else {
-    displayComponent = <Context>
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
-    </Context>
+    displayComponent = (
+      <Context>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Context>
+    );
   }
-  
-  return displayComponent
+
+  return displayComponent;
 }

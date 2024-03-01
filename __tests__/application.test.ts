@@ -1,5 +1,4 @@
-
-import { createApplication} from "../util/client";
+import { createApplication } from "../util/client";
 import { validatePlanningParams } from "../util/validator";
 import { verifyApiKey } from "../util/apiKey";
 import handler from "../src/pages/api/application";
@@ -17,7 +16,7 @@ describe("Applications API", () => {
     const req = {
       method: "POST",
       headers: {
-        authorization: 'test_key',
+        authorization: "test_key",
       },
     };
     const res = {
@@ -61,7 +60,7 @@ describe("Applications API", () => {
         description: "Sample description",
       },
       headers: {
-        authorization: 'test_key',
+        authorization: "test_key",
       },
     };
     const res = {
@@ -69,7 +68,10 @@ describe("Applications API", () => {
       json: jest.fn(),
     };
 
-    const errors = {status: 400, errors:["Invalid reference", "Invalid description"]};
+    const errors = {
+      status: 400,
+      errors: ["Invalid reference", "Invalid description"],
+    };
     validatePlanningParams.mockResolvedValue(errors);
     verifyApiKey.mockReturnValue(true);
 
@@ -79,7 +81,7 @@ describe("Applications API", () => {
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
       errors: ["Invalid reference", "Invalid description"],
-      "status": 400,
+      status: 400,
     });
   });
 
@@ -91,7 +93,7 @@ describe("Applications API", () => {
         description: "Sample description",
       },
       headers: {
-        authorization: 'test_key',
+        authorization: "test_key",
       },
     };
     const res = {
@@ -99,7 +101,7 @@ describe("Applications API", () => {
       json: jest.fn(),
     };
 
-    const errors = {status:200, errors:[]};
+    const errors = { status: 200, errors: [] };
     validatePlanningParams.mockResolvedValue(errors);
     verifyApiKey.mockReturnValue(true);
     createApplication.mockResolvedValue();
@@ -125,7 +127,7 @@ describe("Applications API", () => {
         description: "Sample description",
       },
       headers: {
-        authorization: 'test_key',
+        authorization: "test_key",
       },
     };
     const res = {
@@ -133,10 +135,12 @@ describe("Applications API", () => {
       json: jest.fn(),
     };
 
-    const errors = {status: 200, errors:[]};
+    const errors = { status: 200, errors: [] };
     validatePlanningParams.mockResolvedValue(errors);
     verifyApiKey.mockReturnValue(true);
-    createApplication.mockRejectedValue(new Error("Failed to create application"));
+    createApplication.mockRejectedValue(
+      new Error("Failed to create application"),
+    );
 
     await handler(req, res);
 
