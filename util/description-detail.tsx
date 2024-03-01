@@ -48,7 +48,7 @@ export const descriptionDetail = {
         <p className="govuk-body-s govuk-!-font-weight-bold govuk-!-margin-0">To make sure we balance our priorities</p>
         <p className="govuk-body-s">A single development is unlikely to fulfil all the priorities for the local area. It's useful to be able to demonstrate which priorities are important to residents, so they can push developers to be more ambitious with their targets. Telling us what your priorities are can help planners make that decision.</p>
             </>,
-    "impact": <>
+    "topics": <>
         <p className="govuk-body-s" >As part of the negotiation, the case officer can take into consideration all comments which are ‘material considerations’ to the proposed development. These include (but aren't limited to):</p>
         <ul className="govuk-body-s">
             <li>overlooking/loss of privacy</li>

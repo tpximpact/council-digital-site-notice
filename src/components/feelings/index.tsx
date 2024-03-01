@@ -1,7 +1,7 @@
 import { useEffect, useContext, useState } from "react"
 import { ContextApplication } from "@/context";
 import {Button, BackLink} from "@/components/button"
-import { Happy, Neutral, Opposed } from "../../../../../../public/assets/icons"
+import { Happy, Neutral, Opposed } from "../../../public/assets/icons"
 import Validation from "@/components/validation";
 
 

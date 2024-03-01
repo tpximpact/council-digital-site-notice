@@ -2,10 +2,10 @@ import { useEffect, useContext, useState } from "react"
 import { ContextApplication } from "@/context";
 import { BackLink, Button, ButtonLink } from "@/components/button"
 import Details from "@/components/details";
-import { questions } from "../../../../../../util/questionsInfo"
-import { descriptionDetail } from "../../../../../../util/description-detail";
-import {addFeedback} from "../../../../../../util/client"
-import { savefeedbackToGoogleSheet } from "../../../../../../util/google";
+import { questions } from "../../../util/questionsInfo"
+import { descriptionDetail } from "../../../util/description-detail";
+import {addFeedback} from "../../../util/client"
+import { savefeedbackToGoogleSheet } from "../../../util/google";
 
 export const questionId:number[] = [3,4,5,6,7,8,9,10]
 
@@ -54,7 +54,7 @@ const onChangeQuestions = (label:number) => {
     } else {
         setQuestion(label)
         setSelectedCheckbox([...selectedCheckbox, label])
-        localStorage.setItem('impact', JSON.stringify({id, value:[...selectedCheckbox, label]}))
+        localStorage.setItem('topics', JSON.stringify({id, value:[...selectedCheckbox, label]}))
     }
     
 }
@@ -66,11 +66,11 @@ const submit = async () => {
     let formId = crypto.randomUUID();
     localStorage.setItem('formId', formId)
 
-let impact:any = []
+let topics:any = []
 let comment:any = {}
 
 selectedCheckbox?.map((el:any) => {
-    impact.push(questions[el])
+    topics.push(questions[el])
     comment = {...comment,[questions[el]]: commentForm[el]}
 })
 const application = localStorage.getItem("application");
@@ -79,7 +79,7 @@ const applicationNumber = JSON.parse(application || '{}').applicationNumber;
         'id' : formId,
         'applicationNumber': applicationNumber,
         'feeling' : feelingForm,
-        'impact' : JSON.stringify(impact),
+        'topics' : JSON.stringify(topics),
         'comment' : JSON.stringify(comment),
         'name' : personalDetailsForm.name,
         'address' : personalDetailsForm.address,
@@ -103,7 +103,7 @@ const applicationNumber = JSON.parse(application || '{}').applicationNumber;
             console.log(responseData);
             onChangeQuestion()
             localStorage.removeItem('feeling')
-            localStorage.removeItem('impact')
+            localStorage.removeItem('topics')
             localStorage.removeItem('comment')
             localStorage.removeItem('name')
             localStorage.removeItem('address')
