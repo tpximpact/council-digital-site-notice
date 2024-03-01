@@ -9,7 +9,7 @@ import { questions } from "../../../util/questionsInfo"
 import { useContext } from "react";
 import { ContextApplication } from "@/context";
 
-export const checkboxId:number[] = [3,4,5,6,7,8,9,10]
+export const checkboxId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
 const TopicsQuestion = () => {
     const { onChangeQuestion, setQuestion, selectedCheckbox, setSelectedCheckbox } = useContext(ContextApplication);
@@ -24,6 +24,7 @@ const TopicsQuestion = () => {
         setId(applicationIdStorage)
         initialValue?.id === applicationIdStorage ? setSelectedCheckbox(initialValue.value) : setSelectedCheckbox([])
 },[setSelectedCheckbox])
+
 
 
     const onChecked = (e:any) => {

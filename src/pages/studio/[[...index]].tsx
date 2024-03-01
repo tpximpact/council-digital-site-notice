@@ -1,9 +1,9 @@
-import Head from 'next/head'
-import { NextStudio } from 'next-sanity/studio'
-import { metadata } from 'next-sanity/studio/metadata'
-import config from '../../../sanity.config'
+import Head from "next/head";
+import { NextStudio } from "next-sanity/studio";
+import { metadata } from "next-sanity/studio/metadata";
+import config from "../../../sanity.config";
 
- function StudioPage() {
+function StudioPage() {
   return (
     <>
       <Head>
@@ -13,9 +13,9 @@ import config from '../../../sanity.config'
       </Head>
       <NextStudio config={config} />
     </>
-  )
+  );
 }
 
-StudioPage.displayName = 'StudioPage'
+StudioPage.displayName = "StudioPage";
 
-export default StudioPage
+export default StudioPage;

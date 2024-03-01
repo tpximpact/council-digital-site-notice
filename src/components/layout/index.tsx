@@ -1,4 +1,3 @@
-
 import Header from '@/components/header'
 import Banner from '../banner'
 import CookiesBanner from '@/components/cookies'
@@ -33,9 +32,7 @@ import { urlFor } from "../../../util/client"
         <title>Digital site notice</title>
         <link rel="icon" href={favicon} sizes="any" />
       </Head>
-        <div className='layout-wrap'>
-            {children}
-        </div>
-      </main>
-    )
-  }
+      <div className="layout-wrap">{children}</div>
+    </main>
+  );
+}

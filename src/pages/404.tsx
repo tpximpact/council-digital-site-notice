@@ -1,5 +1,5 @@
-import { NotFoundComponent } from "../../util/sharedComponents"
+import { NotFoundComponent } from "../../util/sharedComponents";
 
 export default function NotFound() {
-    return NotFoundComponent()
+  return NotFoundComponent();
 }

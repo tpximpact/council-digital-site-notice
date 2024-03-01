@@ -41,7 +41,7 @@ describe("Applications API", () => {
         },
       ],
       headers: {
-        authorization: 'test_key',
+        authorization: "test_key",
       },
     };
 
@@ -69,7 +69,9 @@ describe("Applications API", () => {
       },
       errors: {
         failedCreation: [],
-        failedValidation: ["An error occurred while validating the application undefined",],
+        failedValidation: [
+          "An error occurred while validating the application undefined",
+        ],
       },
       message: "An error has occured",
     });
@@ -85,7 +87,7 @@ describe("Applications API", () => {
         },
       ],
       headers: {
-        authorization: 'test_key',
+        authorization: "test_key",
       },
     };
     const res = {
@@ -103,16 +105,16 @@ describe("Applications API", () => {
     expect(validatePlanningParams).toHaveBeenCalledWith(req.body[0]);
     expect(createApplication).toHaveBeenCalledWith({
       applicationNumber: "AAA_BBB_CCC_DDD",
-     _type: 'planning-application',
-    address: undefined,
-    applicationStage: undefined,
-    applicationType: undefined,
-    commentDeadline: undefined,
-    description: 'Sample description',
-    developmentType: undefined,
-    height: undefined,
-    isActive: false,
-    openSpaceGardens: undefined,
+      _type: "planning-application",
+      address: undefined,
+      applicationStage: undefined,
+      applicationType: undefined,
+      commentDeadline: undefined,
+      description: "Sample description",
+      developmentType: undefined,
+      height: undefined,
+      isActive: false,
+      openSpaceGardens: undefined,
     });
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
