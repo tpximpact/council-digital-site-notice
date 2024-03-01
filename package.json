@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint '*/**/*.{js,jsx,ts,tsx}' --quiet",
     "test": "jest",
     "test:update": "jest -u"
   },
@@ -20,6 +20,9 @@
     "@sendgrid/mail": "^8.1.1",
     "@types/styled-components": "^5.1.30",
     "date-fns": "^2.30.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5",
     "google-auth-library": "^9.6.3",
     "google-spreadsheet": "^4.1.1",
     "govuk-frontend": "^4.7.0",
