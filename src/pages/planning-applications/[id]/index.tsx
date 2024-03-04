@@ -32,12 +32,11 @@ export async function getStaticProps(context: any) {
 
 export async function getStaticPaths() {
   const data = await getActiveApplications();
-
-  if (!data || data.length === 0) {
+  if (!data || !Array.isArray(data) || data.length === 0) {
     return { paths: [], fallback: "blocking" };
   } else {
     return {
-      paths: data?.map((doc: any) => ({ params: { data: doc, id: doc._id } })),
+      paths: data.map((doc: any) => ({ params: { data: doc, id: doc._id } })),
       fallback: "blocking",
     };
   }
