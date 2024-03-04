@@ -124,7 +124,6 @@ function CheckAnswers() {
 
       if (response.ok) {
         const responseData = await response.json();
-        console.log(responseData);
         onChangeQuestion();
         localStorage.removeItem("feeling");
         localStorage.removeItem("impact");

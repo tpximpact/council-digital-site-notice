@@ -97,7 +97,6 @@ export async function getOpenDataApplicationsPagination({
   );
   const data = await res.json();
 
-  console.log("DATA 2", data);
   // Build up the array of developments from the CMS data and the data from Camden's API
   const developments = cmsData.map((siteNotice: any) => {
     if (!data || !Array.isArray(data) || data.length === 0) {
