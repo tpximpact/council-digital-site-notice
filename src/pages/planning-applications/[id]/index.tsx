@@ -34,7 +34,7 @@ export async function getStaticPaths() {
   const data = await getActiveApplications();
 
   return {
-    paths: data.map((doc: any) => ({ params: { data: doc, id: doc._id } })),
+    paths: data?.map((doc: any) => ({ params: { data: doc, id: doc._id } })),
     fallback: "blocking",
   };
 }
