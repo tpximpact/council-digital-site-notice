@@ -1,118 +1,121 @@
 .wrap-home {
-max-width: 64rem;
-padding-top: 2rem;
+  max-width: 64rem;
+  padding-top: 2rem;
 }
 
 .search-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.35fr 0.85fr;
-    grid-template-rows: 1fr auto;
+  display: grid;
+  grid-template-columns: 1.2fr 0.35fr 0.85fr;
+  grid-template-rows: 1fr auto;
 }
 
 .grid-button-search {
-    grid-column-start: 1;
-    width: 8rem;
-    font-size: 18px;
-    font-weight: 600;
+  grid-column-start: 1;
+  width: 8rem;
+  font-size: 18px;
+  font-weight: 600;
 }
 .grid-button-signup {
-    grid-column-start: 3;
-    grid-row-start: 1;
-    height: 42px;
-    font-size: 16px;
+  grid-column-start: 3;
+  grid-row-start: 1;
+  font-size: 16px;
 }
 
 .wrap-planning-application {
-    display: flex;  
-    flex-wrap: wrap; 
-    gap: 0 13px
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 13px;
 }
 
 .planning-application-link {
-    display: flex; 
-    flex-direction: column; 
-    border-bottom: 2px solid #B1B4B6; 
-    padding: 20px 0; 
-    color: black; 
-    text-decoration: none;
-    width: 310px; 
-    margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid #b1b4b6;
+  padding: 20px 0;
+  color: black;
+  text-decoration: none;
+  width: 310px;
+  margin-bottom: 40px;
 }
 
 .planning-application-link:hover .link-application {
-    color: #003078
+  color: #003078;
 }
 
 .planning-application-last-line {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .link-application {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1D70B8;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1d70b8;
 }
 .planning-application-text {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0;
-    margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0;
+  margin-top: 5px;
 }
 
-.pagination-button{
-    color: #1D70B8; 
-    background:transparent; 
-    border: none; 
-    text-decoration: underline
+.pagination-button {
+  color: #1d70b8;
+  background: transparent;
+  border: none;
+  text-decoration: underline;
 }
 
 .active-page {
-    background-color: #1D70B8;
-    font-weight: 700; 
-    color: white;
-    padding: 5px 15px;
-    margin: 10px;
+  background-color: #1d70b8;
+  font-weight: 700;
+  color: white;
+  padding: 5px 15px;
+  margin: 10px;
 }
 
 .page-item {
-    list-style-type: none;
-    color: #1D70B8;
-    text-decoration: underline;
-    cursor: pointer;
-    display:flex;
+  list-style-type: none;
+  color: #1d70b8;
+  text-decoration: underline;
+  cursor: pointer;
+  display: flex;
 }
 .page-link {
-    padding: 10px 18px;
+  padding: 10px 18px;
 }
 
 .wrap-pagination {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 .pagination {
-    display: flex;
-    justify-content: space-between;
-    height: 2rem;
-    padding: 10px;
-    min-width: 15rem;
+  display: flex;
+  justify-content: space-between;
+  height: 2rem;
+  padding: 10px;
+  min-width: 15rem;
 }
 
 .active {
-   background-color:  #1D70B8;
-   color: white;
-   font-weight: 700;
-   align-self: center;
-
-
+  background-color: #1d70b8;
+  color: white;
+  font-weight: 700;
+  align-self: center;
 }
 
-@media (max-width: 900px){
-    .search-grid {
-        display: flex;
-        flex-direction: column;
-    }
+@media (max-width: 900px) {
+  .search-grid {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .planning-application-link {
-        margin-bottom: 0;
-    }
+  .planning-application-link {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-button-signup {
+    height: 42px;
+  }
 }
