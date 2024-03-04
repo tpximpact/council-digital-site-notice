@@ -127,7 +127,7 @@ export async function getOpenDataApplicationsPagination({
 }
 
 export async function getApplicationById(id: string) {
-  const query = '*[_type == "planning-application" && _id == $_id]';
+  const query = '*[_type == "planning-application" && _id == $_id && isActive == true]';
   const post = await client.fetch(query, { _id: id });
 
   if (process.env.NEXT_PUBLIC_DATA_PROVIDER == "OpenData") {
