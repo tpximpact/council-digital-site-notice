@@ -63,5 +63,11 @@ export default defineType({
       type: "image",
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      title: "Google Analytics",
+      name: "googleAnalytics",
+      type: "string",
+      description: "Optional",
+    }),
   ],
 });

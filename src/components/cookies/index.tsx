@@ -31,9 +31,17 @@ const CookiesBanner = ({ onClick }: any) => {
             type="button"
             className="govuk-button"
             data-module="govuk-button"
-            onClick={() => onClick()}
+            onClick={() => onClick(true)}
           >
-            Close
+            Accept
+          </button>
+          <button
+            type="button"
+            className="govuk-button"
+            data-module="govuk-button"
+            onClick={() => onClick(false)}
+          >
+            Essencial Cookies
           </button>
           <Link className="govuk-link" href="/cookie-policy" target="_blank">
             View cookies
