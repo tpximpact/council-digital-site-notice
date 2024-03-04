@@ -11,7 +11,7 @@ export const client = createClient({
 
 const builder = imageUrlBuilder(client);
 
-export async function getActiveApplications() {
+export async function getActiveApplications(): Promise<{ _id: string }[]> {
   const posts = await client.fetch(
     '*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] {_id}',
   );
@@ -99,6 +99,9 @@ export async function getOpenDataApplicationsPagination({
 
   // Build up the array of developments from the CMS data and the data from Camden's API
   const developments = cmsData.map((siteNotice: any) => {
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      return siteNotice;
+    }
     const matchedData = data.find(
       (development: any) =>
         development.application_number === siteNotice.applicationNumber,
@@ -124,7 +127,7 @@ export async function getOpenDataApplicationsPagination({
 }
 
 export async function getApplicationById(id: string) {
-  const query = '*[_type == "planning-application" && _id == $_id]';
+  const query = '*[_type == "planning-application" && _id == $_id && isActive == true]';
   const post = await client.fetch(query, { _id: id });
 
   if (process.env.NEXT_PUBLIC_DATA_PROVIDER == "OpenData") {

@@ -1,5 +1,5 @@
 import "@/styles/app.scss";
-import Layout from "./app/layout";
+import Layout from "../components/layout";
 import type { AppProps } from "next/app";
 import Context from "@/context";
 

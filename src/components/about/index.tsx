@@ -1,8 +1,8 @@
 import Details from "@/components/details";
 import Link from "next/link";
-import { descriptionDetail } from "../../../../../util/descriptionDetail";
-import { ArrowIcon } from "../../../../../public/assets/icons";
-import { DataDetails } from "../../../../../util/type";
+import { descriptionDetail } from "../../../util/description-detail";
+import { ArrowIcon } from "../../../public/assets/icons";
+import { DataDetails } from "../../../util/type";
 import { useEffect, useState } from "react";
 import Modal from "@/components/modal";
 import Gallery from "@/components/gallery";

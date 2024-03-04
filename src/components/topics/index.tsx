@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import Checkbox from "@/components/checkbox";
 import Details from "@/components/details";
 import Validation from "@/components/validation";
-import { descriptionDetail } from "../../../../../../util/descriptionDetail";
-import { questions } from "../../../../../../util/questionsInfo";
+import { descriptionDetail } from "../../../util/description-detail";
+import { questions } from "../../../util/questionsInfo";
 import { useContext } from "react";
 import { ContextApplication } from "@/context";
 
 export const checkboxId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
-const ImpactQuestion = () => {
+const TopicsQuestion = () => {
   const {
     onChangeQuestion,
     setQuestion,
@@ -21,7 +21,7 @@ const ImpactQuestion = () => {
   const [idApplication, setId] = useState();
 
   useEffect(() => {
-    const getStorage = localStorage.getItem("impact") || "{}";
+    const getStorage = localStorage.getItem("topics") || "{}";
     const initialValue = JSON.parse(getStorage);
     const applicationStorage = localStorage.getItem("application") || "{}";
     const applicationIdStorage = JSON.parse(applicationStorage).id;
@@ -36,7 +36,7 @@ const ImpactQuestion = () => {
     checked
       ? (setSelectedCheckbox([...selectedCheckbox, parseInt(id)]),
         localStorage.setItem(
-          "impact",
+          "topics",
           JSON.stringify({
             id: idApplication,
             value: [...selectedCheckbox, parseInt(id)],
@@ -46,7 +46,7 @@ const ImpactQuestion = () => {
           ...selectedCheckbox?.filter((el) => el !== parseInt(id)),
         ]),
         localStorage.setItem(
-          "impact",
+          "topics",
           JSON.stringify({
             id: idApplication,
             value: [...selectedCheckbox?.filter((el) => el !== parseInt(id))],
@@ -66,7 +66,7 @@ const ImpactQuestion = () => {
       </p>
       <Details
         summary="What happens to your comments"
-        description={descriptionDetail["impact"]}
+        description={descriptionDetail["topics"]}
       />
       {checkboxId.map((el) => (
         <Checkbox
@@ -80,7 +80,7 @@ const ImpactQuestion = () => {
       {isError && <Validation message="Please select at least one topic" />}
       <Button
         content="Next"
-        className="button-impact-question"
+        className="button-topics-question"
         onClick={() => {
           selectedCheckbox.length > 0 ? onChangeQuestion() : setIsError(true);
         }}
@@ -89,4 +89,4 @@ const ImpactQuestion = () => {
   );
 };
 
-export default ImpactQuestion;
+export default TopicsQuestion;

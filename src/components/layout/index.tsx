@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import Banner from "../../components/banner";
+import Banner from "../banner";
 import CookiesBanner from "@/components/cookies";
 import { useEffect, useState } from "react";
 import Head from "next/head";

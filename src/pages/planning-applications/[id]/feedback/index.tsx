@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { ContextApplication } from "@/context";
 import Breadcrumbs from "@/components/breadcrumbs";
 import Instructions from "./instructions";
-import Questions from "./questions";
+import Questions from "../../../../components/questions";
 
 const Feedback = () => {
   const { dataApplication, question } = useContext(ContextApplication);
@@ -12,8 +12,8 @@ const Feedback = () => {
   useEffect(() => {
     const getStorage = localStorage.getItem("application");
     if (Object.keys(dataApplication).length > 0 || getStorage === null) {
-      const { name, _id } = dataApplication;
-      setName(name);
+      const { name, _id, address } = dataApplication;
+      setName(name || address);
       setId(_id);
     } else {
       const { name, id } = JSON.parse(getStorage);

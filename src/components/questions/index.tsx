@@ -1,10 +1,10 @@
-import Feeling from "./feelings";
-import Impact from "./impact";
-import Message from "../message";
-import Comment from "./comment";
-import PersonalDetails from "./personal-details";
-import FeedbackInformation from "./feedback-information";
-import CheckAnswers from "./check-answers";
+import Feeling from "../feelings";
+import Topics from "../topics";
+import Message from "../../pages/planning-applications/[id]/feedback/message";
+import Comment from "../comment";
+import PersonalDetails from "../personal-details";
+import FeedbackInformation from "../feedback-information";
+import CheckAnswers from "../check-answers";
 
 const FeedbackQuestions = ({ question }: { question: number }) => {
   const switchComponent = () => {
@@ -14,7 +14,7 @@ const FeedbackQuestions = ({ question }: { question: number }) => {
       case 1:
         return <Feeling />;
       case 2:
-        return <Impact />;
+        return <Topics />;
       case 11:
         return <PersonalDetails />;
       case 12:
