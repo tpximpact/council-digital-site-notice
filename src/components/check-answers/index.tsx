@@ -2,10 +2,10 @@ import { useEffect, useContext, useState } from "react";
 import { ContextApplication } from "@/context";
 import { BackLink, Button, ButtonLink } from "@/components/button";
 import Details from "@/components/details";
-import { questions } from "../../../../../../util/questionsInfo";
-import { descriptionDetail } from "../../../../../../util/descriptionDetail";
-import { addFeedback } from "../../../../../../util/client";
-import { savefeedbackToGoogleSheet } from "../../../../../../util/google";
+import { questions } from "../../../util/questionsInfo";
+import { descriptionDetail } from "../../../util/description-detail";
+import { addFeedback } from "../../../util/client";
+import { savefeedbackToGoogleSheet } from "../../../util/google";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -78,7 +78,7 @@ function CheckAnswers() {
       setQuestion(label);
       setSelectedCheckbox([...selectedCheckbox, label]);
       localStorage.setItem(
-        "impact",
+        "topics",
         JSON.stringify({ id, value: [...selectedCheckbox, label] }),
       );
     }
@@ -90,11 +90,11 @@ function CheckAnswers() {
     let formId = crypto.randomUUID();
     localStorage.setItem("formId", formId);
 
-    let impact: any = [];
+    let topics: any = [];
     let comment: any = {};
 
     selectedCheckbox?.map((el: any) => {
-      impact.push(questions[el]);
+      topics.push(questions[el]);
       comment = { ...comment, [questions[el]]: commentForm[el] };
     });
     const application = localStorage.getItem("application");
@@ -103,7 +103,7 @@ function CheckAnswers() {
       id: formId,
       applicationNumber: applicationNumber,
       feeling: feelingForm,
-      impact: JSON.stringify(impact),
+      topics: JSON.stringify(topics),
       comment: JSON.stringify(comment),
       name: personalDetailsForm.name,
       address: personalDetailsForm.address,
@@ -126,7 +126,7 @@ function CheckAnswers() {
         const responseData = await response.json();
         onChangeQuestion();
         localStorage.removeItem("feeling");
-        localStorage.removeItem("impact");
+        localStorage.removeItem("topics");
         localStorage.removeItem("comment");
         localStorage.removeItem("name");
         localStorage.removeItem("address");

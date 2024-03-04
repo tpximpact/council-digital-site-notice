@@ -3,7 +3,7 @@ import { ContextApplication } from "@/context";
 import TextArea from "@/components/text-area";
 import Validation from "@/components/validation";
 import { Button, BackLink } from "@/components/button";
-import { questions } from "../../../../../../util/questionsInfo";
+import { questions } from "../../../util/questionsInfo";
 
 function CommentQuestion() {
   const {
