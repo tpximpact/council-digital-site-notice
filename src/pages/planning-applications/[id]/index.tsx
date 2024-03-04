@@ -74,7 +74,7 @@ const Application = ({ data }: { data: DataDetails }) => {
 
   const breadcrumbs_array = [
     { name: "Planning applications", href: "/" },
-    { name: data?.name, href: "" },
+    { name: data?.name || data?.address, href: "" },
   ];
 
   const {
