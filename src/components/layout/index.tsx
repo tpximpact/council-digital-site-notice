@@ -4,14 +4,16 @@ import CookiesBanner from "@/components/cookies";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { urlFor } from "../../../util/client";
+import { getGlobalContent } from "../../../util/client";
+
+const globalContent = await getGlobalContent();
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isShowCookie, setIsShowCookie] = useState(true);
   const [favicon, setFavicon] = useState("");
   useEffect(() => {
     const getLocalStorageCookies = localStorage.getItem("cookies");
-    const globalContent = localStorage.getItem("globalInfo") || "{}";
-    const { favicon } = JSON.parse(globalContent);
+    const { favicon } = globalContent;
     favicon == null || favicon == undefined
       ? setFavicon("/favicon_default.ico")
       : setFavicon(urlFor(favicon)?.url());
