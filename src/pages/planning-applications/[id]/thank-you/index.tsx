@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
 import Image from "next/image";
 import { urlFor } from "../../../../../util/client";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 const FeedbackMessage = () => {
   const {
@@ -14,9 +15,11 @@ const FeedbackMessage = () => {
       applicationUpdatesUrl,
       _id,
       globalInfo,
+      name,
     },
   } = useContext(ContextApplication);
   const [addressAplication, setAddressAplication] = useState();
+  const [nameAplication, setNameAplication] = useState();
   const [imageAplication, setImageAplication] = useState();
   const [referenceAplication, setReferenceAplication] = useState();
   const [applicationId, setApplicationId] = useState();
@@ -45,19 +48,22 @@ const FeedbackMessage = () => {
       image_head !== undefined ||
       applicationNumber !== undefined ||
       applicationUpdatesUrl !== undefined ||
-      initialValue === null
+      initialValue === null ||
+      name !== undefined
     ) {
       setAddressAplication(address);
       setImageAplication(image_head);
       setReferenceAplication(applicationNumber);
       setUpdatesUrl(applicationUpdatesUrl);
       setApplicationId(_id);
+      setNameAplication(name);
     } else {
       setAddressAplication(JSON.parse(initialValue).address);
       setImageAplication(JSON.parse(initialValue).image_head);
       setReferenceAplication(JSON.parse(initialValue).applicationNumber);
       setUpdatesUrl(JSON.parse(initialValue).applicationUpdatesUrl);
       setApplicationId(JSON.parse(initialValue)._id);
+      setNameAplication(JSON.parse(initialValue).name);
     }
   }, [
     address,
@@ -67,10 +73,26 @@ const FeedbackMessage = () => {
     globalInfo?.howToGetInvolveUrl,
     globalInfo?.councilName,
     _id,
+    name,
   ]);
 
+  const breadcrumbs_array = [
+    {
+      name: "Planning application",
+      href: "/",
+    },
+    {
+      name: nameAplication || addressAplication,
+      href: `/planning-applications/${applicationId}`,
+    },
+    {
+      name: "Thank you",
+      href: "",
+    },
+  ];
   return (
     <section>
+      <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
       <div className="wrap-message-reference">
         <h1 className="govuk-heading-l"> Comment submitted</h1>
         <h2 className="govuk-body-l"> Your reference number</h2>
