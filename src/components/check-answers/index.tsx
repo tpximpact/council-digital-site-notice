@@ -6,6 +6,7 @@ import { questions } from "../../../util/questionsInfo";
 import { descriptionDetail } from "../../../util/description-detail";
 import { addFeedback } from "../../../util/client";
 import { savefeedbackToGoogleSheet } from "../../../util/google";
+import { useRouter } from "next/router";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -23,6 +24,8 @@ function CheckAnswers() {
     contextCleaner,
   } = useContext(ContextApplication);
   const [id, setId] = useState();
+
+  const router = useRouter();
 
   useEffect(() => {
     const initialValueName = localStorage.getItem("name") || "{}";
@@ -125,6 +128,7 @@ function CheckAnswers() {
       if (response.ok) {
         const responseData = await response.json();
         onChangeQuestion();
+        router.push(`/planning-applications/${id}/thank-you`);
         localStorage.removeItem("feeling");
         localStorage.removeItem("topics");
         localStorage.removeItem("comment");
