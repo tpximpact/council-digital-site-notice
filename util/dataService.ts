@@ -1,29 +1,75 @@
-/* this class will take sanityClient and openDataClient as parameters 
-   and will be used to fetch data from the API's and combin the outputs */
-export class DataClient {
-  private sanityClient: any;
-  private openDataClient: any;
+import { SanityClient } from "./sanityClient";
+import { OpenDataClient } from "./openDataClient";
 
-  constructor(sanityClient: any, openDataClient: any) {
+type resultsType = {
+  _id: string;
+  applicationNumber: string;
+}[];
+
+type siteNoticeResponse = {
+  results: resultsType;
+  total: number;
+};
+
+export class DataClient {
+  private sanityClient: SanityClient;
+  private openDataClient: OpenDataClient;
+  private integrationMethod: string;
+
+  constructor(sanityClient: SanityClient, openDataClient: OpenDataClient) {
     this.sanityClient = sanityClient;
     this.openDataClient = openDataClient;
+    this.integrationMethod = process.env.NEXT_PUBLIC_DATA_PROVIDER!;
   }
 
-  async getSiteNotices(): Promise<any[]> {
+  async getAllSiteNotices(): Promise<siteNoticeResponse> {
     const resultData = await this.sanityClient.getActiveApplications();
     let openDataPosts = [];
-    if (process.env.NEXT_PUBLIC_DATA_PROVIDER == "OpenData") {
-      openDataPosts =
-        await this.openDataClient.getOpenDataApplications(resultData);
-      console.log("openDataPosts", openDataPosts);
+    if (this.integrationMethod == "OpenData") {
+      openDataPosts = await this.openDataClient.getOpenDataApplications(
+        resultData.results,
+      );
+      const combinedResults = await this.getActiveApplicationsCombined(
+        resultData.results,
+        openDataPosts,
+      );
+      return {
+        results: combinedResults,
+        total: resultData.total,
+      };
     }
-    return this.getActiveApplicationsCombined(resultData, openDataPosts);
+    return resultData;
   }
+
+  //   async getPaginatedSiteNotices(
+  //     lastId?: string,
+  //     itemsPerPage?: number,
+  //   ): Promise<siteNoticeResponse> {
+  //     const resultData = await this.sanityClient.getActiveApplications(
+  //       lastId,
+  //       itemsPerPage,
+  //     );
+  //     let openDataPosts = [];
+  //     if (this.integrationMethod == "OpenData") {
+  //       openDataPosts = await this.openDataClient.getOpenDataApplications(
+  //         resultData.results,
+  //       );
+  //       const combinedResults = await this.getActiveApplicationsCombined(
+  //         resultData.results,
+  //         openDataPosts,
+  //       );
+  //       return {
+  //         results: combinedResults,
+  //         total: resultData.total,
+  //       };
+  //     }
+  //     return resultData;
+  //   }
 
   private async getActiveApplicationsCombined(
     resultData: any[],
     openDataPosts: any[],
-  ) {
+  ): Promise<resultsType> {
     const developments = resultData.map((siteNotice: any) => {
       if (
         !openDataPosts ||
@@ -36,7 +82,6 @@ export class DataClient {
         (development: any) =>
           development.application_number === siteNotice.applicationNumber,
       );
-      console.log("matchedData", matchedData);
       if (matchedData) {
         return {
           ...siteNotice,

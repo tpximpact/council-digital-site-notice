@@ -1,6 +1,14 @@
 import { createClient } from "@sanity/client";
 import imageUrlBuilder from "@sanity/image-url";
 
+type sanityApplicationResponse = {
+  results: {
+    _id: string;
+    applicationNumber: string;
+  }[];
+  total: number;
+};
+
 export class SanityClient {
   private client: any;
   private imgBuilder: any;
@@ -17,19 +25,24 @@ export class SanityClient {
     this.imgBuilder = imageUrlBuilder(this.client);
   }
 
-  async getActiveApplications(): Promise<{ _id: string }[]> {
-    const posts = await this.client.fetch(
-      `*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) [0...2] {
-                 _id, applicationNumber
-            }`,
-    );
+  async getActiveApplications(
+    lastId?: string,
+    itemsPerPage?: number,
+  ): Promise<sanityApplicationResponse> {
+    const query = `{
+            "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))${
+              lastId ? ` && _id > "${lastId}"` : ""
+            }] | order(_id) ${itemsPerPage ? `[0...${itemsPerPage}]` : ""} {_id, applicationNumber, address},
+            "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))]) 
+    }`;
+    const posts = await this.client.fetch(query);
     return posts;
   }
 
-  async getActiveApplicationsCount(): Promise<number> {
-    const count = await this.client.fetch(
-      `count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])`,
-    );
-    return count;
-  }
+  //   async getActiveApplicationsCount(): Promise<number> {
+  //     const count = await this.client.fetch(
+  //       `count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])`,
+  //     );
+  //     return count;
+  //   }
 }
