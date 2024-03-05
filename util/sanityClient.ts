@@ -36,7 +36,7 @@ export class SanityClient {
     const query = `{
             "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))${
               lastId ? ` && _id > "${lastId}"` : ""
-            }] | order(_id) ${itemsPerPage ? `[0...${itemsPerPage}]` : ""} {_id, applicationNumber, applicationName, address},
+            }] | order(_id) ${itemsPerPage ? `[0...${itemsPerPage}]` : ""} {_id, image_head, name, applicationNumber, applicationName, address},
             "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))]) 
     }`;
     const posts = await this.client.fetch(query);
