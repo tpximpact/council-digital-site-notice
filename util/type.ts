@@ -31,6 +31,7 @@ export type Data = {
   image_head?: string;
   image_gallery: any[];
   location: { lng: number; lat: number };
+  distance?: string;
 };
 
 export type DataDetails = {
