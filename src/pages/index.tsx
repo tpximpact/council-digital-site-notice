@@ -18,7 +18,7 @@ import { getGlobalContent } from "../../util/client";
 
 const globalContent = await getGlobalContent();
 
-export const itemsPerPage = 2;
+export const itemsPerPage = 6;
 const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
 
 export async function getStaticProps() {
@@ -70,8 +70,6 @@ const Home = ({ data, globalContent }: PaginationType) => {
       }
     }
     setLocation(location);
-    console.log(location);
-    console.log(data);
 
     if (location) {
       const sortedData = data.sort((a, b) => {
@@ -90,6 +88,7 @@ const Home = ({ data, globalContent }: PaginationType) => {
         return distanceA - distanceB;
       });
       setDisplayData(sortedData);
+      setItemOffset(0);
     }
   };
 
