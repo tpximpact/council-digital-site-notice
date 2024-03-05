@@ -25,6 +25,10 @@ export class SanityClient {
     this.imgBuilder = imageUrlBuilder(this.client);
   }
 
+  async urlFor(source: any) {
+    return this.imgBuilder.image(source);
+  }
+
   async getActiveApplications(
     lastId?: string,
     itemsPerPage?: number,
