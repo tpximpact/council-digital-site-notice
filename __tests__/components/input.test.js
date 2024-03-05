@@ -1,12 +1,13 @@
-import Details from "../src/components/details";
+import Input from "../../src/components/input";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 test("it should render correctly", () => {
-  render(<Details summary="How to write good feedback" />);
+  render(<Input />);
+  expect(screen.getByRole("textbox", { type: "text" }));
   expect(
     screen.getByRole("definition", {
-      definition: "How to write good feedback",
+      definition: "Enter a postcode to find planning applications nearby",
     }),
   );
 });
