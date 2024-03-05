@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { urlFor } from "../../../util/client";
 import GoogleAnalytics from "../google-analytics";
+import { healpLocalStorage } from "../../../util/localStorageHelper";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isShowCookie, setIsShowCookie] = useState(true);
@@ -14,26 +15,31 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const enviroment = process.env.NEXT_PUBLIC_ENVIROMENT;
   useEffect(() => {
-    const getLocalStorageCookies = localStorage.getItem("cookies");
-    const getLocalStorageConsentCookies =
-      localStorage.getItem("consentCookies") || "false";
-    const consentCookies = JSON.parse(getLocalStorageConsentCookies);
-    const globalContent = localStorage.getItem("globalInfo") || "{}";
-    const { favicon, googleAnalytics } = JSON.parse(globalContent);
+    const getLocalStorageCookies = healpLocalStorage({
+      key: "cookies",
+      defaultValue: isShowCookie,
+    });
+    setIsShowCookie(getLocalStorageCookies);
+
+    const getLocalStorageConsentCookies = healpLocalStorage({
+      key: "consentCookies",
+      defaultValue: isConsentCookie,
+    });
+    setIsConsentCookie(getLocalStorageConsentCookies);
+
+    const globalContent = healpLocalStorage({
+      key: "globalInfo",
+      defaultValue: {},
+    });
+    const favicon = globalContent?.favicon;
+    const googleAnalytics = globalContent?.googleAnalytics;
+    setGa(googleAnalytics);
+
     favicon == null || favicon == undefined
       ? setFavicon("/favicon_default.ico")
       : setFavicon(urlFor(favicon)?.url());
+  }, [isConsentCookie, isShowCookie]);
 
-    googleAnalytics == null || googleAnalytics == undefined
-      ? setGa("")
-      : setGa(googleAnalytics);
-    if (getLocalStorageCookies !== null) {
-      setIsShowCookie(JSON.parse(getLocalStorageCookies));
-    }
-    consentCookies == null || consentCookies == undefined
-      ? setIsConsentCookie(false)
-      : setIsConsentCookie(consentCookies);
-  }, []);
   return (
     <main>
       {isShowCookie && (
@@ -46,7 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }}
         />
       )}
-      {isConsentCookie && enviroment !== "development" && (
+      {isConsentCookie && enviroment !== "development" && ga && (
         <GoogleAnalytics gaId={ga} />
       )}
       <Header />
