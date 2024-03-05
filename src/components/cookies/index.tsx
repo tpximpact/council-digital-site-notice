@@ -19,9 +19,8 @@ const CookiesBanner = ({ onClick }: any) => {
                 We use some essential cookies to make this service work.
               </p>
               <p className="govuk-body">
-                We use only essential cookies to keep your information secure
-                while you use this site. We do not need to ask permission to use
-                them.
+                We’d also like to use analytics cookies so we can understand how
+                you use the service and make improvements.
               </p>
             </div>
           </div>
@@ -33,7 +32,7 @@ const CookiesBanner = ({ onClick }: any) => {
             data-module="govuk-button"
             onClick={() => onClick(true)}
           >
-            Accept
+            Accept analytics cookies
           </button>
           <button
             type="button"
@@ -41,7 +40,7 @@ const CookiesBanner = ({ onClick }: any) => {
             data-module="govuk-button"
             onClick={() => onClick(false)}
           >
-            Essencial Cookies
+            Reject analytics cookies
           </button>
           <Link className="govuk-link" href="/cookie-policy" target="_blank">
             View cookies
