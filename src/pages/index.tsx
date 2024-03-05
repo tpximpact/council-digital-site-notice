@@ -59,7 +59,7 @@ const Home = ({ data, globalContent }: PaginationType) => {
   };
 
   const onSearchPostCode = async () => {
-    let location;
+    let location: any;
 
     if (postcode != null) {
       setLocationNotFound(false);
@@ -72,21 +72,30 @@ const Home = ({ data, globalContent }: PaginationType) => {
     setLocation(location);
 
     if (location) {
-      const sortedData = data.sort((a, b) => {
+      console.log(location);
+      console.log(data);
+      const sortedData = data.slice().sort((a, b) => {
+        if (!a.location || !b.location) {
+          return 1;
+        }
+
         const distanceA = distanceInMiles(
           location.latitude,
           location.longitude,
-          a.latitude,
-          a.longitude,
+          a.location.lat,
+          a.location.lng,
         );
         const distanceB = distanceInMiles(
           location.latitude,
           location.longitude,
-          b.latitude,
-          b.longitude,
+          b.location.lat,
+          b.location.lng,
         );
-        return distanceA - distanceB;
+        return Number(distanceA) - Number(distanceB);
       });
+
+      console.log(sortedData);
+
       setDisplayData(sortedData);
       setItemOffset(0);
     }

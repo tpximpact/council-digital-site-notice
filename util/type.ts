@@ -30,6 +30,7 @@ export type Data = {
   applicationType: string;
   image_head?: string;
   image_gallery: any[];
+  location: { lng: number; lat: number };
 };
 
 export type DataDetails = {
