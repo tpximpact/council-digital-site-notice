@@ -38,7 +38,7 @@ const Home = ({ data, globalContent }: PaginationType) => {
   const [itemOffset, setItemOffset] = useState(0);
 
   useEffect(() => {
-    setDisplayData(data);
+    setDisplayData(data as Data[]);
     setGlobalInfo(globalContent);
     localStorage.setItem("globalInfo", JSON.stringify(globalContent));
   }, [data, globalContent, setGlobalInfo]);
@@ -103,7 +103,7 @@ const Home = ({ data, globalContent }: PaginationType) => {
       });
       //adds the data without location to the end of the array
       sortedData.push(...dataWithoutLocation);
-      setDisplayData(sortedData);
+      setDisplayData(sortedData as Data[]);
       setItemOffset(0);
     }
   };
