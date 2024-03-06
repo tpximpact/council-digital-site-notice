@@ -14,9 +14,6 @@ import { ArrowIcon } from "../../public/assets/icons";
 import Link from "next/link";
 import { getLocationFromPostcode } from "../../util/geolocation";
 import { distanceInMiles } from "../../util/geolocation";
-import { getGlobalContent } from "../../util/client";
-
-const globalContent = await getGlobalContent();
 
 export const itemsPerPage = 6;
 const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
@@ -37,34 +34,23 @@ const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
   const [location, setLocation] = useState<any>();
   const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
   const [displayData, setDisplayData] = useState<Data[]>();
-  const [itemOffset, setItemOffset] = useState(0);
 
   useEffect(() => {
     setDisplayData(data);
     setGlobalInfo(globalContent);
     localStorage.setItem("globalInfo", JSON.stringify(globalContent));
   }, [data, globalContent, setGlobalInfo]);
-  console.log({ data });
-  // const endOffset = itemOffset + itemsPerPage;
-  // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  // const currentItems = data.slice(itemOffset, endOffset);
+
   const pageCount = Math.ceil(resultsTotal / itemsPerPage);
 
   const handlePageClick = async (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % resultsTotal;
-
-    console.log(resultsTotal - newOffset, newOffset);
+    const newTotalPagecount = resultsTotal - newOffset;
     const totalPage =
-      resultsTotal - newOffset >= itemsPerPage
-        ? itemsPerPage
-        : resultsTotal - newOffset;
+      newTotalPagecount >= itemsPerPage ? itemsPerPage : newTotalPagecount;
+
     const newData = await dataClient.getAllSiteNotices(totalPage, newOffset);
-    setDisplayData(newData?.results);
-    console.log({ newData }, totalPage, resultsTotal, newOffset);
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`,
-    );
-    // setItemOffset(newOffset);
+    setDisplayData(newData.results as Data[]);
   };
 
   const onSearchPostCode = async () => {
@@ -93,7 +79,6 @@ const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
         return parseFloat(distanceA) - parseFloat(distanceB);
       });
       setDisplayData(sortedData);
-      // setItemOffset(0);
     }
   };
 
