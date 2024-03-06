@@ -32,7 +32,7 @@ const FeedbackMessage = () => {
     const formId = localStorage.getItem("formId");
     setFormId(formId);
 
-    if (initialGlobalValue !== null) {
+    if (initialGlobalValue !== null && initialGlobalValue !== "undefined") {
       setInvolveUrl(JSON.parse(initialGlobalValue).howToGetInvolveUrl);
       setCouncilName(JSON.parse(initialGlobalValue).councilName);
     } else {

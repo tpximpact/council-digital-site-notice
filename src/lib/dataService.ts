@@ -22,8 +22,16 @@ export class DataClient {
     this.integrationMethod = process.env.NEXT_PUBLIC_DATA_PROVIDER!;
   }
 
-  async getAllSiteNotices(): Promise<siteNoticeResponse> {
-    const resultData = await this.sanityClient.getActiveApplications();
+  async getAllSiteNotices(
+    // lastId?: string,
+    itemsPerPage?: number,
+    offSet?: number,
+  ): Promise<siteNoticeResponse> {
+    const resultData = await this.sanityClient.getActiveApplications(
+      // lastId,
+      itemsPerPage,
+      offSet,
+    );
     let openDataPosts = [];
     if (this.integrationMethod == "OpenData") {
       openDataPosts = await this.openDataClient.getOpenDataApplications(

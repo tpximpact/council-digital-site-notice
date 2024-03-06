@@ -20,7 +20,7 @@ export const itemsPerPage = 6;
 const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
 
 export async function getStaticProps() {
-  const data = await dataClient.getAllSiteNotices();
+  const data = await dataClient.getAllSiteNotices(itemsPerPage, 0);
   return {
     props: {
       data: data.results,
@@ -29,13 +29,12 @@ export async function getStaticProps() {
   };
 }
 
-const Home = ({ data, globalContent }: PaginationType) => {
+const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
   const { setGlobalInfo } = useContext(ContextApplication);
   const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
   const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
   const [displayData, setDisplayData] = useState<Data[]>();
-  const [itemOffset, setItemOffset] = useState(0);
 
   useEffect(() => {
     setDisplayData(data as Data[]);
@@ -43,22 +42,16 @@ const Home = ({ data, globalContent }: PaginationType) => {
     localStorage.setItem("globalInfo", JSON.stringify(globalContent));
   }, [data, globalContent, setGlobalInfo]);
 
-  let currentItems: Data[] = [];
-  let pageCount = 0;
+  const pageCount = Math.ceil(resultsTotal / itemsPerPage);
 
-  if (data) {
-    const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    currentItems = data.slice(itemOffset, endOffset);
-    pageCount = Math.ceil(data.length / itemsPerPage);
-  }
+  const handlePageClick = async (event: any) => {
+    const newOffset = (event.selected * itemsPerPage) % resultsTotal;
+    const newTotalPagecount = resultsTotal - newOffset;
+    const totalPage =
+      newTotalPagecount >= itemsPerPage ? itemsPerPage : newTotalPagecount;
 
-  const handlePageClick = (event: any) => {
-    const newOffset = (event.selected * itemsPerPage) % data.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`,
-    );
-    setItemOffset(newOffset);
+    const newData = await dataClient.getAllSiteNotices(totalPage, newOffset);
+    setDisplayData(newData.results as Data[]);
   };
 
   // this needs to be refactored once data is held in Sanity
@@ -104,7 +97,6 @@ const Home = ({ data, globalContent }: PaginationType) => {
       //adds the data without location to the end of the array
       sortedData.push(...dataWithoutLocation);
       setDisplayData(sortedData as Data[]);
-      setItemOffset(0);
     }
   };
 
@@ -148,7 +140,7 @@ const Home = ({ data, globalContent }: PaginationType) => {
         )}
       </section>
       {displayData && (
-        <PlanningApplications data={currentItems} searchLocation={location} />
+        <PlanningApplications data={displayData} searchLocation={location} />
       )}
 
       <div className="wrap-pagination">

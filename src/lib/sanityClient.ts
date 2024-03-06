@@ -31,13 +31,11 @@ export class SanityClient {
   }
 
   async getActiveApplications(
-    lastId?: string,
     itemsPerPage?: number,
+    offSet: number = 0,
   ): Promise<sanityApplicationResponse> {
     const query = `{
-            "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))${
-              lastId ? ` && _id > "${lastId}"` : ""
-            }] | order(_id) ${itemsPerPage ? `[0...${itemsPerPage}]` : ""} {_id, image_head, name, applicationNumber, applicationName, address},
+            "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} {_id, image_head, name, applicationNumber, applicationName, address},
             "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))]) 
     }`;
     const posts = await this.client.fetch(query);
