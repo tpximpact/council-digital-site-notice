@@ -70,6 +70,9 @@ exports[`renders homepage unchanged 1`] = `
         </span>
       </button>
     </section>
+    <div
+      class="wrap-pagination"
+    />
   </div>
 </div>
 `;
