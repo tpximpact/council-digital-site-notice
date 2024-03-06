@@ -20,9 +20,9 @@ const aplicationStageStyle = (value: string) => {
 const applicationStageMessage = (stage: string, status: string) => {
   const consultation: { [key: string]: string } = {
     "in progress":
-      "People in the local community share feedback and comment on the proposed plans.",
+      "People in the local community can share feedback and comment on the proposed plans.",
     extended:
-      "People in the local community share feedback and comment on the proposed plans",
+      "People in the local community can share feedback and comment on the proposed plans",
   };
 
   const assessment: { [key: string]: string } = {
