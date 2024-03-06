@@ -22,7 +22,7 @@ export const itemsPerPage = 6;
 const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
 
 export async function getStaticProps() {
-  const data = await dataClient.getAllSiteNotices();
+  const data = await dataClient.getAllSiteNotices(itemsPerPage, 0);
   return {
     props: {
       data: data.results,
@@ -31,7 +31,7 @@ export async function getStaticProps() {
   };
 }
 
-const Home = ({ data, globalContent }: PaginationType) => {
+const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
   const { setGlobalInfo } = useContext(ContextApplication);
   const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
@@ -44,22 +44,31 @@ const Home = ({ data, globalContent }: PaginationType) => {
     setGlobalInfo(globalContent);
     localStorage.setItem("globalInfo", JSON.stringify(globalContent));
   }, [data, globalContent, setGlobalInfo]);
+  console.log({ data });
+  // const endOffset = itemOffset + itemsPerPage;
+  // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+  // const currentItems = data.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(resultsTotal / itemsPerPage);
 
-  const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = data.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(data.length / itemsPerPage);
+  const handlePageClick = async (event: any) => {
+    const newOffset = (event.selected * itemsPerPage) % resultsTotal;
 
-  const handlePageClick = (event: any) => {
-    const newOffset = (event.selected * itemsPerPage) % data.length;
+    console.log(resultsTotal - newOffset, newOffset);
+    const totalPage =
+      resultsTotal - newOffset >= itemsPerPage
+        ? itemsPerPage
+        : resultsTotal - newOffset;
+    const newData = await dataClient.getAllSiteNotices(totalPage, newOffset);
+    setDisplayData(newData?.results);
+    console.log({ newData }, totalPage, resultsTotal, newOffset);
     console.log(
       `User requested page number ${event.selected}, which is offset ${newOffset}`,
     );
-    setItemOffset(newOffset);
+    // setItemOffset(newOffset);
   };
 
   const onSearchPostCode = async () => {
-    let location;
+    let location: any;
 
     if (postcode != null) {
       setLocationNotFound(false);
@@ -76,19 +85,15 @@ const Home = ({ data, globalContent }: PaginationType) => {
         const distanceA = distanceInMiles(
           location.latitude,
           location.longitude,
-          a.latitude,
-          a.longitude,
         );
         const distanceB = distanceInMiles(
           location.latitude,
           location.longitude,
-          b.latitude,
-          b.longitude,
         );
-        return distanceA - distanceB;
+        return parseFloat(distanceA) - parseFloat(distanceB);
       });
       setDisplayData(sortedData);
-      setItemOffset(0);
+      // setItemOffset(0);
     }
   };
 
@@ -132,7 +137,7 @@ const Home = ({ data, globalContent }: PaginationType) => {
         )}
       </section>
       {displayData && (
-        <PlanningApplications data={currentItems} searchLocation={location} />
+        <PlanningApplications data={displayData} searchLocation={location} />
       )}
 
       <div className="wrap-pagination">

@@ -76,6 +76,7 @@ export type PaginationType = {
   data: Data[];
   paginationData?: Data[];
   globalContent: any;
+  resultsTotal: number;
 };
 
 export type CommentForm = {

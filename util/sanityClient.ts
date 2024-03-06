@@ -30,16 +30,23 @@ export class SanityClient {
   }
 
   async getActiveApplications(
-    lastId?: string,
+    // lastId?: string,
     itemsPerPage?: number,
+    offSet?: number,
   ): Promise<sanityApplicationResponse> {
+    console.log(itemsPerPage, offSet)
+    // const query = `{
+    //         "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))${
+    //           lastId ? ` && _id > "${lastId}"` : ""
+    //         }] | order(_id) ${itemsPerPage ? `[0...${itemsPerPage}]` : ""} {_id, image_head, name, applicationNumber, applicationName, address},
+    //         "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])
+    // }`;
     const query = `{
-            "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))${
-              lastId ? ` && _id > "${lastId}"` : ""
-            }] | order(_id) ${itemsPerPage ? `[0...${itemsPerPage}]` : ""} {_id, image_head, name, applicationNumber, applicationName, address},
+            "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) ${itemsPerPage ? `[${offSet}...${itemsPerPage}]` : ""} {_id, image_head, name, applicationNumber, applicationName, address},
             "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))]) 
     }`;
     const posts = await this.client.fetch(query);
+    console.log({posts})
     return posts;
   }
 
