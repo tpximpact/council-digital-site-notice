@@ -1,10 +1,10 @@
-import { DataClient } from "../src/lib/dataService";
-import { SanityClient } from "../src/lib/sanityClient";
-import { OpenDataClient } from "../src/lib/openDataClient";
+import { DataClient } from "../../../src/lib/dataService";
+import { SanityClient } from "../../../src/lib/sanityClient";
+import { OpenDataClient } from "../../../src/lib/openDataClient";
 import { loadEnvConfig } from "@next/env";
 
-jest.mock("../src/lib/sanityClient");
-jest.mock("../src/lib/openDataClient");
+jest.mock("../../../src/lib/sanityClient");
+jest.mock("../../../src/lib/openDataClient");
 
 describe("DataClient", () => {
   loadEnvConfig(process.cwd());

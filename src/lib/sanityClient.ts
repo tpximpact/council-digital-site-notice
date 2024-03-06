@@ -43,11 +43,4 @@ export class SanityClient {
     const posts = await this.client.fetch(query);
     return posts;
   }
-
-  //   async getActiveApplicationsCount(): Promise<number> {
-  //     const count = await this.client.fetch(
-  //       `count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])`,
-  //     );
-  //     return count;
-  //   }
 }
