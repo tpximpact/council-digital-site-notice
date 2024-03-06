@@ -23,7 +23,6 @@ export class DataClient {
   }
 
   async getAllSiteNotices(): Promise<siteNoticeResponse> {
-    console.log("MAIN", process.env.NEXT_PUBLIC_DATA_PROVIDER);
     const resultData = await this.sanityClient.getActiveApplications();
     let openDataPosts = [];
     if (this.integrationMethod == "OpenData") {
