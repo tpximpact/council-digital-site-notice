@@ -33,7 +33,7 @@ function Impact({ data }: { data: DataDetails }) {
 
               <>
                 {data?.housing?.residentialUnits && (
-                  <p className="govuk-body">
+                  <p className="govuk-body large-margin-top">
                     <span className="govuk-!-font-weight-bold">
                       {data?.housing?.residentialUnits}
                     </span>{" "}
