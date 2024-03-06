@@ -34,7 +34,7 @@ export class SanityClient {
     itemsPerPage?: number,
     offSet?: number,
   ): Promise<sanityApplicationResponse> {
-    console.log(itemsPerPage, offSet)
+    console.log("JERE", itemsPerPage, offSet);
     // const query = `{
     //         "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))${
     //           lastId ? ` && _id > "${lastId}"` : ""
@@ -42,13 +42,15 @@ export class SanityClient {
     //         "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])
     // }`;
     const query = `{
-            "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) ${itemsPerPage ? `[${offSet}...${itemsPerPage}]` : ""} {_id, image_head, name, applicationNumber, applicationName, address},
+            "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} {_id, image_head, name, applicationNumber, applicationName, address},
             "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))]) 
     }`;
+    console.log({ query });
     const posts = await this.client.fetch(query);
-    console.log({posts})
+    console.log({ posts });
     return posts;
   }
+  // '{\n            "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) [6...6] {_id, image_head, name, applicationNumber, applicationName, address},\n            "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))]) \n    }';
 
   //   async getActiveApplicationsCount(): Promise<number> {
   //     const count = await this.client.fetch(

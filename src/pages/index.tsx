@@ -59,7 +59,7 @@ const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
         ? itemsPerPage
         : resultsTotal - newOffset;
     const newData = await dataClient.getAllSiteNotices(totalPage, newOffset);
-    setDisplayData(newData?.results);
+    setDisplayData(newData.results as Data[]);
     console.log({ newData }, totalPage, resultsTotal, newOffset);
     console.log(
       `User requested page number ${event.selected}, which is offset ${newOffset}`,
