@@ -19,6 +19,7 @@ export class SanityClient {
       dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
       useCdn: false,
       apiVersion: "2023-11-15",
+      ignoreBrowserTokenWarning: true,
       token: process.env.NEXT_PUBLIC_SANITY_SECRET_TOKEN,
     });
 

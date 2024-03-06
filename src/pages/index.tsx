@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import PlanningApplications from "../components/planning-application";
-import { SanityClient } from "../../util/sanityClient";
+import { SanityClient } from "../lib/sanityClient";
 import { PaginationType, Data } from "../../util/type";
 import { ContextApplication } from "@/context";
-import { DataClient } from "../../util/dataService";
-import { OpenDataClient } from "../../util/openDataClient";
+import { DataClient } from "../lib/dataService";
+import { OpenDataClient } from "../lib/openDataClient";
 import ReactPaginate from "react-paginate";
 import { NextIcon } from "../../public/assets/icons";
 import { PreviewIcon } from "../../public/assets/icons";
@@ -15,8 +15,6 @@ import Link from "next/link";
 import { getLocationFromPostcode } from "../../util/geolocation";
 import { getGlobalContent } from "../../util/client";
 import { getDistance, convertDistance } from "geolib";
-
-const globalContent = await getGlobalContent();
 
 export const itemsPerPage = 6;
 const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
@@ -45,10 +43,15 @@ const Home = ({ data, globalContent }: PaginationType) => {
     localStorage.setItem("globalInfo", JSON.stringify(globalContent));
   }, [data, globalContent, setGlobalInfo]);
 
-  const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = data.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(data.length / itemsPerPage);
+  let currentItems: Data[] = [];
+  let pageCount = 0;
+
+  if (data) {
+    const endOffset = itemOffset + itemsPerPage;
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    currentItems = data.slice(itemOffset, endOffset);
+    pageCount = Math.ceil(data.length / itemsPerPage);
+  }
 
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % data.length;
