@@ -19,6 +19,7 @@ export class SanityClient {
       dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
       useCdn: false,
       apiVersion: "2023-11-15",
+      ignoreBrowserTokenWarning: true,
       token: process.env.NEXT_PUBLIC_SANITY_SECRET_TOKEN,
     });
 
@@ -40,12 +41,4 @@ export class SanityClient {
     const posts = await this.client.fetch(query);
     return posts;
   }
-  // '{\n            "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) [6...6] {_id, image_head, name, applicationNumber, applicationName, address},\n            "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))]) \n    }';
-
-  //   async getActiveApplicationsCount(): Promise<number> {
-  //     const count = await this.client.fetch(
-  //       `count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])`,
-  //     );
-  //     return count;
-  //   }
 }

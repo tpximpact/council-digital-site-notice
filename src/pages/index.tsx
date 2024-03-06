@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import PlanningApplications from "../components/planning-application";
-import { SanityClient } from "../../util/sanityClient";
+import { SanityClient } from "../lib/sanityClient";
 import { PaginationType, Data } from "../../util/type";
 import { ContextApplication } from "@/context";
-import { DataClient } from "../../util/dataService";
-import { OpenDataClient } from "../../util/openDataClient";
+import { DataClient } from "../lib/dataService";
+import { OpenDataClient } from "../lib/openDataClient";
 import ReactPaginate from "react-paginate";
 import { NextIcon } from "../../public/assets/icons";
 import { PreviewIcon } from "../../public/assets/icons";
@@ -13,7 +13,8 @@ import { Button } from "@/components/button";
 import { ArrowIcon } from "../../public/assets/icons";
 import Link from "next/link";
 import { getLocationFromPostcode } from "../../util/geolocation";
-import { distanceInMiles } from "../../util/geolocation";
+import { getGlobalContent } from "../../util/client";
+import { getDistance, convertDistance } from "geolib";
 
 export const itemsPerPage = 6;
 const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
@@ -53,6 +54,7 @@ const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
     setDisplayData(newData.results as Data[]);
   };
 
+  // this needs to be refactored once data is held in Sanity
   const onSearchPostCode = async () => {
     let location: any;
 
@@ -67,17 +69,33 @@ const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
     setLocation(location);
 
     if (location) {
-      const sortedData = data.sort((a, b) => {
-        const distanceA = distanceInMiles(
-          location.latitude,
-          location.longitude,
-        );
-        const distanceB = distanceInMiles(
-          location.latitude,
-          location.longitude,
-        );
-        return parseFloat(distanceA) - parseFloat(distanceB);
+      //remove any data elements that dont have a location or location.lat location.lng, keep the elements so i can attache them to the end of the array
+      const dataWithoutLocation = data.filter((el) => !el.location);
+      dataWithoutLocation.forEach((el) => {
+        const index = data.indexOf(el);
+        if (index !== -1) {
+          data.splice(index, 1);
+        }
       });
+
+      const sortedData = data.sort((a, b) => {
+        if (!a.location || !b.location) {
+          return -1;
+        }
+        const distanceA = getDistance(
+          { latitude: location.latitude, longitude: location.longitude },
+          { latitude: a.location.lat, longitude: a.location.lng },
+        );
+        const distanceB = getDistance(
+          { latitude: location.latitude, longitude: location.longitude },
+          { latitude: b.location.lat, longitude: b.location.lng },
+        );
+        //adds the distance to the object
+        a.distance = convertDistance(distanceA, "mi").toFixed(2);
+        return distanceA - distanceB;
+      });
+      //adds the data without location to the end of the array
+      sortedData.push(...dataWithoutLocation);
       setDisplayData(sortedData);
     }
   };
