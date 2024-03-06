@@ -1,59 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { ContextApplication } from "@/context";
 import { ArrowIcon } from "../../../public/assets/icons";
 import { DataDetails } from "../../../util/type";
-
-const aplicationStageStyle = (value: string) => {
-  const style: { [key: string]: string } = {
-    approved: "approved-status",
-    "pending approval": "approved-status",
-    refused: "rejected-status",
-    successful: "approved-status",
-    unsuccessful: "refected-status",
-  };
-
-  return style[value?.toLowerCase()] || "default-status";
-};
-
-const applicationStageMessage = (stage: string, status: string) => {
-  const consultation: { [key: string]: string } = {
-    "in progress":
-      "People in the local community can share feedback and comment on the proposed plans.",
-    extended:
-      "People in the local community can share feedback and comment on the proposed plans",
-  };
-
-  const assessment: { [key: string]: string } = {
-    "in progress":
-      "Assessment of the application is being made by the appropriate authorities. People in the local community can still comment on the plans until a decision is made.",
-  };
-
-  const decision: { [key: string]: string } = {
-    approved: "This planning application has been approved.",
-    decision:
-      "This planning application has been approved pending legal confirmation.",
-    rejected: "This planning application has been rejected.",
-  };
-
-  const appeal: { [key: string]: string } = {
-    "in progress":
-      "An appeal has been lodged to try to change the decision about this application.",
-    successful:
-      "The initial decision has been overturned in appeal, and the application is now approved.",
-    unsucessful:
-      "The initial decision has been upheld in appeal, and the application is still rejected.",
-  };
-
-  const message: { [key: string]: string } = {
-    Consultation: consultation[status],
-    Assessment: assessment[status],
-    Decision: decision[status],
-    Appeal: appeal[status],
-  };
-  return message[stage];
-};
+import {
+  aplicationStageStyle,
+  applicationStageMessage,
+} from "../../../util/applicationHelper";
 
 function Process({
   data,
@@ -63,16 +17,6 @@ function Process({
   commentDeadline: string;
 }) {
   const { globalInfo } = useContext(ContextApplication);
-  const [planningProcessUrl, setPlanningProcessUrl] = useState();
-
-  useEffect(() => {
-    const globalContent = localStorage.getItem("globalInfo");
-    if (globalContent !== null && globalContent !== "undefined") {
-      setPlanningProcessUrl(JSON.parse(globalContent).planningProcessUrl);
-    } else {
-      setPlanningProcessUrl(globalInfo?.planningProcessUrl);
-    }
-  }, [globalInfo?.planningProcessUrl]);
 
   const singleApplicationStatus =
     data?.applicationStage?.status[
@@ -82,10 +26,10 @@ function Process({
   return (
     <section className="process-wrap">
       <h2 className="govuk-heading-l">Where are we in the process?</h2>
-      {planningProcessUrl && (
+      {globalInfo?.planningProcessUrl && (
         <Link
           className="govuk-link govuk-link--no-visited-state"
-          href={planningProcessUrl}
+          href={globalInfo?.planningProcessUrl}
           target="_blank"
         >
           Find out more about the planning process
