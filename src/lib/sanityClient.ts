@@ -32,7 +32,7 @@ export class SanityClient {
 
   async getActiveApplications(
     itemsPerPage?: number,
-    offSet?: number,
+    offSet: number = 0,
   ): Promise<sanityApplicationResponse> {
     const query = `{
             "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} {_id, image_head, name, applicationNumber, applicationName, address},
