@@ -1,5 +1,4 @@
-import { useEffect, useContext, useState } from "react";
-import { ContextApplication } from "@/context";
+import { useEffect, useState } from "react";
 import { BackLink, Button, ButtonLink } from "@/components/button";
 import Details from "@/components/details";
 import { questions } from "../../../util/questionsInfo";
@@ -10,9 +9,13 @@ import { PersonalDetailsForm, CommentForm } from "../../../util/type";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
-function CheckAnswers() {
-  const { onChangeQuestion, setQuestion, contextCleaner } =
-    useContext(ContextApplication);
+function CheckAnswers({
+  onChangeQuestion,
+  setQuestion,
+}: {
+  onChangeQuestion: () => void;
+  setQuestion: (value: number) => void;
+}) {
   const [id, setId] = useState();
   const [personalDetailsForm, setPersonalDetailsForm] =
     useState<PersonalDetailsForm>({
@@ -126,7 +129,7 @@ function CheckAnswers() {
         localStorage.removeItem("phone");
         localStorage.removeItem("consent");
 
-        contextCleaner();
+        // contextCleaner();
       } else {
         console.log("Error fetching data");
       }

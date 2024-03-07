@@ -1,12 +1,16 @@
-import { useEffect, useContext, useState } from "react";
-import { ContextApplication } from "@/context";
+import { useEffect, useState } from "react";
 import { Button, BackLink } from "@/components/button";
 import { Happy, Neutral, Opposed } from "../../../public/assets/icons";
 import Validation from "@/components/validation";
 import { getLocalStorage } from "../../../util/helpLocalStorage";
 
-function Feeling() {
-  const { onChangeQuestion, setQuestion } = useContext(ContextApplication);
+function Feeling({
+  onChangeQuestion,
+  setQuestion,
+}: {
+  onChangeQuestion: () => void;
+  setQuestion: (value: number) => void;
+}) {
   const [feelingForm, setFeelingForm] = useState<string>("");
   const [id, setId] = useState();
   const [isError, setIsError] = useState(false);

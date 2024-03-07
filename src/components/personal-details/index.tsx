@@ -20,9 +20,14 @@ import {
 import { PersonalDetailsForm } from "../../../util/type";
 import { getLocalStorage } from "../../../util/helpLocalStorage";
 
-const PersonalDetails = () => {
-  const { onChangeQuestion, setQuestion, globalInfo } =
-    useContext(ContextApplication);
+const PersonalDetails = ({
+  onChangeQuestion,
+  setQuestion,
+}: {
+  onChangeQuestion: () => void;
+  setQuestion: (value: number) => void;
+}) => {
+  const { globalInfo } = useContext(ContextApplication);
   const [isError, setIsError] = useState<boolean>(false);
   const [id, setId] = useState();
   const [personalDetailsForm, setPersonalDetailsForm] =

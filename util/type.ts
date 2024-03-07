@@ -133,20 +133,6 @@ export type FeelingType = {
 };
 
 export type ContextApplicationProps = {
-  // dataApplication: any;
-  // setDataApplication: (dataApplication: any) => void;
-  question: number;
-  setQuestion: (value: number) => void;
-  selectedCheckbox: number[];
-  setSelectedCheckbox: (value: any) => void;
-  onChangeQuestion: () => void;
-  // feelingForm: string;
-  // setFeelingForm: (value: string) => void;
-  // commentForm: CommentForm;
-  // setCommentForm: (value: any) => void;
-  // personalDetailsForm: PersonalDetailsForm;
-  // setPersonalDetailsForm: (value: any) => void;
   globalInfo: any;
   setGlobalInfo: (value: any) => void;
-  contextCleaner: () => void;
 };

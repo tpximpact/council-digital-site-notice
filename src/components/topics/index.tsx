@@ -11,8 +11,13 @@ import { getLocalStorage } from "../../../util/helpLocalStorage";
 
 export const checkboxId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
-const TopicsQuestion = () => {
-  const { onChangeQuestion, setQuestion } = useContext(ContextApplication);
+const TopicsQuestion = ({
+  onChangeQuestion,
+  setQuestion,
+}: {
+  onChangeQuestion: () => void;
+  setQuestion: (value: number) => void;
+}) => {
   const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([]);
   const [isError, setIsError] = useState<boolean>(false);
   const [idApplication, setId] = useState();

@@ -7,8 +7,12 @@ import { ArrowIcon } from "../../../public/assets/icons";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "../../../util/helpLocalStorage";
 
-function FeedbackInformation() {
-  const { onChangeQuestion, globalInfo } = useContext(ContextApplication);
+function FeedbackInformation({
+  onChangeQuestion,
+}: {
+  onChangeQuestion: () => void;
+}) {
+  const { globalInfo } = useContext(ContextApplication);
   const urlConcern = globalInfo?.concernUrl
     ? globalInfo?.concernUrl
     : globalInfo?.concernContent && "/concern-info";
