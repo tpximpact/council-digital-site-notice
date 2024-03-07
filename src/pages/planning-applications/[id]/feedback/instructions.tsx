@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
 import { urlFor } from "../../../../../util/client";
-import { healpLocalStorage } from "../../../../../util/helpLocalStorage";
+import { getLocalStorage } from "../../../../../util/helpLocalStorage";
 
 function Instructions() {
   const { globalInfo } = useContext(ContextApplication);
@@ -16,7 +16,7 @@ function Instructions() {
   >(undefined);
 
   useEffect(() => {
-    const getStorage = healpLocalStorage({
+    const getStorage = getLocalStorage({
       key: "application",
       defaultValue: {},
     });

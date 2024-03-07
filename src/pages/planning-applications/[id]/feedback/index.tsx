@@ -3,7 +3,7 @@ import { ContextApplication } from "@/context";
 import Breadcrumbs from "@/components/breadcrumbs";
 import Instructions from "./instructions";
 import Questions from "../../../../components/questions";
-import { healpLocalStorage } from "../../../../../util/helpLocalStorage";
+import { getLocalStorage } from "../../../../../util/helpLocalStorage";
 
 const Feedback = () => {
   const { question } = useContext(ContextApplication);
@@ -11,7 +11,7 @@ const Feedback = () => {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    const getStorage = healpLocalStorage({
+    const getStorage = getLocalStorage({
       key: "application",
       defaultValue: {},
     });

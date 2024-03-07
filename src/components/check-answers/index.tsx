@@ -5,7 +5,7 @@ import Details from "@/components/details";
 import { questions } from "../../../util/questionsInfo";
 import { descriptionDetail } from "../../../util/description-detail";
 import { addFeedback } from "../../../util/client";
-import { healpLocalStorage } from "../../../util/helpLocalStorage";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -29,55 +29,55 @@ function CheckAnswers() {
   const [consent, setConsent] = useState<boolean>(false);
 
   useEffect(() => {
-    const applicationStorage = healpLocalStorage({
+    const applicationStorage = getLocalStorage({
       key: "application",
       defaultValue: {},
     });
 
     setId(applicationStorage?.id);
-    const initialValueName = healpLocalStorage({
+    const initialValueName = getLocalStorage({
       key: "name",
       defaultValue: name,
     });
     initialValueName?.id === applicationStorage?.id &&
       setName(initialValueName?.value);
 
-    const initialValueAddress = healpLocalStorage({
+    const initialValueAddress = getLocalStorage({
       key: "address",
       defaultValue: address,
     });
     initialValueAddress?.id === applicationStorage?.id &&
       setAddress(initialValueAddress?.value);
 
-    const initialValuePhone = healpLocalStorage({
+    const initialValuePhone = getLocalStorage({
       key: "phone",
       defaultValue: phone,
     });
     initialValuePhone?.id === applicationStorage?.id &&
       setPhone(initialValuePhone?.value);
 
-    const initialValuePostcode = healpLocalStorage({
+    const initialValuePostcode = getLocalStorage({
       key: "postcode",
       defaultValue: postCode,
     });
     initialValuePostcode?.id === applicationStorage?.id &&
       setPostCode(initialValuePostcode?.value);
 
-    const initialValueEmail = healpLocalStorage({
+    const initialValueEmail = getLocalStorage({
       key: "email",
       defaultValue: email,
     });
     initialValueEmail?.id === applicationStorage?.id &&
       setEmail(initialValueEmail?.value);
 
-    const initialValueConsent = healpLocalStorage({
+    const initialValueConsent = getLocalStorage({
       key: "consent",
       defaultValue: consent,
     });
     initialValueConsent?.id === applicationStorage?.id &&
       setConsent(initialValueConsent?.value);
 
-    const initialValueComment = healpLocalStorage({
+    const initialValueComment = getLocalStorage({
       key: "comment",
       defaultValue: {},
     });
@@ -117,7 +117,7 @@ function CheckAnswers() {
       topics.push(questions[el]);
       comment = { ...comment, [questions[el]]: commentForm[el] };
     });
-    const application = healpLocalStorage({
+    const application = getLocalStorage({
       key: "application",
       defaultValue: {},
     });

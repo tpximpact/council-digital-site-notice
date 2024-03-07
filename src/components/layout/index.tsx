@@ -4,7 +4,7 @@ import CookiesBanner from "@/components/cookies";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { urlFor, getGlobalContent } from "../../../util/client";
-import { healpLocalStorage } from "../../../util/helpLocalStorage";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
 import { useContext } from "react";
 import { ContextApplication } from "@/context";
 
@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       : urlFor(globalContent.favicon)?.url();
 
   useEffect(() => {
-    const getLocalStorageCookies = healpLocalStorage({
+    const getLocalStorageCookies = getLocalStorage({
       key: "cookies",
       defaultValue: false,
     });

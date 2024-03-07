@@ -4,7 +4,7 @@ import TextArea from "@/components/text-area";
 import Validation from "@/components/validation";
 import { Button, BackLink } from "@/components/button";
 import { questions } from "../../../util/questionsInfo";
-import { healpLocalStorage } from "../../../util/helpLocalStorage";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
 import { CommentForm } from "../../../util/type";
 
 function CommentQuestion() {
@@ -19,11 +19,11 @@ function CommentQuestion() {
   const label = questions[question];
 
   useEffect(() => {
-    const commentStorage = healpLocalStorage({
+    const commentStorage = getLocalStorage({
       key: "comment",
       defaultValue: {},
     });
-    const applicationStorage = healpLocalStorage({
+    const applicationStorage = getLocalStorage({
       key: "application",
       defaultValue: {},
     });

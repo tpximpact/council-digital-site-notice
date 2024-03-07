@@ -3,7 +3,7 @@ import { ContextApplication } from "@/context";
 import { Button, BackLink } from "@/components/button";
 import { Happy, Neutral, Opposed } from "../../../public/assets/icons";
 import Validation from "@/components/validation";
-import { healpLocalStorage } from "../../../util/helpLocalStorage";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
 
 function Feeling() {
   const { onChangeQuestion, setQuestion } = useContext(ContextApplication);
@@ -12,11 +12,11 @@ function Feeling() {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const applicationStorage = healpLocalStorage({
+    const applicationStorage = getLocalStorage({
       key: "application",
       defaultValue: {},
     });
-    const feelingStorage = healpLocalStorage({
+    const feelingStorage = getLocalStorage({
       key: "feeling",
       defaultValue: feelingForm,
     });

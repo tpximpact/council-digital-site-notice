@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
 import Image from "next/image";
 import { urlFor } from "../../../../../util/client";
-import { healpLocalStorage } from "../../../../../util/helpLocalStorage";
+import { getLocalStorage } from "../../../../../util/helpLocalStorage";
 
 const FeedbackMessage = () => {
   const { globalInfo } = useContext(ContextApplication);
@@ -18,7 +18,7 @@ const FeedbackMessage = () => {
   const [formId, setFormId] = useState<string | null>();
 
   useEffect(() => {
-    const initialValue = healpLocalStorage({
+    const initialValue = getLocalStorage({
       key: "application",
       defaultValue: {},
     });

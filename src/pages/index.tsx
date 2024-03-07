@@ -11,7 +11,7 @@ import {
 import { PaginationType, Data } from "../../util/type";
 import { getLocationFromPostcode } from "../../util/geolocation";
 import Link from "next/link";
-import { healpLocalStorage } from "../../util/helpLocalStorage";
+import { getLocalStorage } from "../../util/helpLocalStorage";
 
 export const itemsPerPage = 6;
 
@@ -36,7 +36,7 @@ const Home = ({ dataId, data }: PaginationType) => {
 
   useEffect(() => {
     setDisplayData(data);
-    const globalInfoStorage = healpLocalStorage({
+    const globalInfoStorage = getLocalStorage({
       key: "globalInfo",
       defaultValue: {},
     });

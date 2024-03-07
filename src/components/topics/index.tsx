@@ -7,7 +7,7 @@ import { descriptionDetail } from "../../../util/description-detail";
 import { questions } from "../../../util/questionsInfo";
 import { useContext } from "react";
 import { ContextApplication } from "@/context";
-import { healpLocalStorage } from "../../../util/helpLocalStorage";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
 
 export const checkboxId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -18,11 +18,11 @@ const TopicsQuestion = () => {
   const [idApplication, setId] = useState();
 
   useEffect(() => {
-    const getStorage = healpLocalStorage({
+    const getStorage = getLocalStorage({
       key: "topics",
       defaultValue: {},
     });
-    const applicationStorage = healpLocalStorage({
+    const applicationStorage = getLocalStorage({
       key: "application",
       defaultValue: {},
     });

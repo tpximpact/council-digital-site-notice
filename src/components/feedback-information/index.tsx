@@ -5,7 +5,7 @@ import { ContextApplication } from "@/context";
 import { Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
 import { useEffect, useState } from "react";
-import { healpLocalStorage } from "../../../util/helpLocalStorage";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
 
 function FeedbackInformation() {
   const { onChangeQuestion, globalInfo } = useContext(ContextApplication);
@@ -16,7 +16,7 @@ function FeedbackInformation() {
   const [id, setId] = useState();
 
   useEffect(() => {
-    const applicationContent = healpLocalStorage({
+    const applicationContent = getLocalStorage({
       key: "application",
       defaultValue: {},
     });
