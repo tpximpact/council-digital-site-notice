@@ -4,70 +4,33 @@ import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
 import Image from "next/image";
 import { urlFor } from "../../../../../util/client";
+import { healpLocalStorage } from "../../../../../util/helpLocalStorage";
 
 const FeedbackMessage = () => {
-  const {
-    dataApplication: {
-      address,
-      image_head,
-      applicationNumber,
-      applicationUpdatesUrl,
-      _id,
-      globalInfo,
-    },
-  } = useContext(ContextApplication);
-  const [addressAplication, setAddressAplication] = useState();
-  const [imageAplication, setImageAplication] = useState();
-  const [referenceAplication, setReferenceAplication] = useState();
-  const [applicationId, setApplicationId] = useState();
-  const [updatesUrl, setUpdatesUrl] = useState();
-  const [involveUrl, setInvolveUrl] = useState();
-  const [councilName, setCouncilName] = useState();
+  const { globalInfo } = useContext(ContextApplication);
+  const involveUrl = globalInfo?.howToGetInvolveUrl;
+  const councilName = globalInfo?.councilName;
+  const [addressAplication, setAddressAplication] = useState<string>();
+  const [imageAplication, setImageAplication] = useState<string>();
+  const [referenceAplication, setReferenceAplication] = useState<string>();
+  const [applicationId, setApplicationId] = useState<string>();
+  const [updatesUrl, setUpdatesUrl] = useState<string>();
   const [formId, setFormId] = useState<string | null>();
 
   useEffect(() => {
-    const initialValue = localStorage.getItem("application");
-    const initialGlobalValue = localStorage.getItem("globalInfo");
+    const initialValue = healpLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+    setAddressAplication(initialValue?.address);
+    setImageAplication(initialValue?.image_head);
+    setReferenceAplication(initialValue?.applicationNumber);
+    setUpdatesUrl(initialValue?.applicationUpdatesUrl);
+    setApplicationId(initialValue?._id);
 
     const formId = localStorage.getItem("formId");
     setFormId(formId);
-
-    if (initialGlobalValue !== null) {
-      setInvolveUrl(JSON.parse(initialGlobalValue).howToGetInvolveUrl);
-      setCouncilName(JSON.parse(initialGlobalValue).councilName);
-    } else {
-      setInvolveUrl(globalInfo?.howToGetInvolveUrl);
-      setCouncilName(globalInfo?.councilName);
-    }
-
-    if (
-      address !== undefined ||
-      image_head !== undefined ||
-      applicationNumber !== undefined ||
-      applicationUpdatesUrl !== undefined ||
-      initialValue === null
-    ) {
-      setAddressAplication(address);
-      setImageAplication(image_head);
-      setReferenceAplication(applicationNumber);
-      setUpdatesUrl(applicationUpdatesUrl);
-      setApplicationId(_id);
-    } else {
-      setAddressAplication(JSON.parse(initialValue).address);
-      setImageAplication(JSON.parse(initialValue).image_head);
-      setReferenceAplication(JSON.parse(initialValue).applicationNumber);
-      setUpdatesUrl(JSON.parse(initialValue).applicationUpdatesUrl);
-      setApplicationId(JSON.parse(initialValue)._id);
-    }
-  }, [
-    address,
-    image_head,
-    applicationNumber,
-    applicationUpdatesUrl,
-    globalInfo?.howToGetInvolveUrl,
-    globalInfo?.councilName,
-    _id,
-  ]);
+  }, []);
 
   return (
     <section>
