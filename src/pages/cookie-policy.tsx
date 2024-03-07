@@ -1,16 +1,9 @@
-import { getGlobalContent } from "../../util/client";
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
 
-export async function getStaticProps() {
-  const data = await getGlobalContent();
-  return {
-    props: {
-      data: data,
-    },
-  };
-}
-
-const CookiePolicyPage = ({ data }: any) => {
-  return <p className="govuk-body">{data?.cookiePolicyContent}</p>;
+const CookiePolicyPage = () => {
+  const { globalInfo } = useContext(ContextApplication);
+  return <p className="govuk-body">{globalInfo?.cookiePolicyContent}</p>;
 };
 
 export default CookiePolicyPage;

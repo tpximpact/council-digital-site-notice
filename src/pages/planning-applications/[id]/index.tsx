@@ -43,8 +43,8 @@ export async function getStaticPaths() {
 }
 
 const Application = ({ data }: { data: DataDetails }) => {
-  const { setDataApplication, setQuestion } = useContext(ContextApplication);
-  const [commentDeadline, setCommentDeadline] = useState("");
+  const { setQuestion } = useContext(ContextApplication);
+  const [commentDeadline, setCommentDeadline] = useState<string>("");
 
   useEffect(() => {
     setQuestion(0);
@@ -57,7 +57,6 @@ const Application = ({ data }: { data: DataDetails }) => {
       deadlineTime = moment.duration(deadline.diff(today)).asDays().toFixed(0);
       setCommentDeadline(deadlineTime);
     }
-    setDataApplication({ ...data, commentDeadline: deadlineTime });
 
     localStorage.setItem(
       "application",
@@ -73,7 +72,7 @@ const Application = ({ data }: { data: DataDetails }) => {
         applicationUpdatesUrl: data?.applicationUpdatesUrl,
       }),
     );
-  }, [data, setDataApplication, setQuestion, commentDeadline]);
+  }, [data, setQuestion, commentDeadline]);
 
   const breadcrumbs_array = [
     { name: "Planning applications", href: "/" },

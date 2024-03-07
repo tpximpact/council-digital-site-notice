@@ -11,7 +11,7 @@ import {
 import { PaginationType, Data } from "../../util/type";
 import { getLocationFromPostcode } from "../../util/geolocation";
 import Link from "next/link";
-import { getLocalStorage } from "../../util/helpLocalStorage";
+import { ContextApplication } from "@/context";
 
 export const itemsPerPage = 6;
 
@@ -28,7 +28,7 @@ export async function getStaticProps() {
 }
 
 const Home = ({ dataId, data }: PaginationType) => {
-  const [globalContent, setGlobalContent] = useState<any>();
+  const { globalInfo } = useContext(ContextApplication);
   const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
   const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
@@ -36,11 +36,6 @@ const Home = ({ dataId, data }: PaginationType) => {
 
   useEffect(() => {
     setDisplayData(data);
-    const globalInfoStorage = getLocalStorage({
-      key: "globalInfo",
-      defaultValue: {},
-    });
-    setGlobalContent(globalInfoStorage);
   }, [dataId, data]);
 
   async function onSelectPage({ _id }: any) {
@@ -83,7 +78,7 @@ const Home = ({ dataId, data }: PaginationType) => {
       </h1>
       <p className="govuk-body-m">
         Find, review and leave your comments on planning applications in{" "}
-        {globalContent?.councilName}
+        {globalInfo?.councilName}
       </p>
       <section className="search-grid">
         <Input
@@ -100,12 +95,12 @@ const Home = ({ dataId, data }: PaginationType) => {
           icon={<ArrowIcon />}
           onClick={() => onSearchPostCode()}
         />
-        {globalContent?.signUpUrl && (
+        {globalInfo?.signUpUrl && (
           <Link
             className="govuk-button grid-button-signup govuk-button--secondary"
             target="_blank"
             style={{ textDecoration: "none" }}
-            href={`${globalContent?.signUpUrl}`}
+            href={`${globalInfo?.signUpUrl}`}
           >
             Sign up for alerts on applications near you
           </Link>
