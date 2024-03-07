@@ -3,22 +3,29 @@ import { ContextApplication } from "@/context";
 import { Button, BackLink } from "@/components/button";
 import { Happy, Neutral, Opposed } from "../../../public/assets/icons";
 import Validation from "@/components/validation";
+import { healpLocalStorage } from "../../../util/helpLocalStorage";
 
 function Feeling() {
-  const { onChangeQuestion, feelingForm, setFeelingForm, setQuestion } =
-    useContext(ContextApplication);
+  const { onChangeQuestion, setQuestion } = useContext(ContextApplication);
+  const [feelingForm, setFeelingForm] = useState<string>("");
   const [id, setId] = useState();
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const applicationStorage = localStorage.getItem("application") || "{}";
-    const applicationIdStorage = JSON.parse(applicationStorage).id;
-    setId(applicationIdStorage);
-    const initialValue = localStorage.getItem("feeling") || "{}";
-    JSON.parse(initialValue).id === applicationIdStorage
-      ? setFeelingForm(JSON.parse(initialValue).value)
-      : setFeelingForm("");
-  }, [setFeelingForm]);
+    const applicationStorage = healpLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+    const feelingStorage = healpLocalStorage({
+      key: "feeling",
+      defaultValue: feelingForm,
+    });
+
+    setId(applicationStorage?.id);
+
+    feelingStorage?.id === applicationStorage?.id &&
+      setFeelingForm(feelingStorage.value);
+  }, [feelingForm]);
 
   const onChangeFeeling = (value: string) => {
     if (feelingForm === value) {

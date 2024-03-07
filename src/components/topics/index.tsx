@@ -7,27 +7,29 @@ import { descriptionDetail } from "../../../util/description-detail";
 import { questions } from "../../../util/questionsInfo";
 import { useContext } from "react";
 import { ContextApplication } from "@/context";
+import { healpLocalStorage } from "../../../util/helpLocalStorage";
 
 export const checkboxId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
 const TopicsQuestion = () => {
-  const {
-    onChangeQuestion,
-    setQuestion,
-    selectedCheckbox,
-    setSelectedCheckbox,
-  } = useContext(ContextApplication);
+  const { onChangeQuestion, setQuestion } = useContext(ContextApplication);
+  const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([]);
   const [isError, setIsError] = useState<boolean>(false);
   const [idApplication, setId] = useState();
 
   useEffect(() => {
-    const getStorage = localStorage.getItem("topics") || "{}";
-    const initialValue = JSON.parse(getStorage);
-    const applicationStorage = localStorage.getItem("application") || "{}";
-    const applicationIdStorage = JSON.parse(applicationStorage).id;
-    setId(applicationIdStorage);
-    initialValue?.id === applicationIdStorage
-      ? setSelectedCheckbox(initialValue.value)
+    const getStorage = healpLocalStorage({
+      key: "topics",
+      defaultValue: {},
+    });
+    const applicationStorage = healpLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+
+    setId(applicationStorage?.id);
+    getStorage?.id === applicationStorage?.id
+      ? setSelectedCheckbox(getStorage.value)
       : setSelectedCheckbox([]);
   }, [setSelectedCheckbox]);
 
