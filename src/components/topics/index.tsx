@@ -28,9 +28,8 @@ const TopicsQuestion = () => {
     });
 
     setId(applicationStorage?.id);
-    getStorage?.id === applicationStorage?.id
-      ? setSelectedCheckbox(getStorage.value)
-      : setSelectedCheckbox([]);
+    getStorage?.id === applicationStorage?.id &&
+      setSelectedCheckbox(getStorage.value);
   }, [setSelectedCheckbox]);
 
   const onChecked = (e: any) => {
