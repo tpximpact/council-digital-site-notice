@@ -4,42 +4,36 @@ import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
 import { urlFor } from "../../../../../util/client";
 import { getLocalStorage } from "../../../../../util/helpLocalStorage";
+import { Data } from "../../../../../util/type";
 
 function Instructions() {
   const { globalInfo } = useContext(ContextApplication);
   const councilName = globalInfo?.councilName;
-
-  const [image, setImage] = useState<string | undefined>(undefined);
-  const [addressData, setAddressData] = useState<string>("");
-  const [applicationNumberData, setApplicationNumberData] = useState<
-    string | undefined
-  >(undefined);
+  const [application, setApplication] = useState<Data>();
 
   useEffect(() => {
     const getStorage = getLocalStorage({
       key: "application",
       defaultValue: {},
     });
-    setImage(getStorage?.image_head);
-    setAddressData(getStorage?.address);
-    setApplicationNumberData(getStorage?.applicationNumber);
+    setApplication(getStorage);
   }, []);
 
   return (
     <section className="wrap-feedback">
       <h1 className="govuk-heading-l">Tell us what you think</h1>
       <div className="wrap-image-legend-feedback">
-        {image && (
+        {application?.image_head && (
           <Image
             width={80}
             height={57}
             alt="Development image"
-            src={urlFor(image)?.url()}
+            src={urlFor(application?.image_head)?.url()}
           />
         )}
         <div>
-          <h3 className="govuk-heading-s">{addressData}</h3>
-          <p className="govuk-body">{applicationNumberData}</p>
+          <h3 className="govuk-heading-s">{application?.address}</h3>
+          <p className="govuk-body">{application?.applicationNumber}</p>
         </div>
       </div>
       <p className="govuk-body">

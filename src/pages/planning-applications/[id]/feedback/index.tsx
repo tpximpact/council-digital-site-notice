@@ -4,19 +4,18 @@ import Breadcrumbs from "@/components/breadcrumbs";
 import Instructions from "./instructions";
 import Questions from "../../../../components/questions";
 import { getLocalStorage } from "../../../../../util/helpLocalStorage";
+import { Data } from "../../../../../util/type";
 
 const Feedback = () => {
   const { question } = useContext(ContextApplication);
-  const [id, setId] = useState("");
-  const [name, setName] = useState("");
+  const [application, setApplication] = useState<Data>();
 
   useEffect(() => {
     const getStorage = getLocalStorage({
       key: "application",
       defaultValue: {},
     });
-    setName(getStorage?.name);
-    setId(getStorage?.id);
+    setApplication(getStorage);
   }, []);
 
   const breadcrumbs_array = [
@@ -25,8 +24,8 @@ const Feedback = () => {
       href: "/",
     },
     {
-      name: name,
-      href: `/planning-applications/${id}`,
+      name: application?.name || "",
+      href: `/planning-applications/${application?._id}`,
     },
     {
       name: "Tell us what you think",
