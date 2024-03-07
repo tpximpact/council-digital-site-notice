@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { ContextApplication } from "@/context";
+import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/breadcrumbs";
 import About from "../../../components/about";
 import Impact from "../../../components/impact";
@@ -43,12 +42,9 @@ export async function getStaticPaths() {
 }
 
 const Application = ({ data }: { data: DataDetails }) => {
-  const { setQuestion } = useContext(ContextApplication);
   const [commentDeadline, setCommentDeadline] = useState<string>("");
 
   useEffect(() => {
-    setQuestion(0);
-
     let deadlineTime;
 
     if (data?.enableComments) {
@@ -72,7 +68,7 @@ const Application = ({ data }: { data: DataDetails }) => {
         applicationUpdatesUrl: data?.applicationUpdatesUrl,
       }),
     );
-  }, [data, setQuestion, commentDeadline]);
+  }, [data, commentDeadline]);
 
   const breadcrumbs_array = [
     { name: "Planning applications", href: "/" },
