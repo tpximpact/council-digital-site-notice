@@ -71,7 +71,7 @@ const PersonalDetails = ({
       setPersonalDetailsForm(personalDetailsStorage?.value);
 
     const selectedCheckboxStorage = getLocalStorage({
-      key: "impact",
+      key: "topics",
       defaultValue: {},
     });
     selectedCheckboxStorage?.id === applicationStorage?.id &&

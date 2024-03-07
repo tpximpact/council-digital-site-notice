@@ -30,7 +30,7 @@ function CommentQuestion({
       defaultValue: {},
     });
     const selectedCheckboxStorage = getLocalStorage({
-      key: "impact",
+      key: "topics",
       defaultValue: {},
     });
     const applicationStorage = getLocalStorage({
@@ -40,6 +40,7 @@ function CommentQuestion({
     setId(applicationStorage?.id);
     commentStorage?.id == applicationStorage?.id &&
       setCommentForm(commentStorage?.value);
+
     selectedCheckboxStorage?.id == applicationStorage?.id &&
       setSelectedCheckbox(selectedCheckboxStorage?.value);
   }, []);

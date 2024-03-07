@@ -18,12 +18,13 @@ const Feedback = () => {
     setApplication(getStorage);
 
     const getStorageSelectedCheckbox = getLocalStorage({
-      key: "impact",
-      defaultValue: selectedCheckbox,
+      key: "topics",
+      defaultValue: [],
     });
-    getStorage?._id === getStorageSelectedCheckbox?.id &&
+
+    getStorage?.id == getStorageSelectedCheckbox?.id &&
       setSelectedCheckbox(getStorageSelectedCheckbox?.value);
-  }, [selectedCheckbox]);
+  }, []);
 
   const onChangeQuestion = () => {
     if (

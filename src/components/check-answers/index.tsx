@@ -40,19 +40,19 @@ function CheckAnswers({
 
     const initialPersonalDetails = getLocalStorage({
       key: "personalDetails",
-      defaultValue: personalDetailsForm,
+      defaultValue: {},
     });
     initialPersonalDetails?.id === applicationStorage?.id &&
       setPersonalDetailsForm(initialPersonalDetails?.value);
 
     const initialValueComment = getLocalStorage({
       key: "comment",
-      defaultValue: commentForm,
+      defaultValue: {},
     });
 
     const initialValueFeeling = getLocalStorage({
       key: "feeling",
-      defaultValue: feelingForm,
+      defaultValue: {},
     });
 
     initialValueFeeling?.id === applicationStorage?.id &&
@@ -60,7 +60,7 @@ function CheckAnswers({
 
     initialValueComment?.id == applicationStorage?.id &&
       setCommentForm(initialValueComment?.value);
-  }, [commentForm, feelingForm, personalDetailsForm]);
+  }, []);
 
   const onChangeQuestions = (label: number) => {
     const selected = selectedCheckbox?.filter((el: any) => el === label);
