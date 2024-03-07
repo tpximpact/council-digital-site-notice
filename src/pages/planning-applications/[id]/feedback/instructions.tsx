@@ -3,39 +3,27 @@ import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
 import { urlFor } from "../../../../../util/client";
-import { DataDetails } from "../../../../../util/type";
+import { healpLocalStorage } from "../../../../../util/helpLocalStorage";
 
-function Instructions({ data }: { data: DataDetails }) {
+function Instructions() {
   const { globalInfo } = useContext(ContextApplication);
+  const councilName = globalInfo?.councilName;
+
   const [image, setImage] = useState<string | undefined>(undefined);
   const [addressData, setAddressData] = useState<string>("");
   const [applicationNumberData, setApplicationNumberData] = useState<
     string | undefined
   >(undefined);
-  const [councilName, setCouncilName] = useState();
 
   useEffect(() => {
-    const initialGlobalValue = localStorage.getItem("globalInfo");
-
-    if (initialGlobalValue !== null) {
-      setCouncilName(JSON.parse(initialGlobalValue).councilName);
-    } else {
-      setCouncilName(globalInfo?.councilName);
-    }
-
-    const getStorage = localStorage.getItem("application");
-    if (Object.keys(data).length > 0 || getStorage === null) {
-      const { address, image_head, applicationNumber } = data;
-      setImage(image_head);
-      setAddressData(address);
-      setApplicationNumberData(applicationNumber);
-    } else {
-      const { image_head, address, applicationNumber } = JSON.parse(getStorage);
-      setImage(image_head);
-      setAddressData(address);
-      setApplicationNumberData(applicationNumber);
-    }
-  }, [data, globalInfo?.councilName]);
+    const getStorage = healpLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+    setImage(getStorage?.image_head);
+    setAddressData(getStorage?.address);
+    setApplicationNumberData(getStorage?.applicationNumber);
+  }, []);
 
   return (
     <section className="wrap-feedback">
