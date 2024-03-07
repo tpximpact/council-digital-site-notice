@@ -67,7 +67,7 @@ const Feedback = () => {
       <Questions
         question={question}
         onChangeQuestion={() => onChangeQuestion()}
-        setQuestion={() => setQuestion}
+        setQuestion={setQuestion}
       />
     </>
   );
