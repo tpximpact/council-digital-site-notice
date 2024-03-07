@@ -8,7 +8,6 @@ import { Data } from "../../../../../util/type";
 const Feedback = () => {
   const [application, setApplication] = useState<Data>();
   const [question, setQuestion] = useState<number>(0);
-  const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([]);
 
   useEffect(() => {
     const getStorage = getLocalStorage({
@@ -16,17 +15,17 @@ const Feedback = () => {
       defaultValue: {},
     });
     setApplication(getStorage);
+  }, []);
 
+  const onChangeQuestion = () => {
     const getStorageSelectedCheckbox = getLocalStorage({
       key: "topics",
       defaultValue: [],
     });
+    const selectedCheckbox =
+      application?.id == getStorageSelectedCheckbox?.id &&
+      getStorageSelectedCheckbox?.value;
 
-    getStorage?.id == getStorageSelectedCheckbox?.id &&
-      setSelectedCheckbox(getStorageSelectedCheckbox?.value);
-  }, []);
-
-  const onChangeQuestion = () => {
     if (
       question === 0 ||
       question === 1 ||
@@ -54,7 +53,7 @@ const Feedback = () => {
     },
     {
       name: application?.name || "",
-      href: `/planning-applications/${application?._id}`,
+      href: `/planning-applications/${application?.id}`,
     },
     {
       name: "Tell us what you think",
