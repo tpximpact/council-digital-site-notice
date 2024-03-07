@@ -6,6 +6,15 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
+      title: "Integrations",
+      name: "integrations",
+      type: "string",
+      initialValue: "manual",
+      options: {
+        list: ["manual", "openAPI", "uniform"],
+      },
+    }),
+    defineField({
       title: "Concern Url",
       name: "concernUrl",
       type: "string",

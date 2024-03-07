@@ -5,6 +5,7 @@ import {
   consultation,
   decision,
 } from "../structure/helper";
+import PopulateButton from "../../src/components/populate-button";
 
 export default defineType({
   title: "Planning application",
@@ -35,6 +36,15 @@ export default defineType({
       description: "Required",
       validation: (Rule: any) => Rule.required(),
       readOnly: false,
+    }),
+    defineField({
+      name: "populateApi",
+      title: "Auto populate from OpenData API",
+      type: "string",
+      // hidden: ({document}: any) => document?.datasource !== 'OpenData API',
+      components: {
+        input: PopulateButton,
+      },
     }),
     defineField({
       title: "Application Type",
