@@ -6,27 +6,26 @@ import { questions } from "../../../util/questionsInfo";
 import { descriptionDetail } from "../../../util/description-detail";
 import { addFeedback } from "../../../util/client";
 import { getLocalStorage } from "../../../util/helpLocalStorage";
+import { PersonalDetailsForm, CommentForm } from "../../../util/type";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
 function CheckAnswers() {
-  const {
-    onChangeQuestion,
-    selectedCheckbox,
-    commentForm,
-    setQuestion,
-    setSelectedCheckbox,
-    feelingForm,
-    setCommentForm,
-    contextCleaner,
-  } = useContext(ContextApplication);
+  const { onChangeQuestion, setQuestion, contextCleaner } =
+    useContext(ContextApplication);
   const [id, setId] = useState();
-  const [name, setName] = useState<string>();
-  const [address, setAddress] = useState<string>();
-  const [phone, setPhone] = useState<string>();
-  const [postCode, setPostCode] = useState<string>();
-  const [email, setEmail] = useState<string>();
-  const [consent, setConsent] = useState<boolean>(false);
+  const [personalDetailsForm, setPersonalDetailsForm] =
+    useState<PersonalDetailsForm>({
+      name: "",
+      address: "",
+      postcode: "",
+      email: "",
+      phone: "",
+      consent: false,
+    });
+  const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([]);
+  const [commentForm, setCommentForm] = useState<CommentForm>({});
+  const [feelingForm, setFeelingForm] = useState<string>("");
 
   useEffect(() => {
     const applicationStorage = getLocalStorage({
@@ -35,56 +34,30 @@ function CheckAnswers() {
     });
 
     setId(applicationStorage?.id);
-    const initialValueName = getLocalStorage({
-      key: "name",
-      defaultValue: name,
-    });
-    initialValueName?.id === applicationStorage?.id &&
-      setName(initialValueName?.value);
 
-    const initialValueAddress = getLocalStorage({
-      key: "address",
-      defaultValue: address,
+    const initialPersonalDetails = getLocalStorage({
+      key: "personalDetails",
+      defaultValue: personalDetailsForm,
     });
-    initialValueAddress?.id === applicationStorage?.id &&
-      setAddress(initialValueAddress?.value);
-
-    const initialValuePhone = getLocalStorage({
-      key: "phone",
-      defaultValue: phone,
-    });
-    initialValuePhone?.id === applicationStorage?.id &&
-      setPhone(initialValuePhone?.value);
-
-    const initialValuePostcode = getLocalStorage({
-      key: "postcode",
-      defaultValue: postCode,
-    });
-    initialValuePostcode?.id === applicationStorage?.id &&
-      setPostCode(initialValuePostcode?.value);
-
-    const initialValueEmail = getLocalStorage({
-      key: "email",
-      defaultValue: email,
-    });
-    initialValueEmail?.id === applicationStorage?.id &&
-      setEmail(initialValueEmail?.value);
-
-    const initialValueConsent = getLocalStorage({
-      key: "consent",
-      defaultValue: consent,
-    });
-    initialValueConsent?.id === applicationStorage?.id &&
-      setConsent(initialValueConsent?.value);
+    initialPersonalDetails?.id === applicationStorage?.id &&
+      setPersonalDetailsForm(initialPersonalDetails?.value);
 
     const initialValueComment = getLocalStorage({
       key: "comment",
-      defaultValue: {},
+      defaultValue: commentForm,
     });
+
+    const initialValueFeeling = getLocalStorage({
+      key: "feeling",
+      defaultValue: feelingForm,
+    });
+
+    initialValueFeeling?.id === applicationStorage?.id &&
+      setFeelingForm(initialValueFeeling?.value);
 
     initialValueComment?.id == applicationStorage?.id &&
       setCommentForm(initialValueComment?.value);
-  }, [address, consent, email, name, phone, postCode, setCommentForm]);
+  }, [commentForm, feelingForm, personalDetailsForm]);
 
   const onChangeQuestions = (label: number) => {
     const selected = selectedCheckbox?.filter((el: any) => el === label);
@@ -104,7 +77,7 @@ function CheckAnswers() {
     addFeedback({
       feelingForm,
       commentForm,
-      personalDetailsForm: { name, address, postCode, email, phone, consent },
+      personalDetailsForm,
     });
 
     let formId = crypto.randomUUID();
@@ -128,12 +101,7 @@ function CheckAnswers() {
       feeling: feelingForm,
       topics: JSON.stringify(topics),
       comment: JSON.stringify(comment),
-      name: name,
-      address: address,
-      postcode: postCode,
-      email: email,
-      phone: phone,
-      consent: consent,
+      ...personalDetailsForm,
     };
 
     try {
@@ -193,30 +161,30 @@ function CheckAnswers() {
       <h2 className="govuk-heading-m">Your Details</h2>
       <div className="wrap-answers">
         <h2 className="govuk-heading-s">Name</h2>
-        <p className="govuk-body">{name}</p>
+        <p className="govuk-body">{personalDetailsForm?.name}</p>
         <ButtonLink content="Change" onClick={() => setQuestion(11)} />
       </div>
       <div className="wrap-answers">
         <h2 className="govuk-heading-s">Address</h2>
-        <p className="govuk-body">{address}</p>
+        <p className="govuk-body">{personalDetailsForm?.address}</p>
         <ButtonLink content="Change" onClick={() => setQuestion(11)} />
       </div>
       <div className="wrap-answers">
         <h2 className="govuk-heading-s">Postcode</h2>
-        <p className="govuk-body">{postCode}</p>
+        <p className="govuk-body">{personalDetailsForm?.postcode}</p>
         <ButtonLink content="Change" onClick={() => setQuestion(11)} />
       </div>
-      {email && (
+      {personalDetailsForm?.email && (
         <div className="wrap-answers">
           <h2 className="govuk-heading-s">Email</h2>
-          <p className="govuk-body">{email}</p>
+          <p className="govuk-body">{personalDetailsForm?.email}</p>
           <ButtonLink content="Change" onClick={() => setQuestion(11)} />
         </div>
       )}
-      {phone && (
+      {personalDetailsForm?.phone && (
         <div className="wrap-answers">
           <h2 className="govuk-heading-s">Telephone number</h2>
-          <p className="govuk-body">{phone}</p>
+          <p className="govuk-body">{personalDetailsForm?.phone}</p>
           <ButtonLink content="Change" onClick={() => setQuestion(11)} />
         </div>
       )}
