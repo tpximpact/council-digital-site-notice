@@ -5,8 +5,6 @@ import Details from "@/components/details";
 import Validation from "@/components/validation";
 import { descriptionDetail } from "../../../util/description-detail";
 import { questions } from "../../../util/questionsInfo";
-import { useContext } from "react";
-import { ContextApplication } from "@/context";
 import { getLocalStorage } from "../../../util/helpLocalStorage";
 
 export const checkboxId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
@@ -60,6 +58,10 @@ const TopicsQuestion = ({
         ));
   };
 
+  function onNextPage() {
+    selectedCheckbox.length > 0 ? onChangeQuestion() : setIsError(true);
+  }
+
   return (
     <section>
       <BackLink content="Back" onClick={() => setQuestion(1)} />
@@ -87,9 +89,7 @@ const TopicsQuestion = ({
       <Button
         content="Next"
         className="button-topics-question"
-        onClick={() => {
-          selectedCheckbox.length > 0 ? onChangeQuestion() : setIsError(true);
-        }}
+        onClick={() => onNextPage()}
       />
     </section>
   );
