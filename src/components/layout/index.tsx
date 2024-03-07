@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { urlFor } from "../../../util/client";
 import GoogleAnalytics from "../google-analytics";
-import { healpLocalStorage } from "../../../util/localStorageHelper";
+import { getLocalStorage } from "../../../util/localStorageHelper";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isShowCookie, setIsShowCookie] = useState(true);
@@ -15,19 +15,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const enviroment = process.env.NEXT_PUBLIC_ENVIROMENT;
   useEffect(() => {
-    const getLocalStorageCookies = healpLocalStorage({
+    const getLocalStorageCookies = getLocalStorage({
       key: "cookies",
       defaultValue: isShowCookie,
     });
     setIsShowCookie(getLocalStorageCookies);
 
-    const getLocalStorageConsentCookies = healpLocalStorage({
+    const getLocalStorageConsentCookies = getLocalStorage({
       key: "consentCookies",
       defaultValue: isConsentCookie,
     });
     setIsConsentCookie(getLocalStorageConsentCookies);
 
-    const globalContent = healpLocalStorage({
+    const globalContent = getLocalStorage({
       key: "globalInfo",
       defaultValue: {},
     });
