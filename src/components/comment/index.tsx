@@ -8,8 +8,9 @@ import { getLocalStorage } from "../../../util/helpLocalStorage";
 import { CommentForm } from "../../../util/type";
 
 function CommentQuestion() {
-  const { onChangeQuestion, setQuestion, selectedCheckbox, question } =
+  const { onChangeQuestion, setQuestion, question } =
     useContext(ContextApplication);
+  const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([]);
   const [commentForm, setCommentForm] = useState<CommentForm>({});
   const [isError, setIsError] = useState(false);
   const [id, setId] = useState();
@@ -23,6 +24,10 @@ function CommentQuestion() {
       key: "comment",
       defaultValue: {},
     });
+    const selectedCheckboxStorage = getLocalStorage({
+      key: "impact",
+      defaultValue: {},
+    });
     const applicationStorage = getLocalStorage({
       key: "application",
       defaultValue: {},
@@ -30,7 +35,9 @@ function CommentQuestion() {
     setId(applicationStorage?.id);
     commentStorage?.id == applicationStorage?.id &&
       setCommentForm(commentStorage?.value);
-  }, [setCommentForm]);
+    selectedCheckboxStorage?.id == applicationStorage?.id &&
+      setSelectedCheckbox(selectedCheckboxStorage?.value);
+  }, []);
 
   const onComment = (value: any) => {
     setCommentForm({ ...commentForm, [question]: value });
