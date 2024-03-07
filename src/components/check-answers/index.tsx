@@ -5,7 +5,7 @@ import Details from "@/components/details";
 import { questions } from "../../../util/questionsInfo";
 import { descriptionDetail } from "../../../util/description-detail";
 import { addFeedback } from "../../../util/client";
-import { savefeedbackToGoogleSheet } from "../../../util/google";
+import { healpLocalStorage } from "../../../util/helpLocalStorage";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -14,61 +14,77 @@ function CheckAnswers() {
     onChangeQuestion,
     selectedCheckbox,
     commentForm,
-    personalDetailsForm,
     setQuestion,
     setSelectedCheckbox,
     feelingForm,
-    setPersonalDetailsForm,
     setCommentForm,
     contextCleaner,
   } = useContext(ContextApplication);
   const [id, setId] = useState();
+  const [name, setName] = useState<string>();
+  const [address, setAddress] = useState<string>();
+  const [phone, setPhone] = useState<string>();
+  const [postCode, setPostCode] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [consent, setConsent] = useState<boolean>(false);
 
   useEffect(() => {
-    const initialValueName = localStorage.getItem("name") || "{}";
-    const initialValueEmail = localStorage.getItem("email") || "{}";
-    const initialValuePhone = localStorage.getItem("phone") || "{}";
-    const initialValuePostcode = localStorage.getItem("postcode") || "{}";
-    const initialValueConsent = localStorage.getItem("consent") || "{}";
-    const initialValueAddress = localStorage.getItem("address") || "{}";
-    const initialValueComment = localStorage.getItem("comment") || "{}";
-
-    const applicationStorage = localStorage.getItem("application") || "{}";
-    const applicationIdStorage = JSON.parse(applicationStorage).id;
-    setId(applicationIdStorage);
-
-    setPersonalDetailsForm({
-      name:
-        JSON.parse(initialValueName).id === applicationIdStorage
-          ? JSON.parse(initialValueName).value
-          : "",
-      address:
-        JSON.parse(initialValueAddress).id == applicationIdStorage
-          ? JSON.parse(initialValueAddress).value
-          : "",
-      email:
-        JSON.parse(initialValueEmail).id == applicationIdStorage
-          ? JSON.parse(initialValueEmail).value
-          : "",
-      phone:
-        JSON.parse(initialValuePhone).id == applicationIdStorage
-          ? JSON.parse(initialValuePhone).value
-          : "",
-      postcode:
-        JSON.parse(initialValuePostcode).id === applicationIdStorage
-          ? JSON.parse(initialValuePostcode).value
-          : "",
-      consent:
-        JSON.parse(initialValueConsent).id === applicationIdStorage
-          ? JSON.parse(initialValueConsent).value
-          : "",
+    const applicationStorage = healpLocalStorage({
+      key: "application",
+      defaultValue: {},
     });
-    if (
-      initialValueComment !== null &&
-      JSON.parse(initialValueComment).id == applicationIdStorage
-    )
-      setCommentForm(JSON.parse(initialValueComment).value);
-  }, [personalDetailsForm?.consent, setCommentForm, setPersonalDetailsForm]);
+
+    setId(applicationStorage?.id);
+    const initialValueName = healpLocalStorage({
+      key: "name",
+      defaultValue: name,
+    });
+    initialValueName?.id === applicationStorage?.id &&
+      setName(initialValueName?.value);
+
+    const initialValueAddress = healpLocalStorage({
+      key: "address",
+      defaultValue: address,
+    });
+    initialValueAddress?.id === applicationStorage?.id &&
+      setAddress(initialValueAddress?.value);
+
+    const initialValuePhone = healpLocalStorage({
+      key: "phone",
+      defaultValue: phone,
+    });
+    initialValuePhone?.id === applicationStorage?.id &&
+      setPhone(initialValuePhone?.value);
+
+    const initialValuePostcode = healpLocalStorage({
+      key: "postcode",
+      defaultValue: postCode,
+    });
+    initialValuePostcode?.id === applicationStorage?.id &&
+      setPostCode(initialValuePostcode?.value);
+
+    const initialValueEmail = healpLocalStorage({
+      key: "email",
+      defaultValue: email,
+    });
+    initialValueEmail?.id === applicationStorage?.id &&
+      setEmail(initialValueEmail?.value);
+
+    const initialValueConsent = healpLocalStorage({
+      key: "consent",
+      defaultValue: consent,
+    });
+    initialValueConsent?.id === applicationStorage?.id &&
+      setConsent(initialValueConsent?.value);
+
+    const initialValueComment = healpLocalStorage({
+      key: "comment",
+      defaultValue: {},
+    });
+
+    initialValueComment?.id == applicationStorage?.id &&
+      setCommentForm(initialValueComment?.value);
+  }, [address, consent, email, name, phone, postCode, setCommentForm]);
 
   const onChangeQuestions = (label: number) => {
     const selected = selectedCheckbox?.filter((el: any) => el === label);
@@ -85,7 +101,11 @@ function CheckAnswers() {
   };
 
   const submit = async () => {
-    addFeedback({ feelingForm, commentForm, personalDetailsForm });
+    addFeedback({
+      feelingForm,
+      commentForm,
+      personalDetailsForm: { name, address, postCode, email, phone, consent },
+    });
 
     let formId = crypto.randomUUID();
     localStorage.setItem("formId", formId);
@@ -97,20 +117,23 @@ function CheckAnswers() {
       topics.push(questions[el]);
       comment = { ...comment, [questions[el]]: commentForm[el] };
     });
-    const application = localStorage.getItem("application");
-    const applicationNumber = JSON.parse(application || "{}").applicationNumber;
+    const application = healpLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+    const applicationNumber = application?.applicationNumber;
     let data = {
       id: formId,
       applicationNumber: applicationNumber,
       feeling: feelingForm,
       topics: JSON.stringify(topics),
       comment: JSON.stringify(comment),
-      name: personalDetailsForm.name,
-      address: personalDetailsForm.address,
-      postcode: personalDetailsForm.postcode,
-      email: personalDetailsForm.email,
-      phone: personalDetailsForm.phone,
-      consent: personalDetailsForm.consent,
+      name: name,
+      address: address,
+      postcode: postCode,
+      email: email,
+      phone: phone,
+      consent: consent,
     };
 
     try {
@@ -170,30 +193,30 @@ function CheckAnswers() {
       <h2 className="govuk-heading-m">Your Details</h2>
       <div className="wrap-answers">
         <h2 className="govuk-heading-s">Name</h2>
-        <p className="govuk-body">{personalDetailsForm?.name}</p>
+        <p className="govuk-body">{name}</p>
         <ButtonLink content="Change" onClick={() => setQuestion(11)} />
       </div>
       <div className="wrap-answers">
         <h2 className="govuk-heading-s">Address</h2>
-        <p className="govuk-body">{personalDetailsForm?.address}</p>
+        <p className="govuk-body">{address}</p>
         <ButtonLink content="Change" onClick={() => setQuestion(11)} />
       </div>
       <div className="wrap-answers">
         <h2 className="govuk-heading-s">Postcode</h2>
-        <p className="govuk-body">{personalDetailsForm?.postcode}</p>
+        <p className="govuk-body">{postCode}</p>
         <ButtonLink content="Change" onClick={() => setQuestion(11)} />
       </div>
-      {personalDetailsForm?.email && (
+      {email && (
         <div className="wrap-answers">
           <h2 className="govuk-heading-s">Email</h2>
-          <p className="govuk-body">{personalDetailsForm?.email}</p>
+          <p className="govuk-body">{email}</p>
           <ButtonLink content="Change" onClick={() => setQuestion(11)} />
         </div>
       )}
-      {personalDetailsForm?.phone && (
+      {phone && (
         <div className="wrap-answers">
           <h2 className="govuk-heading-s">Telephone number</h2>
-          <p className="govuk-body">{personalDetailsForm?.phone}</p>
+          <p className="govuk-body">{phone}</p>
           <ButtonLink content="Change" onClick={() => setQuestion(11)} />
         </div>
       )}

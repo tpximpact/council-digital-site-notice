@@ -4,16 +4,13 @@ import TextArea from "@/components/text-area";
 import Validation from "@/components/validation";
 import { Button, BackLink } from "@/components/button";
 import { questions } from "../../../util/questionsInfo";
+import { healpLocalStorage } from "../../../util/helpLocalStorage";
+import { CommentForm } from "../../../util/type";
 
 function CommentQuestion() {
-  const {
-    onChangeQuestion,
-    commentForm,
-    setCommentForm,
-    setQuestion,
-    selectedCheckbox,
-    question,
-  } = useContext(ContextApplication);
+  const { onChangeQuestion, setQuestion, selectedCheckbox, question } =
+    useContext(ContextApplication);
+  const [commentForm, setCommentForm] = useState<CommentForm>({});
   const [isError, setIsError] = useState(false);
   const [id, setId] = useState();
   const indexComponent = selectedCheckbox?.indexOf(question);
@@ -22,15 +19,17 @@ function CommentQuestion() {
   const label = questions[question];
 
   useEffect(() => {
-    const initialValue = localStorage.getItem("comment") || "{}";
-    const applicationStorage = localStorage.getItem("application") || "{}";
-    const applicationIdStorage = JSON.parse(applicationStorage).id;
-    setId(applicationIdStorage);
-    if (initialValue !== "" && initialValue !== null) {
-      JSON.parse(initialValue).id === applicationIdStorage
-        ? setCommentForm(JSON.parse(initialValue).value)
-        : setCommentForm({});
-    }
+    const commentStorage = healpLocalStorage({
+      key: "comment",
+      defaultValue: {},
+    });
+    const applicationStorage = healpLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+    setId(applicationStorage?.id);
+    commentStorage?.id == applicationStorage?.id &&
+      setCommentForm(commentStorage?.value);
   }, [setCommentForm]);
 
   const onComment = (value: any) => {

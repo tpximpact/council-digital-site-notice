@@ -1,13 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
 const Banner = () => {
-  const [feedbackUrl, setFeedbackUrl] = useState("");
-  useEffect(() => {
-    const globalInfo = localStorage.getItem("globalInfo");
+  const { globalInfo } = useContext(ContextApplication);
+  const feedbackUrl = globalInfo?.feedbackUrl;
 
-    if (globalInfo !== null && globalInfo !== "undefined") {
-      setFeedbackUrl(JSON.parse(globalInfo)?.feedbackUrl);
-    }
-  }, []);
   return (
     <div className={feedbackUrl && `govuk-phase-banner`}>
       {" "}
