@@ -40,7 +40,6 @@ function CommentQuestion({
     setId(applicationStorage?.id);
     commentStorage?.id == applicationStorage?.id &&
       setCommentForm(commentStorage?.value);
-
     selectedCheckboxStorage?.id == applicationStorage?.id &&
       setSelectedCheckbox(selectedCheckboxStorage?.value);
   }, []);
@@ -56,6 +55,15 @@ function CommentQuestion({
       : setIsError(true);
   };
 
+  function onNextPage() {
+    if (commentForm[question] !== undefined && commentForm[question] !== "") {
+      setIsError(false);
+      onChangeQuestion();
+    } else {
+      setIsError(true);
+    }
+  }
+
   return (
     <section>
       <BackLink content="Back" onClick={() => setQuestion(backComponent)} />
@@ -68,14 +76,7 @@ function CommentQuestion({
       />
 
       {isError && <Validation message="Please leave a comment" />}
-      <Button
-        content="Next"
-        onClick={() => {
-          commentForm[question] !== undefined && commentForm[question] !== ""
-            ? onChangeQuestion()
-            : setIsError(true);
-        }}
-      />
+      <Button content="Next" onClick={() => onNextPage()} />
     </section>
   );
 }
