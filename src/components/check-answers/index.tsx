@@ -50,10 +50,17 @@ function CheckAnswers({
       defaultValue: {},
     });
 
+    const initialValueCheckbox = getLocalStorage({
+      key: "topics",
+      defaultValue: {},
+    });
+
     const initialValueFeeling = getLocalStorage({
       key: "feeling",
       defaultValue: {},
     });
+    initialValueCheckbox?.id === applicationStorage?.id &&
+      setSelectedCheckbox(initialValueCheckbox?.value);
 
     initialValueFeeling?.id === applicationStorage?.id &&
       setFeelingForm(initialValueFeeling?.value);
@@ -128,8 +135,6 @@ function CheckAnswers({
         localStorage.removeItem("email");
         localStorage.removeItem("phone");
         localStorage.removeItem("consent");
-
-        // contextCleaner();
       } else {
         console.log("Error fetching data");
       }
