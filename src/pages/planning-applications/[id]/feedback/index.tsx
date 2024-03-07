@@ -3,24 +3,21 @@ import { ContextApplication } from "@/context";
 import Breadcrumbs from "@/components/breadcrumbs";
 import Instructions from "./instructions";
 import Questions from "../../../../components/questions";
+import { healpLocalStorage } from "../../../../../util/helpLocalStorage";
 
 const Feedback = () => {
-  const { dataApplication, question } = useContext(ContextApplication);
+  const { question } = useContext(ContextApplication);
   const [id, setId] = useState("");
   const [name, setName] = useState("");
 
   useEffect(() => {
-    const getStorage = localStorage.getItem("application");
-    if (Object.keys(dataApplication).length > 0 || getStorage === null) {
-      const { name, _id, address } = dataApplication;
-      setName(name || address);
-      setId(_id);
-    } else {
-      const { name, id } = JSON.parse(getStorage);
-      setName(name);
-      setId(id);
-    }
-  }, [dataApplication]);
+    const getStorage = healpLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+    setName(getStorage?.name);
+    setId(getStorage?.id);
+  }, []);
 
   const breadcrumbs_array = [
     {
@@ -39,9 +36,7 @@ const Feedback = () => {
   return (
     <>
       <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
-      {question !== 0 && question !== 13 && (
-        <Instructions data={dataApplication} />
-      )}
+      {question !== 0 && question !== 13 && <Instructions />}
       <Questions question={question} />
     </>
   );
