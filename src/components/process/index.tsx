@@ -32,7 +32,7 @@ const applicationStageMessage = (stage: string, status: string) => {
 
   const decision: { [key: string]: string } = {
     approved: "This planning application has been approved.",
-    decision:
+    "pending approval":
       "This planning application has been approved pending legal confirmation.",
     rejected: "This planning application has been rejected.",
   };
