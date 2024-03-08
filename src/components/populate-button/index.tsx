@@ -4,6 +4,7 @@ import { getGlobalContent } from "../../../util/client";
 
 export default function PopulateButton(props) {
   const [integrationMethod, setIntegrationMethod] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
 
   useEffect(() => {
     const fetchGlobalContent = async () => {
@@ -28,11 +29,17 @@ export default function PopulateButton(props) {
 
   const applicationNumber = useFormValue(["applicationNumber"]);
   const handlePopulate = async () => {
+    setFetchError(false);
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL!}.json?$where=application_number='${applicationNumber}'`,
       );
       const data = await response.json();
+
+      if (data.length === 0) {
+        setFetchError(true);
+        return;
+      }
       // populate a form fields called application_type
       patch.execute([
         { set: { applicationType: data[0].application_type } },
@@ -40,11 +47,17 @@ export default function PopulateButton(props) {
       ]);
     } catch (error) {
       console.error("ERROR", error);
+      setFetchError(true);
     }
   };
   if (typeof integrationMethod === "string" && integrationMethod == "openAPI") {
     return (
       <div>
+        {fetchError && (
+          <div style={{ color: "red" }}>
+            Could not fetch the data. Please check the application ID.
+          </div>
+        )}
         <button type="button" onClick={handlePopulate}>
           Fetch now
         </button>
