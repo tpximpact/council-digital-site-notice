@@ -9,9 +9,13 @@ export default defineType({
       title: "Integrations",
       name: "integrations",
       type: "string",
-      initialValue: "manual",
       options: {
-        list: ["manual", "openAPI", "uniform"],
+        list: [
+          { title: "Manual", value: "manual" },
+          { title: "Open API", value: "openAPI" },
+        ],
+        layout: "radio",
+        direction: "vertical",
       },
     }),
     defineField({
@@ -73,4 +77,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
   ],
+  initialValue: {
+    integrations: "manual",
+  },
 });

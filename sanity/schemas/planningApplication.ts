@@ -39,12 +39,12 @@ export default defineType({
     }),
     defineField({
       name: "populateApi",
-      title: "Auto populate from OpenData API",
+      title: "Integrations",
       type: "string",
-      // hidden: ({document}: any) => document?.datasource !== 'OpenData API',
       components: {
         input: PopulateButton,
       },
+      description: "Fetch data from the selected integration.",
     }),
     defineField({
       title: "Application Type",

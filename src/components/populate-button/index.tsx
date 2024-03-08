@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useFormValue, useDocumentOperation, set } from "sanity";
+import { useFormValue, useDocumentOperation } from "sanity";
 import { getGlobalContent } from "../../../util/client";
 
 export default function PopulateButton() {
-  const [integrationMethod, setIntegrationMethod] = useState(false);
+  const [integrationMethod, setIntegrationMethod] = useState("");
   const [fetchStatus, setFetchStatus] = useState("idle");
 
   useEffect(() => {
@@ -13,6 +13,7 @@ export default function PopulateButton() {
         setIntegrationMethod(globalContent.integrations);
       } catch (error) {
         console.error("Error fetching global content", error);
+        setIntegrationMethod("manual");
       }
     };
 
@@ -41,6 +42,7 @@ export default function PopulateButton() {
         setFetchStatus("error");
         return;
       }
+
       // Populate form fields
       patch.execute([
         { set: { applicationType: data[0].application_type } },
@@ -66,23 +68,33 @@ export default function PopulateButton() {
     }
   };
 
-  if (typeof integrationMethod === "string" && integrationMethod == "openAPI") {
-    return (
-      <div>
-        {fetchStatus === "error" && (
-          <div style={{ color: "red" }}>
-            Could not fetch the data. Please check the application number.
-          </div>
-        )}
-        {fetchStatus === "success" && (
-          <div style={{ color: "green" }}>Data fetched successfully!</div>
-        )}
+  const integrationOptions: Record<string, string> = {
+    manual: "Manual",
+    openAPI: "Open API",
+  };
+
+  const buttonText =
+    integrationMethod !== "manual"
+      ? `Fetch from ${integrationOptions[integrationMethod]}`
+      : "";
+
+  return (
+    <div>
+      {integrationMethod === "manual" ? (
+        <p>No integration detected. Manual data entry is required.</p>
+      ) : (
         <button type="button" onClick={handlePopulate}>
-          Fetch now
+          {buttonText}
         </button>
-      </div>
-    );
-  } else {
-    return null;
-  }
+      )}
+      {fetchStatus === "error" && (
+        <div style={{ color: "red" }}>
+          Could not fetch the data. Please check the application number.
+        </div>
+      )}
+      {fetchStatus === "success" && (
+        <div style={{ color: "green" }}>Data fetched successfully!</div>
+      )}
+    </div>
+  );
 }
