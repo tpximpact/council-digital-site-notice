@@ -29,6 +29,14 @@ export default defineType({
         "Optional - When set to true will show on the website. Will be hidden if false.",
     }),
     defineField({
+      title: "Planning Id",
+      name: "planningId",
+      type: "string",
+      description:
+        "Required for old id links - This is the id from internal systems and can be used to link to the planning application url",
+      readOnly: false,
+    }),
+    defineField({
       title: "Application number",
       name: "applicationNumber",
       type: "string",
