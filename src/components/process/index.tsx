@@ -105,12 +105,14 @@ function Process({
           >
             <span>{singleApplicationStatus?.toUpperCase()}</span>
           </p>
-          {data?.enableComments && parseFloat(commentDeadline) > 0 && (
-            <p className="govuk-body application-days">
-              {commentDeadline}{" "}
-              {parseFloat(commentDeadline) > 1 ? "days" : "day"} left
-            </p>
-          )}
+          {data?.enableComments &&
+            parseFloat(commentDeadline) > 0 &&
+            data?.applicationStage?.stage == "Consultation" && (
+              <p className="govuk-body application-days">
+                {commentDeadline}{" "}
+                {parseFloat(commentDeadline) > 1 ? "days" : "day"} left
+              </p>
+            )}
 
           <p className="govuk-body">
             {applicationStageMessage(
