@@ -41,11 +41,22 @@ export default function PopulateButton() {
         setFetchStatus("error");
         return;
       }
-
       // Populate form fields
       patch.execute([
         { set: { applicationType: data[0].application_type } },
+        { set: { name: data[0].name } },
         { set: { address: data[0].development_address } },
+        { set: { description: data[0].development_description } },
+        {
+          set: {
+            location: { lng: +data[0].longitude, lat: +data[0].latitude },
+          },
+        },
+        {
+          set: {
+            applicationDocumentsUrl: `http://camdocs.camden.gov.uk/HPRMWebDrawer/PlanRec?q=recContainer:%22${applicationNumber}%22`,
+          },
+        },
       ]);
 
       setFetchStatus("success");
