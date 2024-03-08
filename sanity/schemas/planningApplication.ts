@@ -121,7 +121,9 @@ export default defineType({
               type: "string",
               options: {
                 list: consultation,
+                layout: "radio",
               },
+              initialValue: consultation[0],
               hidden: ({ document }: any) =>
                 document?.applicationStage?.stage !== "Consultation",
             },
@@ -131,7 +133,9 @@ export default defineType({
               type: "string",
               options: {
                 list: assessment,
+                layout: "radio",
               },
+              initialValue: assessment[0],
               hidden: ({ document }: any) =>
                 document?.applicationStage?.stage !== "Assessment",
             },
@@ -141,7 +145,9 @@ export default defineType({
               type: "string",
               options: {
                 list: decision,
+                layout: "radio",
               },
+              initialValue: decision[0],
               hidden: ({ document }: any) =>
                 document?.applicationStage?.stage !== "Decision",
             },
@@ -151,7 +157,9 @@ export default defineType({
               type: "string",
               options: {
                 list: appeal,
+                layout: "radio",
               },
+              initialValue: appeal[0],
               hidden: ({ document }: any) =>
                 document?.applicationStage?.stage !== "Appeal",
             },
