@@ -57,6 +57,7 @@ export default function PopulateButton() {
             applicationDocumentsUrl: `http://camdocs.camden.gov.uk/HPRMWebDrawer/PlanRec?q=recContainer:%22${applicationNumber}%22`,
           },
         },
+        { set: { primaryKey: data[0].pk } },
       ]);
 
       setFetchStatus("success");
