@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [favicon, setFavicon] = useState("");
   const [ga, setGa] = useState("");
 
-  const enviroment = process.env.NEXT_PUBLIC_ENVIROMENT;
+  const environment = process.env.NEXT_PUBLIC_ENVIRONMENT;
   useEffect(() => {
     const getLocalStorageCookies = getLocalStorage({
       key: "cookies",
@@ -52,7 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }}
         />
       )}
-      {isConsentCookie && enviroment !== "development" && ga && (
+      {isConsentCookie && environment !== "development" && ga && (
         <GoogleAnalytics gaId={ga} />
       )}
       <Header />
