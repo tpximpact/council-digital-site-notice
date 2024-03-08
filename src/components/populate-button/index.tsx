@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useFormValue, useDocumentOperation, set } from "sanity";
 import { getGlobalContent } from "../../../util/client";
 
-export default function PopulateButton(props) {
+export default function PopulateButton() {
   const [integrationMethod, setIntegrationMethod] = useState(false);
-  const [fetchError, setFetchError] = useState(false);
+  const [fetchStatus, setFetchStatus] = useState("idle");
 
   useEffect(() => {
     const fetchGlobalContent = async () => {
@@ -13,12 +13,12 @@ export default function PopulateButton(props) {
         setIntegrationMethod(globalContent.integrations);
       } catch (error) {
         console.error("Error fetching global content", error);
-      } finally {
       }
     };
 
     fetchGlobalContent();
   }, []);
+
   const formId = useFormValue(["_id"]);
   const docId =
     typeof formId === "string" ? formId.replace("drafts.", "") : formId;
@@ -28,8 +28,9 @@ export default function PopulateButton(props) {
   );
 
   const applicationNumber = useFormValue(["applicationNumber"]);
+
   const handlePopulate = async () => {
-    setFetchError(false);
+    setFetchStatus("idle");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL!}.json?$where=application_number='${applicationNumber}'`,
@@ -37,26 +38,33 @@ export default function PopulateButton(props) {
       const data = await response.json();
 
       if (data.length === 0) {
-        setFetchError(true);
+        setFetchStatus("error");
         return;
       }
-      // populate a form fields called application_type
+
+      // Populate form fields
       patch.execute([
         { set: { applicationType: data[0].application_type } },
         { set: { address: data[0].development_address } },
       ]);
+
+      setFetchStatus("success");
     } catch (error) {
       console.error("ERROR", error);
-      setFetchError(true);
+      setFetchStatus("error");
     }
   };
+
   if (typeof integrationMethod === "string" && integrationMethod == "openAPI") {
     return (
       <div>
-        {fetchError && (
+        {fetchStatus === "error" && (
           <div style={{ color: "red" }}>
-            Could not fetch the data. Please check the application ID.
+            Could not fetch the data. Please check the application number.
           </div>
+        )}
+        {fetchStatus === "success" && (
+          <div style={{ color: "green" }}>Data fetched successfully!</div>
         )}
         <button type="button" onClick={handlePopulate}>
           Fetch now
