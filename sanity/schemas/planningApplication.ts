@@ -60,8 +60,7 @@ export default defineType({
       title: "Address",
       name: "address",
       type: "string",
-      description: "Required",
-      validation: (Rule: any) => Rule.required(),
+      description: "Optional",
     }),
     defineField({
       title: "Application Updates Url",
