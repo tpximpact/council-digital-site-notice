@@ -47,12 +47,6 @@ export default defineType({
       },
     }),
     defineField({
-      name: "primaryKey",
-      title: "Primary Key",
-      type: "string",
-      description: "Optional",
-    }),
-    defineField({
       title: "Application Type",
       name: "applicationType",
       type: "string",
