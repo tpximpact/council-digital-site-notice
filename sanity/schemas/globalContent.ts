@@ -12,7 +12,7 @@ export default defineType({
       options: {
         list: [
           { title: "Manual", value: "manual" },
-          { title: "Open API", value: "openAPI" },
+          { title: "OpenAPI", value: "openAPI" },
         ],
         layout: "radio",
         direction: "vertical",

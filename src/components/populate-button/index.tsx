@@ -67,15 +67,11 @@ export default function PopulateButton() {
       setFetchStatus("error");
     }
   };
-
-  const integrationOptions: Record<string, string> = {
-    manual: "Manual",
-    openAPI: "Open API",
-  };
-
   const buttonText =
     integrationMethod !== "manual"
-      ? `Fetch from ${integrationOptions[integrationMethod]}`
+      ? `Fetch from ${
+          integrationMethod.charAt(0).toUpperCase() + integrationMethod.slice(1)
+        }`
       : "";
 
   return (
