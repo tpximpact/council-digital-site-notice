@@ -11,7 +11,7 @@ const aplicationStageStyle = (value: string) => {
     "pending approval": "approved-status",
     refused: "rejected-status",
     successful: "approved-status",
-    unsuccessful: "refected-status",
+    unsuccessful: "rejected-status",
   };
 
   return style[value?.toLowerCase()] || "default-status";
@@ -42,7 +42,7 @@ const applicationStageMessage = (stage: string, status: string) => {
       "An appeal has been lodged to try to change the decision about this application.",
     successful:
       "The initial decision has been overturned in appeal, and the application is now approved.",
-    unsucessful:
+    unsuccessful:
       "The initial decision has been upheld in appeal, and the application is still rejected.",
   };
 
