@@ -13,7 +13,6 @@ import { Button } from "@/components/button";
 import { ArrowIcon } from "../../public/assets/icons";
 import Link from "next/link";
 import { getLocationFromPostcode } from "../../util/geolocation";
-import { getGlobalContent } from "../../util/client";
 import { getDistance, convertDistance } from "geolib";
 
 export const itemsPerPage = 6;
@@ -29,8 +28,8 @@ export async function getStaticProps() {
   };
 }
 
-const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
-  const { setGlobalInfo } = useContext(ContextApplication);
+const Home = ({ data, resultsTotal }: PaginationType) => {
+  const { globalConfig } = useContext(ContextApplication);
   const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
   const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
@@ -38,9 +37,7 @@ const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
 
   useEffect(() => {
     setDisplayData(data as Data[]);
-    setGlobalInfo(globalContent);
-    localStorage.setItem("globalInfo", JSON.stringify(globalContent));
-  }, [data, globalContent, setGlobalInfo]);
+  }, [data]);
 
   const pageCount = Math.ceil(resultsTotal / itemsPerPage);
 
@@ -51,7 +48,8 @@ const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
       newTotalPagecount >= itemsPerPage ? itemsPerPage : newTotalPagecount;
 
     const newData = await dataClient.getAllSiteNotices(totalPage, newOffset);
-    setDisplayData(newData.results as Data[]);
+    console.log(newData.results);
+    setDisplayData(newData?.results as Data[]);
   };
 
   // this needs to be refactored once data is held in Sanity
@@ -111,7 +109,7 @@ const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
       </h1>
       <p className="govuk-body-m">
         Find, review and leave your comments on planning applications in{" "}
-        {globalContent?.councilName}
+        {globalConfig?.councilName}
       </p>
       <section className="search-grid">
         <Input
@@ -128,12 +126,12 @@ const Home = ({ data, globalContent, resultsTotal }: PaginationType) => {
           icon={<ArrowIcon />}
           onClick={() => onSearchPostCode()}
         />
-        {globalContent?.signUpUrl && (
+        {globalConfig?.signUpUrl && (
           <Link
             className="govuk-button grid-button-signup govuk-button--secondary"
             target="_blank"
             style={{ textDecoration: "none" }}
-            href={`${globalContent?.signUpUrl}`}
+            href={`${globalConfig?.signUpUrl}`}
           >
             Sign up for alerts on applications near you
           </Link>

@@ -17,19 +17,30 @@ import {
   phoneValidation,
   postcodeValidation,
 } from "../../../util/feedbackHelper";
+import { PersonalDetailsForm } from "../../../util/type";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
 
-const PersonalDetails = () => {
-  const {
-    onChangeQuestion,
-    setQuestion,
-    selectedCheckbox,
-    personalDetailsForm,
-    setPersonalDetailsForm,
-    globalInfo,
-  } = useContext(ContextApplication);
+const PersonalDetails = ({
+  onChangeQuestion,
+  setQuestion,
+}: {
+  onChangeQuestion: () => void;
+  setQuestion: (value: number) => void;
+}) => {
+  const { globalConfig } = useContext(ContextApplication);
   const [isError, setIsError] = useState<boolean>(false);
   const [id, setId] = useState();
-  const [councilName, setCouncilName] = useState();
+  const [personalDetailsForm, setPersonalDetailsForm] =
+    useState<PersonalDetailsForm>({
+      name: "",
+      address: "",
+      postcode: "",
+      email: "",
+      phone: "",
+      consent: false,
+    });
+  const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([]);
+
   const [isNameError, setIsNameErros] = useState<boolean>(false);
   const [isAddressError, setIsAddressErros] = useState<boolean>(false);
   const [isPostcodeError, setIsPostcodeErros] = useState<boolean>(false);
@@ -46,58 +57,33 @@ const PersonalDetails = () => {
     selectedCheckbox && selectedCheckbox[selectedCheckbox?.length - 1];
 
   useEffect(() => {
-    const initialGlobalValue = localStorage.getItem("globalInfo");
-    const applicationStorage = localStorage.getItem("application") || "{}";
-    const applicationIdStorage = JSON.parse(applicationStorage).id;
-    setId(applicationIdStorage);
-
-    if (initialGlobalValue !== null && initialGlobalValue !== "undefined") {
-      setCouncilName(JSON.parse(initialGlobalValue).councilName);
-    } else {
-      setCouncilName(globalInfo?.councilName);
-    }
-
-    const initialValueName = JSON.parse(localStorage.getItem("name") || "{}");
-    const initialValueAddress = localStorage.getItem("address") || "{}";
-    const initialValueEmail = localStorage.getItem("email") || "{}";
-    const initialValuePhone = localStorage.getItem("phone") || "{}";
-    const initialValuePostcode = localStorage.getItem("postcode") || "{}";
-    const consentStorageValue = localStorage.getItem("consent") || "{}";
-    let initialValueConsent = false;
-    if (
-      consentStorageValue !== null &&
-      JSON.parse(consentStorageValue).id == applicationIdStorage
-    )
-      initialValueConsent = JSON.parse(consentStorageValue).value || false;
-
-    setPersonalDetailsForm({
-      name:
-        initialValueName.id == applicationIdStorage
-          ? initialValueName.value
-          : "",
-      address:
-        JSON.parse(initialValueAddress).id == applicationIdStorage
-          ? JSON.parse(initialValueAddress).value
-          : "",
-      email:
-        JSON.parse(initialValueEmail).id == applicationIdStorage
-          ? JSON.parse(initialValueEmail).value
-          : "",
-      phone:
-        JSON.parse(initialValuePhone).id == applicationIdStorage
-          ? JSON.parse(initialValuePhone).value
-          : "",
-      postcode:
-        JSON.parse(initialValuePostcode).id == applicationIdStorage
-          ? JSON.parse(initialValuePostcode).value
-          : "",
-      consent: initialValueConsent,
+    const applicationStorage = getLocalStorage({
+      key: "application",
+      defaultValue: {},
     });
-  }, [globalInfo?.councilName, setPersonalDetailsForm]);
+    setId(applicationStorage?._id);
+
+    const personalDetailsStorage = getLocalStorage({
+      key: "personalDetails",
+      defaultValue: {},
+    });
+    personalDetailsStorage?.id === applicationStorage?._id &&
+      setPersonalDetailsForm(personalDetailsStorage?.value);
+
+    const selectedCheckboxStorage = getLocalStorage({
+      key: "topics",
+      defaultValue: {},
+    });
+    selectedCheckboxStorage?.id === applicationStorage?._id &&
+      setSelectedCheckbox(selectedCheckboxStorage?.value);
+  }, []);
 
   const onChangeDetails = (value: any, key: string) => {
     setPersonalDetailsForm({ ...personalDetailsForm, [key]: value });
-    localStorage.setItem(key, JSON.stringify({ id, value }));
+    localStorage.setItem(
+      "personalDetails",
+      JSON.stringify({ id, value: { ...personalDetailsForm, [key]: value } }),
+    );
   };
 
   const nextPage = () => {
@@ -117,7 +103,7 @@ const PersonalDetails = () => {
         ? setIsAddressErros(true)
         : setIsAddressErros(false);
       setGeneralMessage(messageError(personalDetailsForm));
-      !postcodeValidation(personalDetailsForm?.postcode)
+      !postcodeValidation(personalDetailsForm.postcode)
         ? setIsPostcodeErros(true)
         : setIsPostcodeErros(false);
       setInvalidPostcodeMessage(postcodeMessageError(personalDetailsForm));
@@ -186,7 +172,7 @@ const PersonalDetails = () => {
       <div>
         <Checkbox
           labelClass="consent-label"
-          label={`I consent to ${councilName} Council using my data for the purposes of assessing this planning application`}
+          label={`I consent to ${globalConfig?.councilName} Council using my data for the purposes of assessing this planning application`}
           isError={isConsentError}
           messageError="You need to consent"
           id="consent"

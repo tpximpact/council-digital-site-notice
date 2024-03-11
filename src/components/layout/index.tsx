@@ -3,24 +3,32 @@ import Banner from "../banner";
 import CookiesBanner from "@/components/cookies";
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { urlFor } from "../../../util/client";
-import { getGlobalContent } from "../../../util/client";
+import { urlFor, getGlobalContent } from "../../../util/client";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
 
 const globalContent = await getGlobalContent();
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [isShowCookie, setIsShowCookie] = useState(true);
-  const [favicon, setFavicon] = useState("");
+  const { setGlobalConfig } = useContext(ContextApplication);
+  const [isShowCookie, setIsShowCookie] = useState<boolean>(true);
+
+  const favicon =
+    globalContent.favicon == null || globalContent.favicon == undefined
+      ? "/favicon_default.ico"
+      : urlFor(globalContent.favicon)?.url();
+
   useEffect(() => {
-    const getLocalStorageCookies = localStorage.getItem("cookies");
-    const { favicon } = globalContent;
-    favicon == null || favicon == undefined
-      ? setFavicon("/favicon_default.ico")
-      : setFavicon(urlFor(favicon)?.url());
-    if (getLocalStorageCookies !== null) {
-      setIsShowCookie(JSON.parse(getLocalStorageCookies));
-    }
-  }, []);
+    const getLocalStorageCookies = getLocalStorage({
+      key: "cookies",
+      defaultValue: false,
+    });
+    setIsShowCookie(getLocalStorageCookies);
+
+    setGlobalConfig(globalContent);
+  }, [setGlobalConfig]);
+
   return (
     <main>
       {isShowCookie && (

@@ -1,26 +1,50 @@
-import { useEffect, useState, useContext } from "react";
-import { ContextApplication } from "@/context";
+import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/breadcrumbs";
 import Instructions from "./instructions";
 import Questions from "../../../../components/questions";
+import { getLocalStorage } from "../../../../../util/helpLocalStorage";
+import { Data } from "../../../../../util/type";
 
 const Feedback = () => {
-  const { dataApplication, question } = useContext(ContextApplication);
-  const [id, setId] = useState("");
-  const [name, setName] = useState("");
+  const [application, setApplication] = useState<Data>();
+  const [question, setQuestion] = useState<number>(0);
 
   useEffect(() => {
-    const getStorage = localStorage.getItem("application");
-    if (Object.keys(dataApplication).length > 0 || getStorage === null) {
-      const { name, _id, address } = dataApplication;
-      setName(name || address);
-      setId(_id);
+    const getStorage = getLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+    setApplication(getStorage);
+  }, []);
+
+  const onChangeQuestion = () => {
+    const getStorageSelectedCheckbox = getLocalStorage({
+      key: "topics",
+      defaultValue: [],
+    });
+    const selectedCheckbox =
+      application?._id == getStorageSelectedCheckbox?.id &&
+      getStorageSelectedCheckbox?.value;
+
+    if (
+      question === 0 ||
+      question === 1 ||
+      question === 11 ||
+      question === 12
+    ) {
+      setQuestion(question + 1);
+    } else if (question === 2) {
+      setQuestion(selectedCheckbox[0]);
+    } else if (question === 13) {
+      setQuestion(0);
+    } else if (question === selectedCheckbox[selectedCheckbox.length - 1]) {
+      setQuestion(11);
     } else {
-      const { name, id } = JSON.parse(getStorage);
-      setName(name);
-      setId(id);
+      const questionIndex = selectedCheckbox?.indexOf(question);
+      const newQuestion = selectedCheckbox[questionIndex + 1];
+      setQuestion(newQuestion);
     }
-  }, [dataApplication]);
+  };
 
   const breadcrumbs_array = [
     {
@@ -28,8 +52,8 @@ const Feedback = () => {
       href: "/",
     },
     {
-      name: name,
-      href: `/planning-applications/${id}`,
+      name: application?.name || "",
+      href: `/planning-applications/${application?._id}`,
     },
     {
       name: "Tell us what you think",
@@ -39,10 +63,12 @@ const Feedback = () => {
   return (
     <>
       <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
-      {question !== 0 && question !== 13 && (
-        <Instructions data={dataApplication} />
-      )}
-      <Questions question={question} />
+      {question !== 0 && question !== 13 && <Instructions />}
+      <Questions
+        question={question}
+        onChangeQuestion={() => onChangeQuestion()}
+        setQuestion={setQuestion}
+      />
     </>
   );
 };

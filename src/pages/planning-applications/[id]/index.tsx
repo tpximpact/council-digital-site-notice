@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { ContextApplication } from "@/context";
+import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/breadcrumbs";
 import About from "../../../components/about";
 import Impact from "../../../components/impact";
@@ -43,12 +42,9 @@ export async function getStaticPaths() {
 }
 
 const Application = ({ data }: { data: DataDetails }) => {
-  const { setDataApplication, setQuestion } = useContext(ContextApplication);
-  const [commentDeadline, setCommentDeadline] = useState("");
+  const [commentDeadline, setCommentDeadline] = useState<string>("");
 
   useEffect(() => {
-    setQuestion(0);
-
     let deadlineTime;
 
     if (data?.enableComments) {
@@ -57,7 +53,6 @@ const Application = ({ data }: { data: DataDetails }) => {
       deadlineTime = moment.duration(deadline.diff(today)).asDays().toFixed(0);
       setCommentDeadline(deadlineTime);
     }
-    setDataApplication({ ...data, commentDeadline: deadlineTime });
 
     localStorage.setItem(
       "application",
@@ -67,13 +62,13 @@ const Application = ({ data }: { data: DataDetails }) => {
         image_gallery: data?.image_gallery,
         deadline: data?.commentDeadline,
         name: data?.name,
-        id: data?._id,
+        _id: data?._id,
         applicationNumber: data?.applicationNumber,
         applicationStage: data?.applicationStage,
         applicationUpdatesUrl: data?.applicationUpdatesUrl,
       }),
     );
-  }, [data, setDataApplication, setQuestion, commentDeadline]);
+  }, [data, commentDeadline]);
 
   const breadcrumbs_array = [
     { name: "Planning applications", href: "/" },

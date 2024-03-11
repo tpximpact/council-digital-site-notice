@@ -1,23 +1,11 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ContextApplication } from "@/context";
 import { urlFor } from "../../../util/client";
 
 const Header = () => {
-  const { globalInfo } = useContext(ContextApplication);
-  const [logoCouncil, setLogoCouncil] = useState<any>(undefined);
-
-  useEffect(() => {
-    const initialValue = localStorage.getItem("globalInfo");
-    console.log(initialValue == undefined);
-    if (initialValue !== null && initialValue !== "undefined") {
-      const image = JSON.parse(initialValue)?.logo;
-      setLogoCouncil(image);
-    } else {
-      setLogoCouncil(globalInfo?.logo);
-    }
-  }, [globalInfo?.logo]);
+  const { globalConfig } = useContext(ContextApplication);
 
   return (
     <header className="govuk-header" role="banner" data-module="govuk-header">
@@ -35,12 +23,12 @@ const Header = () => {
               className="govuk-header__logotype"
               style={{ display: "flex", alignItems: "center", gap: "2px" }}
             >
-              {logoCouncil !== undefined ? (
+              {globalConfig?.logo !== undefined ? (
                 <Image
                   width={100}
                   height={35}
                   alt=""
-                  src={urlFor(logoCouncil)?.url()}
+                  src={urlFor(globalConfig?.logo)?.url()}
                 />
               ) : (
                 ""

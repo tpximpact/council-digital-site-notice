@@ -5,37 +5,28 @@ import { ContextApplication } from "@/context";
 import { Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
 import { useEffect, useState } from "react";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
 
-function FeedbackInformation() {
-  const { onChangeQuestion, globalInfo } = useContext(ContextApplication);
-  const [urlConcern, setUrlConcern] = useState("");
-  const [materialConsiderationLink, setMaterialConsiderationLink] =
-    useState("");
+function FeedbackInformation({
+  onChangeQuestion,
+}: {
+  onChangeQuestion: () => void;
+}) {
+  const { globalConfig } = useContext(ContextApplication);
+  const urlConcern = globalConfig?.concernUrl
+    ? globalConfig?.concernUrl
+    : globalConfig?.concernContent && "/concern-info";
+  const materialConsiderationLink = globalConfig?.materialConsiderationUrl;
   const [id, setId] = useState();
 
   useEffect(() => {
-    const globalContent = localStorage.getItem("globalInfo") || "{}";
-    const applicationContent = localStorage.getItem("application") || "{}";
+    const applicationContent = getLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
     localStorage.removeItem("formId");
-    const applicationIdStorage = JSON.parse(applicationContent).id;
-    setId(applicationIdStorage);
-    if (globalContent !== null && globalContent !== "undefined") {
-      const { concernUrl, concernContent, materialConsiderationUrl } =
-        JSON.parse(globalContent);
-
-      concernUrl && setUrlConcern(concernUrl);
-      concernContent && setUrlConcern("/concern-info");
-      setMaterialConsiderationLink(materialConsiderationUrl);
-    } else {
-      globalInfo?.concernUrl && setUrlConcern(globalInfo?.concernUrl);
-      globalInfo?.concernContent && setUrlConcern("/concern-info");
-      setMaterialConsiderationLink(globalInfo?.materialConsiderationUrl);
-    }
-  }, [
-    globalInfo?.concernContent,
-    globalInfo?.concernUrl,
-    globalInfo?.materialConsiderationUrl,
-  ]);
+    setId(applicationContent?._id);
+  }, []);
 
   return (
     <>
@@ -79,7 +70,7 @@ function FeedbackInformation() {
           can restrict the hours of work to reduce disturbance to residents and
           other sensitive neighbours.
         </p>
-        {urlConcern !== "" && (
+        {urlConcern !== undefined && (
           <Link
             href={urlConcern}
             target="_blank"
