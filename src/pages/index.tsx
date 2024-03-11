@@ -1,59 +1,60 @@
 import { useEffect, useState, useContext } from "react";
 import PlanningApplications from "../components/planning-application";
-import Pagination from "../components/pagination";
+import { SanityClient } from "../lib/sanityClient";
+import { PaginationType, Data } from "../../util/type";
+import { ContextApplication } from "@/context";
+import { DataClient } from "../lib/dataService";
+import { OpenDataClient } from "../lib/openDataClient";
+import ReactPaginate from "react-paginate";
+import { NextIcon } from "../../public/assets/icons";
+import { PreviewIcon } from "../../public/assets/icons";
 import Input from "@/components/input";
 import { Button } from "@/components/button";
 import { ArrowIcon } from "../../public/assets/icons";
-import {
-  getActiveApplications,
-  getActiveApplicationsPagination,
-  getGlobalContent,
-} from "../../util/client";
-import { PaginationType, Data } from "../../util/type";
-import { getLocationFromPostcode } from "../../util/geolocation";
-import { ContextApplication } from "@/context";
 import Link from "next/link";
+import { getLocationFromPostcode } from "../../util/geolocation";
+import { getDistance, convertDistance } from "geolib";
 
 export const itemsPerPage = 6;
+const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
 
 export async function getStaticProps() {
-  const dataId = await getActiveApplications();
-  const data = await getActiveApplicationsPagination({ itemsPerPage });
-  const globalContent = await getGlobalContent();
-
+  const data = await dataClient.getAllSiteNotices(itemsPerPage, 0);
   return {
     props: {
-      dataId,
-      data,
-      globalContent,
+      data: data.results,
+      resultsTotal: data.total,
     },
   };
 }
 
-const Home = ({ dataId, data, globalContent }: PaginationType) => {
-  const { setGlobalInfo } = useContext(ContextApplication);
+const Home = ({ data, resultsTotal }: PaginationType) => {
+  const { globalConfig } = useContext(ContextApplication);
   const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
   const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
   const [displayData, setDisplayData] = useState<Data[]>();
 
   useEffect(() => {
-    setDisplayData(data);
-    setGlobalInfo(globalContent);
-    localStorage.setItem("globalInfo", JSON.stringify(globalContent));
-  }, [dataId, data, globalContent, setGlobalInfo]);
+    setDisplayData(data as Data[]);
+  }, [data]);
 
-  async function onSelectPage({ _id }: any) {
-    const res = await getActiveApplicationsPagination({
-      _id,
-      itemsPerPage,
-      location,
-    });
-    setDisplayData(res);
-  }
+  const pageCount = Math.ceil(resultsTotal / itemsPerPage);
 
+  const handlePageClick = async (event: any) => {
+    const newOffset = (event.selected * itemsPerPage) % resultsTotal;
+    const newTotalPagecount = resultsTotal - newOffset;
+    const totalPage =
+      newTotalPagecount >= itemsPerPage ? itemsPerPage : newTotalPagecount;
+
+    const newData = await dataClient.getAllSiteNotices(totalPage, newOffset);
+    console.log(newData.results);
+    setDisplayData(newData?.results as Data[]);
+  };
+
+  // this needs to be refactored once data is held in Sanity
   const onSearchPostCode = async () => {
-    let location;
+    let location: any;
 
     if (postcode != null) {
       setLocationNotFound(false);
@@ -63,13 +64,38 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
         setLocationNotFound(true);
       }
     }
-
     setLocation(location);
-    const res = await getActiveApplicationsPagination({
-      itemsPerPage,
-      location,
-    });
-    setDisplayData(res);
+
+    if (location) {
+      //remove any data elements that dont have a location or location.lat location.lng, keep the elements so i can attache them to the end of the array
+      const dataWithoutLocation = data.filter((el) => !el.location);
+      dataWithoutLocation.forEach((el) => {
+        const index = data.indexOf(el);
+        if (index !== -1) {
+          data.splice(index, 1);
+        }
+      });
+
+      const sortedData = data.sort((a, b) => {
+        if (!a.location || !b.location) {
+          return -1;
+        }
+        const distanceA = getDistance(
+          { latitude: location.latitude, longitude: location.longitude },
+          { latitude: a.location.lat, longitude: a.location.lng },
+        );
+        const distanceB = getDistance(
+          { latitude: location.latitude, longitude: location.longitude },
+          { latitude: b.location.lat, longitude: b.location.lng },
+        );
+        //adds the distance to the object
+        a.distance = convertDistance(distanceA, "mi").toFixed(2);
+        return distanceA - distanceB;
+      });
+      //adds the data without location to the end of the array
+      sortedData.push(...dataWithoutLocation);
+      setDisplayData(sortedData as Data[]);
+    }
   };
 
   return (
@@ -83,7 +109,7 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
       </h1>
       <p className="govuk-body-m">
         Find, review and leave your comments on planning applications in{" "}
-        {globalContent?.councilName}
+        {globalConfig?.councilName}
       </p>
       <section className="search-grid">
         <Input
@@ -100,12 +126,12 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
           icon={<ArrowIcon />}
           onClick={() => onSearchPostCode()}
         />
-        {globalContent?.signUpUrl && (
+        {globalConfig?.signUpUrl && (
           <Link
             className="govuk-button grid-button-signup govuk-button--secondary"
             target="_blank"
             style={{ textDecoration: "none" }}
-            href={`${globalContent?.signUpUrl}`}
+            href={`${globalConfig?.signUpUrl}`}
           >
             Sign up for alerts on applications near you
           </Link>
@@ -115,13 +141,28 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
         <PlanningApplications data={displayData} searchLocation={location} />
       )}
 
-      {dataId?.length > itemsPerPage && (
-        <Pagination
-          data={dataId}
-          onSelectPage={(value: any) => onSelectPage(value)}
-          itemsPerPage={itemsPerPage}
+      <div className="wrap-pagination">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel={<NextIcon />}
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={2}
+          marginPagesDisplayed={1}
+          pageCount={pageCount}
+          previousLabel={<PreviewIcon />}
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination govuk-body"
+          activeClassName="active"
+          renderOnZeroPageCount={null}
         />
-      )}
+      </div>
     </div>
   );
 };

@@ -3,17 +3,25 @@ import Banner from "../banner";
 import CookiesBanner from "@/components/cookies";
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { urlFor } from "../../../util/client";
 import GoogleAnalytics from "../google-analytics";
 import { getLocalStorage } from "../../../util/localStorageHelper";
+import { urlFor, getGlobalContent } from "../../../util/client";
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
+
+const globalConfig = await getGlobalContent();
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [isShowCookie, setIsShowCookie] = useState(true);
+  const { setGlobalConfig } = useContext(ContextApplication);
+  const [isShowCookie, setIsShowCookie] = useState<boolean>(true);
   const [isConsentCookie, setIsConsentCookie] = useState(false);
-  const [favicon, setFavicon] = useState("");
-  const [ga, setGa] = useState("");
 
   const environment = process.env.NEXT_PUBLIC_ENVIRONMENT;
+  const favicon =
+    globalConfig.favicon == null || globalConfig.favicon == undefined
+      ? "/favicon_default.ico"
+      : urlFor(globalConfig.favicon)?.url();
+
   useEffect(() => {
     const getLocalStorageCookies = getLocalStorage({
       key: "cookies",
@@ -21,24 +29,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     });
     setIsShowCookie(getLocalStorageCookies);
 
+    setGlobalConfig(globalConfig);
+
     const getLocalStorageConsentCookies = getLocalStorage({
       key: "consentCookies",
       defaultValue: isConsentCookie,
     });
     setIsConsentCookie(getLocalStorageConsentCookies);
-
-    const globalContent = getLocalStorage({
-      key: "globalInfo",
-      defaultValue: {},
-    });
-    const favicon = globalContent?.favicon;
-    const googleAnalytics = globalContent?.googleAnalytics;
-    setGa(googleAnalytics);
-
-    favicon == null || favicon == undefined
-      ? setFavicon("/favicon_default.ico")
-      : setFavicon(urlFor(favicon)?.url());
-  }, [isConsentCookie, isShowCookie]);
+  }, [isConsentCookie, isShowCookie, setGlobalConfig]);
 
   return (
     <main>
@@ -52,9 +50,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }}
         />
       )}
-      {isConsentCookie && environment !== "development" && ga && (
-        <GoogleAnalytics gaId={ga} />
-      )}
+      {isConsentCookie &&
+        environment !== "development" &&
+        globalConfig?.googleAnalytics && (
+          <GoogleAnalytics gaId={globalConfig?.googleAnalytics} />
+        )}
       <Header />
       <Banner />
       <Head>

@@ -1,80 +1,30 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
+import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { ContextApplication } from "@/context";
-import Image from "next/image";
+import { Data } from "../../../../../util/type";
 import { urlFor } from "../../../../../util/client";
+import { getLocalStorage } from "../../../../../util/helpLocalStorage";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 const FeedbackMessage = () => {
-  const {
-    dataApplication: {
-      address,
-      image_head,
-      applicationNumber,
-      applicationUpdatesUrl,
-      _id,
-      globalInfo,
-      name,
-    },
-  } = useContext(ContextApplication);
-  const [addressAplication, setAddressAplication] = useState();
-  const [nameAplication, setNameAplication] = useState();
-  const [imageAplication, setImageAplication] = useState();
-  const [referenceAplication, setReferenceAplication] = useState();
-  const [applicationId, setApplicationId] = useState();
-  const [updatesUrl, setUpdatesUrl] = useState();
-  const [involveUrl, setInvolveUrl] = useState();
-  const [councilName, setCouncilName] = useState();
+  const { globalConfig } = useContext(ContextApplication);
+  const involveUrl = globalConfig?.howToGetInvolveUrl;
+  const councilName = globalConfig?.councilName;
+  const [application, setAplication] = useState<Data>();
   const [formId, setFormId] = useState<string | null>();
 
   useEffect(() => {
-    const initialValue = localStorage.getItem("application");
-    const initialGlobalValue = localStorage.getItem("globalInfo");
+    const initialValue = getLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+    setAplication(initialValue);
 
     const formId = localStorage.getItem("formId");
     setFormId(formId);
-
-    if (initialGlobalValue !== null) {
-      setInvolveUrl(JSON.parse(initialGlobalValue).howToGetInvolveUrl);
-      setCouncilName(JSON.parse(initialGlobalValue).councilName);
-    } else {
-      setInvolveUrl(globalInfo?.howToGetInvolveUrl);
-      setCouncilName(globalInfo?.councilName);
-    }
-
-    if (
-      address !== undefined ||
-      image_head !== undefined ||
-      applicationNumber !== undefined ||
-      applicationUpdatesUrl !== undefined ||
-      initialValue === null ||
-      name !== undefined
-    ) {
-      setAddressAplication(address);
-      setImageAplication(image_head);
-      setReferenceAplication(applicationNumber);
-      setUpdatesUrl(applicationUpdatesUrl);
-      setApplicationId(_id);
-      setNameAplication(name);
-    } else {
-      setAddressAplication(JSON.parse(initialValue).address);
-      setImageAplication(JSON.parse(initialValue).image_head);
-      setReferenceAplication(JSON.parse(initialValue).applicationNumber);
-      setUpdatesUrl(JSON.parse(initialValue).applicationUpdatesUrl);
-      setApplicationId(JSON.parse(initialValue)._id);
-      setNameAplication(JSON.parse(initialValue).name);
-    }
-  }, [
-    address,
-    image_head,
-    applicationNumber,
-    applicationUpdatesUrl,
-    globalInfo?.howToGetInvolveUrl,
-    globalInfo?.councilName,
-    _id,
-    name,
-  ]);
+  }, []);
 
   const breadcrumbs_array = [
     {
@@ -82,8 +32,8 @@ const FeedbackMessage = () => {
       href: "/",
     },
     {
-      name: nameAplication || addressAplication,
-      href: `/planning-applications/${applicationId}`,
+      name: application?.name || application?.address,
+      href: `/planning-applications/${application?._id}`,
     },
     {
       name: "Thank you",
@@ -99,9 +49,9 @@ const FeedbackMessage = () => {
         <p className="govuk-body-l">{formId}</p>
       </div>
       <div style={{ display: "flex", marginTop: "25px" }}>
-        {imageAplication && (
+        {application?.image_head && (
           <Image
-            src={urlFor(imageAplication)?.url()}
+            src={urlFor(application?.image_head)?.url()}
             alt="development-image"
             width={80}
             height={56}
@@ -111,10 +61,10 @@ const FeedbackMessage = () => {
         <div style={{ marginLeft: "15px" }}>
           <Link
             className="govuk-body govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state"
-            href={`/${applicationId}`}
+            href={`/${application?._id}`}
             style={{ marginBottom: "5px", textDecoration: "none" }}
           >
-            {addressAplication}
+            {application?.address}
           </Link>
           <p
             className="govuk-body govuk-!-font-weight-bold"
@@ -122,12 +72,12 @@ const FeedbackMessage = () => {
           >
             Application reference{" "}
           </p>
-          <p className="govuk-body">{referenceAplication}</p>
+          <p className="govuk-body">{application?.applicationNumber}</p>
         </div>
       </div>
-      {updatesUrl && (
+      {application?.applicationUpdatesUrl && (
         <Link
-          href={updatesUrl}
+          href={application?.applicationUpdatesUrl}
           className="govuk-button govuk-!-font-size-16"
           target="_blank"
         >

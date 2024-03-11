@@ -1,19 +1,22 @@
-import { useEffect, useContext, useState } from "react";
-import { ContextApplication } from "@/context";
+import { useEffect, useState } from "react";
 import TextArea from "@/components/text-area";
 import Validation from "@/components/validation";
 import { Button, BackLink } from "@/components/button";
 import { questions } from "../../../util/questionsInfo";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
+import { CommentForm } from "../../../util/type";
 
-function CommentQuestion() {
-  const {
-    onChangeQuestion,
-    commentForm,
-    setCommentForm,
-    setQuestion,
-    selectedCheckbox,
-    question,
-  } = useContext(ContextApplication);
+function CommentQuestion({
+  onChangeQuestion,
+  setQuestion,
+  question,
+}: {
+  onChangeQuestion: () => void;
+  setQuestion: (value: number) => void;
+  question: number;
+}) {
+  const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([]);
+  const [commentForm, setCommentForm] = useState<CommentForm>({});
   const [isError, setIsError] = useState(false);
   const [id, setId] = useState();
   const indexComponent = selectedCheckbox?.indexOf(question);
@@ -22,16 +25,24 @@ function CommentQuestion() {
   const label = questions[question];
 
   useEffect(() => {
-    const initialValue = localStorage.getItem("comment") || "{}";
-    const applicationStorage = localStorage.getItem("application") || "{}";
-    const applicationIdStorage = JSON.parse(applicationStorage).id;
-    setId(applicationIdStorage);
-    if (initialValue !== "" && initialValue !== null) {
-      JSON.parse(initialValue).id === applicationIdStorage
-        ? setCommentForm(JSON.parse(initialValue).value)
-        : setCommentForm({});
-    }
-  }, [setCommentForm]);
+    const commentStorage = getLocalStorage({
+      key: "comment",
+      defaultValue: {},
+    });
+    const selectedCheckboxStorage = getLocalStorage({
+      key: "topics",
+      defaultValue: {},
+    });
+    const applicationStorage = getLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+    setId(applicationStorage?._id);
+    commentStorage?.id == applicationStorage?._id &&
+      setCommentForm(commentStorage?.value);
+    selectedCheckboxStorage?.id == applicationStorage?._id &&
+      setSelectedCheckbox(selectedCheckboxStorage?.value);
+  }, []);
 
   const onComment = (value: any) => {
     setCommentForm({ ...commentForm, [question]: value });
@@ -43,6 +54,15 @@ function CommentQuestion() {
       ? setIsError(false)
       : setIsError(true);
   };
+
+  function onNextPage() {
+    if (commentForm[question] !== undefined && commentForm[question] !== "") {
+      setIsError(false);
+      onChangeQuestion();
+    } else {
+      setIsError(true);
+    }
+  }
 
   return (
     <section>
@@ -56,14 +76,7 @@ function CommentQuestion() {
       />
 
       {isError && <Validation message="Please leave a comment" />}
-      <Button
-        content="Next"
-        onClick={() => {
-          commentForm[question] !== undefined && commentForm[question] !== ""
-            ? onChangeQuestion()
-            : setIsError(true);
-        }}
-      />
+      <Button content="Next" onClick={() => onNextPage()} />
     </section>
   );
 }

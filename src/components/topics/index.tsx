@@ -5,30 +5,34 @@ import Details from "@/components/details";
 import Validation from "@/components/validation";
 import { descriptionDetail } from "../../../util/description-detail";
 import { questions } from "../../../util/questionsInfo";
-import { useContext } from "react";
-import { ContextApplication } from "@/context";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
 
 export const checkboxId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
-const TopicsQuestion = () => {
-  const {
-    onChangeQuestion,
-    setQuestion,
-    selectedCheckbox,
-    setSelectedCheckbox,
-  } = useContext(ContextApplication);
+const TopicsQuestion = ({
+  onChangeQuestion,
+  setQuestion,
+}: {
+  onChangeQuestion: () => void;
+  setQuestion: (value: number) => void;
+}) => {
+  const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([]);
   const [isError, setIsError] = useState<boolean>(false);
   const [idApplication, setId] = useState();
 
   useEffect(() => {
-    const getStorage = localStorage.getItem("topics") || "{}";
-    const initialValue = JSON.parse(getStorage);
-    const applicationStorage = localStorage.getItem("application") || "{}";
-    const applicationIdStorage = JSON.parse(applicationStorage).id;
-    setId(applicationIdStorage);
-    initialValue?.id === applicationIdStorage
-      ? setSelectedCheckbox(initialValue.value)
-      : setSelectedCheckbox([]);
+    const getStorage = getLocalStorage({
+      key: "topics",
+      defaultValue: {},
+    });
+    const applicationStorage = getLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+
+    setId(applicationStorage?._id);
+    getStorage?.id === applicationStorage?._id &&
+      setSelectedCheckbox(getStorage.value);
   }, [setSelectedCheckbox]);
 
   const onChecked = (e: any) => {
@@ -53,6 +57,10 @@ const TopicsQuestion = () => {
           }),
         ));
   };
+
+  function onNextPage() {
+    selectedCheckbox.length > 0 ? onChangeQuestion() : setIsError(true);
+  }
 
   return (
     <section>
@@ -81,9 +89,7 @@ const TopicsQuestion = () => {
       <Button
         content="Next"
         className="button-topics-question"
-        onClick={() => {
-          selectedCheckbox.length > 0 ? onChangeQuestion() : setIsError(true);
-        }}
+        onClick={() => onNextPage()}
       />
     </section>
   );

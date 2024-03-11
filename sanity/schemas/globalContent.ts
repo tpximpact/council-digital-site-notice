@@ -6,6 +6,19 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
+      title: "Integrations",
+      name: "integrations",
+      type: "string",
+      options: {
+        list: [
+          { title: "Manual", value: "manual" },
+          { title: "OpenAPI", value: "openAPI" },
+        ],
+        layout: "radio",
+        direction: "vertical",
+      },
+    }),
+    defineField({
       title: "Concern Url",
       name: "concernUrl",
       type: "string",
@@ -70,4 +83,7 @@ export default defineType({
       description: "Optional",
     }),
   ],
+  initialValue: {
+    integrations: "manual",
+  },
 });

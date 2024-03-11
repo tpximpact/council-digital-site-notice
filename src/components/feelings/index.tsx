@@ -1,24 +1,35 @@
-import { useEffect, useContext, useState } from "react";
-import { ContextApplication } from "@/context";
+import { useEffect, useState } from "react";
 import { Button, BackLink } from "@/components/button";
 import { Happy, Neutral, Opposed } from "../../../public/assets/icons";
 import Validation from "@/components/validation";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
 
-function Feeling() {
-  const { onChangeQuestion, feelingForm, setFeelingForm, setQuestion } =
-    useContext(ContextApplication);
+function Feeling({
+  onChangeQuestion,
+  setQuestion,
+}: {
+  onChangeQuestion: () => void;
+  setQuestion: (value: number) => void;
+}) {
+  const [feelingForm, setFeelingForm] = useState<string>("");
   const [id, setId] = useState();
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const applicationStorage = localStorage.getItem("application") || "{}";
-    const applicationIdStorage = JSON.parse(applicationStorage).id;
-    setId(applicationIdStorage);
-    const initialValue = localStorage.getItem("feeling") || "{}";
-    JSON.parse(initialValue).id === applicationIdStorage
-      ? setFeelingForm(JSON.parse(initialValue).value)
-      : setFeelingForm("");
-  }, [setFeelingForm]);
+    const applicationStorage = getLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+    const feelingStorage = getLocalStorage({
+      key: "feeling",
+      defaultValue: feelingForm,
+    });
+
+    setId(applicationStorage?._id);
+
+    feelingStorage?.id === applicationStorage?._id &&
+      setFeelingForm(feelingStorage.value);
+  }, [feelingForm]);
 
   const onChangeFeeling = (value: string) => {
     if (feelingForm === value) {

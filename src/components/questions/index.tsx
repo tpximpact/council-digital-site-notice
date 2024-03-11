@@ -5,23 +5,57 @@ import PersonalDetails from "../personal-details";
 import FeedbackInformation from "../feedback-information";
 import CheckAnswers from "../check-answers";
 
-const FeedbackQuestions = ({ question }: { question: number }) => {
+const FeedbackQuestions = ({
+  question,
+  onChangeQuestion,
+  setQuestion,
+}: {
+  question: number;
+  onChangeQuestion: () => void;
+  setQuestion: (value: number) => void;
+}) => {
   const switchComponent = () => {
     switch (question) {
       case 0:
-        return <FeedbackInformation />;
+        return <FeedbackInformation onChangeQuestion={onChangeQuestion} />;
       case 1:
-        return <Feeling />;
+        return (
+          <Feeling
+            onChangeQuestion={onChangeQuestion}
+            setQuestion={setQuestion}
+          />
+        );
       case 2:
-        return <Topics />;
+        return (
+          <Topics
+            onChangeQuestion={onChangeQuestion}
+            setQuestion={setQuestion}
+          />
+        );
       case 11:
-        return <PersonalDetails />;
+        return (
+          <PersonalDetails
+            onChangeQuestion={onChangeQuestion}
+            setQuestion={setQuestion}
+          />
+        );
       case 12:
-        return <CheckAnswers />;
+        return (
+          <CheckAnswers
+            onChangeQuestion={onChangeQuestion}
+            setQuestion={setQuestion}
+          />
+        );
       case 13:
         return;
       default:
-        return <Comment />;
+        return (
+          <Comment
+            onChangeQuestion={onChangeQuestion}
+            setQuestion={setQuestion}
+            question={question}
+          />
+        );
     }
   };
 

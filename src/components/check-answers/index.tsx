@@ -1,77 +1,76 @@
-import { useEffect, useContext, useState } from "react";
-import { ContextApplication } from "@/context";
+import { useEffect, useState } from "react";
 import { BackLink, Button, ButtonLink } from "@/components/button";
 import Details from "@/components/details";
 import { questions } from "../../../util/questionsInfo";
 import { descriptionDetail } from "../../../util/description-detail";
 import { addFeedback } from "../../../util/client";
-import { savefeedbackToGoogleSheet } from "../../../util/google";
 import { useRouter } from "next/router";
+import { getLocalStorage } from "../../../util/helpLocalStorage";
+import { PersonalDetailsForm, CommentForm } from "../../../util/type";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
-function CheckAnswers() {
-  const {
-    onChangeQuestion,
-    selectedCheckbox,
-    commentForm,
-    personalDetailsForm,
-    setQuestion,
-    setSelectedCheckbox,
-    feelingForm,
-    setPersonalDetailsForm,
-    setCommentForm,
-    contextCleaner,
-  } = useContext(ContextApplication);
+function CheckAnswers({
+  onChangeQuestion,
+  setQuestion,
+}: {
+  onChangeQuestion: () => void;
+  setQuestion: (value: number) => void;
+}) {
   const [id, setId] = useState();
+  const [personalDetailsForm, setPersonalDetailsForm] =
+    useState<PersonalDetailsForm>({
+      name: "",
+      address: "",
+      postcode: "",
+      email: "",
+      phone: "",
+      consent: false,
+    });
+  const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([]);
+  const [commentForm, setCommentForm] = useState<CommentForm>({});
+  const [feelingForm, setFeelingForm] = useState<string>("");
 
   const router = useRouter();
 
   useEffect(() => {
-    const initialValueName = localStorage.getItem("name") || "{}";
-    const initialValueEmail = localStorage.getItem("email") || "{}";
-    const initialValuePhone = localStorage.getItem("phone") || "{}";
-    const initialValuePostcode = localStorage.getItem("postcode") || "{}";
-    const initialValueConsent = localStorage.getItem("consent") || "{}";
-    const initialValueAddress = localStorage.getItem("address") || "{}";
-    const initialValueComment = localStorage.getItem("comment") || "{}";
-
-    const applicationStorage = localStorage.getItem("application") || "{}";
-    const applicationIdStorage = JSON.parse(applicationStorage).id;
-    setId(applicationIdStorage);
-
-    setPersonalDetailsForm({
-      name:
-        JSON.parse(initialValueName).id === applicationIdStorage
-          ? JSON.parse(initialValueName).value
-          : "",
-      address:
-        JSON.parse(initialValueAddress).id == applicationIdStorage
-          ? JSON.parse(initialValueAddress).value
-          : "",
-      email:
-        JSON.parse(initialValueEmail).id == applicationIdStorage
-          ? JSON.parse(initialValueEmail).value
-          : "",
-      phone:
-        JSON.parse(initialValuePhone).id == applicationIdStorage
-          ? JSON.parse(initialValuePhone).value
-          : "",
-      postcode:
-        JSON.parse(initialValuePostcode).id === applicationIdStorage
-          ? JSON.parse(initialValuePostcode).value
-          : "",
-      consent:
-        JSON.parse(initialValueConsent).id === applicationIdStorage
-          ? JSON.parse(initialValueConsent).value
-          : "",
+    const applicationStorage = getLocalStorage({
+      key: "application",
+      defaultValue: {},
     });
-    if (
-      initialValueComment !== null &&
-      JSON.parse(initialValueComment).id == applicationIdStorage
-    )
-      setCommentForm(JSON.parse(initialValueComment).value);
-  }, [personalDetailsForm?.consent, setCommentForm, setPersonalDetailsForm]);
+
+    setId(applicationStorage?._id);
+
+    const initialPersonalDetails = getLocalStorage({
+      key: "personalDetails",
+      defaultValue: {},
+    });
+    initialPersonalDetails?.id === applicationStorage?._id &&
+      setPersonalDetailsForm(initialPersonalDetails?.value);
+
+    const initialValueComment = getLocalStorage({
+      key: "comment",
+      defaultValue: {},
+    });
+
+    const initialValueCheckbox = getLocalStorage({
+      key: "topics",
+      defaultValue: {},
+    });
+
+    const initialValueFeeling = getLocalStorage({
+      key: "feeling",
+      defaultValue: {},
+    });
+    initialValueCheckbox?.id === applicationStorage?._id &&
+      setSelectedCheckbox(initialValueCheckbox?.value);
+
+    initialValueFeeling?.id === applicationStorage?._id &&
+      setFeelingForm(initialValueFeeling?.value);
+
+    initialValueComment?.id == applicationStorage?._id &&
+      setCommentForm(initialValueComment?.value);
+  }, []);
 
   const onChangeQuestions = (label: number) => {
     const selected = selectedCheckbox?.filter((el: any) => el === label);
@@ -88,7 +87,11 @@ function CheckAnswers() {
   };
 
   const submit = async () => {
-    addFeedback({ feelingForm, commentForm, personalDetailsForm });
+    addFeedback({
+      feelingForm,
+      commentForm,
+      personalDetailsForm,
+    });
 
     let formId = crypto.randomUUID();
     localStorage.setItem("formId", formId);
@@ -100,20 +103,18 @@ function CheckAnswers() {
       topics.push(questions[el]);
       comment = { ...comment, [questions[el]]: commentForm[el] };
     });
-    const application = localStorage.getItem("application");
-    const applicationNumber = JSON.parse(application || "{}").applicationNumber;
+    const application = getLocalStorage({
+      key: "application",
+      defaultValue: {},
+    });
+    const applicationNumber = application?.applicationNumber;
     let data = {
       id: formId,
       applicationNumber: applicationNumber,
       feeling: feelingForm,
       topics: JSON.stringify(topics),
       comment: JSON.stringify(comment),
-      name: personalDetailsForm.name,
-      address: personalDetailsForm.address,
-      postcode: personalDetailsForm.postcode,
-      email: personalDetailsForm.email,
-      phone: personalDetailsForm.phone,
-      consent: personalDetailsForm.consent,
+      ...personalDetailsForm,
     };
 
     try {
@@ -138,8 +139,6 @@ function CheckAnswers() {
         localStorage.removeItem("email");
         localStorage.removeItem("phone");
         localStorage.removeItem("consent");
-
-        contextCleaner();
       } else {
         console.log("Error fetching data");
       }
