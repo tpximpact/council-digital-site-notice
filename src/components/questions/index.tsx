@@ -1,6 +1,5 @@
 import Feeling from "../feelings";
 import Topics from "../topics";
-import Message from "../../pages/planning-applications/[id]/feedback/message";
 import Comment from "../comment";
 import PersonalDetails from "../personal-details";
 import FeedbackInformation from "../feedback-information";
@@ -48,7 +47,7 @@ const FeedbackQuestions = ({
           />
         );
       case 13:
-        return <Message />;
+        return;
       default:
         return (
           <Comment

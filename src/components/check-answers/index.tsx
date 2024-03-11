@@ -4,6 +4,7 @@ import Details from "@/components/details";
 import { questions } from "../../../util/questionsInfo";
 import { descriptionDetail } from "../../../util/description-detail";
 import { addFeedback } from "../../../util/client";
+import { useRouter } from "next/router";
 import { getLocalStorage } from "../../../util/helpLocalStorage";
 import { PersonalDetailsForm, CommentForm } from "../../../util/type";
 
@@ -29,6 +30,8 @@ function CheckAnswers({
   const [selectedCheckbox, setSelectedCheckbox] = useState<number[]>([]);
   const [commentForm, setCommentForm] = useState<CommentForm>({});
   const [feelingForm, setFeelingForm] = useState<string>("");
+
+  const router = useRouter();
 
   useEffect(() => {
     const applicationStorage = getLocalStorage({
@@ -126,6 +129,7 @@ function CheckAnswers({
       if (response.ok) {
         const responseData = await response.json();
         onChangeQuestion();
+        router.push(`/planning-applications/${id}/thank-you`);
         localStorage.removeItem("feeling");
         localStorage.removeItem("topics");
         localStorage.removeItem("comment");

@@ -6,6 +6,7 @@ import { ContextApplication } from "@/context";
 import { Data } from "../../../../../util/type";
 import { urlFor } from "../../../../../util/client";
 import { getLocalStorage } from "../../../../../util/helpLocalStorage";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 const FeedbackMessage = () => {
   const { globalConfig } = useContext(ContextApplication);
@@ -25,8 +26,23 @@ const FeedbackMessage = () => {
     setFormId(formId);
   }, []);
 
+  const breadcrumbs_array = [
+    {
+      name: "Planning application",
+      href: "/",
+    },
+    {
+      name: application?.name || application?.address,
+      href: `/planning-applications/${application?._id}`,
+    },
+    {
+      name: "Thank you",
+      href: "",
+    },
+  ];
   return (
     <section>
+      <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
       <div className="wrap-message-reference">
         <h1 className="govuk-heading-l"> Comment submitted</h1>
         <h2 className="govuk-body-l"> Your reference number</h2>
