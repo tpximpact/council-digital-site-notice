@@ -195,12 +195,10 @@ export default defineType({
       type: "boolean",
       initialValue: true,
       description: "Optional",
-      hidden: ({ document }: any) =>
-        document?.applicationStage?.stage !== "Consultation",
     }),
     defineField({
-      title: "Comment Deadline",
-      name: "commentDeadline",
+      title: "Consultation Deadline",
+      name: "consultationDeadline",
       type: "date",
       description: "Required",
       hidden: ({ document }: any) =>

@@ -11,10 +11,10 @@ import {
 
 function Process({
   data,
-  commentDeadline,
+  consultationDeadline,
 }: {
   data: DataDetails;
-  commentDeadline: string;
+  consultationDeadline: string;
 }) {
   const { globalConfig } = useContext(ContextApplication);
 
@@ -38,7 +38,7 @@ function Process({
       <div className="wrap-grid-button">
         <div className="process-grid">
           <p className="govuk-body govuk-!-font-weight-bold process-consultation">
-            {parseFloat(commentDeadline) <= 0 &&
+            {parseFloat(consultationDeadline) <= 0 &&
             data?.applicationStage?.stage == "Consultation" &&
             singleApplicationStatus == "in progress"
               ? "Assessment"
@@ -50,11 +50,11 @@ function Process({
             <span>{singleApplicationStatus?.toUpperCase()}</span>
           </p>
           {data?.enableComments &&
-            parseFloat(commentDeadline) > 0 &&
+            parseFloat(consultationDeadline) > 0 &&
             data?.applicationStage?.stage == "Consultation" && (
               <p className="govuk-body application-days">
-                {commentDeadline}{" "}
-                {parseFloat(commentDeadline) > 1 ? "days" : "day"} left
+                {consultationDeadline}{" "}
+                {parseFloat(consultationDeadline) > 1 ? "days" : "day"} left
               </p>
             )}
 
