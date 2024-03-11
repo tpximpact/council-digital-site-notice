@@ -17,7 +17,7 @@ function Instructions({ data }: { data: DataDetails }) {
   useEffect(() => {
     const initialGlobalValue = localStorage.getItem("globalInfo");
 
-    if (initialGlobalValue !== null) {
+    if (initialGlobalValue !== null && initialGlobalValue !== "undefined") {
       setCouncilName(JSON.parse(initialGlobalValue).councilName);
     } else {
       setCouncilName(globalInfo?.councilName);

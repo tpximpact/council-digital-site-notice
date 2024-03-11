@@ -51,7 +51,7 @@ const PersonalDetails = () => {
     const applicationIdStorage = JSON.parse(applicationStorage).id;
     setId(applicationIdStorage);
 
-    if (initialGlobalValue !== null) {
+    if (initialGlobalValue !== null && initialGlobalValue !== "undefined") {
       setCouncilName(JSON.parse(initialGlobalValue).councilName);
     } else {
       setCouncilName(globalInfo?.councilName);

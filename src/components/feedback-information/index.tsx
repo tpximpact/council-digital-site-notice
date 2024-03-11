@@ -14,12 +14,12 @@ function FeedbackInformation() {
   const [id, setId] = useState();
 
   useEffect(() => {
-    const globalContent = localStorage.getItem("globalInfo");
+    const globalContent = localStorage.getItem("globalInfo") || "{}";
     const applicationContent = localStorage.getItem("application") || "{}";
     localStorage.removeItem("formId");
     const applicationIdStorage = JSON.parse(applicationContent).id;
     setId(applicationIdStorage);
-    if (globalContent !== null) {
+    if (globalContent !== null && globalContent !== "undefined") {
       const { concernUrl, concernContent, materialConsiderationUrl } =
         JSON.parse(globalContent);
 
