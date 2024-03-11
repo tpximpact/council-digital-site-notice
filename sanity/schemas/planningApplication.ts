@@ -5,6 +5,7 @@ import {
   consultation,
   decision,
 } from "../structure/helper";
+import PopulateButton from "../../src/components/populate-button";
 
 export default defineType({
   title: "Planning application",
@@ -43,6 +44,15 @@ export default defineType({
       description: "Required",
       validation: (Rule: any) => Rule.required(),
       readOnly: false,
+    }),
+    defineField({
+      name: "populateApi",
+      title: "Integrations",
+      type: "string",
+      components: {
+        input: PopulateButton,
+      },
+      description: "Fetch data from the selected integration.",
     }),
     defineField({
       title: "Application Type",
