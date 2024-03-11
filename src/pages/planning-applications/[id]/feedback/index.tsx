@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/breadcrumbs";
 import Instructions from "./instructions";
 import Questions from "../../../../components/questions";
@@ -23,7 +23,7 @@ const Feedback = () => {
       defaultValue: [],
     });
     const selectedCheckbox =
-      application?.id == getStorageSelectedCheckbox?.id &&
+      application?._id == getStorageSelectedCheckbox?.id &&
       getStorageSelectedCheckbox?.value;
 
     if (
@@ -53,7 +53,7 @@ const Feedback = () => {
     },
     {
       name: application?.name || "",
-      href: `/planning-applications/${application?.id}`,
+      href: `/planning-applications/${application?._id}`,
     },
     {
       name: "Tell us what you think",

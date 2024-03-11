@@ -48,6 +48,7 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
       newTotalPagecount >= itemsPerPage ? itemsPerPage : newTotalPagecount;
 
     const newData = await dataClient.getAllSiteNotices(totalPage, newOffset);
+    console.log(newData.results);
     setDisplayData(newData?.results as Data[]);
   };
 

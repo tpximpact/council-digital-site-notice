@@ -20,7 +20,7 @@ export type ProposedLandUse = {
 };
 
 export type Data = {
-  id: Id;
+  _id: Id;
   name: string;
   address: string;
   description: string;

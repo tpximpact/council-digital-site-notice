@@ -25,9 +25,9 @@ function Feeling({
       defaultValue: feelingForm,
     });
 
-    setId(applicationStorage?.id);
+    setId(applicationStorage?._id);
 
-    feelingStorage?.id === applicationStorage?.id &&
+    feelingStorage?.id === applicationStorage?._id &&
       setFeelingForm(feelingStorage.value);
   }, [feelingForm]);
 

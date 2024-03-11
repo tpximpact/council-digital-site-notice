@@ -62,7 +62,7 @@ const Application = ({ data }: { data: DataDetails }) => {
         image_gallery: data?.image_gallery,
         deadline: data?.commentDeadline,
         name: data?.name,
-        id: data?._id,
+        _id: data?._id,
         applicationNumber: data?.applicationNumber,
         applicationStage: data?.applicationStage,
         applicationUpdatesUrl: data?.applicationUpdatesUrl,

@@ -36,13 +36,13 @@ function CheckAnswers({
       defaultValue: {},
     });
 
-    setId(applicationStorage?.id);
+    setId(applicationStorage?._id);
 
     const initialPersonalDetails = getLocalStorage({
       key: "personalDetails",
       defaultValue: {},
     });
-    initialPersonalDetails?.id === applicationStorage?.id &&
+    initialPersonalDetails?.id === applicationStorage?._id &&
       setPersonalDetailsForm(initialPersonalDetails?.value);
 
     const initialValueComment = getLocalStorage({
@@ -59,13 +59,13 @@ function CheckAnswers({
       key: "feeling",
       defaultValue: {},
     });
-    initialValueCheckbox?.id === applicationStorage?.id &&
+    initialValueCheckbox?.id === applicationStorage?._id &&
       setSelectedCheckbox(initialValueCheckbox?.value);
 
-    initialValueFeeling?.id === applicationStorage?.id &&
+    initialValueFeeling?.id === applicationStorage?._id &&
       setFeelingForm(initialValueFeeling?.value);
 
-    initialValueComment?.id == applicationStorage?.id &&
+    initialValueComment?.id == applicationStorage?._id &&
       setCommentForm(initialValueComment?.value);
   }, []);
 

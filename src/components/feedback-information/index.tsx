@@ -25,7 +25,7 @@ function FeedbackInformation({
       defaultValue: {},
     });
     localStorage.removeItem("formId");
-    setId(applicationContent?.id);
+    setId(applicationContent?._id);
   }, []);
 
   return (

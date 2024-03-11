@@ -61,20 +61,20 @@ const PersonalDetails = ({
       key: "application",
       defaultValue: {},
     });
-    setId(applicationStorage?.id);
+    setId(applicationStorage?._id);
 
     const personalDetailsStorage = getLocalStorage({
       key: "personalDetails",
       defaultValue: {},
     });
-    personalDetailsStorage?.id === applicationStorage?.id &&
+    personalDetailsStorage?.id === applicationStorage?._id &&
       setPersonalDetailsForm(personalDetailsStorage?.value);
 
     const selectedCheckboxStorage = getLocalStorage({
       key: "topics",
       defaultValue: {},
     });
-    selectedCheckboxStorage?.id === applicationStorage?.id &&
+    selectedCheckboxStorage?.id === applicationStorage?._id &&
       setSelectedCheckbox(selectedCheckboxStorage?.value);
   }, []);
 

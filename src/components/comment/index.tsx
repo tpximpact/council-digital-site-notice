@@ -37,10 +37,10 @@ function CommentQuestion({
       key: "application",
       defaultValue: {},
     });
-    setId(applicationStorage?.id);
-    commentStorage?.id == applicationStorage?.id &&
+    setId(applicationStorage?._id);
+    commentStorage?.id == applicationStorage?._id &&
       setCommentForm(commentStorage?.value);
-    selectedCheckboxStorage?.id == applicationStorage?.id &&
+    selectedCheckboxStorage?.id == applicationStorage?._id &&
       setSelectedCheckbox(selectedCheckboxStorage?.value);
   }, []);
 

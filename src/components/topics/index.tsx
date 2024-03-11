@@ -30,8 +30,8 @@ const TopicsQuestion = ({
       defaultValue: {},
     });
 
-    setId(applicationStorage?.id);
-    getStorage?.id === applicationStorage?.id &&
+    setId(applicationStorage?._id);
+    getStorage?.id === applicationStorage?._id &&
       setSelectedCheckbox(getStorage.value);
   }, [setSelectedCheckbox]);
 
