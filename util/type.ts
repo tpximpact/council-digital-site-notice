@@ -31,6 +31,8 @@ export type Data = {
   image_head?: string;
   image_gallery: any[];
   applicationUpdatesUrl?: string;
+  location: { lng: number; lat: number };
+  distance?: string;
 };
 
 export type DataDetails = {
@@ -77,6 +79,7 @@ export type PaginationType = {
   data: Data[];
   paginationData?: Data[];
   globalContent: any;
+  resultsTotal: number;
 };
 
 export type CommentForm = {
