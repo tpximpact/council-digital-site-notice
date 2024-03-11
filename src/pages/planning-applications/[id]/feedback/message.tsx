@@ -8,9 +8,9 @@ import { urlFor } from "../../../../../util/client";
 import { getLocalStorage } from "../../../../../util/helpLocalStorage";
 
 const FeedbackMessage = () => {
-  const { globalInfo } = useContext(ContextApplication);
-  const involveUrl = globalInfo?.howToGetInvolveUrl;
-  const councilName = globalInfo?.councilName;
+  const { globalConfig } = useContext(ContextApplication);
+  const involveUrl = globalConfig?.howToGetInvolveUrl;
+  const councilName = globalConfig?.councilName;
   const [application, setAplication] = useState<Data>();
   const [formId, setFormId] = useState<string | null>();
 

@@ -29,7 +29,7 @@ export async function getStaticProps() {
 }
 
 const Home = ({ data, resultsTotal }: PaginationType) => {
-  const { globalInfo } = useContext(ContextApplication);
+  const { globalConfig } = useContext(ContextApplication);
   const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
   const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
@@ -109,7 +109,7 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
       </h1>
       <p className="govuk-body-m">
         Find, review and leave your comments on planning applications in{" "}
-        {globalInfo?.councilName}
+        {globalConfig?.councilName}
       </p>
       <section className="search-grid">
         <Input
@@ -126,12 +126,12 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
           icon={<ArrowIcon />}
           onClick={() => onSearchPostCode()}
         />
-        {globalInfo?.signUpUrl && (
+        {globalConfig?.signUpUrl && (
           <Link
             className="govuk-button grid-button-signup govuk-button--secondary"
             target="_blank"
             style={{ textDecoration: "none" }}
-            href={`${globalInfo?.signUpUrl}`}
+            href={`${globalConfig?.signUpUrl}`}
           >
             Sign up for alerts on applications near you
           </Link>

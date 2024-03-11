@@ -12,11 +12,11 @@ function FeedbackInformation({
 }: {
   onChangeQuestion: () => void;
 }) {
-  const { globalInfo } = useContext(ContextApplication);
-  const urlConcern = globalInfo?.concernUrl
-    ? globalInfo?.concernUrl
-    : globalInfo?.concernContent && "/concern-info";
-  const materialConsiderationLink = globalInfo?.materialConsiderationUrl;
+  const { globalConfig } = useContext(ContextApplication);
+  const urlConcern = globalConfig?.concernUrl
+    ? globalConfig?.concernUrl
+    : globalConfig?.concernContent && "/concern-info";
+  const materialConsiderationLink = globalConfig?.materialConsiderationUrl;
   const [id, setId] = useState();
 
   useEffect(() => {

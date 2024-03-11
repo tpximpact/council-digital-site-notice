@@ -5,7 +5,7 @@ import { ContextApplication } from "@/context";
 import { urlFor } from "../../../util/client";
 
 const Header = () => {
-  const { globalInfo } = useContext(ContextApplication);
+  const { globalConfig } = useContext(ContextApplication);
 
   return (
     <header className="govuk-header" role="banner" data-module="govuk-header">
@@ -23,12 +23,12 @@ const Header = () => {
               className="govuk-header__logotype"
               style={{ display: "flex", alignItems: "center", gap: "2px" }}
             >
-              {globalInfo?.logo !== undefined ? (
+              {globalConfig?.logo !== undefined ? (
                 <Image
                   width={100}
                   height={35}
                   alt=""
-                  src={urlFor(globalInfo?.logo)?.url()}
+                  src={urlFor(globalConfig?.logo)?.url()}
                 />
               ) : (
                 ""

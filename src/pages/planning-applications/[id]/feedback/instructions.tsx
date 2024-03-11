@@ -7,8 +7,8 @@ import { getLocalStorage } from "../../../../../util/helpLocalStorage";
 import { Data } from "../../../../../util/type";
 
 function Instructions() {
-  const { globalInfo } = useContext(ContextApplication);
-  const councilName = globalInfo?.councilName;
+  const { globalConfig } = useContext(ContextApplication);
+  const councilName = globalConfig?.councilName;
   const [application, setApplication] = useState<Data>();
 
   useEffect(() => {

@@ -16,7 +16,7 @@ function Process({
   data: DataDetails;
   commentDeadline: string;
 }) {
-  const { globalInfo } = useContext(ContextApplication);
+  const { globalConfig } = useContext(ContextApplication);
 
   const singleApplicationStatus =
     data?.applicationStage?.status[
@@ -26,10 +26,10 @@ function Process({
   return (
     <section className="process-wrap">
       <h2 className="govuk-heading-l">Where are we in the process?</h2>
-      {globalInfo?.planningProcessUrl && (
+      {globalConfig?.planningProcessUrl && (
         <Link
           className="govuk-link govuk-link--no-visited-state"
-          href={globalInfo?.planningProcessUrl}
+          href={globalConfig?.planningProcessUrl}
           target="_blank"
         >
           Find out more about the planning process

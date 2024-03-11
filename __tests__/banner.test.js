@@ -5,7 +5,7 @@ import { ContextApplication } from "@/context";
 
 describe("Test Banner", () => {
   it("it should render correctly", async () => {
-    const value = { globalInfo: { feedbackUrl: "/" } };
+    const value = { globalConfig: { feedbackUrl: "/" } };
     render(
       <ContextApplication.Provider value={value}>
         <Banner />
@@ -16,7 +16,7 @@ describe("Test Banner", () => {
   });
 
   it("it should not render", async () => {
-    const value = { globalInfo: null };
+    const value = { globalConfig: null };
     render(
       <ContextApplication.Provider value={value}>
         <Banner />

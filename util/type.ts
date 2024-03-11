@@ -136,6 +136,6 @@ export type FeelingType = {
 };
 
 export type ContextApplicationProps = {
-  globalInfo: any;
-  setGlobalInfo: (value: any) => void;
+  globalConfig: any;
+  setGlobalConfig: (value: any) => void;
 };

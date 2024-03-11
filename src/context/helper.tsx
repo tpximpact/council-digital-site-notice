@@ -1,4 +1,4 @@
 export const defaultValue = {
-  globalInfo: {},
-  setGlobalInfo: () => {},
+  globalConfig: {},
+  setGlobalConfig: () => {},
 };

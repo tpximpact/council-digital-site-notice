@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { ContextApplication } from "@/context";
 
 const ConcernInfo = () => {
-  const { globalInfo } = useContext(ContextApplication);
-  return <p className="govuk-body">{globalInfo?.concernContent}</p>;
+  const { globalConfig } = useContext(ContextApplication);
+  return <p className="govuk-body">{globalConfig?.concernContent}</p>;
 };
 
 export default ConcernInfo;

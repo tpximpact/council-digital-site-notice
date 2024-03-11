@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { ContextApplication } from "@/context";
 const Banner = () => {
-  const { globalInfo } = useContext(ContextApplication);
-  const feedbackUrl = globalInfo?.feedbackUrl;
+  const { globalConfig } = useContext(ContextApplication);
+  const feedbackUrl = globalConfig?.feedbackUrl;
 
   return (
     <div className={feedbackUrl && `govuk-phase-banner`}>

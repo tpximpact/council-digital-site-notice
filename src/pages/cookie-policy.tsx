@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { ContextApplication } from "@/context";
 
 const CookiePolicyPage = () => {
-  const { globalInfo } = useContext(ContextApplication);
-  return <p className="govuk-body">{globalInfo?.cookiePolicyContent}</p>;
+  const { globalConfig } = useContext(ContextApplication);
+  return <p className="govuk-body">{globalConfig?.cookiePolicyContent}</p>;
 };
 
 export default CookiePolicyPage;

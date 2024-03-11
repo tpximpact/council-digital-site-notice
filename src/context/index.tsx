@@ -6,13 +6,13 @@ export const ContextApplication =
   createContext<ContextApplicationProps>(defaultValue);
 
 function Context({ children }: any) {
-  const [globalInfo, setGlobalInfo] = useState({});
+  const [globalConfig, setGlobalConfig] = useState({});
 
   return (
     <ContextApplication.Provider
       value={{
-        globalInfo,
-        setGlobalInfo,
+        globalConfig,
+        setGlobalConfig,
       }}
     >
       {children}

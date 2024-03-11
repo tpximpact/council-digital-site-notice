@@ -27,7 +27,7 @@ const PersonalDetails = ({
   onChangeQuestion: () => void;
   setQuestion: (value: number) => void;
 }) => {
-  const { globalInfo } = useContext(ContextApplication);
+  const { globalConfig } = useContext(ContextApplication);
   const [isError, setIsError] = useState<boolean>(false);
   const [id, setId] = useState();
   const [personalDetailsForm, setPersonalDetailsForm] =
@@ -172,7 +172,7 @@ const PersonalDetails = ({
       <div>
         <Checkbox
           labelClass="consent-label"
-          label={`I consent to ${globalInfo?.councilName} Council using my data for the purposes of assessing this planning application`}
+          label={`I consent to ${globalConfig?.councilName} Council using my data for the purposes of assessing this planning application`}
           isError={isConsentError}
           messageError="You need to consent"
           id="consent"

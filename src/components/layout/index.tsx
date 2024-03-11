@@ -11,7 +11,7 @@ import { ContextApplication } from "@/context";
 const globalContent = await getGlobalContent();
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { setGlobalInfo } = useContext(ContextApplication);
+  const { setGlobalConfig } = useContext(ContextApplication);
   const [isShowCookie, setIsShowCookie] = useState<boolean>(true);
 
   const favicon =
@@ -26,8 +26,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     });
     setIsShowCookie(getLocalStorageCookies);
 
-    setGlobalInfo(globalContent);
-  }, [setGlobalInfo]);
+    setGlobalConfig(globalContent);
+  }, [setGlobalConfig]);
 
   return (
     <main>
