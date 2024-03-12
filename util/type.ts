@@ -13,6 +13,7 @@ export type Jobs = {
 export type ProposedLandUse = {
   classB: boolean;
   classC: boolean;
+  classCHotel: boolean;
   classE: boolean;
   classF: boolean;
   suiGeneris: boolean;
