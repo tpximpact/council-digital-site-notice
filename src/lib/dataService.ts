@@ -26,11 +26,13 @@ export class DataClient {
     // lastId?: string,
     itemsPerPage?: number,
     offSet?: number,
+    location?: any,
   ): Promise<siteNoticeResponse> {
     const resultData = await this.sanityClient.getActiveApplications(
       // lastId,
       itemsPerPage,
       offSet,
+      location,
     );
     let openDataPosts = [];
     if (this.integrationMethod == "OpenData") {
