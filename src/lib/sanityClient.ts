@@ -5,6 +5,7 @@ type sanityApplicationResponse = {
   results: {
     _id: string;
     applicationNumber: string;
+    distance?: number;
   }[];
   total: number;
 };
@@ -33,16 +34,38 @@ export class SanityClient {
   async getActiveApplications(
     itemsPerPage?: number,
     offSet: number = 0,
+  ): Promise<sanityApplicationResponse> {
+    let query;
+
+    query = `{
+      "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) 
+        ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} {
+          _id, 
+          image_head, 
+          name, 
+          applicationNumber, 
+          applicationName, 
+          address
+        },
+      "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])
+    }`;
+
+    const response = await this.client.fetch(query);
+    return response;
+  }
+
+  async getActiveApplicationsByLocation(
+    itemsPerPage?: number,
+    offSet: number = 0,
     location?: { latitude: number; longitude: number },
   ): Promise<sanityApplicationResponse> {
-    let chosenQuery;
+    let query;
     if (
       location &&
       typeof location.latitude === "number" &&
       typeof location.longitude === "number"
     ) {
-      // Query with geospatial sorting when location is provided
-      chosenQuery = `{
+      query = `{
         "results": 
         *[_type == "planning-application" && defined(location) && isActive == true && !(_id in path("drafts.**"))] | order(geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude}))) ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} 
            {
@@ -56,31 +79,15 @@ export class SanityClient {
           },
         "total": count(*[_type == "planning-application" && defined(location) && isActive == true && !(_id in path("drafts.**"))]),
       }`;
-    } else {
-      // Default query without geospatial considerations
-      chosenQuery = `{
-        "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) 
-          ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} {
-            _id, 
-            image_head, 
-            name, 
-            applicationNumber, 
-            applicationName, 
-            address
-          },
-        "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])
-      }`;
     }
 
-    // Execute the fetch with the chosenQuery
-    const response = await this.client.fetch(chosenQuery);
+    const response = await this.client.fetch(query);
     if (response.results) {
       response.results.forEach((result: { distance: number }) => {
         if (result.distance) {
-          // convert the distance from meters to miles
+          // convert the distance of each distance from meters to miles
           result.distance = result.distance * 0.000621371192;
           result.distance = Math.round(result.distance);
-          console.log("distance in rounded miles", result.distance);
         }
       });
     }

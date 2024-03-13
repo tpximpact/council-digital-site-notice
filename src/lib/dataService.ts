@@ -26,14 +26,23 @@ export class DataClient {
     // lastId?: string,
     itemsPerPage?: number,
     offSet?: number,
-    location?: any,
+    location?: { latitude: number; longitude: number },
   ): Promise<siteNoticeResponse> {
-    const resultData = await this.sanityClient.getActiveApplications(
-      // lastId,
-      itemsPerPage,
-      offSet,
-      location,
-    );
+    let resultData;
+    if (location) {
+      resultData = await this.sanityClient.getActiveApplicationsByLocation(
+        // lastId,
+        itemsPerPage,
+        offSet,
+        location,
+      );
+    } else {
+      resultData = await this.sanityClient.getActiveApplications(
+        // lastId,
+        itemsPerPage,
+        offSet,
+      );
+    }
     let openDataPosts = [];
     if (this.integrationMethod == "OpenData") {
       openDataPosts = await this.openDataClient.getOpenDataApplications(
