@@ -61,5 +61,40 @@ describe("DataClient", () => {
       expect(openDataClient2.getOpenDataApplications).not.toHaveBeenCalled();
       expect(response).toEqual(resultData);
     });
+    describe("getAllSiteNotices by location", () => {
+      it("should filter and sort site notices by location when provided", async () => {
+        const sanityClient = new SanityClient();
+        const openDataClient = new OpenDataClient();
+        const dataClient = new DataClient(sanityClient, openDataClient);
+
+        const location = { latitude: 40.7128, longitude: -74.006 };
+
+        const sanityResultData = {
+          results: [
+            { _id: "1", applicationNumber: "123", distance: 1000 },
+            { _id: "2", applicationNumber: "456", distance: 5000 },
+          ],
+          total: 2,
+        };
+
+        jest
+          .spyOn(sanityClient, "getActiveApplicationsByLocation")
+          .mockResolvedValue(sanityResultData);
+
+        const response = await dataClient.getAllSiteNotices(
+          undefined,
+          undefined,
+          location,
+        );
+
+        expect(
+          sanityClient.getActiveApplicationsByLocation,
+        ).toHaveBeenCalledWith(undefined, location, undefined);
+        expect(response.results.length).toBe(2);
+        expect(response.results[0]._id).toBe("1");
+        expect(response.results[1]._id).toBe("2");
+        expect(response.total).toBe(2);
+      });
+    });
   });
 });
