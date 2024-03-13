@@ -83,13 +83,13 @@ describe("DataClient", () => {
 
         const response = await dataClient.getAllSiteNotices(
           undefined,
-          undefined,
           location,
+          undefined,
         );
 
         expect(
           sanityClient.getActiveApplicationsByLocation,
-        ).toHaveBeenCalledWith(undefined, undefined, location);
+        ).toHaveBeenCalledWith(undefined, location, undefined);
         expect(response.results.length).toBe(2);
         expect(response.results[0]._id).toBe("1");
         expect(response.results[1]._id).toBe("2");

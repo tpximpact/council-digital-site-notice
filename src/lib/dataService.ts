@@ -24,23 +24,23 @@ export class DataClient {
 
   async getAllSiteNotices(
     // lastId?: string,
-    itemsPerPage?: number,
     offSet?: number,
     location?: { latitude: number; longitude: number },
+    itemsPerPage?: number,
   ): Promise<siteNoticeResponse> {
     let resultData;
     if (location) {
       resultData = await this.sanityClient.getActiveApplicationsByLocation(
         // lastId,
-        itemsPerPage,
         offSet,
         location,
+        itemsPerPage,
       );
     } else {
       resultData = await this.sanityClient.getActiveApplications(
         // lastId,
-        itemsPerPage,
         offSet,
+        itemsPerPage,
       );
     }
     let openDataPosts = [];
