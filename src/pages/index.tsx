@@ -19,7 +19,7 @@ export const itemsPerPage = 6;
 const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
 
 export async function getStaticProps() {
-  const data = await dataClient.getAllSiteNotices(0, undefined, itemsPerPage);
+  const data = await dataClient.getAllSiteNotices(0, itemsPerPage);
   return {
     props: {
       data: data.results,
@@ -51,8 +51,8 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
 
     const newData = await dataClient.getAllSiteNotices(
       newOffset,
-      location,
       totalPage,
+      location,
     );
     setDisplayData(newData?.results as Data[]);
     setDynamicTotalResults(newData?.total as number);
@@ -75,8 +75,8 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
     // Fetching sorted applications based on lat/long
     const newData = await dataClient.getAllSiteNotices(
       0,
-      location,
       itemsPerPage,
+      location,
     );
     setDisplayData(newData?.results as Data[]);
     setDynamicTotalResults(newData?.total as number);

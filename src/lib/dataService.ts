@@ -25,8 +25,8 @@ export class DataClient {
   async getAllSiteNotices(
     // lastId?: string,
     offSet?: number,
-    location?: { latitude: number; longitude: number },
     itemsPerPage?: number,
+    location?: { latitude: number; longitude: number },
   ): Promise<siteNoticeResponse> {
     let resultData;
     if (location) {

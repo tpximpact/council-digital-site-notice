@@ -83,8 +83,8 @@ describe("DataClient", () => {
 
         const response = await dataClient.getAllSiteNotices(
           undefined,
-          location,
           undefined,
+          location,
         );
 
         expect(
