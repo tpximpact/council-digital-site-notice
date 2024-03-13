@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 type BreadcrumbsInfo = {
-  name: string;
+  name?: string;
   href: string;
 };
 

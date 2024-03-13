@@ -6,6 +6,19 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
+      title: "Integrations",
+      name: "integrations",
+      type: "string",
+      options: {
+        list: [
+          { title: "Manual", value: "manual" },
+          { title: "OpenAPI", value: "openAPI" },
+        ],
+        layout: "radio",
+        direction: "vertical",
+      },
+    }),
+    defineField({
       title: "Concern Url",
       name: "concernUrl",
       type: "string",
@@ -63,5 +76,14 @@ export default defineType({
       type: "image",
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      title: "Google Analytics",
+      name: "googleAnalytics",
+      type: "string",
+      description: "Optional",
+    }),
   ],
+  initialValue: {
+    integrations: "manual",
+  },
 });
