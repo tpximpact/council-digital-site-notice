@@ -34,12 +34,14 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
   const [location, setLocation] = useState<any>();
   const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
   const [displayData, setDisplayData] = useState<Data[]>();
+  const [dynamicTotalResults, setDynamicTotalResults] =
+    useState<number>(resultsTotal);
 
   useEffect(() => {
     setDisplayData(data as Data[]);
   }, [data]);
 
-  const pageCount = Math.ceil(resultsTotal / itemsPerPage);
+  const pageCount = Math.ceil(dynamicTotalResults / itemsPerPage);
 
   const handlePageClick = async (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % resultsTotal;
@@ -53,6 +55,7 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
       location,
     );
     setDisplayData(newData?.results as Data[]);
+    setDynamicTotalResults(newData?.total as number);
   };
 
   const onSearchPostCode = async () => {
@@ -76,6 +79,7 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
       location,
     );
     setDisplayData(newData?.results as Data[]);
+    setDynamicTotalResults(newData?.total as number);
   };
 
   return (
