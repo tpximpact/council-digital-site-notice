@@ -93,7 +93,6 @@
 
 .large-margin-top {
   margin-top: -15px;
-  margin-top: -15px;
   max-width: 16rem;
 }
 
@@ -119,6 +118,7 @@
 .wrap-grid-button {
   display: flex;
   gap: 50px;
+  min-height: 250px;
 }
 
 .process-consultation {
