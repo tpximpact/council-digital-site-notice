@@ -24,7 +24,7 @@ import { verifyApiKey } from "../../../util/apiKey";
  *              applicationStage: string
  *              height: string
  *              developmentType: string
- *              commentDeadline: string
+ *              consultationDeadline: string
  *              openSpaceGardens: boolean
  *              affordableHousing: string
  *              c02Emissions: string
@@ -37,7 +37,7 @@ import { verifyApiKey } from "../../../util/apiKey";
  *                applicationStage: PCO
  *                height: 14
  *                developmentType: Change of Use
- *                commentDeadline: 31/12/2023 12:00:00 am
+ *                consultationDeadline: 31/12/2023 12:00:00 am
  *                openSpaceGardens: true
  *     responses:
  *       200:
@@ -81,7 +81,7 @@ export default async function handler(
         applicationType,
         applicationStage,
         height,
-        commentDeadline,
+        consultationDeadline,
       } = req.body[key];
 
       const validationErrors = await validatePlanningParams(req.body[key]);
@@ -99,7 +99,7 @@ export default async function handler(
         applicationType,
         applicationStage,
         height,
-        commentDeadline,
+        consultationDeadline,
         isActive: false,
         _type: "planning-application",
       };

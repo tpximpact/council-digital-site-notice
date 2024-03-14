@@ -42,16 +42,16 @@ export async function getStaticPaths() {
 }
 
 const Application = ({ data }: { data: DataDetails }) => {
-  const [commentDeadline, setCommentDeadline] = useState<string>("");
+  const [consultationDeadline, setConsultationDeadline] = useState<string>("");
 
   useEffect(() => {
     let deadlineTime;
 
     if (data?.enableComments) {
-      const deadline = moment(data?.commentDeadline);
+      const deadline = moment(data?.consultationDeadline);
       const today = moment().hour(0).minute(0).second(0);
       deadlineTime = moment.duration(deadline.diff(today)).asDays().toFixed(0);
-      setCommentDeadline(deadlineTime);
+      setConsultationDeadline(deadlineTime);
     }
 
     localStorage.setItem(
@@ -60,7 +60,7 @@ const Application = ({ data }: { data: DataDetails }) => {
         address: data?.address,
         image_head: data?.image_head,
         image_gallery: data?.image_gallery,
-        deadline: data?.commentDeadline,
+        deadline: data?.consultationDeadline,
         name: data?.name,
         _id: data?._id,
         applicationNumber: data?.applicationNumber,
@@ -68,7 +68,7 @@ const Application = ({ data }: { data: DataDetails }) => {
         applicationUpdatesUrl: data?.applicationUpdatesUrl,
       }),
     );
-  }, [data, commentDeadline]);
+  }, [data, consultationDeadline]);
 
   const breadcrumbs_array = [
     { name: "Planning applications", href: "/" },
@@ -93,7 +93,7 @@ const Application = ({ data }: { data: DataDetails }) => {
         showHousing ||
         showJobs ||
         showOpenSpace) && <Impact data={data} />}
-      <Process data={data} commentDeadline={commentDeadline} />
+      <Process data={data} consultationDeadline={consultationDeadline} />
     </>
   );
 };

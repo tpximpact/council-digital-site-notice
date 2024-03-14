@@ -9,7 +9,7 @@ const PlanningValidation = z.object({
   applicationType: z.string().optional(),
   applicationStage: z.string().optional(),
   height: z.number().optional(),
-  commentDeadline: z.date().optional(),
+  consultationDeadline: z.date().optional(),
 });
 const ReferenceResult = z.object({
   exists: z.boolean().refine((value) => value == false, {

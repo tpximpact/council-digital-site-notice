@@ -1,4 +1,4 @@
-import Checkbox from "../../src/components/checkbox";
+import Checkbox from "../src/components/checkbox";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 

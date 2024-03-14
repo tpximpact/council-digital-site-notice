@@ -109,7 +109,7 @@ describe("Applications API", () => {
       address: undefined,
       applicationStage: undefined,
       applicationType: undefined,
-      commentDeadline: undefined,
+      consultationDeadline: undefined,
       description: "Sample description",
       developmentType: undefined,
       height: undefined,

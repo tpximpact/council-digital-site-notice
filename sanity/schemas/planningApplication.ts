@@ -15,7 +15,6 @@ export default defineType({
     proposedLandUse: {
       classB: false,
       classC: false,
-      classCHotel: false,
       classE: false,
       classF: false,
       suiGeneris: false,
@@ -209,12 +208,10 @@ export default defineType({
       type: "boolean",
       initialValue: true,
       description: "Optional",
-      hidden: ({ document }: any) =>
-        document?.applicationStage?.stage !== "Consultation",
     }),
     defineField({
-      title: "Comment Deadline",
-      name: "commentDeadline",
+      title: "Consultation Deadline",
+      name: "consultationDeadline",
       type: "date",
       description: "Required",
       hidden: ({ document }: any) =>
@@ -263,14 +260,6 @@ export default defineType({
         {
           title: "Class C - Residential",
           name: "classC",
-          type: "boolean",
-          options: {
-            layout: "checkbox",
-          },
-        },
-        {
-          title: "Class C - Hotel",
-          name: "classCHotel",
           type: "boolean",
           options: {
             layout: "checkbox",

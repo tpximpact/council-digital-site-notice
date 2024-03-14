@@ -5,8 +5,7 @@ import "swagger-ui-react/swagger-ui.css";
 import SwaggerUI from "swagger-ui-react";
 
 function ApiDoc({ spec }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log({ spec });
-  // return <SwaggerUI spec={spec} />;
+  return <SwaggerUI spec={spec} />;
 }
 
 export const getStaticProps: GetStaticProps = async () => {

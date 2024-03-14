@@ -1,4 +1,4 @@
-import Breadcrumbs from "../../src/components/breadcrumbs";
+import Breadcrumbs from "../src/components/breadcrumbs";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 

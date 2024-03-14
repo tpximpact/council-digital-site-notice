@@ -13,7 +13,6 @@ export type Jobs = {
 export type ProposedLandUse = {
   classB: boolean;
   classC: boolean;
-  classCHotel: boolean;
   classE: boolean;
   classF: boolean;
   suiGeneris: boolean;
@@ -27,7 +26,7 @@ export type Data = {
   description: string;
   height: number;
   applicationNumber: string;
-  commentDeadline: string;
+  consultationDeadline: string;
   applicationType: string;
   image_head?: string;
   image_gallery: any[];
@@ -63,7 +62,7 @@ export type DataDetails = {
   image_head?: string;
   image_gallery: any[];
   enableComments?: boolean;
-  commentDeadline: string;
+  consultationDeadline: string;
   applicationType: string;
   address: string;
   description: string;
