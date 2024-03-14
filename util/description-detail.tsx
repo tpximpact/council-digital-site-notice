@@ -27,10 +27,10 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         details.
       </p>
 
-      <p className="govuk-body-s govuk-!-font-weight-bold govuk-!-margin-0">
+      <p style={{ fontWeight: 700 }}>
         Application for removal/variation of conditions
       </p>
-      <p className="govuk-body-s">
+      <p className="govuk-body">
         Planning applications are often approved with 'conditions', which have
         to be delivered before, during or after construction. Applicants have to
         apply to change these conditions.
