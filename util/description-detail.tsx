@@ -28,14 +28,12 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
       </p>
 
       <p className="govuk-body-s govuk-!-font-weight-bold govuk-!-margin-0">
-        To make sure we balance our priorities
+        Application for removal/variation of conditions
       </p>
       <p className="govuk-body-s">
-        A single development is unlikely to fulfil all the priorities for the
-        local area. It's useful to be able to demonstrate which priorities are
-        important to residents, so they can push developers to be more ambitious
-        with their targets. Telling us what your priorities are can help
-        planners make that decision.
+        Planning applications are often approved with 'conditions', which have
+        to be delivered before, during or after construction. Applicants have to
+        apply to change these conditions.
       </p>
     </>
   ),
