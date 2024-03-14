@@ -5,6 +5,7 @@ import {
   consultation,
   decision,
 } from "../structure/helper";
+import PopulateButton from "../../src/components/populate-button";
 
 export default defineType({
   title: "Planning application",
@@ -30,12 +31,29 @@ export default defineType({
         "Optional - When set to true will show on the website. Will be hidden if false.",
     }),
     defineField({
+      title: "Planning Id",
+      name: "planningId",
+      type: "string",
+      description:
+        "Required for old id links - This is the id from internal systems and can be used to link to the planning application url",
+      readOnly: false,
+    }),
+    defineField({
       title: "Application number",
       name: "applicationNumber",
       type: "string",
       description: "Required",
       validation: (Rule: any) => Rule.required(),
       readOnly: false,
+    }),
+    defineField({
+      name: "populateApi",
+      title: "Integrations",
+      type: "string",
+      components: {
+        input: PopulateButton,
+      },
+      description: "Fetch data from the selected integration.",
     }),
     defineField({
       title: "Application Type",
@@ -61,8 +79,7 @@ export default defineType({
       title: "Address",
       name: "address",
       type: "string",
-      description: "Required",
-      validation: (Rule: any) => Rule.required(),
+      description: "Optional",
     }),
     defineField({
       title: "Application Updates Url",
@@ -91,6 +108,19 @@ export default defineType({
           type: "image",
         },
       ],
+      validation: (Rule) =>
+        Rule.custom((field: any) => {
+          const duplicates = field.filter((item: any, index: number) =>
+            field.some(
+              (elem: any, idx: number) =>
+                elem.asset._ref === item.asset._ref && idx !== index,
+            ),
+          );
+          if (duplicates?.length > 0) {
+            return "You can't upload an image twice";
+          }
+          return true;
+        }),
       description: "Optional",
     }),
     defineField({
@@ -123,7 +153,9 @@ export default defineType({
               type: "string",
               options: {
                 list: consultation,
+                layout: "radio",
               },
+              initialValue: consultation[0],
               hidden: ({ document }: any) =>
                 document?.applicationStage?.stage !== "Consultation",
             },
@@ -133,7 +165,9 @@ export default defineType({
               type: "string",
               options: {
                 list: assessment,
+                layout: "radio",
               },
+              initialValue: assessment[0],
               hidden: ({ document }: any) =>
                 document?.applicationStage?.stage !== "Assessment",
             },
@@ -143,7 +177,9 @@ export default defineType({
               type: "string",
               options: {
                 list: decision,
+                layout: "radio",
               },
+              initialValue: decision[0],
               hidden: ({ document }: any) =>
                 document?.applicationStage?.stage !== "Decision",
             },
@@ -153,7 +189,9 @@ export default defineType({
               type: "string",
               options: {
                 list: appeal,
+                layout: "radio",
               },
+              initialValue: appeal[0],
               hidden: ({ document }: any) =>
                 document?.applicationStage?.stage !== "Appeal",
             },

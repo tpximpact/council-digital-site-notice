@@ -1,75 +1,85 @@
 import { useEffect, useState, useContext } from "react";
 import PlanningApplications from "../components/planning-application";
-import Pagination from "../components/pagination";
+import { SanityClient } from "../lib/sanityClient";
+import { PaginationType, Data } from "../../util/type";
+import { ContextApplication } from "@/context";
+import { DataClient } from "../lib/dataService";
+import { OpenDataClient } from "../lib/openDataClient";
+import ReactPaginate from "react-paginate";
+import { NextIcon } from "../../public/assets/icons";
+import { PreviewIcon } from "../../public/assets/icons";
 import Input from "@/components/input";
 import { Button } from "@/components/button";
 import { ArrowIcon } from "../../public/assets/icons";
-import {
-  getActiveApplications,
-  getActiveApplicationsPagination,
-  getGlobalContent,
-} from "../../util/client";
-import { PaginationType, Data } from "../../util/type";
-import { getLocationFromPostcode } from "../../util/geolocation";
-import { ContextApplication } from "@/context";
 import Link from "next/link";
+import { getLocationFromPostcode } from "../../util/geolocation";
+import { getDistance, convertDistance } from "geolib";
 
 export const itemsPerPage = 6;
+const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
 
 export async function getStaticProps() {
-  const dataId = await getActiveApplications();
-  const data = await getActiveApplicationsPagination({ itemsPerPage });
-  const globalContent = await getGlobalContent();
-
+  const data = await dataClient.getAllSiteNotices(0, itemsPerPage);
   return {
     props: {
-      dataId,
-      data,
-      globalContent,
+      data: data.results,
+      resultsTotal: data.total,
     },
   };
 }
 
-const Home = ({ dataId, data, globalContent }: PaginationType) => {
-  const { setGlobalInfo } = useContext(ContextApplication);
+const Home = ({ data, resultsTotal }: PaginationType) => {
+  const { globalConfig } = useContext(ContextApplication);
   const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
   const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
   const [displayData, setDisplayData] = useState<Data[]>();
+  const [dynamicTotalResults, setDynamicTotalResults] =
+    useState<number>(resultsTotal);
 
   useEffect(() => {
-    setDisplayData(data);
-    setGlobalInfo(globalContent);
-    localStorage.setItem("globalInfo", JSON.stringify(globalContent));
-  }, [dataId, data, globalContent, setGlobalInfo]);
+    setDisplayData(data as Data[]);
+  }, [data]);
 
-  async function onSelectPage({ _id }: any) {
-    const res = await getActiveApplicationsPagination({
-      _id,
-      itemsPerPage,
+  const pageCount = Math.ceil(dynamicTotalResults / itemsPerPage);
+
+  const handlePageClick = async (event: any) => {
+    const newOffset = (event.selected * itemsPerPage) % resultsTotal;
+    const newTotalPagecount = resultsTotal - newOffset;
+    const totalPage =
+      newTotalPagecount >= itemsPerPage ? itemsPerPage : newTotalPagecount;
+
+    const newData = await dataClient.getAllSiteNotices(
+      newOffset,
+      totalPage,
       location,
-    });
-    setDisplayData(res);
-  }
+    );
+    setDisplayData(newData?.results as Data[]);
+    setDynamicTotalResults(newData?.total as number);
+  };
 
   const onSearchPostCode = async () => {
-    let location;
-
-    if (postcode != null) {
-      setLocationNotFound(false);
-      location = await getLocationFromPostcode(postcode);
-
-      if (location == null) {
-        setLocationNotFound(true);
-      }
+    let location: any;
+    if (!postcode) {
+      setLocationNotFound(true);
+      return;
     }
-
+    location = await getLocationFromPostcode(postcode);
+    if (!location) {
+      setLocationNotFound(true);
+      return;
+    }
+    setLocationNotFound(false);
     setLocation(location);
-    const res = await getActiveApplicationsPagination({
+
+    // Fetching sorted applications based on lat/long
+    const newData = await dataClient.getAllSiteNotices(
+      0,
       itemsPerPage,
       location,
-    });
-    setDisplayData(res);
+    );
+    setDisplayData(newData?.results as Data[]);
+    setDynamicTotalResults(newData?.total as number);
   };
 
   return (
@@ -83,7 +93,7 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
       </h1>
       <p className="govuk-body-m">
         Find, review and leave your comments on planning applications in{" "}
-        {globalContent?.councilName}
+        {globalConfig?.councilName}
       </p>
       <section className="search-grid">
         <Input
@@ -100,12 +110,12 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
           icon={<ArrowIcon />}
           onClick={() => onSearchPostCode()}
         />
-        {globalContent?.signUpUrl && (
+        {globalConfig?.signUpUrl && (
           <Link
             className="govuk-button grid-button-signup govuk-button--secondary"
             target="_blank"
             style={{ textDecoration: "none" }}
-            href={`${globalContent?.signUpUrl}`}
+            href={`${globalConfig?.signUpUrl}`}
           >
             Sign up for alerts on applications near you
           </Link>
@@ -115,13 +125,28 @@ const Home = ({ dataId, data, globalContent }: PaginationType) => {
         <PlanningApplications data={displayData} searchLocation={location} />
       )}
 
-      {dataId?.length > itemsPerPage && (
-        <Pagination
-          data={dataId}
-          onSelectPage={(value: any) => onSelectPage(value)}
-          itemsPerPage={itemsPerPage}
+      <div className="wrap-pagination">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel={<NextIcon />}
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={2}
+          marginPagesDisplayed={1}
+          pageCount={pageCount}
+          previousLabel={<PreviewIcon />}
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination govuk-body"
+          activeClassName="active"
+          renderOnZeroPageCount={null}
         />
-      )}
+      </div>
     </div>
   );
 };

@@ -195,6 +195,66 @@ exports[`renders homepage unchanged 1`] = `
         </span>
       </button>
     </section>
+    <div
+      class="wrap-pagination"
+    >
+      <ul
+        aria-label="Pagination"
+        class="pagination govuk-body"
+        role="navigation"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <a
+            aria-disabled="true"
+            aria-label="Previous page"
+            class="page-link "
+            rel="prev"
+            role="button"
+            tabindex="-1"
+          >
+            <svg
+              fill="none"
+              height="13"
+              viewBox="0 0 15 13"
+              width="15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.893 13.125L8.3066 11.711L4.014 7.418L17 7.418V5.418L4.104 5.418L8.2895 1.4414L6.9125 -0.0078001L0.1684 6.3984L6.893 13.125Z"
+                fill="#505A5F"
+              />
+            </svg>
+          </a>
+        </li>
+        <li
+          class="page-item"
+        >
+          <a
+            aria-disabled="false"
+            aria-label="Next page"
+            class="page-link"
+            rel="next"
+            role="button"
+            tabindex="0"
+          >
+            <svg
+              fill="none"
+              height="13"
+              viewBox="0 0 15 13"
+              width="15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.107 -0.0078125L6.6934 1.40619L10.986 5.69919H-2V7.69919H10.896L6.7105 11.6758L8.0875 13.125L14.8316 6.71879L8.107 -0.0078125Z"
+                fill="#505A5F"
+              />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 `;

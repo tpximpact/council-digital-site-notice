@@ -1,16 +1,9 @@
-import { getGlobalContent } from "../../util/client";
+import { useContext } from "react";
+import { ContextApplication } from "@/context";
 
-export async function getStaticProps() {
-  const data = await getGlobalContent();
-  return {
-    props: {
-      data: data,
-    },
-  };
-}
-
-const ConcernInfo = ({ data }: any) => {
-  return <p className="govuk-body">{data?.concernContent}</p>;
+const ConcernInfo = () => {
+  const { globalConfig } = useContext(ContextApplication);
+  return <p className="govuk-body">{globalConfig?.concernContent}</p>;
 };
 
 export default ConcernInfo;

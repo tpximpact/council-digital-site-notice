@@ -31,6 +31,9 @@ export type Data = {
   applicationType: string;
   image_head?: string;
   image_gallery: any[];
+  applicationUpdatesUrl?: string;
+  location: { lng: number; lat: number };
+  distance?: string;
 };
 
 export type DataDetails = {
@@ -77,6 +80,7 @@ export type PaginationType = {
   data: Data[];
   paginationData?: Data[];
   globalContent: any;
+  resultsTotal: number;
 };
 
 export type CommentForm = {
@@ -133,20 +137,6 @@ export type FeelingType = {
 };
 
 export type ContextApplicationProps = {
-  dataApplication: any;
-  setDataApplication: (dataApplication: any) => void;
-  question: number;
-  setQuestion: (value: number) => void;
-  selectedCheckbox: number[];
-  setSelectedCheckbox: (value: any) => void;
-  onChangeQuestion: () => void;
-  feelingForm: string;
-  setFeelingForm: (value: string) => void;
-  commentForm: CommentForm;
-  setCommentForm: (value: any) => void;
-  personalDetailsForm: PersonalDetailsForm;
-  setPersonalDetailsForm: (value: any) => void;
-  globalInfo: any;
-  setGlobalInfo: (value: any) => void;
-  contextCleaner: () => void;
+  globalConfig: any;
+  setGlobalConfig: (value: any) => void;
 };
