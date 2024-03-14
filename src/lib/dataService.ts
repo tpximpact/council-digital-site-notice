@@ -24,14 +24,25 @@ export class DataClient {
 
   async getAllSiteNotices(
     // lastId?: string,
-    itemsPerPage?: number,
     offSet?: number,
+    itemsPerPage?: number,
+    location?: { latitude: number; longitude: number },
   ): Promise<siteNoticeResponse> {
-    const resultData = await this.sanityClient.getActiveApplications(
-      // lastId,
-      itemsPerPage,
-      offSet,
-    );
+    let resultData;
+    if (location) {
+      resultData = await this.sanityClient.getActiveApplicationsByLocation(
+        // lastId,
+        offSet,
+        location,
+        itemsPerPage,
+      );
+    } else {
+      resultData = await this.sanityClient.getActiveApplications(
+        // lastId,
+        offSet,
+        itemsPerPage,
+      );
+    }
     let openDataPosts = [];
     if (this.integrationMethod == "OpenData") {
       openDataPosts = await this.openDataClient.getOpenDataApplications(
