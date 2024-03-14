@@ -19,7 +19,7 @@ export const itemsPerPage = 6;
 const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
 
 export async function getStaticProps() {
-  const data = await dataClient.getAllSiteNotices(itemsPerPage, 0);
+  const data = await dataClient.getAllSiteNotices(0, itemsPerPage);
   return {
     props: {
       data: data.results,
@@ -34,12 +34,14 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
   const [location, setLocation] = useState<any>();
   const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
   const [displayData, setDisplayData] = useState<Data[]>();
+  const [dynamicTotalResults, setDynamicTotalResults] =
+    useState<number>(resultsTotal);
 
   useEffect(() => {
     setDisplayData(data as Data[]);
   }, [data]);
 
-  const pageCount = Math.ceil(resultsTotal / itemsPerPage);
+  const pageCount = Math.ceil(dynamicTotalResults / itemsPerPage);
 
   const handlePageClick = async (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % resultsTotal;
@@ -47,55 +49,37 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
     const totalPage =
       newTotalPagecount >= itemsPerPage ? itemsPerPage : newTotalPagecount;
 
-    const newData = await dataClient.getAllSiteNotices(totalPage, newOffset);
-    console.log(newData.results);
+    const newData = await dataClient.getAllSiteNotices(
+      newOffset,
+      totalPage,
+      location,
+    );
     setDisplayData(newData?.results as Data[]);
+    setDynamicTotalResults(newData?.total as number);
   };
 
-  // this needs to be refactored once data is held in Sanity
   const onSearchPostCode = async () => {
     let location: any;
-
-    if (postcode != null) {
-      setLocationNotFound(false);
-      location = await getLocationFromPostcode(postcode);
-
-      if (location == null) {
-        setLocationNotFound(true);
-      }
+    if (!postcode) {
+      setLocationNotFound(true);
+      return;
     }
+    location = await getLocationFromPostcode(postcode);
+    if (!location) {
+      setLocationNotFound(true);
+      return;
+    }
+    setLocationNotFound(false);
     setLocation(location);
 
-    if (location) {
-      //remove any data elements that dont have a location or location.lat location.lng, keep the elements so i can attache them to the end of the array
-      const dataWithoutLocation = data.filter((el) => !el.location);
-      dataWithoutLocation.forEach((el) => {
-        const index = data.indexOf(el);
-        if (index !== -1) {
-          data.splice(index, 1);
-        }
-      });
-
-      const sortedData = data.sort((a, b) => {
-        if (!a.location || !b.location) {
-          return -1;
-        }
-        const distanceA = getDistance(
-          { latitude: location.latitude, longitude: location.longitude },
-          { latitude: a.location.lat, longitude: a.location.lng },
-        );
-        const distanceB = getDistance(
-          { latitude: location.latitude, longitude: location.longitude },
-          { latitude: b.location.lat, longitude: b.location.lng },
-        );
-        //adds the distance to the object
-        a.distance = convertDistance(distanceA, "mi").toFixed(2);
-        return distanceA - distanceB;
-      });
-      //adds the data without location to the end of the array
-      sortedData.push(...dataWithoutLocation);
-      setDisplayData(sortedData as Data[]);
-    }
+    // Fetching sorted applications based on lat/long
+    const newData = await dataClient.getAllSiteNotices(
+      0,
+      itemsPerPage,
+      location,
+    );
+    setDisplayData(newData?.results as Data[]);
+    setDynamicTotalResults(newData?.total as number);
   };
 
   return (
