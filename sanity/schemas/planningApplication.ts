@@ -15,6 +15,7 @@ export default defineType({
     proposedLandUse: {
       classB: false,
       classC: false,
+      classCHotel: false,
       classE: false,
       classF: false,
       suiGeneris: false,
@@ -107,6 +108,19 @@ export default defineType({
           type: "image",
         },
       ],
+      validation: (Rule) =>
+        Rule.custom((field: any) => {
+          const duplicates = field.filter((item: any, index: number) =>
+            field.some(
+              (elem: any, idx: number) =>
+                elem.asset._ref === item.asset._ref && idx !== index,
+            ),
+          );
+          if (duplicates?.length > 0) {
+            return "You can't upload an image twice";
+          }
+          return true;
+        }),
       description: "Optional",
     }),
     defineField({
@@ -249,6 +263,14 @@ export default defineType({
         {
           title: "Class C - Residential",
           name: "classC",
+          type: "boolean",
+          options: {
+            layout: "checkbox",
+          },
+        },
+        {
+          title: "Class C - Hotel",
+          name: "classCHotel",
           type: "boolean",
           options: {
             layout: "checkbox",

@@ -85,6 +85,7 @@ function About({ data }: { data: DataDetails }) {
       )}
       {(data?.proposedLandUse?.classB ||
         data?.proposedLandUse?.classC ||
+        data?.proposedLandUse?.classCHotel ||
         data?.proposedLandUse?.classE ||
         data?.proposedLandUse?.classF ||
         data?.proposedLandUse?.suiGeneris) && (
@@ -94,6 +95,7 @@ function About({ data }: { data: DataDetails }) {
             <ul>
               {data?.proposedLandUse?.classB && <li>Industrial</li>}
               {data?.proposedLandUse?.classC && <li>Residential</li>}
+              {data?.proposedLandUse?.classCHotel && <li>Hotel</li>}
               {data?.proposedLandUse?.classE && <li>Commercial</li>}
               {data?.proposedLandUse?.classF && <li>Community</li>}
               {data?.proposedLandUse?.suiGeneris && (

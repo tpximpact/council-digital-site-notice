@@ -1,4 +1,4 @@
-import Banner from "../src/components/banner";
+import Banner from "../../src/components/banner";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { ContextApplication } from "@/context";

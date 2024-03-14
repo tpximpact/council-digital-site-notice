@@ -22,7 +22,12 @@ function Process({
     data?.applicationStage?.status[
       data?.applicationStage?.stage?.toLowerCase()
     ];
-
+  const checkStage =
+    parseFloat(commentDeadline) <= 0 &&
+    data?.applicationStage?.stage == "Consultation" &&
+    singleApplicationStatus == "in progress"
+      ? "Assessment"
+      : data?.applicationStage?.stage;
   return (
     <section className="process-wrap">
       <h2 className="govuk-heading-l">Where are we in the process?</h2>
@@ -38,11 +43,7 @@ function Process({
       <div className="wrap-grid-button">
         <div className="process-grid">
           <p className="govuk-body govuk-!-font-weight-bold process-consultation">
-            {parseFloat(commentDeadline) <= 0 &&
-            data?.applicationStage?.stage == "Consultation" &&
-            singleApplicationStatus == "in progress"
-              ? "Assessment"
-              : data?.applicationStage?.stage}
+            {checkStage}
           </p>
           <p
             className={`govuk-body process-consultation-result ${aplicationStageStyle(singleApplicationStatus)}`}
@@ -59,10 +60,7 @@ function Process({
             )}
 
           <p className="govuk-body">
-            {applicationStageMessage(
-              data?.applicationStage?.stage,
-              singleApplicationStatus,
-            )}
+            {applicationStageMessage(checkStage, singleApplicationStatus)}
           </p>
         </div>
         <div style={{ marginTop: "20px" }}>
