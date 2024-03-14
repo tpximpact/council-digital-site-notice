@@ -1,5 +1,130 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`descriptionDetail should render the 'about' description correctly 1`] = `
+<div>
+  <p
+    style="font-weight: 700; margin-bottom: 0px;"
+  >
+    Full planning application
+  </p>
+  <p
+    class="govuk-body"
+  >
+    An application to alter, change the use of or construct a building. A full planning application provides all the details of the proposed development in one go.
+  </p>
+  <p
+    style="font-weight: 700;"
+  >
+    Outline planning application
+  </p>
+  <p
+    class="govuk-body"
+  >
+    An application seeking approval for the principle of the development — including size, layout, uses and key features. The rest of the details are provided later with a reserved matters applications.
+  </p>
+  <p
+    style="font-weight: 700;"
+  >
+    Reserved matters application
+  </p>
+  <p
+    class="govuk-body"
+  >
+    Provides the additional details that aren't provided in an outline planning application. This could include layout, materials and landscape details.
+  </p>
+  <p
+    class="govuk-body-s govuk-!-font-weight-bold govuk-!-margin-0"
+  >
+    To make sure we balance our priorities
+  </p>
+  <p
+    class="govuk-body-s"
+  >
+    A single development is unlikely to fulfil all the priorities for the local area. It's useful to be able to demonstrate which priorities are important to residents, so they can push developers to be more ambitious with their targets. Telling us what your priorities are can help planners make that decision.
+  </p>
+</div>
+`;
+
+exports[`descriptionDetail should render the 'home' description correctly 1`] = `
+<div>
+  <p
+    class="govuk-body"
+  >
+    The number of self contained homes that are being proposed. This includes affordable, social and private housing. Larger schemes might have a range showing the minimum and maximum number of homes if the total number is going to be decided later.
+  </p>
+  <p
+    class="govuk-body"
+  >
+    Affordable housing is a term used to cover different types of housing that are less costly than housing on the private market. This might be social rented housing, affordable rented housing or housing which the government helps people to buy a proportion of. It can be shown as a proportion of the total number of homes, or as a proportion of the total residential floorspace.
+  </p>
+</div>
+`;
+
+exports[`descriptionDetail should render the 'topics' description correctly 1`] = `
+<div>
+  <p
+    class="govuk-body-s"
+  >
+    As part of the negotiation, the case officer can take into consideration all comments which are ‘material considerations’ to the proposed development. These include (but aren't limited to):
+  </p>
+  <ul
+    class="govuk-body-s"
+  >
+    <li>
+      overlooking/loss of privacy
+    </li>
+    <li>
+      loss of light or overshadowing
+    </li>
+    <li>
+      traffic parking
+    </li>
+    <li>
+      highway safety
+    </li>
+    <li>
+      noise from new uses or plant equipment
+    </li>
+    <li>
+      effect on listed building and conservation area
+    </li>
+    <li>
+      scale of buildings and structures
+    </li>
+    <li>
+      layout and density of building
+    </li>
+    <li>
+      design, appearance and materials
+    </li>
+    <li>
+      disabled persons' access
+    </li>
+    <li>
+      previous planning decisions (including appeal decisions)
+    </li>
+    <li>
+      trees and nature conservation
+    </li>
+  </ul>
+  <p
+    class="govuk-body-s"
+  >
+    Issues such as loss of private view or negative impact on property values, or civil matters like ‘right to light’, party walls and property damage are not considered ‘material planning considerations’.
+  </p>
+  <p
+    class="govuk-body-s"
+  >
+    The case officer will summarise their findings in the officer's report and/or decision notice.
+  </p>
+  <p
+    class="govuk-body-s"
+  >
+    We won't acknowledge receipt of your comments, or get in touch with you directly about the issues you've raised. You can check the officer's report or decision notice to see if your, and other, comments have been logged.
+  </p>
+</div>
+`;
+
 exports[`renders homepage unchanged 1`] = `
 <div>
   <div

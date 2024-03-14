@@ -15,6 +15,7 @@ export default defineType({
     proposedLandUse: {
       classB: false,
       classC: false,
+      classCHotel: false,
       classE: false,
       classF: false,
       suiGeneris: false,
@@ -262,6 +263,14 @@ export default defineType({
         {
           title: "Class C - Residential",
           name: "classC",
+          type: "boolean",
+          options: {
+            layout: "checkbox",
+          },
+        },
+        {
+          title: "Class C - Hotel",
+          name: "classCHotel",
           type: "boolean",
           options: {
             layout: "checkbox",

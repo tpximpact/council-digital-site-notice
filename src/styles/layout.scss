@@ -1,99 +1,95 @@
 body {
-    margin: 0
-    }
-    
+  margin: 0;
+}
 
 .layout-wrap {
-        padding: 0 20px;
-        margin: 0 auto;
-        max-width: 1020px;
-    }
+  padding: 0 20px;
+  margin: 0 auto;
+  max-width: 1020px;
+}
 
 .govuk-header__container {
-    border-bottom: none;
-    margin-left: 10px;
-    }
-    
-.govuk-header {
-        border-bottom: 10px solid #1D70B8;
-        height: 70px;
-    }
-    
-.govuk-header__logo {
-        width: 100%;
-        margin-top: 10px;
-    }
-    
-.govuk-header__logotype {
-        font-size: 24px;
-        height: 32px;
-        width: 22.3rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-    }
+  border-bottom: none;
+  margin-left: 10px;
+}
 
+.govuk-header {
+  border-bottom: 10px solid #1d70b8;
+  height: 70px;
+}
+
+.govuk-header__logo {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.govuk-header__logotype {
+  font-size: 24px;
+  height: 32px;
+  width: 22.3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
 
 .govuk-phase-banner {
-        margin-bottom: 25px;
-        padding: 10px;
-    }
-        
+  margin-bottom: 25px;
+  padding: 10px;
+}
+
 .govuk-phase-banner__content {
-            width: 100%;
-    }
-    
+  width: 100%;
+}
+
 .govuk-phase-banner__text {
-            display: inline;
-    }
+  display: inline;
+}
 
 .backlink {
-    border: none; 
-    background-color: white
+  border: none;
+  background-color: white;
 }
 .backlink:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .error-container {
-    max-width: 1020px; 
+  max-width: 1020px;
 }
 
 .error-title {
-    background-color: #FFDD00;
-    padding: 15px;
-    text-align: center;
-    margin-bottom: 20px;
+  background-color: #ffdd00;
+  padding: 15px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .error-title h1 {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 .govuk-breadcrumbs__list-item {
-    min-height: 20px;
+  min-height: 20px;
 }
 
-@media (max-width: 600px){
-    .layout-wrap {
-        padding: 0 20px;
-    }
-    .govuk-header__container {
-            margin-left: 10px;
-            }
-    
-    .govuk-header__logotype {
-            width: max-content;
-            margin-top: 0;
-        }
-    
-    .govuk-header__logotype-text {
-            align-self: center;
-            margin-left: 10px;
-        }
+@media (max-width: 600px) {
+  .layout-wrap {
+    padding: 0 20px;
+  }
+  .govuk-header__container {
+    margin-left: 10px;
+  }
 
-    .govuk-phase-banner {
-            padding: 10px 10px;
-        }
+  .govuk-header__logotype {
+    width: max-content;
+    margin-top: 0;
+  }
 
-    
-    }
+  .govuk-header__logotype-text {
+    align-self: center;
+    margin-left: 10px;
+  }
+
+  .govuk-phase-banner {
+    padding: 10px 10px;
+  }
+}
