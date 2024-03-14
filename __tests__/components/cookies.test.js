@@ -12,7 +12,9 @@ describe("CookiesBanner", () => {
       name: "Essential Cookies",
     });
 
-    const closeButton = screen.getByRole("button", { name: "Close" });
+    const closeButton = screen.getByRole("button", {
+      name: "Reject analytics cookies",
+    });
 
     expect(bannerElement).toBeInTheDocument();
     expect(headingElement).toBeInTheDocument();
@@ -23,7 +25,9 @@ describe("CookiesBanner", () => {
     const onClickMock = jest.fn();
     render(<CookiesBanner onClick={onClickMock} />);
 
-    const closeButton = screen.getByRole("button", { name: "Close" });
+    const closeButton = screen.getByRole("button", {
+      name: "Reject analytics cookies",
+    });
     fireEvent.click(closeButton);
 
     expect(onClickMock).toHaveBeenCalled();

@@ -3,35 +3,24 @@ import { ContextApplication } from "@/context";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-const localStorageMock = (function () {
-  let store = {};
-  return {
-    getItem(key) {
-      return store[key] || null;
-    },
-    setItem(key, value) {
-      store[key] = value.toString();
-    },
-    clear() {
-      store = {};
-    },
-  };
-})();
-
-Object.defineProperty(window, "localStorage", {
-  value: localStorageMock,
-});
-
 describe("TopicsQuestion Component", () => {
   const mockSetQuestion = jest.fn();
-  const mockSetSelectedCheckbox = jest.fn();
   const mockOnChangeQuestion = jest.fn();
 
   beforeEach(() => {
+    // Clear mock localStorage before each test
+    localStorage.clear();
+
+    // Mocking localStorage to return an array for 'topics'
+    const mockTopicsStorage = JSON.stringify({
+      id: "mockId",
+      value: [], // Assuming initial state is an empty array, adjust as needed
+    });
+    localStorage.setItem("topics", mockTopicsStorage);
+    localStorage.setItem("application", JSON.stringify({ _id: "mockId" }));
+
     const contextValue = {
       setQuestion: mockSetQuestion,
-      setSelectedCheckbox: mockSetSelectedCheckbox,
-      selectedCheckbox: [],
       onChangeQuestion: mockOnChangeQuestion,
     };
 
