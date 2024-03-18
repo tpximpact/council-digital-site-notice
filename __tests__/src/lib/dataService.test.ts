@@ -6,9 +6,6 @@ jest.mock("../../../src/lib/sanityClient");
 
 describe("DataClient", () => {
   loadEnvConfig(process.cwd());
-  beforeEach(() => {
-    process.env.NEXT_PUBLIC_DATA_PROVIDER = "OpenData";
-  });
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -16,8 +13,6 @@ describe("DataClient", () => {
 
   describe("getAllSiteNotices", () => {
     it("should return all site notices from SanityClient", async () => {
-      process.env.NEXT_PUBLIC_DATA_PROVIDER = "blah";
-
       const sanityClient = new SanityClient();
       const dataClient2 = new DataClient(sanityClient);
       const resultData = {
