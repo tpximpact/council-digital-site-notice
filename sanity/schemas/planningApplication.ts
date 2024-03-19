@@ -55,6 +55,34 @@ export default defineType({
       description: "Fetch data from the selected integration.",
     }),
     defineField({
+      name: "dataFetched",
+      title: "Data Fetched",
+      type: "boolean",
+      initialValue: false,
+      hidden: true,
+    }),
+    defineField({
+      name: "dataFetchValidation",
+      title: "Data Fetch Validation",
+      type: "boolean",
+      initialValue: true,
+      hidden: true,
+      validation: (Rule: any) =>
+        Rule.custom((value: any, context: any) => {
+          const { document } = context;
+          const integrationMethod = document.integrations;
+          if (
+            integrationMethod !== "manual" &&
+            !document.dataFetched &&
+            !value
+          ) {
+            return "Please fetch the data using the integration button before submitting.";
+          }
+
+          return true;
+        }),
+    }),
+    defineField({
       title: "Application Type",
       name: "applicationType",
       type: "string",

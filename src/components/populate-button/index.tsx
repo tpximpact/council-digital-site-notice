@@ -30,6 +30,16 @@ export default function PopulateButton() {
 
   const applicationNumber = useFormValue(["applicationNumber"]);
 
+  useEffect(() => {
+    if (integrationMethod === "manual") {
+      // Reset dataFetched and dataFetchValidation fields when integration method is changed to "manual"
+      patch.execute([
+        { set: { dataFetched: false } },
+        { set: { dataFetchValidation: true } },
+      ]);
+    }
+  }, [integrationMethod, patch]);
+
   const handlePopulate = async () => {
     setFetchStatus("idle");
     try {
@@ -59,6 +69,8 @@ export default function PopulateButton() {
             applicationDocumentsUrl: `http://camdocs.camden.gov.uk/HPRMWebDrawer/PlanRec?q=recContainer:%22${applicationNumber}%22`,
           },
         },
+        { set: { dataFetched: true } },
+        { set: { dataFetchValidation: true } },
       ]);
 
       setFetchStatus("success");
