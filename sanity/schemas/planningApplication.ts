@@ -109,6 +109,9 @@ export default defineType({
       ],
       validation: (Rule) =>
         Rule.custom((field: any) => {
+          if (!Array.isArray(field) || field.length === 0) {
+            return true;
+          }
           const duplicates = field.filter((item: any, index: number) =>
             field.some(
               (elem: any, idx: number) =>
