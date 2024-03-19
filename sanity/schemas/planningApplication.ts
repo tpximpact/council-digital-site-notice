@@ -76,7 +76,7 @@ export default defineType({
             !document.dataFetched &&
             !value
           ) {
-            return "Please fetch the data using the integration button before submitting.";
+            return "Please fetch the data using the 'Fetch' button in the Integrations section before publishing.";
           }
 
           return true;
