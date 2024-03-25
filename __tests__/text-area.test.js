@@ -1,12 +1,13 @@
-import Details from "../../src/components/details";
+import TextArea from "../src/components/text-area";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 test("it should render correctly", () => {
-  render(<Details summary="How to write good feedback" />);
+  render(<TextArea label="How can we do better?" />);
   expect(
     screen.getByRole("definition", {
-      definition: "How to write good feedback",
+      definition: "How can we do better?",
+      rows: 5,
     }),
   );
 });

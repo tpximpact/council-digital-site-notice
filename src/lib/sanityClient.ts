@@ -86,7 +86,7 @@ export class SanityClient {
           if (result.distance) {
             // convert the distance of each distance from meters to miles
             result.distance = result.distance * 0.000621371192;
-            result.distance = Math.round(result.distance);
+            result.distance = parseFloat(result.distance.toFixed(1));
           }
         });
       }

@@ -20,7 +20,7 @@ import { verifyApiKey } from "../../../util/apiKey";
  *             applicationType: string
  *             height: string
  *             developmentType: string
- *             commentDeadline: string
+ *             consultationDeadline: string
  *             openSpaceGardens: boolean
  *             affordableHousing: string
  *             c02Emissions: string
@@ -32,7 +32,7 @@ import { verifyApiKey } from "../../../util/apiKey";
  *             applicationType: Full Planning Permission
  *             height: 14
  *             developmentType: Change of Use
- *             commentDeadline: 31/12/2023 12:00:00 am
+ *             consultationDeadline: 31/12/2023 12:00:00 am
  *             openSpaceGardens: true
  *     responses:
  *       200:
@@ -75,7 +75,7 @@ export default async function handler(
     address,
     applicationType,
     height,
-    commentDeadline,
+    consultationDeadline,
   } = req.body;
 
   const data = {
@@ -84,7 +84,7 @@ export default async function handler(
     address,
     applicationType,
     height,
-    commentDeadline,
+    consultationDeadline,
     isActive: true,
     _type: "planning-application",
   };

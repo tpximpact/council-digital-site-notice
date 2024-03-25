@@ -1,13 +1,13 @@
-import TextArea from "../../src/components/text-area";
+import Input from "../src/components/input";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 test("it should render correctly", () => {
-  render(<TextArea label="How can we do better?" />);
+  render(<Input />);
+  expect(screen.getByRole("textbox", { type: "text" }));
   expect(
     screen.getByRole("definition", {
-      definition: "How can we do better?",
-      rows: 5,
+      definition: "Enter a postcode to find planning applications nearby",
     }),
   );
 });

@@ -53,7 +53,7 @@ describe("validatePlanningParams", () => {
       applicationType: 123,
       applicationStage: 123,
       height: "123",
-      commentDeadline: 123,
+      consultationDeadline: 123,
     };
     const result = await validatePlanningParams(data);
 
@@ -76,7 +76,7 @@ describe("validatePlanningParams", () => {
       },
       {
         message:
-          "Invalid value for field 'commentDeadline': Expected date, received number",
+          "Invalid value for field 'consultationDeadline': Expected date, received number",
       },
     ]);
     expect(result.status).toEqual(400);
