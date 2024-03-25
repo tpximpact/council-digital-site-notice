@@ -1,22 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
-import { ContextApplication } from "@/context";
 import { ArrowIcon } from "../../../public/assets/icons";
 import { DataDetails } from "../../../util/type";
 import {
   aplicationStageStyle,
   applicationStageMessage,
 } from "../../../util/applicationHelper";
+import { getGlobalContent } from "../../../util/actions";
 
-function Process({
+async function Process({
   data,
   consultationDeadline,
 }: {
   data: DataDetails;
   consultationDeadline: string;
 }) {
-  const { globalConfig } = useContext(ContextApplication);
+  const globalConfig = await getGlobalContent();
 
   const singleApplicationStatus =
     data?.applicationStage?.status[
