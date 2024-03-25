@@ -7,15 +7,22 @@ import {
   applicationStageMessage,
 } from "../../../util/applicationHelper";
 import { getGlobalContent } from "../../../util/actions";
-
-async function Process({
+import { useEffect, useState } from "react";
+function Process({
   data,
   consultationDeadline,
 }: {
   data: DataDetails;
   consultationDeadline: string;
 }) {
-  const globalConfig = await getGlobalContent();
+  const [globalConfig, setGlobalConfig] = useState<any>();
+
+  useEffect(() => {
+    (async () => {
+      const fetchGlobalConfig = await getGlobalContent();
+      setGlobalConfig(fetchGlobalConfig);
+    })();
+  }, []);
 
   const singleApplicationStatus =
     data?.applicationStage?.status[
