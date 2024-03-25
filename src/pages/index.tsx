@@ -4,7 +4,6 @@ import { SanityClient } from "../lib/sanityClient";
 import { PaginationType, Data } from "../../util/type";
 import { ContextApplication } from "@/context";
 import { DataClient } from "../lib/dataService";
-import { OpenDataClient } from "../lib/openDataClient";
 import ReactPaginate from "react-paginate";
 import { NextIcon } from "../../public/assets/icons";
 import { PreviewIcon } from "../../public/assets/icons";
@@ -13,10 +12,9 @@ import { Button } from "@/components/button";
 import { ArrowIcon } from "../../public/assets/icons";
 import Link from "next/link";
 import { getLocationFromPostcode } from "../../util/geolocation";
-import { getDistance, convertDistance } from "geolib";
 
 export const itemsPerPage = 6;
-const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
+const dataClient = new DataClient(new SanityClient());
 
 export async function getStaticProps() {
   const data = await dataClient.getAllSiteNotices(0, itemsPerPage);
