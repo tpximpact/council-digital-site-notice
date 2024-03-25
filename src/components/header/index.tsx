@@ -1,11 +1,10 @@
-import { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ContextApplication } from "@/context";
 import { urlFor } from "../../../util/client";
+import { getGlobalContent } from "../../../util/actions";
 
-const Header = () => {
-  const { globalConfig } = useContext(ContextApplication);
+const Header = async () => {
+  const globalConfig = await getGlobalContent();
 
   return (
     <header className="govuk-header" role="banner" data-module="govuk-header">
