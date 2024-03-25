@@ -1,7 +1,6 @@
-import { useContext } from "react";
-import { ContextApplication } from "@/context";
-const Banner = () => {
-  const { globalConfig } = useContext(ContextApplication);
+import { getGlobalContent } from "../../../util/actions";
+const Banner = async () => {
+  const globalConfig = await getGlobalContent();
   const feedbackUrl = globalConfig?.feedbackUrl;
 
   return (
