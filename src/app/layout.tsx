@@ -8,6 +8,7 @@ import GoogleAnalytics from "../components/google-analytics";
 import { getLocalStorage } from "../../util/localStorageHelper";
 import { urlFor } from "../../util/client";
 import { getGlobalContent } from "../../util/actions";
+import "../styles/app.scss";
 
 export default function RootLayout({
   children,
@@ -17,7 +18,7 @@ export default function RootLayout({
   const [isShowCookie, setIsShowCookie] = useState<boolean>(true);
   const [isConsentCookie, setIsConsentCookie] = useState(false);
   const [favicon, setFavicon] = useState("/favicon_default.ico");
-  const [googleAnalytics, setGoogleAnalytics] = useState();
+  const [globalConfig, setGlobalConfig] = useState<any>();
 
   const environment = process.env.NEXT_PUBLIC_ENVIRONMENT;
 
@@ -44,12 +45,16 @@ export default function RootLayout({
           ? "/favicon_default.ico"
           : urlFor(globalConfig.favicon)?.url();
       setFavicon(defineFavicon);
-      setGoogleAnalytics(globalConfig.googleAnalytics);
+      setGlobalConfig(globalConfig);
     }
     fetchGlobalContent();
   }, [isConsentCookie, isShowCookie]);
   return (
-    <html>
+    <html lang="en">
+      <Head>
+        <title>Digital site notice</title>
+        <link rel="icon" href={favicon} sizes="any" />
+      </Head>
       <body>
         {isShowCookie && (
           <CookiesBanner
@@ -63,13 +68,11 @@ export default function RootLayout({
         )}
         {isConsentCookie &&
           environment !== "development" &&
-          googleAnalytics && <GoogleAnalytics gaId={googleAnalytics} />}
-        <Header />
-        <Banner />
-        <Head>
-          <title>Digital site notice</title>
-          <link rel="icon" href={favicon} sizes="any" />
-        </Head>
+          globalConfig?.googleAnalytics && (
+            <GoogleAnalytics gaId={globalConfig?.googleAnalytics} />
+          )}
+        <Header globalConfig={globalConfig} />
+        <Banner globalConfig={globalConfig} />
         <div className="layout-wrap">{children}</div>
       </body>
     </html>
