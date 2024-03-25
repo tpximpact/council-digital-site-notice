@@ -1,6 +1,4 @@
-import { getGlobalContent } from "../../../util/actions";
-const Banner = async () => {
-  const globalConfig = await getGlobalContent();
+const Banner = ({ globalConfig }: any) => {
   const feedbackUrl = globalConfig?.feedbackUrl;
 
   return (

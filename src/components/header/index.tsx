@@ -1,11 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { urlFor } from "../../../util/client";
-import { getGlobalContent } from "../../../util/actions";
 
-const Header = async () => {
-  const globalConfig = await getGlobalContent();
-
+const Header = ({ globalConfig }: any) => {
   return (
     <header className="govuk-header" role="banner" data-module="govuk-header">
       <div className="govuk-header__container govuk-width-container">
