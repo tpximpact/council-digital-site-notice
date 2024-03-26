@@ -20,13 +20,17 @@ const PlanningApplications = ({
             { _id, image_head, name, address, location, distance }: any,
             index,
           ) => {
-            const indexValue = Math.floor(data.length / 3) * 3;
+            const itemsPerRow = 3;
+            const itemsPerPage = itemsPerRow * 2;
+            const isLastItem = index === data.length - 1;
+            const isFirstRowOnPage = index % itemsPerPage < itemsPerRow;
+            const isLastRowOnPage = index % itemsPerPage >= itemsPerRow;
 
             return (
               <Link
                 key={_id}
                 href={`/planning-applications/${_id}`}
-                className={`planning-application-link ${indexValue <= index && "planning-application-last-line"}`}
+                className={`planning-application-link ${isLastItem && "planning-application-last-item"} ${isLastRowOnPage && "planning-application-last-row"} ${isFirstRowOnPage && "planning-application-first-row"}`}
               >
                 {image_head && (
                   <Image
