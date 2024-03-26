@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useState } from "react";
 import { ContextApplicationProps } from "../../util/type";
 import { defaultValue } from "./helper";

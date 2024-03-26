@@ -39,7 +39,7 @@ export default function RootLayout({
         defaultValue: isConsentCookie,
       });
       setIsConsentCookie(getLocalStorageConsentCookies);
-
+console.log(globalConfig.favicon, urlFor(globalConfig.favicon)?.url())
       const defineFavicon =
         globalConfig.favicon == null || globalConfig.favicon == undefined
           ? "/favicon_default.ico"

@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+"use client";
 import { useContext } from "react";
 import Link from "next/link";
 import { ContextApplication } from "@/context";

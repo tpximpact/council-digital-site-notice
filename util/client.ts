@@ -179,11 +179,6 @@ export async function getApplicationById(id: string) {
   }
 }
 
-export async function getGlobalContent() {
-  const info = await client.fetch('*[_type == "global-content"][0]');
-  return info;
-}
-
 export async function createApplication(post: any) {
   const result = client.create(post);
   return result;

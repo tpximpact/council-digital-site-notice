@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState, useContext } from "react";
 import { ContextApplication } from "@/context";
 import { Button, BackLink } from "@/components/button";

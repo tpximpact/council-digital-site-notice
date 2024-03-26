@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { sendEmail, createEmailData } from "../../../util/sendService";
-import { savefeedbackToGoogleSheet } from "../../../util/google";
+import { sendEmail, createEmailData } from "../../util/sendService";
+import { savefeedbackToGoogleSheet } from "../../util/google";
 
 export default async function handler(
   req: NextApiRequest,

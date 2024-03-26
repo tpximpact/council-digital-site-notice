@@ -1,7 +1,10 @@
+"use client";
 import Head from "next/head";
 import { NextStudio } from "next-sanity/studio";
 import { metadata } from "next-sanity/studio/metadata";
-import config from "../../../sanity.config";
+import config from "../../../../sanity.config";
+import SanityLayout from "./layout";
+import type { ReactElement } from "react";
 
 function StudioPage() {
   return (
