@@ -1,6 +1,13 @@
 .wrap-home {
   max-width: 64rem;
-  padding-top: 2rem;
+}
+
+.wrap-home h1 {
+  margin-bottom: 25px;
+}
+
+.wrap-home p {
+  margin-bottom: 25px;
 }
 
 .search-grid {
@@ -27,23 +34,46 @@
   gap: 0 13px;
 }
 
+@media screen and (max-width: 959px) {
+  .wrap-planning-application {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .planning-application-link {
   display: flex;
   flex-direction: column;
-  border-bottom: 2px solid #b1b4b6;
   padding: 20px 0;
   color: black;
   text-decoration: none;
   width: 310px;
   margin-bottom: 40px;
+  border-bottom: 2px solid #b1b4b6;
 }
 
 .planning-application-link:hover .link-application {
   color: #003078;
 }
 
-.planning-application-last-line {
+.planning-application-last-item {
   border-bottom: none;
+}
+
+@media (min-width: 768px) {
+  .planning-application-link {
+    border-bottom: none;
+  }
+
+  .planning-application-first-row {
+    border-bottom: 2px solid #b1b4b6;
+  }
+
+  .planning-application-last-row {
+    border-bottom: none;
+  }
 }
 
 .link-application {

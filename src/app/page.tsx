@@ -6,7 +6,6 @@ import PlanningApplications from "../components/planning-application";
 import { SanityClient } from "../lib/sanityClient";
 import { Data } from "../../util/type";
 import { DataClient } from "../lib/dataService";
-import { OpenDataClient } from "../lib/openDataClient";
 import ReactPaginate from "react-paginate";
 import { NextIcon } from "../../public/assets/icons";
 import { PreviewIcon } from "../../public/assets/icons";
@@ -18,7 +17,7 @@ import { getLocationFromPostcode } from "../../util/geolocation";
 import { getGlobalContent } from "../../util/actions";
 
 export const itemsPerPage = 6;
-const dataClient = new DataClient(new SanityClient(), new OpenDataClient());
+const dataClient = new DataClient(new SanityClient());
 
 const Home = () => {
   const [postcode, setPostcode] = useState("");
