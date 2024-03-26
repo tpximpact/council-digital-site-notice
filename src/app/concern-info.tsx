@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import { ContextApplication } from "@/context";
+import { globalContentRevalidate } from "../../util/actions";
 
-const ConcernInfo = () => {
-  const { globalConfig } = useContext(ContextApplication);
+async function ConcernInfo() {
+  const globalConfig: any = globalContentRevalidate();
   return <p className="govuk-body">{globalConfig?.concernContent}</p>;
-};
+}
 
 export default ConcernInfo;
