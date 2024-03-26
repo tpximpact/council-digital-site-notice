@@ -5,11 +5,18 @@ import { client } from "./client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { sendEmail, createEmailData } from "./sendService";
 import { savefeedbackToGoogleSheet } from "./google";
+import { cookies } from "next/headers";
 
 export async function getGlobalContent() {
   const info = await client.fetch('*[_type == "global-content"][0]');
   revalidateTag("globalContent");
   return info;
+}
+
+export async function createCookies(value: any) {
+  const cookieStore = cookies();
+  cookieStore.set("isShowCookie", "false"),
+    cookieStore.set("isConsentCookie", value);
 }
 
 export async function handlerComments(

@@ -1,78 +1,50 @@
-"use client";
 import Header from "@/components/header";
 import Banner from "../components/banner";
 import CookiesBanner from "@/components/cookies";
-import { useEffect, useState } from "react";
-import Head from "next/head";
 import GoogleAnalytics from "../components/google-analytics";
-import { getLocalStorage } from "../../util/localStorageHelper";
 import { urlFor } from "../../util/client";
 import { getGlobalContent } from "../../util/actions";
 import "../styles/app.scss";
+import type { Metadata } from "next";
+import { cookies } from "next/headers";
 
-export default function RootLayout({
+export const globalContent = await getGlobalContent();
+export async function generateMetadata(): Promise<Metadata> {
+  const resMetadata = await globalContent?.favicon;
+  return {
+    title: "Digital site notice",
+    icons: {
+      icon: resMetadata ? urlFor(resMetadata)?.url() : "/favicon_default.ico",
+    },
+  };
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [isShowCookie, setIsShowCookie] = useState<boolean>(true);
-  const [isConsentCookie, setIsConsentCookie] = useState(false);
-  const [favicon, setFavicon] = useState("/favicon_default.ico");
-  const [globalConfig, setGlobalConfig] = useState<any>();
-
   const environment = process.env.NEXT_PUBLIC_ENVIRONMENT;
+  const cookieStore = cookies();
+  const isShowCookie = cookieStore.get("isShowCookie")?.value || true;
+  const isConsentCookie = cookieStore.get("isConsentCookie")?.value || false;
 
-  useEffect(() => {
+  if (typeof window !== "undefined") {
     const govUk = require("govuk-frontend");
     govUk.initAll();
-    async function fetchGlobalContent() {
-      const globalConfig = await getGlobalContent();
+  }
 
-      const getLocalStorageCookies = getLocalStorage({
-        key: "cookies",
-        defaultValue: isShowCookie,
-      });
-      setIsShowCookie(getLocalStorageCookies);
-
-      const getLocalStorageConsentCookies = getLocalStorage({
-        key: "consentCookies",
-        defaultValue: isConsentCookie,
-      });
-      setIsConsentCookie(getLocalStorageConsentCookies);
-console.log(globalConfig.favicon, urlFor(globalConfig.favicon)?.url())
-      const defineFavicon =
-        globalConfig.favicon == null || globalConfig.favicon == undefined
-          ? "/favicon_default.ico"
-          : urlFor(globalConfig.favicon)?.url();
-      setFavicon(defineFavicon);
-      setGlobalConfig(globalConfig);
-    }
-    fetchGlobalContent();
-  }, [isConsentCookie, isShowCookie]);
   return (
     <html lang="en">
-      <Head>
-        <title>Digital site notice</title>
-        <link rel="icon" href={favicon} sizes="any" />
-      </Head>
       <body>
-        {isShowCookie && (
-          <CookiesBanner
-            onClick={(value: any) => {
-              setIsShowCookie(false),
-                localStorage.setItem("cookies", "false"),
-                setIsConsentCookie(value),
-                localStorage.setItem("consentCookies", value);
-            }}
-          />
-        )}
+        {isShowCookie == true && <CookiesBanner />}
         {isConsentCookie &&
           environment !== "development" &&
-          globalConfig?.googleAnalytics && (
-            <GoogleAnalytics gaId={globalConfig?.googleAnalytics} />
+          globalContent?.googleAnalytics && (
+            <GoogleAnalytics gaId={globalContent?.googleAnalytics} />
           )}
-        <Header globalConfig={globalConfig} />
-        <Banner globalConfig={globalConfig} />
+        <Header globalConfig={globalContent} />
+        <Banner globalConfig={globalContent} />
         <div className="layout-wrap">{children}</div>
       </body>
     </html>
