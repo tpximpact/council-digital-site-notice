@@ -109,16 +109,21 @@
   grid-template-rows: 0.5fr 0.5fr 1fr;
 }
 
-.process-grid > :last-child {
+.show-date {
   grid-row-start: 3;
   grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.hiden-date {
+  grid-row-start: 2;
+    grid-column-start: 1;
   grid-column-end: 3;
 }
 
 .wrap-grid-button {
   display: flex;
   gap: 50px;
-  min-height: 270px;
 }
 
 .process-consultation {
@@ -197,7 +202,7 @@
 
   .wrap-secondary-button-image {
     display: flex;
-    margin-bottom: 100px;
+    margin-bottom: 70px;
   }
 
   .wrap-button {
