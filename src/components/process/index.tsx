@@ -59,7 +59,9 @@ function Process({
               </p>
             )}
 
-          <p className="govuk-body">
+          <p
+            className={`govuk-body ${data?.applicationStage?.stage !== "Consultation" ? "hiden-date" : "show-date"}`}
+          >
             {applicationStageMessage(checkStage, singleApplicationStatus)}
           </p>
         </div>
