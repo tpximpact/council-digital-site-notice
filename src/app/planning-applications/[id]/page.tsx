@@ -17,8 +17,9 @@ const Application = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const getData = await getApplicationById(id as string);
-      setData(getData[0]);
+      const result = await getApplicationById(id as string);
+      const getData = result[0];
+      setData(getData);
       let deadlineTime;
 
       if (getData?.enableComments) {
@@ -30,7 +31,6 @@ const Application = () => {
           .toFixed(0);
         setConsultationDeadline(deadlineTime);
       }
-
       localStorage.setItem(
         "application",
         JSON.stringify({
@@ -47,7 +47,7 @@ const Application = () => {
       );
     }
     fetchData();
-  }, [data, consultationDeadline, id]);
+  }, [id]);
 
   const breadcrumbs_array = [
     { name: "Planning applications", href: "/" },
