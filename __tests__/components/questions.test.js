@@ -9,8 +9,17 @@ beforeEach(() => {
   Storage.prototype.setItem = jest.fn();
 });
 
-jest.mock("next/router", () => ({
-  useRouter: jest.fn(),
+jest.mock("../../util/actions", () => ({
+  getGlobalContent: jest.fn(),
+  globalContentRevalidate: jest.fn(),
+}));
+
+jest.mock("next/navigation", () => ({
+  useRouter() {
+    return {
+      prefetch: () => null,
+    };
+  },
 }));
 
 describe("FeedbackQuestions", () => {
