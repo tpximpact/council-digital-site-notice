@@ -9,4 +9,3 @@ export function getLocalStorage({ key, defaultValue }: any) {
 
   return storagedValue;
 }
-//fazer test

@@ -1,9 +1,7 @@
-"use client";
-import { useContext } from "react";
-import { ContextApplication } from "@/context";
+import { globalContentRevalidate } from "../../../util/actions";
 
-const CookiePolicyPage = () => {
-  const { globalConfig } = useContext(ContextApplication);
+const CookiePolicyPage = async () => {
+  const globalConfig: any = await globalContentRevalidate();
   return <p className="govuk-body">{globalConfig?.cookiePolicyContent}</p>;
 };
 
