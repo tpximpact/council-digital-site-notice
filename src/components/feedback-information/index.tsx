@@ -1,32 +1,38 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import { useContext } from "react";
 import Link from "next/link";
-import { ContextApplication } from "@/context";
 import { Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "../../../util/helpLocalStorage";
+import { globalContentRevalidate } from "../../../util/actions";
 
 function FeedbackInformation({
   onChangeQuestion,
 }: {
   onChangeQuestion: () => void;
 }) {
-  const { globalConfig } = useContext(ContextApplication);
-  const urlConcern = globalConfig?.concernUrl
-    ? globalConfig?.concernUrl
-    : globalConfig?.concernContent && "/concern-info";
-  const materialConsiderationLink = globalConfig?.materialConsiderationUrl;
+  const [globalConfig, setGlobalConfig] = useState<any>();
+  const [urlConcern, setUrlConcern] = useState();
   const [id, setId] = useState();
 
   useEffect(() => {
-    const applicationContent = getLocalStorage({
-      key: "application",
-      defaultValue: {},
-    });
-    localStorage.removeItem("formId");
-    setId(applicationContent?._id);
+    (async () => {
+      const fetchGlobalConfig: any = await globalContentRevalidate();
+      setGlobalConfig(fetchGlobalConfig);
+      setUrlConcern(
+        fetchGlobalConfig?.concernUrl
+          ? fetchGlobalConfig?.concernUrl
+          : fetchGlobalConfig?.concernContent && "/concern-info",
+      );
+
+      const applicationContent = getLocalStorage({
+        key: "application",
+        defaultValue: {},
+      });
+      localStorage.removeItem("formId");
+      setId(applicationContent?._id);
+    })();
   }, []);
 
   return (
@@ -132,9 +138,9 @@ function FeedbackInformation({
         <h2 className="govuk-heading-l">What happens to your comments</h2>
         <p className="govuk-body">
           The case officer will take all comments which are{" "}
-          {materialConsiderationLink ? (
+          {globalConfig?.materialConsiderationUrl ? (
             <Link
-              href={materialConsiderationLink}
+              href={globalConfig?.materialConsiderationUrl}
               className="govuk govuk-link govuk-link--no-visited-state"
               target="_blank"
             >

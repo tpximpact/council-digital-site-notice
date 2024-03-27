@@ -2,29 +2,31 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
-import { ContextApplication } from "@/context";
+import { useEffect, useState } from "react";
 import { Data } from "../../../../../util/type";
 import { urlFor } from "../../../../../util/client";
 import { getLocalStorage } from "../../../../../util/helpLocalStorage";
 import Breadcrumbs from "@/components/breadcrumbs";
+import { globalContentRevalidate } from "../../../../../util/actions";
 
 const FeedbackMessage = () => {
-  const { globalConfig } = useContext(ContextApplication);
-  const involveUrl = globalConfig?.howToGetInvolveUrl;
-  const councilName = globalConfig?.councilName;
+  const [globalConfig, setGlobalConfig] = useState<any>();
   const [application, setAplication] = useState<Data>();
   const [formId, setFormId] = useState<string | null>();
 
   useEffect(() => {
-    const initialValue = getLocalStorage({
-      key: "application",
-      defaultValue: {},
-    });
-    setAplication(initialValue);
+    (async () => {
+      const fetchGlobalConfig: any = await globalContentRevalidate();
+      setGlobalConfig(fetchGlobalConfig);
+      const initialValue = getLocalStorage({
+        key: "application",
+        defaultValue: {},
+      });
+      setAplication(initialValue);
 
-    const formId = localStorage.getItem("formId");
-    setFormId(formId);
+      const formId = localStorage.getItem("formId");
+      setFormId(formId);
+    })();
   }, []);
 
   const breadcrumbs_array = [
@@ -99,17 +101,17 @@ const FeedbackMessage = () => {
       >
         View local planning applications
       </Link>
-      {involveUrl && (
+      {globalConfig?.howToGetInvolveUrl && (
         <>
           <h1 className="govuk-heading-m">
-            Get involved in {councilName}’s Local Plan
+            Get involved in {globalConfig?.councilName}’s Local Plan
           </h1>
           <p className="govuk-body">
             You can have a big impact on developments in your local community by
-            getting involved in {councilName}'s planning policy.{" "}
+            getting involved in {globalConfig?.councilName}'s planning policy.{" "}
           </p>
           <Link
-            href={involveUrl}
+            href={globalConfig?.howToGetInvolveUrl}
             className="govuk-button govuk-button--secondary govuk-!-font-size-16"
           >
             Find out how you can get involved

@@ -135,7 +135,3 @@ export type FeelingType = {
   setFeelingForm: (value: string) => void;
 };
 
-export type ContextApplicationProps = {
-  globalConfig: any;
-  setGlobalConfig: (value: any) => void;
-};
