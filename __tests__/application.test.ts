@@ -1,7 +1,7 @@
 import { createApplication } from "../util/client";
 import { validatePlanningParams } from "../util/validator";
 import { verifyApiKey } from "../util/apiKey";
-import handler from "../src/api/application";
+import handler from "../src/app/api/application/route";
 
 jest.mock("../util/client");
 jest.mock("../util/validator");

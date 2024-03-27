@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createApplication } from "../../util/client";
-import { validatePlanningParams } from "../../util/validator";
-import { verifyApiKey } from "../../util/apiKey";
+import { createApplication } from "../../../../util/client";
+import { validatePlanningParams } from "../../../../util/validator";
+import { verifyApiKey } from "../../../../util/apiKey";
 
 /**
  * @swagger

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import handler from "../src/api/comments";
+import handler from "../src/app/api/comments";
 import { sendEmail, createEmailData } from "../util/sendService";
 import { savefeedbackToGoogleSheet } from "../util/google";
 
