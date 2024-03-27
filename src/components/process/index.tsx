@@ -6,8 +6,8 @@ import {
   aplicationStageStyle,
   applicationStageMessage,
 } from "../../../util/applicationHelper";
-import { getGlobalContent } from "../../../util/actions";
 import { useEffect, useState } from "react";
+import { globalContentRevalidate } from "../../../util/actions";
 function Process({
   data,
   consultationDeadline,
@@ -19,7 +19,7 @@ function Process({
 
   useEffect(() => {
     (async () => {
-      const fetchGlobalConfig = await getGlobalContent();
+      const fetchGlobalConfig = await globalContentRevalidate();
       setGlobalConfig(fetchGlobalConfig);
     })();
   }, []);
