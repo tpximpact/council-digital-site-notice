@@ -5,7 +5,7 @@ import Details from "@/components/details";
 import Input from "@/components/input";
 import Validation from "@/components/validation";
 import Checkbox from "@/components/checkbox";
-import { descriptionDetail } from "../../../util/description-detail";
+import { descriptionDetail } from "../../../util/helpers/description";
 import {
   messageError,
   optionalValidation,
@@ -16,10 +16,10 @@ import {
   emailValidation,
   phoneValidation,
   postcodeValidation,
-} from "../../../util/feedbackHelper";
-import { PersonalDetailsForm } from "../../../util/type";
-import { getLocalStorage } from "../../../util/helpLocalStorage";
-import { globalContentRevalidate } from "../../../util/actions";
+} from "../../../util/helpers/feedback";
+import { PersonalDetailsForm } from "../../../util/helpers/type";
+import { getLocalStorage } from "../../../util/helpers/application";
+import { globalContentRevalidate } from "../../../util/actions/actions";
 
 const PersonalDetails = ({
   onChangeQuestion,

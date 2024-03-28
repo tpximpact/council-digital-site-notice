@@ -134,4 +134,3 @@ export type FeelingType = {
   feelingForm: string;
   setFeelingForm: (value: string) => void;
 };
-

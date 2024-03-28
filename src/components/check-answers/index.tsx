@@ -2,13 +2,11 @@
 import { useEffect, useState } from "react";
 import { BackLink, Button, ButtonLink } from "@/components/button";
 import Details from "@/components/details";
-import { questions } from "../../../util/questionsInfo";
-import { descriptionDetail } from "../../../util/description-detail";
-import { addFeedback } from "../../../util/client";
+import { questions, getLocalStorage } from "../../../util/helpers/application";
+import { descriptionDetail } from "../../../util/helpers/description";
 import { useRouter } from "next/navigation";
-import { getLocalStorage } from "../../../util/helpLocalStorage";
-import { PersonalDetailsForm, CommentForm } from "../../../util/type";
-import { saveComments } from "../../../util/actions";
+import { PersonalDetailsForm, CommentForm } from "../../../util/helpers/type";
+import { saveComments } from "../../../util/actions/actions";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -89,11 +87,11 @@ function CheckAnswers({
   };
 
   const submit = async () => {
-    addFeedback({
-      feelingForm,
-      commentForm,
-      personalDetailsForm,
-    });
+    // addFeedback({
+    //   feelingForm,
+    //   commentForm,
+    //   personalDetailsForm,
+    // });
 
     let formId = crypto.randomUUID();
     localStorage.setItem("formId", formId);

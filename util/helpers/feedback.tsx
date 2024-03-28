@@ -1,4 +1,4 @@
-import { phoneRegex, postCodeRegex } from "./regex";
+import { phoneRegex, postCodeRegex } from "./application";
 
 export function messageError(personalDetailsForm: any) {
   const name = personalDetailsForm["name"] === "" ? "Name" : "";

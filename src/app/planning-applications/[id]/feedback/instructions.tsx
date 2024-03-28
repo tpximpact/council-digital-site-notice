@@ -2,10 +2,10 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { urlFor } from "../../../../../util/client";
-import { getLocalStorage } from "../../../../../util/helpLocalStorage";
-import { Data } from "../../../../../util/type";
-import { globalContentRevalidate } from "../../../../../util/actions";
+import { urlFor } from "../../../../../util/actions/client";
+import { getLocalStorage } from "../../../../../util/helpers/application";
+import { Data } from "../../../../../util/helpers/type";
+import { globalContentRevalidate } from "../../../../../util/actions/actions";
 
 function Instructions() {
   const [application, setApplication] = useState<Data>();

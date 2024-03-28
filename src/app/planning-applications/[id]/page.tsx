@@ -4,8 +4,8 @@ import Breadcrumbs from "@/components/breadcrumbs";
 import About from "../../../components/about";
 import Impact from "../../../components/impact";
 import Process from "../../../components/process";
-import { DataDetails } from "../../../../util/type";
-import { getApplicationById } from "../../../../util/client";
+import { DataDetails } from "../../../../util/helpers/type";
+import { getApplicationById } from "../../../../util/actions/actions";
 import moment from "moment";
 import { useParams } from "next/navigation";
 

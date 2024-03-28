@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { urlFor } from "../../../util/client";
+import { urlFor } from "../../../util/actions/client";
 
 const Header = ({ globalConfig }: any) => {
   return (

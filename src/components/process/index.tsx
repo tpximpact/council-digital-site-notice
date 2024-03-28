@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowIcon } from "../../../public/assets/icons";
-import { DataDetails } from "../../../util/type";
+import { DataDetails } from "../../../util/helpers/type";
 import {
   aplicationStageStyle,
   applicationStageMessage,
-} from "../../../util/applicationHelper";
+} from "../../../util/helpers/application";
 import { useEffect, useState } from "react";
-import { globalContentRevalidate } from "../../../util/actions";
+import { globalContentRevalidate } from "../../../util/actions/actions";
 function Process({
   data,
   consultationDeadline,

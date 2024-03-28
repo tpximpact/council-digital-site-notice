@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { LocalIcon } from "../../../public/assets/icons";
-import { urlFor } from "../../../util/client";
-import { Data } from "../../../util/type";
-import { distanceInMiles } from "../../../util/geolocation";
+import { urlFor } from "../../../util/actions/client";
+import { Data } from "../../../util/helpers/type";
+import { distanceInMiles } from "../../../util/actions/actions";
 
 const PlanningApplications = ({
   data,
