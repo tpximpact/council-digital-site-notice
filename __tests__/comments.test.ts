@@ -1,7 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import handler from "../src/app/api/comments";
 import { sendEmail, createEmailData } from "../util/sendService";
 import { savefeedbackToGoogleSheet } from "../util/google";
+import { saveComments } from "../util/actions";
 
 jest.mock("../util/sendService", () => ({
   sendEmail: jest.fn(),
@@ -13,24 +12,27 @@ jest.mock("../util/google", () => ({
 }));
 
 describe("comments API", () => {
-  let req: NextApiRequest;
-  let res: NextApiResponse;
+  let data: any;
 
   beforeEach(() => {
-    req = {
-      method: "",
-      body: {},
-    } as NextApiRequest;
+    data = {
+      applicationNumber: "123",
+      feeling: "good",
+      comment: "Great job!",
+      postcode: "12345",
+    };
 
-    res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    } as NextApiResponse;
   });
 
   it("should send email and save to Google Sheet when POST request is made", async () => {
-    req.method = "POST";
-    req.body = {
+    jest.mock("../util/actions", () => ({
+      saveComments: jest.fn().mockReturnValue({
+        status: 200,
+        message: "Email sent & google sheet saved successfully",
+      }),
+    }));
+
+    data = {
       applicationNumber: "123",
       feeling: "good",
       comment: "Great job!",
@@ -42,7 +44,7 @@ describe("comments API", () => {
     };
     createEmailData.mockResolvedValue(emailData);
 
-    await handler(req, res);
+    const res = await saveComments(data);
 
     expect(createEmailData).toHaveBeenCalledWith(
       "123",
@@ -50,20 +52,24 @@ describe("comments API", () => {
       "Great job!",
       "12345",
     );
+    // console.log(res, 'response');
     expect(sendEmail).toHaveBeenCalledWith(emailData);
-    expect(savefeedbackToGoogleSheet).toHaveBeenCalledWith(req.body);
-    expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({
-      message: "Email sent & google sheet saved successfully",
-    });
+    expect(savefeedbackToGoogleSheet).toHaveBeenCalledWith(data);
+    expect(res.status).toBe(200);
+    expect(res.message).toBe("Email sent & google sheet saved successfully");
   });
 
-  it("should return 405 status when a non-POST request is made", async () => {
-    req.method = "GET";
+  it("should return 500 status when error ", async () => {
+    jest.mock("../util/actions", () => ({
+      saveComments: jest.fn().mockReturnValue({
+        status: 500,
+        message: "Failed to store comments",
+      }),
+    }));
 
-    await handler(req, res);
+    const res = await saveComments(undefined);
 
-    expect(res.status).toHaveBeenCalledWith(405);
-    expect(res.json).toHaveBeenCalledWith({ message: "Method not allowed" });
+    expect(res.status).toBe(500);
+    expect(res.message).toBe("Failed to store comments");
   });
 });

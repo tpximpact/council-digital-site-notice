@@ -8,6 +8,7 @@ import { addFeedback } from "../../../util/client";
 import { useRouter } from "next/navigation";
 import { getLocalStorage } from "../../../util/helpLocalStorage";
 import { PersonalDetailsForm, CommentForm } from "../../../util/type";
+import { saveComments } from "../../../util/actions";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -119,17 +120,8 @@ function CheckAnswers({
     };
 
     try {
-      const response = await fetch("/api/comments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
+      const response = await saveComments(data);
       if (response.ok) {
-        console.log(response.body);
-        const responseData = await response.json();
         onChangeQuestion();
         router.push(`/planning-applications/${id}/thank-you`);
         localStorage.removeItem("feeling");
