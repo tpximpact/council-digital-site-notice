@@ -1,13 +1,10 @@
-import { sendEmail, createEmailData } from "../util/sendService";
-import { savefeedbackToGoogleSheet } from "../util/google";
-import { saveComments } from "../util/actions";
+import { sendEmail, createEmailData } from "../util/actions/email";
+import { savefeedbackToGoogleSheet } from "../util/actions/email";
+import { saveComments } from "../util/actions/actions";
 
-jest.mock("../util/sendService", () => ({
+jest.mock("../util/actions/email", () => ({
   sendEmail: jest.fn(),
   createEmailData: jest.fn(),
-}));
-
-jest.mock("../util/google", () => ({
   savefeedbackToGoogleSheet: jest.fn(),
 }));
 
@@ -21,11 +18,10 @@ describe("comments API", () => {
       comment: "Great job!",
       postcode: "12345",
     };
-
   });
 
   it("should send email and save to Google Sheet when POST request is made", async () => {
-    jest.mock("../util/actions", () => ({
+    jest.mock("../util/actions/actions", () => ({
       saveComments: jest.fn().mockReturnValue({
         status: 200,
         message: "Email sent & google sheet saved successfully",
@@ -60,7 +56,7 @@ describe("comments API", () => {
   });
 
   it("should return 500 status when error ", async () => {
-    jest.mock("../util/actions", () => ({
+    jest.mock("../util/actions/actions", () => ({
       saveComments: jest.fn().mockReturnValue({
         status: 500,
         message: "Failed to store comments",

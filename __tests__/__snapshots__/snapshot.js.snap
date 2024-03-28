@@ -29,7 +29,7 @@ exports[`renders homepage unchanged 1`] = `
         >
           <label
             class="govuk-label govuk-label--l false"
-            for="event-name"
+            for="Enter a postcode to find planning applications nearby"
             role="definition"
           >
             Enter a postcode to find planning applications nearby
@@ -37,7 +37,7 @@ exports[`renders homepage unchanged 1`] = `
         </h1>
         <input
           class="govuk-input false"
-          id="event-name"
+          id="Enter a postcode to find planning applications nearby"
           name="eventName"
           role="textbox"
           type="text"

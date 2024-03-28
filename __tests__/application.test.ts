@@ -1,11 +1,11 @@
-import { createApplication } from "../util/client";
-import { validatePlanningParams } from "../util/validator";
-import { verifyApiKey } from "../util/apiKey";
+import { createApplication } from "../util/actions/actions";
+import { validatePlanningParams } from "../util/actions/validator";
+import { verifyApiKey } from "../util/helpers/apiKey";
 import handler from "../src/app/api/application/route";
 
-jest.mock("../util/client");
-jest.mock("../util/validator");
-jest.mock("../util/apiKey");
+jest.mock("../util/actions/actions");
+jest.mock("../util/actions/validator");
+jest.mock("../util//helpers/apiKey");
 
 describe("Applications API", () => {
   beforeEach(() => {

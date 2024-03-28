@@ -9,7 +9,7 @@ beforeEach(() => {
   Storage.prototype.setItem = jest.fn();
 });
 
-jest.mock("../../util/actions", () => ({
+jest.mock("../../util/actions/actions", () => ({
   getGlobalContent: jest.fn(),
   globalContentRevalidate: jest.fn(),
 }));
