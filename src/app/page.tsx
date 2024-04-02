@@ -16,10 +16,10 @@ import Link from "next/link";
 import { getLocationFromPostcode } from "../../util/actions/actions";
 import { getGlobalContent } from "../../util/actions/actions";
 
-export const itemsPerPage = 6;
 const dataClient = new DataClient(new SanityClient());
-
 const Home = () => {
+  const itemsPerPage = 6;
+
   const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
   const [locationNotFound, setLocationNotFound] = useState<boolean>(false);

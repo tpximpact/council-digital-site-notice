@@ -4,6 +4,9 @@ import { createApplication } from "../../../../util/actions/actions";
 import { validatePlanningParams } from "../../../../util/actions/validator";
 import { ValidationResult } from "../../../../models/validationResult";
 import { verifyApiKey } from "../../../../util/helpers/apiKey";
+import type { NextRequest, NextResponse } from "next/server";
+import type { NextApiHandler } from "next";
+import { headers } from "next/headers";
 
 /**
  * @swagger
@@ -44,35 +47,23 @@ import { verifyApiKey } from "../../../../util/helpers/apiKey";
  *         message: Success
  */
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  const { method } = req;
-
-  if (method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    res.status(405).json({
-      error: { message: `Method ${method} Not Allowed` },
-    });
-    return;
-  }
+export async function GET(req: Request) {
+  const headersList = headers();
+  const referer = headersList.get("authorization");
 
   // Verify API key
-  const apiKey = req.headers.authorization as string;
+  const apiKey = referer as string;
   const isValidApiKey = verifyApiKey(apiKey);
   if (!isValidApiKey) {
-    res.status(401).json({
-      error: { message: "Invalid API key" },
+    return new Response("Invalid API key", {
+      status: 401,
     });
-    return;
   }
-
   let successApplications = [];
   let failedCreationApplcaitons = [];
   let failedValidationApplcaitons = [];
 
-  for (var key in req.body) {
+  for (let key in req.body) {
     if (req.body.hasOwnProperty(key)) {
       const {
         applicationNumber,
@@ -92,51 +83,53 @@ export default async function handler(
         continue;
       }
 
-      const data = {
-        applicationNumber,
-        description,
-        address,
-        applicationType,
-        applicationStage,
-        height,
-        consultationDeadline,
-        isActive: false,
-        _type: "planning-application",
-      };
+      //     const data = {
+      //       applicationNumber,
+      //       description,
+      //       address,
+      //       applicationType,
+      //       applicationStage,
+      //       height,
+      //       consultationDeadline,
+      //       isActive: false,
+      //       _type: "planning-application",
+      //     };
 
-      try {
-        await createApplication(data);
-        successApplications.push(`Applciation ${applicationNumber} created`);
-      } catch (error) {
-        failedCreationApplcaitons.push(
-          `An error occurred while creating the application ${applicationNumber}`,
-        );
-      }
+      //     try {
+      //       await createApplication(data);
+      //       successApplications.push(`Applciation ${applicationNumber} created`);
+      //     } catch (error) {
+      //       failedCreationApplcaitons.push(
+      //         `An error occurred while creating the application ${applicationNumber}`,
+      //       );
+      //     }
+      //   }
+      // }
+
+      // let status = 200;
+      // let message = "Success";
+
+      // if (successApplications.length == 0) {
+      //   status = 400;
+      //   message = "An error has occured";
+      // } else if (
+      //   failedCreationApplcaitons.length > 0 ||
+      //   failedValidationApplcaitons.length > 0
+      // ) {
+      //   status = 207;
+      //   message = "Partial success";
+      // }
+
+      // return res.status(status).json({
+      //   message: message,
+      //   data: {
+      //     successfullyCreated: successApplications,
+      //   },
+      //   errors: {
+      //     failedCreation: failedCreationApplcaitons,
+      //     failedValidation: failedValidationApplcaitons,
+      //   },
+      // });
     }
   }
-
-  let status = 200;
-  let message = "Success";
-
-  if (successApplications.length == 0) {
-    status = 400;
-    message = "An error has occured";
-  } else if (
-    failedCreationApplcaitons.length > 0 ||
-    failedValidationApplcaitons.length > 0
-  ) {
-    status = 207;
-    message = "Partial success";
-  }
-
-  return res.status(status).json({
-    message: message,
-    data: {
-      successfullyCreated: successApplications,
-    },
-    errors: {
-      failedCreation: failedCreationApplcaitons,
-      failedValidation: failedValidationApplcaitons,
-    },
-  });
 }

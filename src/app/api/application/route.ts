@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { createApplication } from "../../../../util/actions/actions";
 import { validatePlanningParams } from "../../../../util/actions/validator";
 import { verifyApiKey } from "../../../../util/helpers/apiKey";
+import type { NextRequest, NextResponse } from "next/server";
 
 /**
  * @swagger
@@ -39,62 +40,55 @@ import { verifyApiKey } from "../../../../util/helpers/apiKey";
  *         message: Success
  */
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  const { method } = req;
-
-  if (method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    res.status(405).json({
-      error: { message: `Method ${method} Not Allowed` },
-    });
-    return;
-  }
-
-  // Verify API key
-  const apiKey = req.headers.authorization as string;
-  const isValidApiKey = verifyApiKey(apiKey);
-
-  if (!isValidApiKey) {
-    res.status(401).json({
-      error: { message: "Invalid API key" },
-    });
-    return;
-  }
-
-  const validationErrors = await validatePlanningParams(req.body);
-  if (validationErrors.errors.length > 0) {
-    return res.status(validationErrors.status).json(validationErrors);
-  }
-
-  const {
-    applicationNumber,
-    description,
-    address,
-    applicationType,
-    height,
-    consultationDeadline,
-  } = req.body;
-
-  const data = {
-    applicationNumber,
-    description,
-    address,
-    applicationType,
-    height,
-    consultationDeadline,
-    isActive: true,
-    _type: "planning-application",
-  };
-
-  try {
-    await createApplication(data);
-    res.status(validationErrors.status).json({ message: "Success" });
-  } catch (error) {
-    res.status(500).json({
-      error: { message: "An error occurred while creating the application" },
-    });
-  }
+export async function GET(req: Request) {
+  return new Response("Success!", {
+    status: 200,
+  });
+  // const { method } = req;
+  // if (method !== "POST") {
+  //   res.setHeader("Allow", ["POST"]);
+  //   res.status(405).json({
+  //     error: { message: `Method ${method} Not Allowed` },
+  //   });
+  //   return;
+  // }
+  // // Verify API key
+  // const apiKey = req.headers.authorization as string;
+  // const isValidApiKey = verifyApiKey(apiKey);
+  // if (!isValidApiKey) {
+  //   res.status(401).json({
+  //     error: { message: "Invalid API key" },
+  //   });
+  //   return;
+  // }
+  // const validationErrors = await validatePlanningParams(req.body);
+  // if (validationErrors.errors.length > 0) {
+  //   return res.status(validationErrors.status).json(validationErrors);
+  // }
+  // const {
+  //   applicationNumber,
+  //   description,
+  //   address,
+  //   applicationType,
+  //   height,
+  //   consultationDeadline,
+  // } = req.body;
+  // const data = {
+  //   applicationNumber,
+  //   description,
+  //   address,
+  //   applicationType,
+  //   height,
+  //   consultationDeadline,
+  //   isActive: true,
+  //   _type: "planning-application",
+  // };
+  // try {
+  //   await createApplication(data);
+  //   res.status(validationErrors.status).json({ message: "Success" });
+  // } catch (error) {
+  //   res.status(500).json({
+  //     error: { message: "An error occurred while creating the application" },
+  //   });
+  // }
 }
