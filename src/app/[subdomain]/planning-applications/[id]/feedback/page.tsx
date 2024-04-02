@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/breadcrumbs";
 import Instructions from "./instructions";
-import Questions from "../../../../components/questions";
-import { getLocalStorage } from "../../../../../util/helpers/application";
-import { Data } from "../../../../../util/helpers/type";
+import Questions from "../../../../../components/questions";
+import { getLocalStorage } from "../../../../../../util/helpers/application";
+import { Data } from "../../../../../../util/helpers/type";
 
 const Feedback = () => {
   const [application, setApplication] = useState<Data>();

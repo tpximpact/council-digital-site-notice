@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import Home from "../src/app/page";
+import Home from "../src/app/[subdomain]/page";
 
 it("renders homepage unchanged", () => {
   const { container } = render(<Home />);
