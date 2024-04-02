@@ -1,11 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
 import { createApplication } from "../../../../util/actions/actions";
 import { validatePlanningParams } from "../../../../util/actions/validator";
 import { ValidationResult } from "../../../../models/validationResult";
 import { verifyApiKey } from "../../../../util/helpers/apiKey";
-import type { NextRequest, NextResponse } from "next/server";
-import type { NextApiHandler } from "next";
 import { headers } from "next/headers";
 
 /**
@@ -73,9 +70,9 @@ export async function GET(req: Request) {
         applicationStage,
         height,
         consultationDeadline,
-      } = req.body[key];
+      } = req.body as any;
 
-      const validationErrors = await validatePlanningParams(req.body[key]);
+      const validationErrors = await validatePlanningParams(req.body as any);
       if (validationErrors.errors.length > 0) {
         failedValidationApplcaitons.push(
           `An error occurred while validating the application ${applicationNumber}`,
@@ -83,53 +80,41 @@ export async function GET(req: Request) {
         continue;
       }
 
-      //     const data = {
-      //       applicationNumber,
-      //       description,
-      //       address,
-      //       applicationType,
-      //       applicationStage,
-      //       height,
-      //       consultationDeadline,
-      //       isActive: false,
-      //       _type: "planning-application",
-      //     };
+      const data = {
+        applicationNumber,
+        description,
+        address,
+        applicationType,
+        applicationStage,
+        height,
+        consultationDeadline,
+        isActive: false,
+        _type: "planning-application",
+      };
 
-      //     try {
-      //       await createApplication(data);
-      //       successApplications.push(`Applciation ${applicationNumber} created`);
-      //     } catch (error) {
-      //       failedCreationApplcaitons.push(
-      //         `An error occurred while creating the application ${applicationNumber}`,
-      //       );
-      //     }
-      //   }
-      // }
-
-      // let status = 200;
-      // let message = "Success";
-
-      // if (successApplications.length == 0) {
-      //   status = 400;
-      //   message = "An error has occured";
-      // } else if (
-      //   failedCreationApplcaitons.length > 0 ||
-      //   failedValidationApplcaitons.length > 0
-      // ) {
-      //   status = 207;
-      //   message = "Partial success";
-      // }
-
-      // return res.status(status).json({
-      //   message: message,
-      //   data: {
-      //     successfullyCreated: successApplications,
-      //   },
-      //   errors: {
-      //     failedCreation: failedCreationApplcaitons,
-      //     failedValidation: failedValidationApplcaitons,
-      //   },
-      // });
+      try {
+        await createApplication(data);
+        successApplications.push(`Applciation ${applicationNumber} created`);
+      } catch (error) {
+        failedCreationApplcaitons.push(
+          `An error occurred while creating the application ${applicationNumber}`,
+        );
+      }
     }
   }
+
+  let status = 200;
+  let message = "Success";
+
+  if (successApplications.length == 0) {
+    status = 400;
+    message = "An error has occured";
+  } else if (
+    failedCreationApplcaitons.length > 0 ||
+    failedValidationApplcaitons.length > 0
+  ) {
+    status = 207;
+    message = "Partial success";
+  }
+  return new Response(message, {});
 }

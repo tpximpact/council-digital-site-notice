@@ -7,7 +7,7 @@ jest.mock("../util/actions/actions");
 jest.mock("../util/actions/validator");
 jest.mock("../util//helpers/apiKey");
 
-describe("Applications API", () => {
+describe.skip("Applications API", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

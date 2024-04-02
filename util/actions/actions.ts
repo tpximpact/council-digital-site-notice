@@ -9,7 +9,7 @@ import { cookies } from "next/headers";
 
 export async function getGlobalContent() {
   const info = await client.fetch('*[_type == "global-content"][0]', {
-    next: { tags: ["globalContent"] },
+    tags: ["globalContent"],
   });
   return info;
 }
