@@ -5,7 +5,7 @@ type resultsType = {
   applicationNumber: string;
 }[];
 
-type siteNoticeResponse = {
+export type siteNoticeResponse = {
   results: resultsType;
   total: number;
 };
