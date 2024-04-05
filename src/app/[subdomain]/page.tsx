@@ -5,17 +5,9 @@ import "../../styles/app.scss";
 import { useEffect, useState } from "react";
 import PlanningApplications from "../../components/planning-application";
 import { SanityClient } from "../../lib/sanityClient";
-import { Data } from "../../../util/helpers/type";
 import { DataClient } from "../../lib/dataService";
-import ReactPaginate from "react-paginate";
-import { NextIcon } from "../../../public/assets/icons";
-import { PreviewIcon } from "../../../public/assets/icons";
-import Input from "@/components/input";
 import { Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
-import Link from "next/link";
-import { getLocationFromPostcode } from "../../../util/actions/actions";
-import { getGlobalContent } from "../../../util/actions/actions";
 import { siteNoticeResponse } from "../../lib/dataService";
 
 const itemsPerPage = 6;
@@ -28,55 +20,9 @@ async function fetchData(): Promise<siteNoticeResponse> {
 
 export default async function Home() {
   console.log("Home");
-  // const [postcode, setPostcode] = useState("");
   const [location, setLocation] = useState<any>();
-  // const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
-  // const [displayData, setDisplayData] = useState<Data[]>();
-  // const [dynamicTotalResults, setDynamicTotalResults] = useState<number>(0);
-  // const [globalConfig, setGlobalConfig] = useState<any>();
 
   const testdata = await fetchData();
-
-  // const pageCount = Math.ceil(dynamicTotalResults / itemsPerPage);
-
-  // const handlePageClick = async (event: any) => {
-  //   const newOffset = (event.selected * itemsPerPage) % dynamicTotalResults;
-  //   const newTotalPagecount = dynamicTotalResults - newOffset;
-  //   const totalPage =
-  //     newTotalPagecount >= itemsPerPage ? itemsPerPage : newTotalPagecount;
-
-  //   const newData = await dataClient.getAllSiteNotices(
-  //     newOffset,
-  //     totalPage,
-  //     location,
-  //   );
-  //   setDisplayData(newData?.results as Data[]);
-  //   setDynamicTotalResults(newData?.total as number);
-  // };
-
-  // const onSearchPostCode = async () => {
-  //   let location: any;
-  //   if (!postcode) {
-  //     setLocationNotFound(true);
-  //     return;
-  //   }
-  //   location = await getLocationFromPostcode(postcode);
-  //   if (!location) {
-  //     setLocationNotFound(true);
-  //     return;
-  //   }
-  //   setLocationNotFound(false);
-  //   setLocation(location);
-
-  //   // Fetching sorted applications based on lat/long
-  //   const newData = await dataClient.getAllSiteNotices(
-  //     0,
-  //     itemsPerPage,
-  //     location,
-  //   );
-  //   setDisplayData(newData?.results as Data[]);
-  //   setDynamicTotalResults(newData?.total as number);
-  // };
 
   return (
     <div className="wrap-home">
