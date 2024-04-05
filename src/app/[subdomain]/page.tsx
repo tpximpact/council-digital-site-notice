@@ -13,7 +13,7 @@ import { siteNoticeResponse } from "../../lib/dataService";
 const itemsPerPage = 6;
 
 async function fetchData(): Promise<siteNoticeResponse> {
-  const dataClient = new DataClient(new SanityClient());
+  const dataClient = new DataClient(new SanityClient()); //can we pass something here to change configs?
   const data = await dataClient.getAllSiteNotices(0, itemsPerPage);
   return data;
 }
