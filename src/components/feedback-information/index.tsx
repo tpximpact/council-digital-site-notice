@@ -5,7 +5,7 @@ import { Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "../../../util/helpers/application";
-import { globalContentRevalidate } from "../../../util/actions/actions";
+import { globalContentRevalidate } from "@/app/actions/actions";
 
 function FeedbackInformation({
   onChangeQuestion,

@@ -1,4 +1,4 @@
-import { globalContentRevalidate } from "../../../util/actions/actions";
+import { globalContentRevalidate } from "@/app/actions/actions";
 
 const CookiePolicyPage = async () => {
   const globalConfig: any = await globalContentRevalidate();

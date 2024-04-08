@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Button } from "../button";
-import { urlFor } from "../../../util/actions/client";
+import { urlFor } from "@/app/actions/client";
 const Gallery = ({
   images,
   loadImage,

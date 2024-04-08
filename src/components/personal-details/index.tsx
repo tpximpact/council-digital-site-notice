@@ -19,7 +19,7 @@ import {
 } from "../../../util/helpers/feedback";
 import { PersonalDetailsForm } from "../../../util/helpers/type";
 import { getLocalStorage } from "../../../util/helpers/application";
-import { globalContentRevalidate } from "../../../util/actions/actions";
+import { globalContentRevalidate } from "../../app/actions/actions";
 
 const PersonalDetails = ({
   onChangeQuestion,

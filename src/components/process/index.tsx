@@ -7,7 +7,7 @@ import {
   applicationStageMessage,
 } from "../../../util/helpers/application";
 import { useEffect, useState } from "react";
-import { globalContentRevalidate } from "../../../util/actions/actions";
+import { globalContentRevalidate } from "@/app/actions/actions";
 function Process({
   data,
   consultationDeadline,

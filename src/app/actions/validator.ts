@@ -1,7 +1,7 @@
 "use server";
 import { checkExistingReference } from "./actions";
 import { z } from "zod";
-import { ValidationResult } from "../../models/validationResult";
+import { ValidationResult } from "../../../models/validationResult";
 
 const PlanningValidation = z.object({
   applicationNumber: z.string().min(1),

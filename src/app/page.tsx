@@ -2,7 +2,7 @@
 
 import "../styles/app.scss";
 import { useEffect, useState } from "react";
-import PlanningApplications from "../components/planning-application";
+import PlanningApplications from "@/components/planning-application";
 import { SanityClient } from "../lib/sanityClient";
 import { Data } from "../../util/helpers/type";
 import { DataClient } from "../lib/dataService";
@@ -13,8 +13,8 @@ import Input from "@/components/input";
 import { Button } from "@/components/button";
 import { ArrowIcon } from "../../public/assets/icons";
 import Link from "next/link";
-import { getLocationFromPostcode } from "../../util/actions/actions";
-import { getGlobalContent } from "../../util/actions/actions";
+import { getLocationFromPostcode } from "./actions/actions";
+import { getGlobalContent } from "./actions/actions";
 
 const dataClient = new DataClient(new SanityClient());
 const Home = () => {

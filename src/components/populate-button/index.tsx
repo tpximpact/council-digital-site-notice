@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useFormValue, useDocumentOperation } from "sanity";
-import { getGlobalContent } from "../../../util/actions/actions";
+import { getGlobalContent } from "@/app/actions/actions";
 
 export default function PopulateButton() {
   const [integrationMethod, setIntegrationMethod] = useState("");

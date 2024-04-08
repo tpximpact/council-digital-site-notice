@@ -1,6 +1,6 @@
-import { sendEmail, createEmailData } from "../util/actions/email";
-import { savefeedbackToGoogleSheet } from "../util/actions/email";
-import { saveComments } from "../util/actions/actions";
+import { sendEmail, createEmailData } from "@/app/actions/email";
+import { savefeedbackToGoogleSheet } from "@/app/actions/email";
+import { saveComments } from "@/app/actions/actions";
 
 jest.mock("../util/actions/email", () => ({
   sendEmail: jest.fn(),

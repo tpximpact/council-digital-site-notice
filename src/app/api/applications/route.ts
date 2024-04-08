@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { createApplication } from "../../../../util/actions/actions";
-import { validatePlanningParams } from "../../../../util/actions/validator";
+import { createApplication } from "@/app/actions/actions";
+import { validatePlanningParams } from "@/app/actions/validator";
 import { ValidationResult } from "../../../../models/validationResult";
 import { verifyApiKey } from "../../../../util/helpers/apiKey";
 import { headers } from "next/headers";

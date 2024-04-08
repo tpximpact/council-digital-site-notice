@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { createCookies } from "../../../util/actions/actions";
+import { createCookies } from "@/app/actions/actions";
 
 const CookiesBanner = () => {
   return (
