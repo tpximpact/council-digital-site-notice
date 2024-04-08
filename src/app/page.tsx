@@ -2,10 +2,10 @@
 
 import "../styles/app.scss";
 import { useEffect, useState } from "react";
-import PlanningApplications from "@/components/planning-application";
-import { SanityClient } from "../lib/sanityClient";
-import { Data } from "../../lib/type";
-import { DataClient } from "../lib/dataService";
+import PlanningApplicationList from "@/components/planning-application-list";
+import { SanityClient } from "./actions/sanityClient";
+import { Data } from "./lib/type";
+import { DataClient } from "./actions/dataService";
 import ReactPaginate from "react-paginate";
 import { NextIcon } from "../../public/assets/icons";
 import { PreviewIcon } from "../../public/assets/icons";
@@ -119,7 +119,7 @@ const Home = () => {
         )}
       </section>
       {displayData && (
-        <PlanningApplications data={displayData} searchLocation={location} />
+        <PlanningApplicationList data={displayData} searchLocation={location} />
       )}
 
       <div className="wrap-pagination">

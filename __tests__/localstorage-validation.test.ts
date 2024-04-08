@@ -1,4 +1,4 @@
-import { getLocalStorage } from "../lib/application";
+import { getLocalStorage } from "../src/app/lib/application";
 
 describe("localstorage", () => {
   beforeAll(() => {

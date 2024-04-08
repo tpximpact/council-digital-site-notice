@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createApplication } from "@/app/actions/actions";
 import { validatePlanningParams } from "@/app/actions/validator";
-import { verifyApiKey } from "../../../../lib/apiKey";
+import { verifyApiKey } from "../../lib/apiKey";
 import type { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 

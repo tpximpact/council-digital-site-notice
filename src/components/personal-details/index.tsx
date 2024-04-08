@@ -5,7 +5,7 @@ import Details from "@/components/details";
 import Input from "@/components/input";
 import Validation from "@/components/validation";
 import Checkbox from "@/components/checkbox";
-import { descriptionDetail } from "../../../lib/description";
+import { descriptionDetail } from "../../app/lib/description";
 import {
   messageError,
   optionalValidation,
@@ -16,9 +16,9 @@ import {
   emailValidation,
   phoneValidation,
   postcodeValidation,
-} from "../../../lib/feedback";
-import { PersonalDetailsForm } from "../../../lib/type";
-import { getLocalStorage } from "../../../lib/application";
+} from "../../app/lib/feedback";
+import { PersonalDetailsForm } from "../../app/lib/type";
+import { getLocalStorage } from "../../app/lib/application";
 import { globalContentRevalidate } from "../../app/actions/actions";
 
 const PersonalDetails = ({

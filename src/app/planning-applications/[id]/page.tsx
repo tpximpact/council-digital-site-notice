@@ -4,12 +4,12 @@ import Breadcrumbs from "@/components/breadcrumbs";
 import About from "@/components/about";
 import Impact from "@/components/impact";
 import Process from "@/components/process";
-import { DataDetails } from "../../../../lib/type";
+import { DataDetails } from "../../lib/type";
 import { getApplicationById } from "@/app/actions/actions";
 import moment from "moment";
 import { useParams } from "next/navigation";
 
-const Application = () => {
+const PlanningApplicationItem = () => {
   const [consultationDeadline, setConsultationDeadline] = useState<string>("");
   const [data, setData] = useState<DataDetails>();
   const params = useParams();
@@ -81,4 +81,4 @@ const Application = () => {
   );
 };
 
-export default Application;
+export default PlanningApplicationItem;

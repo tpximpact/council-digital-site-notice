@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/breadcrumbs";
 import Instructions from "./instructions";
 import Questions from "../../../../components/questions";
-import { getLocalStorage } from "../../../../../lib/application";
-import { Data } from "../../../../../lib/type";
+import { getLocalStorage } from "../../../lib/application";
+import { Data } from "../../../lib/type";
 
 const Feedback = () => {
   const [application, setApplication] = useState<Data>();

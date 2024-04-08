@@ -2,10 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { LocalIcon } from "../../../public/assets/icons";
 import { urlFor } from "@/app/actions/client";
-import { Data } from "../../../lib/type";
+import { Data } from "../../app/lib/type";
 import { distanceInMiles } from "../../app/actions/actions";
 
-const PlanningApplications = ({
+const PlanningApplicationList = ({
   data,
   searchLocation,
 }: {
@@ -66,4 +66,4 @@ const PlanningApplications = ({
   );
 };
 
-export default PlanningApplications;
+export default PlanningApplicationList;

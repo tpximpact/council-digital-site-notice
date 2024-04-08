@@ -1,5 +1,5 @@
-import { DataClient } from "../../../src/lib/dataService";
-import { SanityClient } from "../../../src/lib/sanityClient";
+import { DataClient } from "../../../src/app/actions/dataService";
+import { SanityClient } from "../../../src/app/actions/sanityClient";
 import { loadEnvConfig } from "@next/env";
 
 jest.mock("../../../src/lib/sanityClient");

@@ -1,6 +1,6 @@
 import "swagger-ui-react/swagger-ui.css";
 
-import { getApiDocs } from "../../../lib/swagger";
+import { getApiDocs } from "../lib/swagger";
 import ReactSwagger from "./react-swagger";
 
 export default async function IndexPage() {

@@ -3,9 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Data } from "../../../../../lib/type";
+import { Data } from "../../../lib/type";
 import { urlFor } from "@/app/actions/client";
-import { getLocalStorage } from "../../../../../lib/application";
+import { getLocalStorage } from "../../../lib/application";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { globalContentRevalidate } from "@/app/actions/actions";
 
