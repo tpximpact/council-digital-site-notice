@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
 import { useEffect, useState } from "react";
-import { getLocalStorage } from "../../app/lib/application";
+import { getLocalStorage } from "@/app/lib/application";
 import { globalContentRevalidate } from "@/app/actions/actions";
 
 function FeedbackInformation({

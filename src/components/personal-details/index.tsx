@@ -5,7 +5,7 @@ import Details from "@/components/details";
 import Input from "@/components/input";
 import Validation from "@/components/validation";
 import Checkbox from "@/components/checkbox";
-import { descriptionDetail } from "../../app/lib/description";
+import { descriptionDetail } from "@/app/lib/description";
 import {
   messageError,
   optionalValidation,

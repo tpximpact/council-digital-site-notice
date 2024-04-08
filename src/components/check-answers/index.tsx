@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { BackLink, Button, ButtonLink } from "@/components/button";
 import Details from "@/components/details";
-import { questions, getLocalStorage } from "../../app/lib/application";
-import { descriptionDetail } from "../../app/lib/description";
+import { questions, getLocalStorage } from "@/app/lib/application";
+import { descriptionDetail } from "@/app/lib/description";
 import { useRouter } from "next/navigation";
 import { PersonalDetailsForm, CommentForm } from "../../app/lib/type";
 import { saveComments } from "@/app/actions/actions";
