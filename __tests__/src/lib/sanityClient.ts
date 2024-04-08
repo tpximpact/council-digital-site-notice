@@ -1,10 +1,9 @@
-import { DataClient } from "../../../src/lib/dataService";
 import { SanityClient } from "../../../src/lib/sanityClient";
 import { loadEnvConfig } from "@next/env";
 
 jest.mock("../../../src/lib/sanityClient");
 
-describe("DataClient", () => {
+describe("SanityClient", () => {
   loadEnvConfig(process.cwd());
 
   afterEach(() => {
@@ -14,7 +13,6 @@ describe("DataClient", () => {
   describe("getAllSiteNotices", () => {
     it("should return all site notices from SanityClient", async () => {
       const sanityClient = new SanityClient();
-      const dataClient2 = new DataClient(sanityClient);
       const resultData = {
         results: [{ _id: "1", applicationNumber: "123" }],
         total: 1,
@@ -23,15 +21,13 @@ describe("DataClient", () => {
         .spyOn(sanityClient, "getActiveApplications")
         .mockResolvedValue(resultData);
 
-      const response = await dataClient2.getAllSiteNotices();
+      const response = await sanityClient.getActiveApplications();
 
-      expect(sanityClient.getActiveApplications).toHaveBeenCalled();
       expect(response).toEqual(resultData);
     });
     describe("getAllSiteNoticesByLocation", () => {
       it("should filter and sort site notices by location when provided", async () => {
         const sanityClient = new SanityClient();
-        const dataClient = new DataClient(sanityClient);
 
         const location = { latitude: 40.7128, longitude: -74.006 };
 
@@ -47,10 +43,10 @@ describe("DataClient", () => {
           .spyOn(sanityClient, "getActiveApplicationsByLocation")
           .mockResolvedValue(sanityResultData);
 
-        const response = await dataClient.getAllSiteNotices(
-          undefined,
+        const response = await sanityClient.getActiveApplicationsByLocation(
           undefined,
           location,
+          undefined,
         );
 
         expect(

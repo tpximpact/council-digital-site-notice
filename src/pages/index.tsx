@@ -3,7 +3,6 @@ import PlanningApplications from "../components/planning-application";
 import { SanityClient } from "../lib/sanityClient";
 import { PaginationType, Data } from "../../util/type";
 import { ContextApplication } from "@/context";
-import { DataClient } from "../lib/dataService";
 import ReactPaginate from "react-paginate";
 import { NextIcon } from "../../public/assets/icons";
 import { PreviewIcon } from "../../public/assets/icons";
@@ -14,10 +13,10 @@ import Link from "next/link";
 import { getLocationFromPostcode } from "../../util/geolocation";
 
 export const itemsPerPage = 6;
-const dataClient = new DataClient(new SanityClient());
+const client = new SanityClient();
 
 export async function getStaticProps() {
-  const data = await dataClient.getAllSiteNotices(0, itemsPerPage);
+  const data = await client.getActiveApplications(0, itemsPerPage);
   return {
     props: {
       data: data.results,
@@ -40,18 +39,23 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
   }, [data]);
 
   const pageCount = Math.ceil(dynamicTotalResults / itemsPerPage);
-
   const handlePageClick = async (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % resultsTotal;
     const newTotalPagecount = resultsTotal - newOffset;
     const totalPage =
       newTotalPagecount >= itemsPerPage ? itemsPerPage : newTotalPagecount;
 
-    const newData = await dataClient.getAllSiteNotices(
-      newOffset,
-      totalPage,
-      location,
-    );
+    let newData;
+    if (location) {
+      newData = await client.getActiveApplicationsByLocation(
+        newOffset,
+        location,
+        totalPage,
+      );
+    } else {
+      newData = await client.getActiveApplications(newOffset, totalPage);
+    }
+
     setDisplayData(newData?.results as Data[]);
     setDynamicTotalResults(newData?.total as number);
   };
@@ -71,10 +75,10 @@ const Home = ({ data, resultsTotal }: PaginationType) => {
     setLocation(location);
 
     // Fetching sorted applications based on lat/long
-    const newData = await dataClient.getAllSiteNotices(
+    const newData = await client.getActiveApplicationsByLocation(
       0,
-      itemsPerPage,
       location,
+      itemsPerPage,
     );
     setDisplayData(newData?.results as Data[]);
     setDynamicTotalResults(newData?.total as number);
