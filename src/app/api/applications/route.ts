@@ -2,7 +2,7 @@
 import { createApplication } from "@/app/actions/actions";
 import { validatePlanningParams } from "@/app/actions/validator";
 import { ValidationResult } from "../../../../models/validationResult";
-import { verifyApiKey } from "../../../../util/helpers/apiKey";
+import { verifyApiKey } from "../../../../lib/apiKey";
 import { headers } from "next/headers";
 
 /**

@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import Checkbox from "@/components/checkbox";
 import Details from "@/components/details";
 import Validation from "@/components/validation";
-import { descriptionDetail } from "../../../util/helpers/description";
-import { questions } from "../../../util/helpers/application";
-import { getLocalStorage } from "../../../util/helpers/application";
+import { descriptionDetail } from "../../../lib/description";
+import { questions } from "../../../lib/application";
+import { getLocalStorage } from "../../../lib/application";
 
 export const checkboxId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 

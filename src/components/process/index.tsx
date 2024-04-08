@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowIcon } from "../../../public/assets/icons";
-import { DataDetails } from "../../../util/helpers/type";
+import { DataDetails } from "../../../lib/type";
 import {
   aplicationStageStyle,
   applicationStageMessage,
-} from "../../../util/helpers/application";
+} from "../../../lib/application";
 import { useEffect, useState } from "react";
 import { globalContentRevalidate } from "@/app/actions/actions";
 function Process({

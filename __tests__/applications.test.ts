@@ -1,7 +1,7 @@
 import { createApplication } from "@/app/actions/actions";
 import { validatePlanningParams } from "@/app/actions/validator";
 import handler from "@/app/api/applications/route";
-import { verifyApiKey } from "../util/helpers/apiKey";
+import { verifyApiKey } from "../lib/apiKey";
 
 jest.mock("../util/actions/actions");
 jest.mock("../util/actions/validator");

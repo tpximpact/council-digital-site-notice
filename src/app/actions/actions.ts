@@ -4,7 +4,7 @@ import { revalidateTag } from "next/cache";
 import { client } from "./client";
 import { sendEmail, createEmailData } from "./email";
 import { savefeedbackToGoogleSheet } from "./email";
-import { postCodeRegex } from "../../../util/helpers/application";
+import { postCodeRegex } from "../../../lib/application";
 import { cookies } from "next/headers";
 
 export async function getGlobalContent() {

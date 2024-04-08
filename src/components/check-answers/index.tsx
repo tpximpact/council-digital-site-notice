@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import { BackLink, Button, ButtonLink } from "@/components/button";
 import Details from "@/components/details";
-import { questions, getLocalStorage } from "../../../util/helpers/application";
-import { descriptionDetail } from "../../../util/helpers/description";
+import { questions, getLocalStorage } from "../../../lib/application";
+import { descriptionDetail } from "../../../lib/description";
 import { useRouter } from "next/navigation";
-import { PersonalDetailsForm, CommentForm } from "../../../util/helpers/type";
+import { PersonalDetailsForm, CommentForm } from "../../../lib/type";
 import { saveComments } from "@/app/actions/actions";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import TextArea from "@/components/text-area";
 import Validation from "@/components/validation";
 import { Button, BackLink } from "@/components/button";
-import { questions } from "../../../util/helpers/application";
-import { getLocalStorage } from "../../../util/helpers/application";
-import { CommentForm } from "../../../util/helpers/type";
+import { questions } from "../../../lib/application";
+import { getLocalStorage } from "../../../lib/application";
+import { CommentForm } from "../../../lib/type";
 
 function CommentQuestion({
   onChangeQuestion,

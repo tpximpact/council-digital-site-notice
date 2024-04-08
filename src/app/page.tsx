@@ -4,7 +4,7 @@ import "../styles/app.scss";
 import { useEffect, useState } from "react";
 import PlanningApplications from "@/components/planning-application";
 import { SanityClient } from "../lib/sanityClient";
-import { Data } from "../../util/helpers/type";
+import { Data } from "../../lib/type";
 import { DataClient } from "../lib/dataService";
 import ReactPaginate from "react-paginate";
 import { NextIcon } from "../../public/assets/icons";
