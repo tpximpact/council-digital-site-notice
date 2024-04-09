@@ -16,7 +16,7 @@ import {
   emailValidation,
   phoneValidation,
   postcodeValidation,
-} from "../../app/lib/feedback";
+} from "../../app/lib/feedback-validation";
 import { PersonalDetailsForm } from "../../app/lib/type";
 import { getLocalStorage } from "../../app/lib/application";
 import { globalContentRevalidate } from "../../app/actions/actions";
