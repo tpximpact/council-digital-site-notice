@@ -2,7 +2,7 @@ import { sendEmail, createEmailData } from "@/app/actions/email";
 import { savefeedbackToGoogleSheet } from "@/app/actions/email";
 import { saveComments } from "@/app/actions/actions";
 
-jest.mock("../util/actions/email", () => ({
+jest.mock("../src/app/actions/email", () => ({
   sendEmail: jest.fn(),
   createEmailData: jest.fn(),
   savefeedbackToGoogleSheet: jest.fn(),
@@ -21,7 +21,7 @@ describe("comments API", () => {
   });
 
   it("should send email and save to Google Sheet when POST request is made", async () => {
-    jest.mock("../util/actions/actions", () => ({
+    jest.mock("../src/app/actions/actions", () => ({
       saveComments: jest.fn().mockReturnValue({
         status: 200,
         message: "Email sent & google sheet saved successfully",
@@ -56,7 +56,7 @@ describe("comments API", () => {
   });
 
   it("should return 500 status when error ", async () => {
-    jest.mock("../util/actions/actions", () => ({
+    jest.mock("../src/app/actions/actions", () => ({
       saveComments: jest.fn().mockReturnValue({
         status: 500,
         message: "Failed to store comments",

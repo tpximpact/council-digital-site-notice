@@ -2,7 +2,7 @@ import { DataClient } from "../../../src/app/actions/dataService";
 import { SanityClient } from "../../../src/app/actions/sanityClient";
 import { loadEnvConfig } from "@next/env";
 
-jest.mock("../../../src/lib/sanityClient");
+jest.mock("../../../src/app/actions/sanityClient");
 
 describe("DataClient", () => {
   loadEnvConfig(process.cwd());

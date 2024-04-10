@@ -3,9 +3,9 @@ import { validatePlanningParams } from "@/app/actions/validator";
 import { verifyApiKey } from "../src/app/lib/apiKey";
 import handler from "@/app/api/application/route";
 
-jest.mock("../util/actions/actions");
-jest.mock("../util/actions/validator");
-jest.mock("../util//helpers/apiKey");
+jest.mock("../src/app/actions/actions");
+jest.mock("../src/app/actions/validator");
+jest.mock("../src/app/lib/apiKey");
 
 describe.skip("Applications API", () => {
   beforeEach(() => {

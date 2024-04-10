@@ -1,4 +1,4 @@
-jest.mock("../util/actions/actions", () => {
+jest.mock("../src/app/actions/actions", () => {
   return {
     checkExistingReference: jest.fn(),
   };
