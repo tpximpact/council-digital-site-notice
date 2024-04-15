@@ -1,6 +1,8 @@
+"use client";
 import Link from "next/link";
+import { createCookies } from "@/app/actions/actions";
 
-const CookiesBanner = ({ onClick }: any) => {
+const CookiesBanner = () => {
   return (
     <div
       className="govuk-cookie-banner"
@@ -30,7 +32,9 @@ const CookiesBanner = ({ onClick }: any) => {
             type="button"
             className="govuk-button"
             data-module="govuk-button"
-            onClick={() => onClick(true)}
+            onClick={() => {
+              createCookies(true);
+            }}
           >
             Accept analytics cookies
           </button>
@@ -38,7 +42,9 @@ const CookiesBanner = ({ onClick }: any) => {
             type="button"
             className="govuk-button"
             data-module="govuk-button"
-            onClick={() => onClick(false)}
+            onClick={() => {
+              createCookies(false);
+            }}
           >
             Reject analytics cookies
           </button>

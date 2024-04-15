@@ -22,26 +22,18 @@ const Input = ({
       <h1 className="govuk-label-wrapper">
         <label
           className={`govuk-label govuk-label--l ${isError && "govuk-error-message"}`}
-          htmlFor="event-name"
+          htmlFor={label}
           role="definition"
           style={{ ...style }}
         >
           {label}
         </label>
       </h1>
-      {hint && (
-        <div id="event-name-hint" className="govuk-hint">
-          {hint}
-        </div>
-      )}
-      {isError && (
-        <div id="message-error" className="govuk-error-message">
-          {messageError}
-        </div>
-      )}
+      {hint && <div className="govuk-hint">{hint}</div>}
+      {isError && <div className="govuk-error-message">{messageError}</div>}
       <input
         className={`govuk-input ${isError && `govuk-input--error`}`}
-        id="event-name"
+        id={label}
         name="eventName"
         type={type}
         role="textbox"

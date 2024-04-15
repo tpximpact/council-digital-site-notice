@@ -1,11 +1,11 @@
-import { useEffect, useState, useContext } from "react";
-import { ContextApplication } from "@/context";
+"use client";
+import { useEffect, useState } from "react";
 import { Button, BackLink } from "@/components/button";
 import Details from "@/components/details";
 import Input from "@/components/input";
 import Validation from "@/components/validation";
 import Checkbox from "@/components/checkbox";
-import { descriptionDetail } from "../../../util/description-detail";
+import { descriptionDetail } from "@/app/lib/description";
 import {
   messageError,
   optionalValidation,
@@ -16,9 +16,10 @@ import {
   emailValidation,
   phoneValidation,
   postcodeValidation,
-} from "../../../util/feedbackHelper";
-import { PersonalDetailsForm } from "../../../util/type";
-import { getLocalStorage } from "../../../util/helpLocalStorage";
+} from "../../app/lib/feedback-validation";
+import { PersonalDetailsForm } from "../../app/lib/type";
+import { getLocalStorage } from "../../app/lib/application";
+import { globalContentRevalidate } from "../../app/actions/actions";
 
 const PersonalDetails = ({
   onChangeQuestion,
@@ -27,7 +28,7 @@ const PersonalDetails = ({
   onChangeQuestion: () => void;
   setQuestion: (value: number) => void;
 }) => {
-  const { globalConfig } = useContext(ContextApplication);
+  const [globalConfig, setGlobalConfig] = useState<any>();
   const [isError, setIsError] = useState<boolean>(false);
   const [id, setId] = useState();
   const [personalDetailsForm, setPersonalDetailsForm] =
@@ -57,25 +58,30 @@ const PersonalDetails = ({
     selectedCheckbox && selectedCheckbox[selectedCheckbox?.length - 1];
 
   useEffect(() => {
-    const applicationStorage = getLocalStorage({
-      key: "application",
-      defaultValue: {},
-    });
-    setId(applicationStorage?._id);
+    (async () => {
+      const fetchGlobalConfig: any = await globalContentRevalidate();
+      setGlobalConfig(fetchGlobalConfig);
 
-    const personalDetailsStorage = getLocalStorage({
-      key: "personalDetails",
-      defaultValue: {},
-    });
-    personalDetailsStorage?.id === applicationStorage?._id &&
-      setPersonalDetailsForm(personalDetailsStorage?.value);
+      const applicationStorage = getLocalStorage({
+        key: "application",
+        defaultValue: {},
+      });
+      setId(applicationStorage?._id);
 
-    const selectedCheckboxStorage = getLocalStorage({
-      key: "topics",
-      defaultValue: {},
-    });
-    selectedCheckboxStorage?.id === applicationStorage?._id &&
-      setSelectedCheckbox(selectedCheckboxStorage?.value);
+      const personalDetailsStorage = getLocalStorage({
+        key: "personalDetails",
+        defaultValue: {},
+      });
+      personalDetailsStorage?.id === applicationStorage?._id &&
+        setPersonalDetailsForm(personalDetailsStorage?.value);
+
+      const selectedCheckboxStorage = getLocalStorage({
+        key: "topics",
+        defaultValue: {},
+      });
+      selectedCheckboxStorage?.id === applicationStorage?._id &&
+        setSelectedCheckbox(selectedCheckboxStorage?.value);
+    })();
   }, []);
 
   const onChangeDetails = (value: any, key: string) => {

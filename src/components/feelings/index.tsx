@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, BackLink } from "@/components/button";
 import { Happy, Neutral, Opposed } from "../../../public/assets/icons";
 import Validation from "@/components/validation";
-import { getLocalStorage } from "../../../util/helpLocalStorage";
+import { getLocalStorage } from "@/app/lib/application";
 
 function Feeling({
   onChangeQuestion,

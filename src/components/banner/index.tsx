@@ -1,7 +1,4 @@
-import { useContext } from "react";
-import { ContextApplication } from "@/context";
-const Banner = () => {
-  const { globalConfig } = useContext(ContextApplication);
+const Banner = ({ globalConfig }: any) => {
   const feedbackUrl = globalConfig?.feedbackUrl;
 
   return (
