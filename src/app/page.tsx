@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import PlanningApplicationList from "@/components/planning-application-list";
 import { SanityClient } from "./actions/sanityClient";
 import { Data } from "./lib/type";
-import { DataClient } from "./actions/dataService";
 import ReactPaginate from "react-paginate";
 import { NextIcon } from "../../public/assets/icons";
 import { PreviewIcon } from "../../public/assets/icons";
@@ -16,7 +15,7 @@ import Link from "next/link";
 import { getLocationFromPostcode } from "./actions/actions";
 import { getGlobalContent } from "./actions/actions";
 
-const dataClient = new DataClient(new SanityClient());
+const dataClient = new SanityClient();
 const Home = () => {
   const itemsPerPage = 6;
 
@@ -29,7 +28,7 @@ const Home = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await dataClient.getAllSiteNotices(0, itemsPerPage);
+      const data = await dataClient.getActiveApplications(0, itemsPerPage);
       const fetchGlobalConfig = await getGlobalContent();
       setDisplayData(data.results as Data[]);
       setDynamicTotalResults(data.total);
@@ -46,11 +45,16 @@ const Home = () => {
     const totalPage =
       newTotalPagecount >= itemsPerPage ? itemsPerPage : newTotalPagecount;
 
-    const newData = await dataClient.getAllSiteNotices(
-      newOffset,
-      totalPage,
-      location,
-    );
+    let newData;
+    if (location) {
+      newData = await dataClient.getActiveApplicationsByLocation(
+        newOffset,
+        location,
+        totalPage,
+      );
+    } else {
+      newData = await dataClient.getActiveApplications(newOffset, totalPage);
+    }
     setDisplayData(newData?.results as Data[]);
     setDynamicTotalResults(newData?.total as number);
   };
@@ -70,10 +74,10 @@ const Home = () => {
     setLocation(location);
 
     // Fetching sorted applications based on lat/long
-    const newData = await dataClient.getAllSiteNotices(
+    const newData = await dataClient.getActiveApplicationsByLocation(
       0,
-      itemsPerPage,
       location,
+      itemsPerPage,
     );
     setDisplayData(newData?.results as Data[]);
     setDynamicTotalResults(newData?.total as number);
