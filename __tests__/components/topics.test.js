@@ -1,5 +1,4 @@
 import TopicsQuestion from "../../src/components/topics";
-import { ContextApplication } from "@/context";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
@@ -25,9 +24,10 @@ describe("TopicsQuestion Component", () => {
     };
 
     render(
-      <ContextApplication.Provider value={contextValue}>
-        <TopicsQuestion />
-      </ContextApplication.Provider>,
+      <TopicsQuestion
+        onChangeQuestion={contextValue.onChangeQuestion}
+        setQuestion={contextValue.setQuestion}
+      />,
     );
   });
 

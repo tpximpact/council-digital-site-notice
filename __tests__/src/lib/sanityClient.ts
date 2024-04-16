@@ -1,7 +1,7 @@
-import { SanityClient } from "../../../src/lib/sanityClient";
+import { SanityClient } from "../../../src/app/actions/sanityClient";
 import { loadEnvConfig } from "@next/env";
 
-jest.mock("../../../src/lib/sanityClient");
+jest.mock("../../../src/app/actions/sanityClient");
 
 describe("SanityClient", () => {
   loadEnvConfig(process.cwd());

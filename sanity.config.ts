@@ -2,22 +2,22 @@
  * This configuration is used to for the Sanity Studio that’s mounted on the `\src\app\studio\[[...index]]\page.tsx` route
  */
 
-import {visionTool} from '@sanity/vision'
-import {defineConfig} from 'sanity'
-import {deskTool} from 'sanity/desk'
+import { visionTool } from "@sanity/vision";
+import { defineConfig } from "sanity";
+import { deskTool } from "sanity/desk";
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
-import {apiVersion, dataset, projectId} from './sanity/env'
-import {schema} from './sanity/schema'
+import { apiVersion, dataset, projectId } from "./sanity/env";
+import { schema } from "./sanity/schema";
 
 // Define the actions that should be available for singleton documents
-const singletonActions = new Set(["publish", "discardChanges", "restore"])
+const singletonActions = new Set(["publish", "discardChanges", "restore"]);
 
 // Define the singleton document types
-const singletonTypes = new Set(["settings"])
+const singletonTypes = new Set(["settings"]);
 
 export default defineConfig({
-  basePath: '/studio',
+  basePath: "/studio",
   projectId,
   dataset,
   plugins: [
@@ -27,24 +27,23 @@ export default defineConfig({
           .title("Content")
           .items([
             // Our singleton type has a list item with a custom child
-            S.listItem()
-              .title("Global Content")
-              .id("globalContent")
-              .child(
-                // Instead of rendering a list of documents, we render a single
-                // document, specifying the `documentId` manually to ensure
-                // that we're editing the single instance of the document
-                S.document()
-                  .schemaType("global-content")
-                  .documentId("globalContent")
-                  .title("Global Content")
-              ),
+            S.listItem().title("Global Content").id("globalContent").child(
+              // Instead of rendering a list of documents, we render a single
+              // document, specifying the `documentId` manually to ensure
+              // that we're editing the single instance of the document
+              S.document()
+                .schemaType("global-content")
+                .documentId("globalContent")
+                .title("Global Content"),
+            ),
             S.divider(),
             // Regular document types
-            S.documentTypeListItem("planning-application").title("Planning applications"),
+            S.documentTypeListItem("planning-application").title(
+              "Planning applications",
+            ),
           ]),
     }),
-    visionTool({defaultApiVersion: apiVersion}),
+    visionTool({ defaultApiVersion: apiVersion }),
   ],
 
   schema: {
@@ -63,4 +62,4 @@ export default defineConfig({
         ? input.filter(({ action }) => action && singletonActions.has(action))
         : input,
   },
-})
+});

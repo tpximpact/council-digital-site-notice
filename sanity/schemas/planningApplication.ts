@@ -42,7 +42,14 @@ export default defineType({
       name: "applicationNumber",
       type: "string",
       description: "Required",
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: any) =>
+        Rule.required().custom((field: any) => {
+          const regex = /^((\d{4})(\/)(\d{4})(\/)([ A-Z]{1}))?$/;
+          if (regex.test(field) !== true) {
+            return "Application Number format is wrong";
+          }
+          return true;
+        }),
       readOnly: false,
     }),
     defineField({

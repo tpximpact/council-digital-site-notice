@@ -1,11 +1,11 @@
-jest.mock("../util/client", () => {
+jest.mock("../src/app/actions/actions", () => {
   return {
     checkExistingReference: jest.fn(),
   };
 });
 
-import { checkExistingReference } from "../util/client";
-import { validatePlanningParams } from "../util/validator";
+import { checkExistingReference } from "@/app/actions/actions";
+import { validatePlanningParams } from "@/app/actions/validator";
 
 describe("validatePlanningParams", () => {
   it("should return an error if applicationNumber is not provided", async () => {
