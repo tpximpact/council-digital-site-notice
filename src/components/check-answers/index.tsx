@@ -125,12 +125,7 @@ function CheckAnswers({
         localStorage.removeItem("feeling");
         localStorage.removeItem("topics");
         localStorage.removeItem("comment");
-        localStorage.removeItem("name");
-        localStorage.removeItem("address");
-        localStorage.removeItem("postcode");
-        localStorage.removeItem("email");
-        localStorage.removeItem("phone");
-        localStorage.removeItem("consent");
+        localStorage.removeItem("personalDetails");
       } else {
         console.log("Error fetching data");
       }
