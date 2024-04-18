@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { urlFor } from "@/app/actions/client";
-import { getLocalStorage } from "../../../lib/application";
-import { Data } from "../../../lib/type";
+import { getLocalStorage } from "../../../../lib/application";
+import { Data } from "../../../../lib/type";
 import { globalContentRevalidate } from "@/app/actions/actions";
 
 function Instructions() {

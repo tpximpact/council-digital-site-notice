@@ -1,20 +1,20 @@
 "use client";
 
-import "../styles/app.scss";
+import "../../styles/app.scss";
 import { useEffect, useState } from "react";
 import PlanningApplicationList from "@/components/planning-application-list";
-import { SanityClient } from "./actions/sanityClient";
-import { Data } from "./lib/type";
-import { DataClient } from "./actions/dataService";
+import { SanityClient } from "../actions/sanityClient";
+import { Data } from "../lib/type";
+import { DataClient } from "../actions/dataService";
 import ReactPaginate from "react-paginate";
-import { NextIcon } from "../../public/assets/icons";
-import { PreviewIcon } from "../../public/assets/icons";
+import { NextIcon } from "../../../public/assets/icons";
+import { PreviewIcon } from "../../../public/assets/icons";
 import Input from "@/components/input";
 import { Button } from "@/components/button";
-import { ArrowIcon } from "../../public/assets/icons";
+import { ArrowIcon } from "../../../public/assets/icons";
 import Link from "next/link";
-import { getLocationFromPostcode } from "./actions/actions";
-import { getGlobalContent } from "./actions/actions";
+import { getLocationFromPostcode } from "../actions/actions";
+import { getGlobalContent } from "../actions/actions";
 
 const dataClient = new DataClient(new SanityClient());
 const Home = () => {
