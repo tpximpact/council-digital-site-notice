@@ -55,34 +55,6 @@ export default defineType({
       description: "Fetch data from the selected integration.",
     }),
     defineField({
-      name: "dataFetched",
-      title: "Data Fetched",
-      type: "boolean",
-      initialValue: false,
-      hidden: true,
-    }),
-    defineField({
-      name: "dataFetchValidation",
-      title: "Data Fetch Validation",
-      type: "boolean",
-      initialValue: true,
-      hidden: true,
-      validation: (Rule: any) =>
-        Rule.custom((value: any, context: any) => {
-          const { document } = context;
-          const integrationMethod = document.integrations;
-          if (
-            integrationMethod !== "manual" &&
-            !document.dataFetched &&
-            !value
-          ) {
-            return "Please fetch the data using the 'Fetch' button in the Integrations section before publishing.";
-          }
-
-          return true;
-        }),
-    }),
-    defineField({
       title: "Application Type",
       name: "applicationType",
       type: "string",
@@ -269,7 +241,21 @@ export default defineType({
       title: "Location",
       name: "location",
       type: "geopoint",
-      description: "Optional",
+      description: "Latitude and longitude are required. Altitude is optional.",
+      validation: (Rule) =>
+        Rule.custom((field: { lat?: number; lng?: number; alt?: number }) => {
+          if (
+            !field ||
+            typeof field.lat !== "number" ||
+            typeof field.lng !== "number"
+          ) {
+            return "Latitude and longitude are required.";
+          }
+          if (field.alt !== undefined && typeof field.alt !== "number") {
+            return "Altitude, if specified, must be a number.";
+          }
+          return true;
+        }),
     }),
     defineField({
       title: "Proposed land use",
