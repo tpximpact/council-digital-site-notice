@@ -19,7 +19,6 @@ function FeedbackInformation({
   useEffect(() => {
     (async () => {
       const fetchGlobalConfig: any = await getGlobalContent();
-      console.log({fetchGlobalConfig}, 'feedback-info')
       setGlobalConfig(fetchGlobalConfig);
       setUrlConcern(
         fetchGlobalConfig?.concernUrl
