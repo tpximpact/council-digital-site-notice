@@ -1,22 +1,16 @@
 "use server";
 
-import { revalidateTag } from "next/cache";
 import { client } from "./client";
 import { sendEmail, createEmailData } from "./email";
 import { savefeedbackToGoogleSheet } from "./email";
 import { postCodeRegex } from "../lib/application";
 import { cookies } from "next/headers";
+import { cache } from "react";
 
-export async function getGlobalContent() {
-  const info = await client.fetch('*[_type == "global-content"][0]', {
-    tags: ["globalContent"],
-  });
+export const getGlobalContent = cache(async () => {
+  const info = await client.fetch('*[_type == "global-content"][0]');
   return info;
-}
-
-export async function globalContentRevalidate() {
-  revalidateTag("globalContent");
-}
+});
 
 export async function getApplicationById(id: string) {
   const query =

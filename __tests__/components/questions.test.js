@@ -11,7 +11,6 @@ beforeEach(() => {
 
 jest.mock("../../src/app/actions/actions", () => ({
   getGlobalContent: jest.fn(),
-  globalContentRevalidate: jest.fn(),
 }));
 
 jest.mock("next/navigation", () => ({
