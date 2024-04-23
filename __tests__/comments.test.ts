@@ -8,6 +8,16 @@ jest.mock("../src/app/actions/email", () => ({
   savefeedbackToGoogleSheet: jest.fn(),
 }));
 
+jest.mock("react", () => {
+  const testCache = <T extends (...args: Array<unknown>) => unknown>(func: T) =>
+    func;
+  const originalModule = jest.requireActual("react");
+  return {
+    ...originalModule,
+    cache: testCache,
+  };
+});
+
 describe("comments API", () => {
   let data: any;
 
