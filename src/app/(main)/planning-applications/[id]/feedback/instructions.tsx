@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { urlFor } from "@/app/actions/client";
 import { getLocalStorage } from "../../../../lib/application";
 import { Data } from "../../../../lib/type";
-import { globalContentRevalidate } from "@/app/actions/actions";
+import { getGlobalContent } from "@/app/actions/actions";
 
 function Instructions() {
   const [application, setApplication] = useState<Data>();
@@ -13,7 +13,7 @@ function Instructions() {
 
   useEffect(() => {
     (async () => {
-      const globalConfig: any = await globalContentRevalidate();
+      const globalConfig: any = await getGlobalContent();
       const getStorage = getLocalStorage({
         key: "application",
         defaultValue: {},
