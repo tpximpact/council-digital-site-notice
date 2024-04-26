@@ -7,7 +7,7 @@ import {
   applicationStageMessage,
 } from "@/app/lib/application";
 import { useEffect, useState } from "react";
-import { globalContentRevalidate } from "@/app/actions/actions";
+import { getGlobalContent } from "@/app/actions/actions";
 function Process({
   data,
   consultationDeadline,
@@ -19,7 +19,7 @@ function Process({
 
   useEffect(() => {
     (async () => {
-      const fetchGlobalConfig = await globalContentRevalidate();
+      const fetchGlobalConfig = await getGlobalContent();
       setGlobalConfig(fetchGlobalConfig);
     })();
   }, []);

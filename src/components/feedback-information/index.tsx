@@ -5,7 +5,7 @@ import { Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "@/app/lib/application";
-import { globalContentRevalidate } from "@/app/actions/actions";
+import { getGlobalContent } from "@/app/actions/actions";
 
 function FeedbackInformation({
   onChangeQuestion,
@@ -18,7 +18,7 @@ function FeedbackInformation({
 
   useEffect(() => {
     (async () => {
-      const fetchGlobalConfig: any = await globalContentRevalidate();
+      const fetchGlobalConfig: any = await getGlobalContent();
       setGlobalConfig(fetchGlobalConfig);
       setUrlConcern(
         fetchGlobalConfig?.concernUrl

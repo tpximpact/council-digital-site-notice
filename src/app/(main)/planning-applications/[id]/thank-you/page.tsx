@@ -7,7 +7,7 @@ import { Data } from "../../../../lib/type";
 import { urlFor } from "@/app/actions/client";
 import { getLocalStorage } from "../../../../lib/application";
 import Breadcrumbs from "@/components/breadcrumbs";
-import { globalContentRevalidate } from "@/app/actions/actions";
+import { getGlobalContent } from "@/app/actions/actions";
 
 const FeedbackMessage = () => {
   const [globalConfig, setGlobalConfig] = useState<any>();
@@ -16,7 +16,7 @@ const FeedbackMessage = () => {
 
   useEffect(() => {
     (async () => {
-      const fetchGlobalConfig: any = await globalContentRevalidate();
+      const fetchGlobalConfig: any = await getGlobalContent();
       setGlobalConfig(fetchGlobalConfig);
       const initialValue = getLocalStorage({
         key: "application",
