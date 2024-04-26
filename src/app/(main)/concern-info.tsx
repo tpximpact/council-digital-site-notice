@@ -1,4 +1,4 @@
-import { globalContentRevalidate } from "./actions/actions";
+import { globalContentRevalidate } from "../actions/actions";
 
 async function ConcernInfo() {
   const globalConfig: any = globalContentRevalidate();
