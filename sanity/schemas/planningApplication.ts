@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { GeopointValue, defineField, defineType } from "sanity";
 import {
   appeal,
   assessment,
@@ -251,7 +251,21 @@ export default defineType({
       title: "Location",
       name: "location",
       type: "geopoint",
-      description: "Optional",
+      description: "Latitude and longitude are required. Altitude is optional.",
+      validation: (Rule) =>
+        Rule.custom((field: GeopointValue | undefined) => {
+          if (
+            !field ||
+            typeof field.lat !== "number" ||
+            typeof field.lng !== "number"
+          ) {
+            return "Latitude and longitude are required.";
+          }
+          if (field.alt !== undefined && typeof field.alt !== "number") {
+            return "Altitude, if specified, must be a number.";
+          }
+          return true;
+        }),
     }),
     defineField({
       title: "Proposed land use",
