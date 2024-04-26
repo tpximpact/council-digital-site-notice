@@ -1,5 +1,30 @@
-import { createClient } from "@sanity/client";
+import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
+
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
+const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2023-05-03";
+const token = process.env.NEXT_PUBLIC_SANITY_SECRET_TOKEN;
+
+const client = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: false,
+  token,
+});
+
+export async function sanityFetch<T>({
+  query,
+  params = {},
+  config = {},
+}: {
+  query: string;
+  params?: any;
+  config?: any;
+}): Promise<T> {
+  return client.fetch<T>(query, params, config);
+}
 
 type sanityApplicationResponse = {
   results: {
@@ -15,15 +40,7 @@ export class SanityClient {
   private imgBuilder: any;
 
   constructor() {
-    this.client = createClient({
-      projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-      dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-      useCdn: false,
-      apiVersion: "2023-11-15",
-      ignoreBrowserTokenWarning: true,
-      token: process.env.NEXT_PUBLIC_SANITY_SECRET_TOKEN,
-    });
-
+    this.client = client;
     this.imgBuilder = imageUrlBuilder(this.client);
   }
 
@@ -37,19 +54,19 @@ export class SanityClient {
   ): Promise<sanityApplicationResponse> {
     try {
       const query = `{
-      "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) 
-        ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} {
-          _id, 
-          image_head, 
-          name, 
-          applicationNumber, 
-          applicationName, 
-          address
-        },
-      "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])
-    }`;
+        "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) 
+          ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} {
+            _id, 
+            image_head, 
+            name, 
+            applicationNumber, 
+            applicationName, 
+            address
+          },
+        "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])
+      }`;
 
-      const response = await this.client.fetch(query);
+      const response = await sanityFetch<sanityApplicationResponse>({ query });
       return response;
     } catch (error) {
       throw new Error("Error fetching data from Sanity");
@@ -67,22 +84,22 @@ export class SanityClient {
 
     try {
       const query = `{
-      "results": 
-      *[_type == "planning-application" && defined(location) && isActive == true && !(_id in path("drafts.**"))] | order(geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude}))) ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} 
-         {
-          _id, 
-          image_head, 
-          name, 
-          applicationNumber, 
-          applicationName, 
-          address,
-          "distance": geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude}))
-        },
-      "total": count(*[_type == "planning-application" && defined(location) && isActive == true && !(_id in path("drafts.**"))]),
-    }`;
-      const response = await this.client.fetch(query);
+        "results": 
+        *[_type == "planning-application" && defined(location) && isActive == true && !(_id in path("drafts.**"))] | order(geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude}))) ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} 
+           {
+            _id, 
+            image_head, 
+            name, 
+            applicationNumber, 
+            applicationName, 
+            address,
+            "distance": geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude}))
+          },
+        "total": count(*[_type == "planning-application" && defined(location) && isActive == true && !(_id in path("drafts.**"))]),
+      }`;
+      const response = await sanityFetch<sanityApplicationResponse>({ query });
       if (response.results) {
-        response.results.forEach((result: { distance: number }) => {
+        response.results.forEach((result) => {
           if (result.distance) {
             // convert the distance of each distance from meters to miles
             result.distance = result.distance * 0.000621371192;
