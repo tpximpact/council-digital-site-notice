@@ -1,7 +1,7 @@
-import { globalContentRevalidate } from "../actions/actions";
+import { getGlobalContent } from "../actions/actions";
 
 async function ConcernInfo() {
-  const globalConfig: any = globalContentRevalidate();
+  const globalConfig: any = getGlobalContent();
   return <p className="govuk-body">{globalConfig?.concernContent}</p>;
 }
 
