@@ -1,12 +1,12 @@
+"use client";
 import { useEffect, useState } from "react";
 import { BackLink, Button, ButtonLink } from "@/components/button";
 import Details from "@/components/details";
-import { questions } from "../../../util/questionsInfo";
-import { descriptionDetail } from "../../../util/description-detail";
-import { addFeedback } from "../../../util/client";
-import { useRouter } from "next/router";
-import { getLocalStorage } from "../../../util/helpLocalStorage";
-import { PersonalDetailsForm, CommentForm } from "../../../util/type";
+import { questions, getLocalStorage } from "@/app/lib/application";
+import { descriptionDetail } from "@/app/lib/description";
+import { useRouter } from "next/navigation";
+import { PersonalDetailsForm, CommentForm } from "../../app/lib/type";
+import { saveComments } from "@/app/actions/actions";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -87,11 +87,11 @@ function CheckAnswers({
   };
 
   const submit = async () => {
-    addFeedback({
-      feelingForm,
-      commentForm,
-      personalDetailsForm,
-    });
+    // addFeedback({
+    //   feelingForm,
+    //   commentForm,
+    //   personalDetailsForm,
+    // });
 
     let formId = crypto.randomUUID();
     localStorage.setItem("formId", formId);
@@ -118,27 +118,14 @@ function CheckAnswers({
     };
 
     try {
-      const response = await fetch("/api/comments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
+      const response = await saveComments(data);
       if (response.ok) {
-        const responseData = await response.json();
         onChangeQuestion();
         router.push(`/planning-applications/${id}/thank-you`);
         localStorage.removeItem("feeling");
         localStorage.removeItem("topics");
         localStorage.removeItem("comment");
-        localStorage.removeItem("name");
-        localStorage.removeItem("address");
-        localStorage.removeItem("postcode");
-        localStorage.removeItem("email");
-        localStorage.removeItem("phone");
-        localStorage.removeItem("consent");
+        localStorage.removeItem("personalDetails");
       } else {
         console.log("Error fetching data");
       }

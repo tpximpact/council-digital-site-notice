@@ -1,14 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
-import { ContextApplication } from "@/context";
 import { ArrowIcon } from "../../../public/assets/icons";
-import { DataDetails } from "../../../util/type";
+import { DataDetails } from "@/app/lib/type";
 import {
   aplicationStageStyle,
   applicationStageMessage,
-} from "../../../util/applicationHelper";
-
+} from "@/app/lib/application";
+import { useEffect, useState } from "react";
+import { globalContentRevalidate } from "@/app/actions/actions";
 function Process({
   data,
   consultationDeadline,
@@ -16,7 +15,14 @@ function Process({
   data: DataDetails;
   consultationDeadline: string;
 }) {
-  const { globalConfig } = useContext(ContextApplication);
+  const [globalConfig, setGlobalConfig] = useState<any>();
+
+  useEffect(() => {
+    (async () => {
+      const fetchGlobalConfig = await globalContentRevalidate();
+      setGlobalConfig(fetchGlobalConfig);
+    })();
+  }, []);
 
   const singleApplicationStatus =
     data?.applicationStage?.status[
@@ -59,7 +65,9 @@ function Process({
               </p>
             )}
 
-          <p className="govuk-body">
+          <p
+            className={`govuk-body ${data?.applicationStage?.stage !== "Consultation" ? "hiden-date" : "show-date"}`}
+          >
             {applicationStageMessage(checkStage, singleApplicationStatus)}
           </p>
         </div>
