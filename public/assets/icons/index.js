@@ -1,4 +1,4 @@
-export const Happy = ({ color = "white", onClick }) => {
+export const Happy = ({ color = "white" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,7 +6,6 @@ export const Happy = ({ color = "white", onClick }) => {
       height="65"
       viewBox="0 0 64 65"
       fill="none"
-      onClick={() => onClick()}
     >
       <circle cx="31.9999" cy="32.1769" r="30.2619" fill={color} />
       <path
@@ -33,7 +32,7 @@ export const Happy = ({ color = "white", onClick }) => {
   );
 };
 
-export const Opposed = ({ color = "white", onClick }) => {
+export const Opposed = ({ color = "white" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +40,6 @@ export const Opposed = ({ color = "white", onClick }) => {
       height="65"
       viewBox="0 0 64 65"
       fill="none"
-      onClick={() => onClick()}
     >
       <circle cx="31.9999" cy="32.423" r="30.2619" fill={color} />
       <path
@@ -58,7 +56,7 @@ export const Opposed = ({ color = "white", onClick }) => {
   );
 };
 
-export const Neutral = ({ color = "white", onClick }) => {
+export const Neutral = ({ color = "white" }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +64,6 @@ export const Neutral = ({ color = "white", onClick }) => {
       height="65"
       viewBox="0 0 64 65"
       fill="none"
-      onClick={() => onClick()}
     >
       <circle cx="31.9999" cy="32.5786" r="30.2619" fill={color} />
       <path
