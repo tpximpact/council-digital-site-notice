@@ -64,7 +64,7 @@ const FeedbackMessage = () => {
         <div style={{ marginLeft: "15px" }}>
           <Link
             className="govuk-body govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state"
-            href={`/${application?._id}`}
+            href={`/planning-applications/${application?._id}`}
             style={{ marginBottom: "5px", textDecoration: "none" }}
           >
             {application?.address}
