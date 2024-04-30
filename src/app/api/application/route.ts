@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createApplication } from "@/app/actions/actions";
-import { validatePlanningParams } from "@/app/actions/validator";
+import { validatePlanningParams } from "@/app/actions/validators/validator";
 import { verifyApiKey } from "../../lib/apiKey";
 import type { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
@@ -41,20 +41,23 @@ import { headers } from "next/headers";
  *         message: Success
  */
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   // Verify API key
+  const postData = await req.json();
   const headersList = headers();
   const referer = headersList.get("authorization");
   const apiKey = referer as string;
   const isValidApiKey = verifyApiKey(apiKey);
+  console.log(isValidApiKey);
   if (!isValidApiKey) {
     return new Response("Invalid API key", {
       status: 401,
     });
   }
-  const validationErrors = await validatePlanningParams(req.body as any);
+  const validationErrors = await validatePlanningParams(postData as any);
+  console.log(validationErrors.errors[0]);
   if (validationErrors.errors.length > 0) {
-    return new Response(`${validationErrors}`, {
+    return new Response(`${validationErrors.errors[0]}`, {
       status: validationErrors.status,
     });
   }
@@ -77,6 +80,7 @@ export async function GET(req: Request) {
     _type: "planning-application",
   };
   try {
+    console.log(data);
     await createApplication(data);
     new Response("Success", { status: validationErrors.status });
   } catch (error) {

@@ -70,13 +70,19 @@ export async function createApplication(post: any) {
   return result;
 }
 
+export async function updateApplication(id: string, post: any) {
+  const result = client.patch(id).set(post).commit();
+  return result;
+}
+
 export async function checkExistingReference(
   applicationNumber: string,
-): Promise<{ exists: boolean }> {
+): Promise<{ id: string | null }> {
   const query =
-    '*[_type == "planning-application" && applicationNumber == $applicationNumber]';
-  const posts = await client.fetch(query, { applicationNumber });
-  return { exists: posts.length > 0 };
+    '*[_type == "planning-application" && applicationNumber == $applicationNumber][0]';
+  const application = await client.fetch(query, { applicationNumber });
+  console.log("YYYYYYY", application);
+  return application ? application._id : null;
 }
 
 export async function createCookies(value: any) {

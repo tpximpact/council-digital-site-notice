@@ -1,5 +1,5 @@
 import { createApplication } from "@/app/actions/actions";
-import { validatePlanningParams } from "@/app/actions/validator";
+import { validatePlanningParams } from "@/app/actions/validators/validator";
 import { verifyApiKey } from "../src/app/lib/apiKey";
 import handler from "@/app/api/application/route";
 

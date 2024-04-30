@@ -5,7 +5,7 @@ jest.mock("../src/app/actions/actions", () => {
 });
 
 import { checkExistingReference } from "@/app/actions/actions";
-import { validatePlanningParams } from "@/app/actions/validator";
+import { validatePlanningParams } from "@/app/actions/validators/validator";
 
 describe("validatePlanningParams", () => {
   it("should return an error if applicationNumber is not provided", async () => {
