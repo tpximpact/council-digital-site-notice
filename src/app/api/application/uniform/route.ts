@@ -39,11 +39,11 @@ export async function POST(req: Request) {
     console.log("DATA", data);
 
     //if applicationId exists update otherwise create
-    const applicationId = await checkExistingReference(data["DCAPPL[REFVAL]"]);
-    console.log("ID", applicationId);
-    if (applicationId) {
+    const application = await checkExistingReference(data["DCAPPL[REFVAL]"]);
+    console.log("ID", application);
+    if (application && application._id) {
       console.log("EXISTS");
-      await updateApplication(applicationId, applicationData);
+      await updateApplication(application._id, applicationData);
     } else {
       console.log("CREATES");
       await createApplication(applicationData);

@@ -6,6 +6,7 @@ import { savefeedbackToGoogleSheet } from "./email";
 import { postCodeRegex } from "../lib/application";
 import { cookies } from "next/headers";
 import { cache } from "react";
+import { Data } from "@/app/lib/type";
 
 export const getGlobalContent = cache(async () => {
   const info = await client.fetch('*[_type == "global-content"][0]');
@@ -77,12 +78,12 @@ export async function updateApplication(id: string, post: any) {
 
 export async function checkExistingReference(
   applicationNumber: string,
-): Promise<string | null> {
+): Promise<Data | null> {
   const query =
     '*[_type == "planning-application" && applicationNumber == $applicationNumber][0]';
   const application = await client.fetch(query, { applicationNumber });
   console.log("YYYYYYY", application);
-  return application ? application._id : null;
+  return application ? application : null;
 }
 
 export async function createCookies(value: any) {

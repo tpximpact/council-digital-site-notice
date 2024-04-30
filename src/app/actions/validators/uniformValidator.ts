@@ -7,7 +7,7 @@ const UniformValidation = z.object({
   "DCAPPL[BLPU_CLASS_DESC]": z.string().optional(),
   "DCAPPL[Application Type_D]": z.string().optional(),
 });
-type UniformValidationType = z.infer<typeof UniformValidation>;
+export type UniformValidationType = z.infer<typeof UniformValidation>;
 
 export async function validateUniformData(
   data: UniformValidationType,
