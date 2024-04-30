@@ -14,12 +14,7 @@ import { ArrowIcon } from "../../../public/assets/icons";
 import Link from "next/link";
 import { getLocationFromPostcode } from "../actions/actions";
 import { getGlobalContent } from "../actions/actions";
-import {
-  usePathname,
-  useSearchParams,
-  useRouter,
-  useParams,
-} from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const dataClient = new SanityClient();
 const Home = () => {
@@ -35,7 +30,6 @@ const Home = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const param = useParams();
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
