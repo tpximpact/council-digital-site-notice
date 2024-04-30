@@ -67,7 +67,7 @@ function Feeling({
           onClick={() => {
             onChangeFeeling("Opposed");
           }}
-          className="sentimental-button"
+          className="sentiment-button"
         >
           <Opposed color={colors["Opposed"]} />
           <span className="govuk-body">Opposed</span>
@@ -76,7 +76,7 @@ function Feeling({
           onClick={() => {
             onChangeFeeling("Neutral");
           }}
-          className="sentimental-button"
+          className="sentiment-button"
         >
           <Neutral color={colors["Neutral"]} />
           <span className="govuk-body">Neutral</span>
@@ -85,7 +85,7 @@ function Feeling({
           onClick={() => {
             onChangeFeeling("Support");
           }}
-          className="sentimental-button"
+          className="sentiment-button"
         >
           <Happy color={colors["Support"]} />
           <span className="govuk-body">Support</span>
