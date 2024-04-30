@@ -77,7 +77,7 @@ export async function updateApplication(id: string, post: any) {
 
 export async function checkExistingReference(
   applicationNumber: string,
-): Promise<{ id: string }> {
+): Promise<string | null> {
   const query =
     '*[_type == "planning-application" && applicationNumber == $applicationNumber][0]';
   const application = await client.fetch(query, { applicationNumber });
