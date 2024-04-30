@@ -63,33 +63,33 @@ function Feeling({
         How do you feel about this development?
       </h1>
       <div className="wrap-icons-feeling">
-        <div>
-          <Opposed
-            onClick={() => {
-              onChangeFeeling("Opposed");
-            }}
-            color={colors["Opposed"]}
-          />
+        <button
+          onClick={() => {
+            onChangeFeeling("Opposed");
+          }}
+          className="sentiment-button"
+        >
+          <Opposed color={colors["Opposed"]} />
           <span className="govuk-body">Opposed</span>
-        </div>
-        <div>
-          <Neutral
-            onClick={() => {
-              onChangeFeeling("Neutral");
-            }}
-            color={colors["Neutral"]}
-          />
+        </button>
+        <button
+          onClick={() => {
+            onChangeFeeling("Neutral");
+          }}
+          className="sentiment-button"
+        >
+          <Neutral color={colors["Neutral"]} />
           <span className="govuk-body">Neutral</span>
-        </div>
-        <div>
-          <Happy
-            onClick={() => {
-              onChangeFeeling("Support");
-            }}
-            color={colors["Support"]}
-          />
+        </button>
+        <button
+          onClick={() => {
+            onChangeFeeling("Support");
+          }}
+          className="sentiment-button"
+        >
+          <Happy color={colors["Support"]} />
           <span className="govuk-body">Support</span>
-        </div>
+        </button>
       </div>
       {isError && <Validation message="Please select one" />}
       <Button content="Next" onClick={() => onNextPage()} />
