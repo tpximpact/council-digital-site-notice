@@ -27,6 +27,21 @@
     flex-direction: column;
     border: none;
     background: none;
+    padding: 10px;
+    height: fit-content;
+}
+
+.sentiment-button svg {
+    margin: 0 auto;
+}
+
+.sentiment-button span {
+    margin-bottom: 0;
+}
+
+.sentiment-button:focus-visible {
+    background-color: #ffdd00;
+    outline: #ffdd00;
 }
 
 // feedback info

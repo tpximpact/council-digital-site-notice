@@ -1,4 +1,4 @@
-import { getGlobalContent } from "../actions/actions";
+import { getGlobalContent } from "../../actions/actions";
 
 async function ConcernInfo() {
   const globalConfig: any = getGlobalContent();
