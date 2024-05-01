@@ -44,9 +44,9 @@ export default defineType({
       description: "Required",
       validation: (Rule: any) =>
         Rule.required().custom((field: any) => {
-          const regex = /^((\d{4})(\/)(\d{4})(\/)([ A-Z]{1}))?$/;
+          const regex = /^((\d{4})(\/)(\d{4})(\/)([a-zA-Z]{1}))?$/;
           if (regex.test(field) !== true) {
-            return "Application Number format is wrong. It should be NNNN/NNNN/L";
+            return "Application Number format is wrong. It should be NNNN/NNNN/L or NNNN/NNNN/l";
           }
           return true;
         }),
