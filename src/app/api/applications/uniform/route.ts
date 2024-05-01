@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { verifyApiKey } from "@/app/lib/apiKey";
 import { validateUniformData } from "@/app/actions/validators/uniformValidator";
@@ -18,11 +18,10 @@ type ApplicationData = {
   _type: string;
 };
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   const errors: string[] = [];
   const success: string[] = [];
   const authorization = headers().get("authorization") as string;
-  console.log("KEY", authorization);
   const isValidApiKey = verifyApiKey(authorization);
   if (!isValidApiKey) {
     return new Response("Invalid API key", {

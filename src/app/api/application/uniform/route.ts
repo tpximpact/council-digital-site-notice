@@ -9,6 +9,8 @@ import {
 } from "@/app/actions/actions";
 
 export async function POST(req: Request) {
+  const errors: string[] = [];
+  const success: string[] = [];
   const authorization = headers().get("authorization") as string;
   console.log("KEY", authorization);
   const isValidApiKey = verifyApiKey(authorization);
@@ -44,12 +46,15 @@ export async function POST(req: Request) {
     if (application && application._id) {
       console.log("EXISTS");
       await updateApplication(application._id, applicationData);
+      success.push(`Applciation ${data["DCAPPL[REFVAL]"]} updated`);
     } else {
       console.log("CREATES");
       await createApplication(applicationData);
+      success.push(`Applciation ${data["DCAPPL[REFVAL]"]} created`);
     }
-    new Response("Success", { status: validationErrors.status });
+    return NextResponse.json({ data: { success } });
   } catch (error) {
+    errors.push(validationErrors.errors[0].message);
     new Response("An error occurred while creating the application", {
       status: 500,
     });
