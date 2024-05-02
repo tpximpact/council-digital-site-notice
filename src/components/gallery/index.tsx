@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { Button } from "../button";
-import { urlFor } from "@/app/actions/client";
-const Gallery = ({
+import { urlFor } from "@/app/actions/sanityClient";
+
+const Gallery = async ({
   images,
   loadImage,
   setIsModalOpen,
@@ -10,11 +11,13 @@ const Gallery = ({
   imageSelected,
   image_head,
 }: any) => {
+  const imageHead = await urlFor(image_head ? image_head : images?.[0])?.url();
+
   return (
     <>
       <div className="carousel-wrap">
         <Image
-          src={urlFor(image_head ? image_head : images?.[0])?.url()}
+          src={imageHead}
           alt=""
           width={323}
           height={240}

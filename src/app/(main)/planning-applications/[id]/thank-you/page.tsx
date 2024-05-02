@@ -4,10 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Data } from "../../../../lib/type";
-import { urlFor } from "@/app/actions/client";
+import { urlFor } from "@/app/actions/sanityClient";
 import { getLocalStorage } from "../../../../lib/application";
 import Breadcrumbs from "@/components/breadcrumbs";
-import { getGlobalContent } from "@/app/actions/actions";
+import { getGlobalContent } from "@/app/actions/sanityClient";
 
 const FeedbackMessage = () => {
   const [globalConfig, setGlobalConfig] = useState<any>();

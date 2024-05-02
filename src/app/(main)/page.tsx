@@ -3,7 +3,10 @@
 import "../../styles/app.scss";
 import { useEffect, useState } from "react";
 import PlanningApplicationList from "@/components/planning-application-list";
-import { SanityClient } from "../actions/sanityClient";
+import {
+  getActiveApplications,
+  getActiveApplicationsByLocation,
+} from "../actions/sanityClient";
 import { Data } from "../lib/type";
 import ReactPaginate from "react-paginate";
 import { NextIcon } from "../../../public/assets/icons";
@@ -13,9 +16,8 @@ import { Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
 import Link from "next/link";
 import { getLocationFromPostcode } from "../actions/actions";
-import { getGlobalContent } from "../actions/actions";
+import { getGlobalContent } from "@/app/actions/sanityClient";
 
-const dataClient = new SanityClient();
 const Home = () => {
   const itemsPerPage = 6;
 
@@ -28,7 +30,7 @@ const Home = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await dataClient.getActiveApplications(0, itemsPerPage);
+      const data = await getActiveApplications(0, itemsPerPage);
       const fetchGlobalConfig = await getGlobalContent();
       setDisplayData(data.results as Data[]);
       setDynamicTotalResults(data.total);
@@ -47,13 +49,13 @@ const Home = () => {
 
     let newData;
     if (location) {
-      newData = await dataClient.getActiveApplicationsByLocation(
+      newData = await getActiveApplicationsByLocation(
         newOffset,
         location,
         totalPage,
       );
     } else {
-      newData = await dataClient.getActiveApplications(newOffset, totalPage);
+      newData = await getActiveApplications(newOffset, totalPage);
     }
     setDisplayData(newData?.results as Data[]);
     setDynamicTotalResults(newData?.total as number);
@@ -74,7 +76,7 @@ const Home = () => {
     setLocation(location);
 
     // Fetching sorted applications based on lat/long
-    const newData = await dataClient.getActiveApplicationsByLocation(
+    const newData = await getActiveApplicationsByLocation(
       0,
       location,
       itemsPerPage,

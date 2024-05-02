@@ -6,44 +6,46 @@ import { DataDetails } from "@/app/lib/type";
 import { useEffect, useState } from "react";
 import Modal from "@/components/modal";
 import Gallery from "@/components/gallery";
+import { PlanningApplication } from "../../../sanity/sanity.types";
 
-function About({ data }: { data: DataDetails }) {
-  const [loadImage, setLoadImage] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [imageSelected, setImageSelected] = useState<any>();
+function About(data: PlanningApplication) {
+  // const [loadImage, setLoadImage] = useState(0);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [imageSelected, setImageSelected] = useState<any>();
+  let loadImage = 0;
+  let imageSelected = null;
+  let isModalOpen = false;
 
-  useEffect(() => {
-    if (data?.image_gallery?.length < 8) {
-      setLoadImage(data?.image_gallery?.length);
-    } else {
-      setLoadImage(6);
-    }
-    data?.image_head
-      ? setImageSelected(data?.image_head)
-      : setImageSelected(data?.image_gallery?.[0]);
-  }, [data?.image_gallery, data?.image_head]);
-
+  // useEffect(() => {
+  if (data?.image_gallery?.length < 8) {
+    loadImage = data?.image_gallery?.length;
+  } else {
+    loadImage = 6;
+  }
+  imageSelected = data?.image_head
+    ? data?.image_head
+    : data?.image_gallery?.[0];
+  // }, [data?.image_gallery, data?.image_head]);
+  console.log(data, "HERE");
   return (
     <div className="wrap-about">
-      {isModalOpen && (
-        <Modal setIsModalOpen={setIsModalOpen} image={imageSelected} />
-      )}
+      {isModalOpen && <Modal isModalOpen={isModalOpen} image={imageSelected} />}
       {data?.name && <h1 className="govuk-heading-l">{data?.name}</h1>}
       {data?.address && (
         <p className="govuk-body-m govuk-!-font-weight-bold">{data?.address}</p>
       )}
       <div className="wrap-carousel-desktop">
-        {(data?.image_head || data?.image_gallery) && (
+        {/* {(data?.image_head || data?.image_gallery) && (
           <Gallery
             image_head={data?.image_head}
             images={data?.image_gallery}
             loadImage={loadImage}
-            setIsModalOpen={setIsModalOpen}
-            setLoadImage={setLoadImage}
-            setImageSelected={setImageSelected}
+            setIsModalOpen={isModalOpen}
+            setLoadImage={loadImage}
+            setImageSelected={imageSelected}
             imageSelected={imageSelected}
           />
-        )}
+        )} */}
         {data?.description && (
           <div>
             <h2 className="govuk-heading-m">About this development</h2>

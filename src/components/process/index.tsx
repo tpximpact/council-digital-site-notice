@@ -1,28 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowIcon } from "../../../public/assets/icons";
-import { DataDetails } from "@/app/lib/type";
+import { PlanningApplication } from "../../../sanity/sanity.types";
 import {
   aplicationStageStyle,
   applicationStageMessage,
 } from "@/app/lib/application";
-import { useEffect, useState } from "react";
-import { getGlobalContent } from "@/app/actions/actions";
-function Process({
-  data,
-  consultationDeadline,
-}: {
-  data: DataDetails;
-  consultationDeadline: string;
-}) {
-  const [globalConfig, setGlobalConfig] = useState<any>();
+import { getGlobalContent } from "@/app/actions/sanityClient";
 
-  useEffect(() => {
-    (async () => {
-      const fetchGlobalConfig = await getGlobalContent();
-      setGlobalConfig(fetchGlobalConfig);
-    })();
-  }, []);
+async function getGlobalData() {
+  const fetchGlobalConfig = await getGlobalContent();
+  return fetchGlobalConfig;
+}
+
+async function Process(
+  data: PlanningApplication,
+  consultationDeadline: string,
+) {
+  const globalConfig = await getGlobalData();
 
   const singleApplicationStatus =
     data?.applicationStage?.status[

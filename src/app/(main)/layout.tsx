@@ -2,19 +2,23 @@ import Header from "@/components/header";
 import Banner from "@/components/banner";
 import CookiesBanner from "@/components/cookies";
 import GoogleAnalytics from "@/components/google-analytics";
-import { urlFor } from "../actions/client";
-import { getGlobalContent } from "../actions/actions";
+import { urlFor } from "../actions/sanityClient";
+import { getGlobalContent } from "../actions/sanityClient";
 import "../../styles/app.scss";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 
 export const globalContent = await getGlobalContent();
+const siteLogo = (await urlFor(globalContent?.logo))?.url();
+
 export async function generateMetadata(): Promise<Metadata> {
-  const resMetadata = await globalContent?.favicon;
+  const resMetadata = globalContent?.favicon;
   return {
     title: "Digital site notice",
     icons: {
-      icon: resMetadata ? urlFor(resMetadata)?.url() : "/favicon_default.ico",
+      icon: resMetadata
+        ? (await urlFor(resMetadata))?.url()
+        : "/favicon_default.ico",
     },
   };
 }
@@ -43,7 +47,7 @@ export default async function RootLayout({
           globalContent?.googleAnalytics && (
             <GoogleAnalytics gaId={globalContent?.googleAnalytics} />
           )}
-        <Header globalConfig={globalContent} />
+        <Header globalConfig={globalContent} siteLogo={siteLogo} />
         <Banner globalConfig={globalContent} />
         <div className="layout-wrap">{children}</div>
       </body>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { LocalIcon } from "../../../public/assets/icons";
-import { urlFor } from "@/app/actions/client";
+import { urlFor } from "@/app/actions/sanityClient";
 import { Data } from "../../app/lib/type";
 import { distanceInMiles } from "../../app/actions/actions";
 

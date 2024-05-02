@@ -2,14 +2,15 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { urlFor } from "@/app/actions/client";
+import { urlFor } from "@/app/actions/sanityClient";
 import { getLocalStorage } from "../../../../lib/application";
 import { Data } from "../../../../lib/type";
-import { getGlobalContent } from "@/app/actions/actions";
+import { getGlobalContent } from "@/app/actions/sanityClient";
 
 function Instructions() {
   const [application, setApplication] = useState<Data>();
   const [councilName, setCouncilName] = useState();
+  const [imageSrc, setImageSrc] = useState();
 
   useEffect(() => {
     (async () => {
@@ -18,7 +19,9 @@ function Instructions() {
         key: "application",
         defaultValue: {},
       });
+      const imageSrc = await urlFor(application?.image_head).url();
       setApplication(getStorage);
+      setImageSrc(getStorage);
       setCouncilName(globalConfig?.councilName);
     })();
   }, []);
@@ -32,7 +35,7 @@ function Instructions() {
             width={80}
             height={57}
             alt="Development image"
-            src={urlFor(application?.image_head)?.url()}
+            src={imageSrc}
           />
         )}
         <div>

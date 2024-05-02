@@ -2,8 +2,9 @@ import Image from "next/image";
 import Details from "@/components/details";
 import { descriptionDetail } from "@/app/lib/description";
 import { DataDetails } from "@/app/lib/type";
+import { PlanningApplication } from "../../../sanity/sanity.types";
 
-function Impact({ data }: { data: DataDetails }) {
+function Impact(data: PlanningApplication) {
   return (
     <section className="impact-wrap">
       <div>
