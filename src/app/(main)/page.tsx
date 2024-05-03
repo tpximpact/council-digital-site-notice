@@ -1,7 +1,7 @@
 "use client";
 
 import "../../styles/app.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import PlanningApplicationList from "@/components/planning-application-list";
 import {
   getActiveApplicationsByLocation,
@@ -17,6 +17,7 @@ import { ArrowIcon } from "../../../public/assets/icons";
 import Link from "next/link";
 import { getLocationFromPostcode } from "../actions/actions";
 import { getGlobalContent } from "../actions/sanityClient";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const Home = () => {
   const itemsPerPage = 6;
@@ -27,17 +28,60 @@ const Home = () => {
   const [displayData, setDisplayData] = useState<Data[]>();
   const [dynamicTotalResults, setDynamicTotalResults] = useState<number>(0);
   const [globalConfig, setGlobalConfig] = useState<any>();
+  const [selectedPage, setSelectedPage] = useState(0);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getActiveApplications(0, itemsPerPage);
+      const paramsPage = searchParams.get("page");
+      const paramsSearch = searchParams.get("search");
+      const pageParams: any = paramsPage ? parseInt(paramsPage) : 1;
+
       const fetchGlobalConfig = await getGlobalContent();
-      setDisplayData(data.results as Data[]);
-      setDynamicTotalResults(data.total);
       setGlobalConfig(fetchGlobalConfig);
+      const offset =
+        dynamicTotalResults == 0
+          ? 0
+          : ((pageParams - 1) * itemsPerPage) % dynamicTotalResults;
+
+      if (paramsSearch) {
+        const location = await getLocationFromPostcode(paramsSearch);
+        if (!location) {
+          setLocationNotFound(true);
+          return;
+        }
+        const newData = await getActiveApplicationsByLocation(
+          offset,
+          location,
+          itemsPerPage,
+        );
+        setDisplayData(newData?.results as Data[]);
+        setDynamicTotalResults(newData?.total as number);
+
+        setLocationNotFound(false);
+        setLocation(location);
+        setSelectedPage(pageParams - 1);
+      } else {
+        const data = await getActiveApplications(offset, itemsPerPage);
+        setDisplayData(data.results as Data[]);
+        setDynamicTotalResults(data.total);
+        setSelectedPage(pageParams - 1);
+      }
     }
     fetchData();
-  }, []);
+  }, [dynamicTotalResults, postcode, searchParams]);
 
   const pageCount = Math.ceil(dynamicTotalResults / itemsPerPage);
 
@@ -59,6 +103,12 @@ const Home = () => {
     }
     setDisplayData(newData?.results as Data[]);
     setDynamicTotalResults(newData?.total as number);
+    router.push(
+      pathname +
+        "?" +
+        createQueryString("page", (event.selected + 1).toString()),
+    );
+    setSelectedPage(event.selected);
   };
 
   const onSearchPostCode = async () => {
@@ -74,7 +124,6 @@ const Home = () => {
     }
     setLocationNotFound(false);
     setLocation(location);
-
     // Fetching sorted applications based on lat/long
     const newData = await getActiveApplicationsByLocation(
       0,
@@ -83,6 +132,8 @@ const Home = () => {
     );
     setDisplayData(newData?.results as Data[]);
     setDynamicTotalResults(newData?.total as number);
+
+    router.push(pathname + "?" + createQueryString("search", postcode));
   };
 
   return (
@@ -147,6 +198,7 @@ const Home = () => {
           breakLinkClassName="page-link"
           containerClassName="pagination govuk-body"
           activeClassName="active"
+          forcePage={selectedPage}
           renderOnZeroPageCount={null}
         />
       </div>

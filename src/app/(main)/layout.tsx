@@ -7,6 +7,7 @@ import "../../styles/app.scss";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getGlobalContent } from "../actions/sanityClient";
+import { Suspense } from "react";
 
 export const globalContent = await getGlobalContent();
 export async function generateMetadata(): Promise<Metadata> {
@@ -45,7 +46,9 @@ export default async function RootLayout({
           )}
         <Header globalConfig={globalContent} />
         <Banner globalConfig={globalContent} />
-        <div className="layout-wrap">{children}</div>
+        <div className="layout-wrap">
+          <Suspense>{children}</Suspense>
+        </div>
       </body>
     </html>
   );
