@@ -6,10 +6,8 @@ import Impact from "@/components/impact";
 import Process from "@/components/process";
 import { DataDetails } from "../../../lib/type";
 import { getApplicationById } from "../../../actions/sanityClient";
-// import { getApplicationById } from "@/app/actions/actions";
 import moment from "moment";
 import { useParams } from "next/navigation";
-// const dataClient = new SanityClient();
 
 export const dynamic = "force-dynamic";
 

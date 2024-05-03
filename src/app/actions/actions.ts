@@ -1,69 +1,9 @@
 "use server";
 
-// import { client } from "./client";
 import { sendEmail, createEmailData } from "./email";
 import { savefeedbackToGoogleSheet } from "./email";
 import { postCodeRegex } from "../lib/application";
 import { cookies } from "next/headers";
-
-// export const getGlobalContent = cache(async () => {
-//   const info = await client.fetch('*[_type == "global-content"][0]');
-//   console.log({ info });
-//   return info;
-// });
-
-// export async function getApplicationById(id: string) {
-//   const query =
-//     '*[_type == "planning-application" && (_id == $_id || planningId == $_id) && isActive == true]';
-//   const post = await client.fetch(query, { _id: id, planningId: id });
-
-//   if (process.env.NEXT_PUBLIC_DATA_PROVIDER == "OpenData") {
-//     // Then fetch the matching data from Camden's API
-//     const ids = post.map((development: any) => development.applicationNumber);
-//     const arrayToSoqlString = (arr: []) =>
-//       "'" + arr.toString().replace(/,/g, "','") + "'";
-//     let whereQuery = `application_number in(${arrayToSoqlString(ids)})`;
-//     const res = await fetch(
-//       `${process.env.NEXT_PUBLIC_API_URL}.json?$where=${whereQuery}`,
-//     );
-//     const data = await res.json();
-
-//     //todo fixed for demo - this can be improved
-//     if (data.length == 0) {
-//       return post;
-//     } else {
-//       // Build up the array of developments from the CMS data and the data from Camden's API, mapping from Camden's API so we know we're only showing
-//       // developments that exist in M3 and the Planning Explorer
-//       const developments = data.map((development: any) => {
-//         const siteNotice = post.find(
-//           (el: any) => el.applicationNumber == development.application_number,
-//         );
-
-//         // Skip if there's no CMS data
-//         if (!siteNotice) {
-//           return;
-//         }
-
-//         let application = {
-//           ...siteNotice,
-//           applicationType: development.application_type,
-//           description: development.development_description,
-//           address: development.development_address,
-//           name: siteNotice.name
-//             ? siteNotice.name
-//             : development?.development_address,
-//           location: { lng: development.longitude, lat: development.latitude },
-//           applicationDocumentsUrl: `http://camdocs.camden.gov.uk/HPRMWebDrawer/PlanRec?q=recContainer:%22${siteNotice.applicationNumber}%22`,
-//         };
-
-//         return application;
-//       });
-//       return developments;
-//     }
-//   } else {
-//     return post;
-//   }
-// }
 
 export async function createCookies(value: any) {
   const cookieStore = cookies();

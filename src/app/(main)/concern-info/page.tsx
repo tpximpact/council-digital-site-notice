@@ -1,4 +1,3 @@
-// import { getGlobalContent } from "../actions/actions";
 import { getGlobalContent } from "../../actions/sanityClient";
 
 async function ConcernInfo() {

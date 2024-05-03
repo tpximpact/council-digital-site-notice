@@ -1,6 +1,5 @@
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
-import { cache } from "react";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -41,20 +40,6 @@ type sanityApplicationResponse = {
   }[];
   total: number;
 };
-
-// export class SanityClient {
-//   private client: any;
-//   // private imgBuilder: any;
-
-//   constructor() {
-//     this.client = client;
-//     // this.imgBuilder = imageUrlBuilder(this.client);
-//   }
-
-//   // async urlFor(source: any) {
-//   //   return this.imgBuilder.image(source);
-//   // }
-// }
 
 export async function getActiveApplications(
   offSet: number = 0,
@@ -174,10 +159,14 @@ export async function getActiveApplicationsByLocation(
   }
 }
 
-export const getGlobalContent = cache(async () => {
-  const info = await client.fetch('*[_type == "global-content"][0]');
+export async function getGlobalContent() {
+  const info = await client.fetch(
+    '*[_type == "global-content"][0]',
+    {},
+    { cache: "force-cache" },
+  );
   return info;
-});
+}
 
 export async function createApplication(post: any) {
   const result = client.create(post);

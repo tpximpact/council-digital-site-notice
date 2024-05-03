@@ -2,10 +2,8 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-// import { urlFor } from "@/app/actions/client";
 import { getLocalStorage } from "../../../../lib/application";
 import { Data } from "../../../../lib/type";
-// import { getGlobalContent } from "@/app/actions/actions";
 import { urlFor, getGlobalContent } from "../../../../actions/sanityClient";
 
 function Instructions() {

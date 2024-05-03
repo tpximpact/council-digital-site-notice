@@ -18,7 +18,6 @@ import Link from "next/link";
 import { getLocationFromPostcode } from "../actions/actions";
 import { getGlobalContent } from "../actions/sanityClient";
 
-// const dataClient = new SanityClient();
 const Home = () => {
   const itemsPerPage = 6;
 
