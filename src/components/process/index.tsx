@@ -7,7 +7,7 @@ import {
   applicationStageMessage,
 } from "@/app/lib/application";
 import { useEffect, useState } from "react";
-import { getGlobalContent } from "../../app/actions/sanityClient";
+import { getGlobalContent } from "@/app/actions/sanityClient";
 
 function Process({
   data,

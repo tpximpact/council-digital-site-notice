@@ -3,7 +3,7 @@ import { validatePlanningParams } from "@/app/actions/validator";
 import { verifyApiKey } from "../src/app/lib/apiKey";
 import handler from "@/app/api/application/route";
 
-jest.mock("../src/app/actions/actions");
+jest.mock("../src/app/actions/sanityClient");
 jest.mock("../src/app/actions/validator");
 jest.mock("../src/app/lib/apiKey");
 jest.mock("react", () => {
