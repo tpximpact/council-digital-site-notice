@@ -5,9 +5,13 @@ import About from "@/components/about";
 import Impact from "@/components/impact";
 import Process from "@/components/process";
 import { DataDetails } from "../../../lib/type";
-import { getApplicationById } from "@/app/actions/actions";
+import { getApplicationById } from "../../../actions/sanityClient";
+// import { getApplicationById } from "@/app/actions/actions";
 import moment from "moment";
 import { useParams } from "next/navigation";
+// const dataClient = new SanityClient();
+
+export const dynamic = "force-dynamic";
 
 const PlanningApplicationItem = () => {
   const [consultationDeadline, setConsultationDeadline] = useState<string>("");
@@ -18,6 +22,7 @@ const PlanningApplicationItem = () => {
   useEffect(() => {
     async function fetchData() {
       const result = await getApplicationById(id as string);
+      console.log({ result }, "id");
       const getData = result[0];
       setData(getData);
       let deadlineTime;

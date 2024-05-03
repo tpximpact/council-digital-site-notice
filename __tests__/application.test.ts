@@ -1,4 +1,4 @@
-import { createApplication } from "@/app/actions/actions";
+import { createApplication } from "@/app/actions/sanityClient";
 import { validatePlanningParams } from "@/app/actions/validator";
 import { verifyApiKey } from "../src/app/lib/apiKey";
 import handler from "@/app/api/application/route";

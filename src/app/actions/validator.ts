@@ -1,5 +1,5 @@
 "use server";
-import { checkExistingReference } from "./actions";
+import { checkExistingReference } from "./sanityClient";
 import { z } from "zod";
 import { ValidationResult } from "../../../models/validationResult";
 

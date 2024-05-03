@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Button } from "../button";
-import { urlFor } from "@/app/actions/client";
+import { urlFor } from "@/app/actions/sanityClient";
 const Gallery = ({
   images,
   loadImage,

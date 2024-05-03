@@ -2,11 +2,14 @@ import Header from "@/components/header";
 import Banner from "@/components/banner";
 import CookiesBanner from "@/components/cookies";
 import GoogleAnalytics from "@/components/google-analytics";
-import { urlFor } from "../actions/client";
-import { getGlobalContent } from "../actions/actions";
+import { urlFor } from "../actions/sanityClient";
+// import { getGlobalContent } from "../actions/actions";
 import "../../styles/app.scss";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import { getGlobalContent } from "../actions/sanityClient";
+
+export const dynamic = "force-dynamic";
 
 export const globalContent = await getGlobalContent();
 export async function generateMetadata(): Promise<Metadata> {

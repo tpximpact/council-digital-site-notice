@@ -1,4 +1,5 @@
-import { getGlobalContent } from "@/app/actions/actions";
+// import { getGlobalContent } from "@/app/actions/actions";
+import { getGlobalContent } from "../../../app/actions/sanityClient";
 
 const CookiePolicyPage = async () => {
   const globalConfig: any = await getGlobalContent();

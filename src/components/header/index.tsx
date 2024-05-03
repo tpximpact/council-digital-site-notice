@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { urlFor } from "@/app/actions/client";
+// import { urlFor } from "@/app/actions/client";
+import { urlFor } from "../../app/actions/sanityClient";
 
-const Header = ({ globalConfig }: any) => {
+const Header = async ({ globalConfig }: any) => {
   return (
     <header className="govuk-header" role="banner" data-module="govuk-header">
       <div className="govuk-header__container govuk-width-container">
