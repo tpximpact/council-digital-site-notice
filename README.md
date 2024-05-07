@@ -31,6 +31,7 @@ yarn test
 ```
 
 Update the test snapshots:
+
 ```bash
 yarn test:update
 ```
@@ -39,18 +40,17 @@ yarn test:update
 
 Ensure that the .env or .env.local file also has the following environment Keys:
 
-|         Variable Name           |    Value    |
-| :----------------------------:  | :---------: |
-| NEXT_PUBLIC_SANITY_SECRET_TOKEN |     ###     |
-| NEXT_PUBLIC_SANITY_PROJECT_ID   |     ###     |
-| NEXT_PUBLIC_SANITY_DATASET      |     ###     |
-| NEXT_PUBLIC_API_KEY             |     ###     |
-| NEXT_PUBLIC_SPREADSHEET_ID      |     ###     |
-| NEXT_PUBLIC_SHEET_ID            |     ###     |
-| NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL |     ###     |
-| GOOGLE_SERVICE_PRIVATE_KEY      |     ###     |
-| NEXT_PUBLIC_DATA_PROVIDER       |     CMS/OpenData     |
-| NEXT_PUBLIC_API_URL             |     ###     |
+|          Variable Name          | Value |
+| :-----------------------------: | :---: |
+| NEXT_PUBLIC_SANITY_SECRET_TOKEN |  ###  |
+|  NEXT_PUBLIC_SANITY_PROJECT_ID  |  ###  |
+|   NEXT_PUBLIC_SANITY_DATASET    |  ###  |
+|       NEXT_PUBLIC_API_KEY       |  ###  |
+|   NEXT_PUBLIC_SPREADSHEET_ID    |  ###  |
+|      NEXT_PUBLIC_SHEET_ID       |  ###  |
+| NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL |  ###  |
+|   GOOGLE_SERVICE_PRIVATE_KEY    |  ###  |
+|       NEXT_PUBLIC_API_URL       |  ###  |
 
 ## CMS setp
 
