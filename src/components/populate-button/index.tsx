@@ -29,7 +29,8 @@ export default function PopulateButton() {
     "planning-application",
   );
 
-  const applicationNumber = useFormValue(["applicationNumber"]);
+  const getApplicationNumber: any = useFormValue(["applicationNumber"]);
+  const applicationNumber: any = getApplicationNumber.toUpperCase();
 
   const handlePopulate = async () => {
     setFetchStatus("idle");

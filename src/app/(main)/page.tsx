@@ -165,16 +165,18 @@ const Home = () => {
           icon={<ArrowIcon />}
           onClick={() => onSearchPostCode()}
         />
-        {globalConfig?.signUpUrl && (
-          <Link
-            className="govuk-button grid-button-signup govuk-button--secondary"
-            target="_blank"
-            style={{ textDecoration: "none" }}
-            href={`${globalConfig?.signUpUrl}`}
-          >
-            Sign up for alerts on applications near you
-          </Link>
-        )}
+        <div className="grid-button-signup">
+          {globalConfig?.signUpUrl && (
+            <Link
+              className="govuk-button govuk-button--secondary"
+              target="_blank"
+              style={{ textDecoration: "none" }}
+              href={`${globalConfig?.signUpUrl}`}
+            >
+              Sign up for alerts on applications near you
+            </Link>
+          )}
+        </div>
       </section>
       {displayData && (
         <PlanningApplicationList data={displayData} searchLocation={location} />
