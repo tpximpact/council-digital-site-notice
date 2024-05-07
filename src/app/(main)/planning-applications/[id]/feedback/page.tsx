@@ -6,6 +6,8 @@ import Questions from "../../../../../components/questions";
 import { getLocalStorage } from "../../../../lib/application";
 import { Data } from "../../../../lib/type";
 
+export const dynamic = "force-dynamic";
+
 const Feedback = () => {
   const [application, setApplication] = useState<Data>();
   const [question, setQuestion] = useState<number>(0);

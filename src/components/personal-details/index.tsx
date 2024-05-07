@@ -19,7 +19,7 @@ import {
 } from "../../app/lib/feedback-validation";
 import { PersonalDetailsForm } from "../../app/lib/type";
 import { getLocalStorage } from "../../app/lib/application";
-import { getGlobalContent } from "../../app/actions/actions";
+import { getGlobalContent } from "../../app/actions/sanityClient";
 
 const PersonalDetails = ({
   onChangeQuestion,

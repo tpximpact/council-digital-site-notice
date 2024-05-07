@@ -1,10 +1,10 @@
-jest.mock("../src/app/actions/actions", () => {
+jest.mock("../src/app/actions/sanityClient", () => {
   return {
     checkExistingReference: jest.fn(),
   };
 });
 
-import { checkExistingReference } from "@/app/actions/actions";
+import { checkExistingReference } from "@/app/actions/sanityClient";
 import { validatePlanningParams } from "@/app/actions/validator";
 
 describe("validatePlanningParams", () => {

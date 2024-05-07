@@ -5,7 +5,7 @@ import { Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "@/app/lib/application";
-import { getGlobalContent } from "@/app/actions/actions";
+import { getGlobalContent } from "@/app/actions/sanityClient";
 
 function FeedbackInformation({
   onChangeQuestion,

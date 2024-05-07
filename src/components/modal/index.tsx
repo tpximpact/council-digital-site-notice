@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { urlFor } from "@/app/actions/client";
+import { urlFor } from "@/app/actions/sanityClient";
 
 const Modal = ({ setIsModalOpen, image }: any) => {
   return (

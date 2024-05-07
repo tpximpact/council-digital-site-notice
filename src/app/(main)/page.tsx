@@ -3,7 +3,10 @@
 import "../../styles/app.scss";
 import { useEffect, useState, useCallback } from "react";
 import PlanningApplicationList from "@/components/planning-application-list";
-import { SanityClient } from "../actions/sanityClient";
+import {
+  getActiveApplicationsByLocation,
+  getActiveApplications,
+} from "../actions/sanityClient";
 import { Data } from "../lib/type";
 import ReactPaginate from "react-paginate";
 import { NextIcon } from "../../../public/assets/icons";
@@ -13,10 +16,9 @@ import { Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
 import Link from "next/link";
 import { getLocationFromPostcode } from "../actions/actions";
-import { getGlobalContent } from "../actions/actions";
+import { getGlobalContent } from "../actions/sanityClient";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
-const dataClient = new SanityClient();
 const Home = () => {
   const itemsPerPage = 6;
 
@@ -60,7 +62,7 @@ const Home = () => {
           setLocationNotFound(true);
           return;
         }
-        const newData = await dataClient.getActiveApplicationsByLocation(
+        const newData = await getActiveApplicationsByLocation(
           offset,
           location,
           itemsPerPage,
@@ -72,10 +74,7 @@ const Home = () => {
         setLocation(location);
         setSelectedPage(pageParams - 1);
       } else {
-        const data = await dataClient.getActiveApplications(
-          offset,
-          itemsPerPage,
-        );
+        const data = await getActiveApplications(offset, itemsPerPage);
         setDisplayData(data.results as Data[]);
         setDynamicTotalResults(data.total);
         setSelectedPage(pageParams - 1);
@@ -94,13 +93,13 @@ const Home = () => {
 
     let newData;
     if (location) {
-      newData = await dataClient.getActiveApplicationsByLocation(
+      newData = await getActiveApplicationsByLocation(
         newOffset,
         location,
         totalPage,
       );
     } else {
-      newData = await dataClient.getActiveApplications(newOffset, totalPage);
+      newData = await getActiveApplications(newOffset, totalPage);
     }
     setDisplayData(newData?.results as Data[]);
     setDynamicTotalResults(newData?.total as number);
@@ -126,7 +125,7 @@ const Home = () => {
     setLocationNotFound(false);
     setLocation(location);
     // Fetching sorted applications based on lat/long
-    const newData = await dataClient.getActiveApplicationsByLocation(
+    const newData = await getActiveApplicationsByLocation(
       0,
       location,
       itemsPerPage,

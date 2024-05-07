@@ -5,7 +5,7 @@ import Details from "@/components/details";
 import { questions, getLocalStorage } from "@/app/lib/application";
 import { descriptionDetail } from "@/app/lib/description";
 import { useRouter } from "next/navigation";
-import { PersonalDetailsForm, CommentForm } from "../../app/lib/type";
+import { PersonalDetailsForm, CommentForm } from "@/app/lib/type";
 import { saveComments } from "@/app/actions/actions";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
