@@ -158,9 +158,9 @@ export type PlanningApplication = {
     _type: "image";
     _key: string;
   }>;
-  applicationStage?: {
-    stage?: "Consultation" | "Assessment" | "Decision" | "Appeal";
-    status?: {
+  applicationStage: {
+    stage: "Consultation" | "Assessment" | "Decision" | "Appeal";
+    status: {
       consultation?: "in progress" | "extended";
       assessment?: "in progress";
       decision?: "approved" | "pending approval" | "rejected";

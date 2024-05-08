@@ -26,13 +26,13 @@ function Process({
   }, []);
 
   const singleApplicationStatus =
-    data?.applicationStage?.status[
-      data?.applicationStage?.stage?.toLowerCase()
+    data.applicationStage.status[
+      data.applicationStage.stage.toLowerCase() as keyof typeof data.applicationStage.status
     ];
   const checkStage =
     parseFloat(consultationDeadline) <= 0 &&
-    data?.applicationStage?.stage == "Consultation" &&
-    singleApplicationStatus == "in progress"
+    data?.applicationStage?.stage === "Consultation" &&
+    singleApplicationStatus === "in progress"
       ? "Assessment"
       : data?.applicationStage?.stage;
   return (
@@ -53,7 +53,7 @@ function Process({
             {checkStage}
           </p>
           <p
-            className={`govuk-body process-consultation-result ${aplicationStageStyle(singleApplicationStatus)}`}
+            className={`govuk-body process-consultation-result ${aplicationStageStyle(singleApplicationStatus ?? "")}`}
           >
             <span>{singleApplicationStatus?.toUpperCase()}</span>
           </p>
@@ -69,7 +69,7 @@ function Process({
           <p
             className={`govuk-body ${data?.applicationStage?.stage !== "Consultation" ? "hiden-date" : "show-date"}`}
           >
-            {applicationStageMessage(checkStage, singleApplicationStatus)}
+            {applicationStageMessage(checkStage, singleApplicationStatus ?? "")}
           </p>
         </div>
         <div style={{ marginTop: "20px" }}>
