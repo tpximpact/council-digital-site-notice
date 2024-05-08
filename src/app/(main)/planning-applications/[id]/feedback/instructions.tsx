@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "../../../../lib/application";
-import { Data } from "../../../../lib/type";
 import { urlFor, getGlobalContent } from "../../../../actions/sanityClient";
+import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 
 function Instructions() {
-  const [application, setApplication] = useState<Data>();
+  const [application, setApplication] = useState<PlanningApplication>();
   const [councilName, setCouncilName] = useState();
 
   useEffect(() => {
