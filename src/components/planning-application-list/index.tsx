@@ -2,14 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { LocalIcon } from "../../../public/assets/icons";
 import { urlFor } from "@/app/actions/sanityClient";
-import { Data } from "../../app/lib/type";
-import { distanceInMiles } from "../../app/actions/actions";
+import { PlanningApplication } from "../../../sanity/sanity.types";
 
 const PlanningApplicationList = ({
   data,
   searchLocation,
 }: {
-  data: Data[];
+  data: PlanningApplication[];
   searchLocation: any;
 }) => {
   return (
