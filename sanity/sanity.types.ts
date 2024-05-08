@@ -196,9 +196,11 @@ export type PlanningApplication = {
     min?: number;
     max?: number;
   };
-  commments?: Array<{
-    _key: string;
-  } & Comment>;
+  commments?: Array<
+    {
+      _key: string;
+    } & Comment
+  >;
 };
 
 export type Geopoint = {
@@ -265,4 +267,3 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 export declare const internalGroqTypeReferenceTo: unique symbol;
-
