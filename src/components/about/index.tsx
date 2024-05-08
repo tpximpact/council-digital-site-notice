@@ -2,18 +2,18 @@ import Details from "@/components/details";
 import Link from "next/link";
 import { descriptionDetail } from "@/app/lib/description";
 import { ArrowIcon } from "../../../public/assets/icons";
-import { DataDetails } from "@/app/lib/type";
 import { useEffect, useState } from "react";
 import Modal from "@/components/modal";
 import Gallery from "@/components/gallery";
+import { PlanningApplication } from "../../../sanity/sanity.types";
 
-function About({ data }: { data: DataDetails }) {
+function About({ data }: { data: PlanningApplication }) {
   const [loadImage, setLoadImage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageSelected, setImageSelected] = useState<any>();
 
   useEffect(() => {
-    if (data?.image_gallery?.length < 8) {
+    if (data?.image_gallery && data?.image_gallery?.length < 8) {
       setLoadImage(data?.image_gallery?.length);
     } else {
       setLoadImage(6);

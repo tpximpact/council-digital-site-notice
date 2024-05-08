@@ -60,7 +60,7 @@ const PlanningApplicationItem = () => {
   const {
     showAccess,
     showCarbon,
-    showHealthcare,
+    // showHealthcare,
     showHousing,
     showJobs,
     showOpenSpace,
@@ -73,7 +73,7 @@ const PlanningApplicationItem = () => {
           <About data={data} />
           {(showAccess ||
             showCarbon ||
-            showHealthcare ||
+            // showHealthcare ||
             showHousing ||
             showJobs ||
             showOpenSpace) && <Impact data={data} />}
