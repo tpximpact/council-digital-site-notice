@@ -1,19 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowIcon } from "../../../public/assets/icons";
-import { DataDetails } from "@/app/lib/type";
 import {
   aplicationStageStyle,
   applicationStageMessage,
 } from "@/app/lib/application";
 import { useEffect, useState } from "react";
 import { getGlobalContent } from "@/app/actions/sanityClient";
+import { PlanningApplication } from "../../../sanity/sanity.types";
 
 function Process({
   data,
   consultationDeadline,
 }: {
-  data: DataDetails;
+  data: PlanningApplication;
   consultationDeadline: string;
 }) {
   const [globalConfig, setGlobalConfig] = useState<any>();

@@ -3,14 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Data } from "../../../../lib/type";
 import { getLocalStorage } from "../../../../lib/application";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { getGlobalContent, urlFor } from "../../../../actions/sanityClient";
+import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 
 const FeedbackMessage = () => {
   const [globalConfig, setGlobalConfig] = useState<any>();
-  const [application, setAplication] = useState<Data>();
+  const [application, setAplication] = useState<PlanningApplication>();
   const [formId, setFormId] = useState<string | null>();
 
   useEffect(() => {
