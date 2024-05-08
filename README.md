@@ -4,6 +4,16 @@ This project is a Digital Site Notice web application that helps people to disco
 
 It is built using [Next.js](https://nextjs.org/) and bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). The codebase is written in TypeScript which enhances code reliability, maintainability, and tooling support. The application uses https://sanity.io/ as its CMS.
 
+### API Integration
+
+This project connects to an API to fetch and display live planning application data. Data is synced into [Sanity](https://sanity.io/). The required API configurations are stored in environment variables.
+
+Within Sanity Studio, users are able to apply Global Content configurations and create/edit planning applications. The integration option is set to manual by default, and displays the option to select Open API in the Global Content section. If the Integrations option in Global Content is set to OpenAPI, data can be synced and can be populated into planning application fields.
+
+Simply add a valid Application Number to a planning application, scroll to Integrations and hit the Fetch from OpenAPI button. This then pulls in the following data: `application_type, name, development_address, development_description, location - latitude, longitude, applicationDocumentsUrl`. If the fields have a value it will display on Sanity.
+
+If the application number is invalid it will error and will not be able to sync any data.
+
 ## Getting Started
 
 Ensure you have Node.js and npm (Node Package Manager) installed on your machine.
