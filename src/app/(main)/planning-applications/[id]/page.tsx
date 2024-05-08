@@ -4,16 +4,16 @@ import Breadcrumbs from "@/components/breadcrumbs";
 import About from "@/components/about";
 import Impact from "@/components/impact";
 import Process from "@/components/process";
-import { DataDetails } from "../../../lib/type";
 import { getApplicationById } from "../../../actions/sanityClient";
 import moment from "moment";
 import { useParams } from "next/navigation";
+import { PlanningApplication } from "../../../../../sanity/sanity.types";
 
 export const dynamic = "force-dynamic";
 
 const PlanningApplicationItem = () => {
   const [consultationDeadline, setConsultationDeadline] = useState<string>("");
-  const [data, setData] = useState<DataDetails>();
+  const [data, setData] = useState<PlanningApplication>();
   const params = useParams();
   const { id } = params;
 
