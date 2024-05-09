@@ -103,11 +103,10 @@ const Home = () => {
     }
     setDisplayData(newData?.results as Data[]);
     setDynamicTotalResults(newData?.total as number);
-    router.push(
-      pathname +
-        "?" +
-        createQueryString("page", (event.selected + 1).toString()),
-    );
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", (event.selected + 1).toString());
+
+    router.push(pathname + "?" + params.toString());
     setSelectedPage(event.selected);
   };
 
@@ -124,16 +123,12 @@ const Home = () => {
     }
     setLocationNotFound(false);
     setLocation(location);
-    // Fetching sorted applications based on lat/long
-    const newData = await getActiveApplicationsByLocation(
-      0,
-      location,
-      itemsPerPage,
-    );
-    setDisplayData(newData?.results as Data[]);
-    setDynamicTotalResults(newData?.total as number);
+    const params = new URLSearchParams();
+    params.set("search", postcode);
+    params.set("page", "1");
 
-    router.push(pathname + "?" + createQueryString("search", postcode));
+    router.push(pathname + "?" + params.toString());
+    setSelectedPage(0);
   };
 
   return (
