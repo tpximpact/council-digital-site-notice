@@ -8,7 +8,7 @@ const Banner = ({ globalConfig }: any) => {
         <p className="govuk-phase-banner__content">
           <strong
             className="govuk-tag govuk-phase-banner__content__tag"
-            role="tag"
+            role="banner"
           >
             Beta
           </strong>
