@@ -28,7 +28,7 @@ describe("validatePlanningParams", () => {
       applicationNumber: "existingReference",
       description: "Some description",
     };
-    checkExistingReference.mockResolvedValue({ exists: true });
+    (checkExistingReference as jest.Mock).mockResolvedValue({ exists: true });
     const result = await validatePlanningParams(data);
 
     expect(result.errors).toEqual([
@@ -38,7 +38,7 @@ describe("validatePlanningParams", () => {
     expect(result.errors).toHaveLength(1);
     expect(checkExistingReference).toHaveBeenCalledWith("existingReference");
 
-    checkExistingReference.mockResolvedValue({ exists: false });
+    (checkExistingReference as jest.Mock).mockResolvedValue({ exists: false });
     const result2 = await validatePlanningParams(data);
 
     expect(result2.status).toEqual(200);

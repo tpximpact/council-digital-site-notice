@@ -1,4 +1,5 @@
 import { Id } from "sanity";
+import { PlanningApplication } from "../../../sanity/sanity.types";
 
 export type Housing = {
   affordableResidentialUnits: number;
@@ -19,65 +20,65 @@ export type ProposedLandUse = {
   suiGenerisDetail: string;
 };
 
-export type Data = {
-  _id: Id;
-  name: string;
-  address: string;
-  description: string;
-  height: number;
-  applicationNumber: string;
-  consultationDeadline: string;
-  applicationType: string;
-  image_head?: string;
-  image_gallery: any[];
-  applicationUpdatesUrl?: string;
-  location: { lng: number; lat: number };
-  distance?: string;
-};
+// export type Data = {
+//   _id: Id;
+//   name: string;
+//   address: string;
+//   description: string;
+//   height: number;
+//   applicationNumber: string;
+//   consultationDeadline: string;
+//   applicationType: string;
+//   image_head?: string;
+//   image_gallery: any[];
+//   applicationUpdatesUrl?: string;
+//   location: { lng: number; lat: number };
+//   distance?: string;
+// };
 
-export type DataDetails = {
-  _id: string;
-  name: string;
-  development_description?: string;
-  development_address: string;
-  application_type?: string;
-  proposedLandUse?: ProposedLandUse;
-  height?: number;
-  constructionTime?: string;
-  applicationNumber?: string;
-  housing: Housing;
-  showHousing?: boolean;
-  showHealthcare?: boolean;
-  healthcareDemand?: number;
-  showOpenSpace?: boolean;
-  openSpaceArea?: number;
-  showJobs?: boolean;
-  jobs?: Jobs;
-  showCarbon?: boolean;
-  carbonEmissions?: number;
-  showAccess?: boolean;
-  access?: string;
-  applicationStage: any;
-  valid_from_date: string;
-  image_head?: string;
-  image_gallery: any[];
-  enableComments?: boolean;
-  consultationDeadline: string;
-  applicationType: string;
-  address: string;
-  description: string;
-  applicationUpdatesUrl: string;
-  applicationDocumentsUrl: string;
-};
+// export type DataDetails = {
+//   _id: string;
+//   name: string;
+//   development_description?: string;
+//   development_address: string;
+//   application_type?: string;
+//   proposedLandUse?: ProposedLandUse;
+//   height?: number;
+//   constructionTime?: string;
+//   applicationNumber?: string;
+//   housing: Housing;
+//   showHousing?: boolean;
+//   showHealthcare?: boolean;
+//   healthcareDemand?: number;
+//   showOpenSpace?: boolean;
+//   openSpaceArea?: number;
+//   showJobs?: boolean;
+//   jobs?: Jobs;
+//   showCarbon?: boolean;
+//   carbonEmissions?: number;
+//   showAccess?: boolean;
+//   access?: string;
+//   applicationStage: any;
+//   valid_from_date: string;
+//   image_head?: string;
+//   image_gallery: any[];
+//   enableComments?: boolean;
+//   consultationDeadline: string;
+//   applicationType: string;
+//   address: string;
+//   description: string;
+//   applicationUpdatesUrl: string;
+//   applicationDocumentsUrl: string;
+// };
 
-export type DataTypeArray = {
-  data: Data[];
-};
+// export type DataTypeArray = {
+//   data: Data[];
+// };
 
 export type PaginationType = {
   dataId: { _id: string }[];
-  data: Data[];
-  paginationData?: Data[];
+  data: PlanningApplication[];
+  paginationData?: PlanningApplication[];
   globalContent: any;
   resultsTotal: number;
 };

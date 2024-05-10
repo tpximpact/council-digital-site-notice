@@ -4,12 +4,12 @@ import Breadcrumbs from "@/components/breadcrumbs";
 import Instructions from "./instructions";
 import Questions from "../../../../../components/questions";
 import { getLocalStorage } from "../../../../lib/application";
-import { Data } from "../../../../lib/type";
+import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 
 export const dynamic = "force-dynamic";
 
 const Feedback = () => {
-  const [application, setApplication] = useState<Data>();
+  const [application, setApplication] = useState<PlanningApplication>();
   const [question, setQuestion] = useState<number>(0);
 
   useEffect(() => {
