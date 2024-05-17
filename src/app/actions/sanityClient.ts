@@ -129,11 +129,9 @@ export async function createApplication(post: any) {
 }
 
 export async function updateApplication(_id: string, body: any) {
-  const bodyObj = Object.fromEntries(body);
-  console.log(_id, bodyObj.description);
   const result = await client
     .patch(_id)
-    .set({ ...bodyObj })
+    .set({ ...body })
     .commit();
   console.log({ result });
   return result;
@@ -159,14 +157,13 @@ export async function checkExistingReferenceAndUpdate(
   });
   // if is an obj
   if (typeof body === "object") {
-    const bodyObj = Object.fromEntries(body);
-    const res = Object.keys(bodyObj).filter(
-      (key) => bodyObj[key] !== posts[0][key], // think about obj array, can come more than one?
+    const res = Object.keys(body).filter(
+      (key) => body[key] !== posts[0][key], // think about obj array, can come more than one?
     );
     if (res.length > 0) {
       return true;
     } else {
-      return false;
+      return posts[0];
     }
   }
 

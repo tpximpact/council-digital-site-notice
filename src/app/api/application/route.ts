@@ -145,42 +145,22 @@ export async function PUT(req: NextRequest) {
   //     status: validationErrors.status,
   //   });
   // }
-  // const {
-  //   _id,
-  //   applicationNumber,
-  //   description,
-  //   address,
-  //   applicationType,
-  //   height,
-  //   consultationDeadline,
-  // } = req.body as any;
-  // const data = {
-  //   _id,
-  //   applicationNumber,
-  //   description,
-  //   address,
-  //   applicationType,
-  //   height,
-  //   consultationDeadline,
-  //   isActive: true,
-  //   _type: "planning-application",
-  // };
   const applicationNumber = req.nextUrl.searchParams.get(
     "applicationNumber",
   ) as string;
   const _id = req.nextUrl.searchParams.get("_id") as string;
   const body = req.nextUrl.searchParams as any;
-
+  const bodyObj = Object.fromEntries(body);
   const checkApplication = await checkExistingReferenceAndUpdate(
-    body,
+    bodyObj,
     applicationNumber,
-  ); // validar no array nao so o primeiro e retornar os atualizados
-  // console.log(application);
+  );
+
   try {
     if (!checkApplication) {
-      return Response.json(body);
+      return Response.json(checkApplication); // send the full application not just the updated
     } else {
-      const response = await updateApplication(_id, body); // fazer o update do que foi atualizado
+      const response = await updateApplication(_id, bodyObj);
       return Response.json(response);
     }
   } catch (error) {
