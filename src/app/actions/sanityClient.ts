@@ -133,7 +133,7 @@ export async function updateApplication(_id: string, body: any) {
   console.log(_id, bodyObj.description);
   const result = await client
     .patch(_id)
-    .set({ decription: bodyObj.description })
+    .set({ ...bodyObj })
     .commit();
   console.log({ result });
   return result;
