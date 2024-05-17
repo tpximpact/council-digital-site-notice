@@ -128,6 +128,17 @@ export async function createApplication(post: any) {
   return result;
 }
 
+export async function updateApplication(_id: string, body: any) {
+  const bodyObj = Object.fromEntries(body);
+  console.log(_id, bodyObj.description);
+  const result = await client
+    .patch(_id)
+    .set({ decription: bodyObj.description })
+    .commit();
+  console.log({ result });
+  return result;
+}
+
 export async function checkExistingReference(
   applicationNumber: string,
 ): Promise<{ exists: boolean }> {
@@ -135,4 +146,29 @@ export async function checkExistingReference(
     '*[_type == "planning-application" && applicationNumber == $applicationNumber]';
   const posts = await client.fetch(query, { applicationNumber });
   return { exists: posts.length > 0 };
+}
+
+export async function checkExistingReferenceAndUpdate(
+  body: any,
+  applicationNumber: string,
+) {
+  const query =
+    '*[_type == "planning-application" && applicationNumber == $applicationNumber]';
+  const posts = await client.fetch(query, {
+    applicationNumber,
+  });
+  // if is an obj
+  if (typeof body === "object") {
+    const bodyObj = Object.fromEntries(body);
+    const res = Object.keys(bodyObj).filter(
+      (key) => bodyObj[key] !== posts[0][key], // think about obj array, can come more than one?
+    );
+    if (res.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // if is an array
 }
