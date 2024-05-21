@@ -4,12 +4,12 @@ import {
   createApplication,
   updateApplication,
   checkExistingReference,
-  checkExistingReferenceAndUpdate,
 } from "@/app/actions/sanityClient";
 import { validatePlanningParams } from "@/app/actions/validator";
 import { verifyApiKey } from "../../lib/apiKey";
-import type { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
+import { validateUniformData } from "@/app/actions/uniformValidator";
 
 /**
  * @swagger
@@ -55,22 +55,15 @@ import { headers } from "next/headers";
  *     summary: Insert new planning application
  *     parameters:
  *      - in: query
- *        name: _id
- *        schema:
- *          type: string
- *      - in: query
  *        name: body
  *        schema:
  *          type: object
  *          example:
+ *             _id: g5ft6pk79js
  *             applicationNumber: 00/12345/ABC
- *             description: Lorem ipsum dolor sit amet, consectetur adipiscing elit
- *             address: 123 Example Street Name Town Name City
  *             applicationType: Full Planning Permission
- *             height: 14
- *             developmentType: Change of Use
- *             consultationDeadline: 31/12/2023 12:00:00 am
- *             openSpaceGardens: true
+ *             isActive: true
+ *             _type: planning-application
  *        description: Update planning application
  *     responses:
  *       200:
@@ -129,6 +122,8 @@ import { headers } from "next/headers";
 // }
 
 export async function PUT(req: NextRequest) {
+  const errors: string[] = [];
+  const success: string[] = [];
   // Verify API key
   const referer = req.headers.get("x-api-key");
   const apiKey = referer as string;
@@ -139,33 +134,36 @@ export async function PUT(req: NextRequest) {
       status: 401,
     });
   }
-  // const validationErrors = await validatePlanningParams(req.body as any);
-  // if (validationErrors.errors.length > 0) {
-  //   return new Response(`${validationErrors}`, {
-  //     status: validationErrors.status,
-  //   });
-  // }
+
+  const body = req.nextUrl.searchParams as any;
+  const bodyObj = Object.fromEntries(body);
+
+  // validate
+  const validationErrors = await validateUniformData(bodyObj as any);
+  if (validationErrors.errors.length > 0) {
+    return new Response(`${validationErrors.errors[0]}`, {
+      status: validationErrors.status,
+    });
+  }
   const applicationNumber = req.nextUrl.searchParams.get(
     "applicationNumber",
   ) as string;
   const _id = req.nextUrl.searchParams.get("_id") as string;
-  const body = req.nextUrl.searchParams as any;
-  const bodyObj = Object.fromEntries(body);
-  const checkApplication = await checkExistingReferenceAndUpdate(
-    bodyObj,
-    applicationNumber,
-  );
-
+  const application = await checkExistingReference(applicationNumber);
   try {
-    if (!checkApplication) {
-      return Response.json(checkApplication); // send the full application not just the updated
+    if (application && application._id) {
+      await updateApplication(_id, bodyObj);
+      success.push(`${bodyObj.applicationNumber} updated`);
     } else {
-      const response = await updateApplication(_id, bodyObj);
-      return Response.json(response);
+      await createApplication(bodyObj);
+      success.push(`Application ${bodyObj.applicationNumber} created`);
     }
+    return NextResponse.json({ data: { success } });
   } catch (error) {
-    new Response("An error occurred while updating the application", {
+    errors.push(validationErrors.errors[0].message);
+    new Response("An error occurred while creating the application", {
       status: 500,
     });
   }
+  return NextResponse.json({ bodyObj });
 }

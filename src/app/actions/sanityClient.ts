@@ -1,5 +1,6 @@
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
+import { Data } from "@/app/lib/type";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -124,7 +125,7 @@ export async function getGlobalContent() {
 }
 
 export async function createApplication(post: any) {
-  const result = client.create(post);
+  const result = await client.create(post);
   return result;
 }
 
@@ -139,33 +140,9 @@ export async function updateApplication(_id: string, body: any) {
 
 export async function checkExistingReference(
   applicationNumber: string,
-): Promise<{ exists: boolean }> {
+): Promise<Data | null> {
   const query =
     '*[_type == "planning-application" && applicationNumber == $applicationNumber]';
-  const posts = await client.fetch(query, { applicationNumber });
-  return { exists: posts.length > 0 };
-}
-
-export async function checkExistingReferenceAndUpdate(
-  body: any,
-  applicationNumber: string,
-) {
-  const query =
-    '*[_type == "planning-application" && applicationNumber == $applicationNumber]';
-  const posts = await client.fetch(query, {
-    applicationNumber,
-  });
-  // if is an obj
-  if (typeof body === "object") {
-    const res = Object.keys(body).filter(
-      (key) => body[key] !== posts[0][key], // think about obj array, can come more than one?
-    );
-    if (res.length > 0) {
-      return true;
-    } else {
-      return posts[0];
-    }
-  }
-
-  // if is an array
+  const application = await client.fetch(query, { applicationNumber });
+  return application ? application[0] : null;
 }

@@ -20,21 +20,21 @@ export type ProposedLandUse = {
   suiGenerisDetail: string;
 };
 
-// export type Data = {
-//   _id: Id;
-//   name: string;
-//   address: string;
-//   description: string;
-//   height: number;
-//   applicationNumber: string;
-//   consultationDeadline: string;
-//   applicationType: string;
-//   image_head?: string;
-//   image_gallery: any[];
-//   applicationUpdatesUrl?: string;
-//   location: { lng: number; lat: number };
-//   distance?: string;
-// };
+export type Data = {
+  _id: Id;
+  name: string;
+  address: string;
+  description: string;
+  height: number;
+  applicationNumber: string;
+  consultationDeadline: string;
+  applicationType: string;
+  image_head?: string;
+  image_gallery: any[];
+  applicationUpdatesUrl?: string;
+  location: { lng: number; lat: number };
+  distance?: string;
+};
 
 // export type DataDetails = {
 //   _id: string;
