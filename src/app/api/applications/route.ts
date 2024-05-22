@@ -10,6 +10,16 @@ import { verifyApiKey } from "../../lib/apiKey";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
+interface ApplicationError {
+  application: any;
+  error: string;
+}
+
+interface ApplicationResult {
+  success: string[];
+  errors: ApplicationError[];
+}
+
 /**
  * @swagger
  * /api/applications:
@@ -74,45 +84,56 @@ export async function PUT(req: NextRequest) {
   const referer = req.headers.get("x-api-key");
   const apiKey = referer as string;
   const isValidApiKey = verifyApiKey(apiKey);
-
   if (!isValidApiKey) {
     return new Response("Invalid API key", { status: 401 });
   }
 
   const body = await req.json();
-
   if (!Array.isArray(body)) {
     return new NextResponse("Invalid request body. Expected an array.", {
       status: 400,
     });
   }
 
-  const updatedApplications = [];
+  const results: ApplicationResult = { success: [], errors: [] };
 
   for (const application of body) {
+    const validationErrors = await validatePlanningParams(application);
+    if (validationErrors.errors.length > 0) {
+      results.errors.push({
+        application,
+        error: validationErrors.errors[0].message,
+      });
+      continue;
+    }
+
     if (!application || typeof application !== "object") {
-      return new NextResponse("Invalid application data", { status: 400 });
+      results.errors.push({
+        application,
+        error: "Invalid application data",
+      });
+      continue;
     }
 
     const { applicationNumber, ...updateData } = application;
-
     if (!applicationNumber) {
-      return new NextResponse("Missing required field: applicationNumber", {
-        status: 400,
+      results.errors.push({
+        application,
+        error: "Missing required field: applicationNumber",
       });
+      continue;
     }
 
     try {
       const existingApplication =
         await checkExistingReference(applicationNumber);
-
       if (existingApplication) {
         // Application found, update it
         const updatedApplication = await updateApplication(
           existingApplication._id,
           updateData,
         );
-        updatedApplications.push(updatedApplication);
+        results.success.push(`Application ${applicationNumber} updated`);
       } else {
         // Application not found, create a new one
         const newApplication = {
@@ -121,18 +142,30 @@ export async function PUT(req: NextRequest) {
           ...updateData,
         };
         const createdApplication = await createApplication(newApplication);
-        updatedApplications.push(createdApplication);
+        results.success.push(`Application ${applicationNumber} created`);
       }
     } catch (error) {
       console.error("Error updating application:", error);
-      return new NextResponse(
-        "An error occurred while updating the application",
-        {
-          status: 500,
-        },
-      );
+      results.errors.push({
+        application,
+        error: "An error occurred while updating the application",
+      });
     }
   }
 
-  return NextResponse.json(updatedApplications);
+  // Handle different response scenarios
+  if (results.success.length === 0 && results.errors.length === 0) {
+    return new NextResponse("No applications provided", { status: 400 });
+  } else if (results.success.length === 0 && results.errors.length > 0) {
+    return new NextResponse(
+      JSON.stringify({ data: { errors: results.errors } }),
+      {
+        status: 400,
+      },
+    );
+  } else if (results.errors.length > 0) {
+    return new NextResponse(JSON.stringify({ data: results }), { status: 207 });
+  } else {
+    return NextResponse.json({ data: { success: results.success } });
+  }
 }
