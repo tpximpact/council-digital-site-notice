@@ -57,7 +57,7 @@ export async function PUT(req: NextRequest) {
   // validate
   const validationErrors = await validateUniformData(bodyObj as any);
   if (validationErrors.errors.length > 0) {
-    return new NextResponse(`${validationErrors.errors[0]}`, {
+    return new NextResponse(`${validationErrors?.errors[0]}`, {
       status: validationErrors.status,
     });
   }
