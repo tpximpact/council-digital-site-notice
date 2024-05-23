@@ -17,6 +17,65 @@ interface ApplicationResult {
   errors: ApplicationError[];
 }
 
+/**
+ * @swagger
+ * /api/applications:
+ *   put:
+ *     summary: Update multiple planning applications or create new ones if they don't exist
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                 applicationNumber:
+ *                   type: string
+ *                 description:
+ *                   type: string
+ *             example:
+ *               - _id: abc123
+ *                 applicationNumber: 0850/1235/C
+ *                 description: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+ *                 address: 123 Example Street Name Town Name City
+ *                 applicationType: Full Planning Permission
+ *                 height: 14
+ *                 developmentType: Change of Use
+ *                 consultationDeadline: 31/12/2023 12:00:00 am
+ *                 openSpaceGardens: true
+ *               - _id: def456
+ *                 applicationNumber: 0034/6789/F
+ *                 description: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+ *                 address: 123 Example Street Name Town Name City
+ *                 applicationType: Full Planning Permission
+ *                 height: 14
+ *                 developmentType: Change of Use
+ *                 consultationDeadline: 31/12/2023 12:00:00 am
+ *                 openSpaceGardens: true
+ *     responses:
+ *       200:
+ *         description: Returns updated planning applications
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 details:
+ *                   type: any
+ *       400:
+ *         description: Invalid request body or missing required fields
+ *       401:
+ *         description: Not authorized
+ *       403:
+ *         description: Forbidden
+ *       500:
+ *         description: An error occurred while updating the applications
+ */
+
 export async function PUT(req: NextRequest) {
   // Verify API key
   const referer = req.headers.get("x-api-key");
@@ -27,6 +86,7 @@ export async function PUT(req: NextRequest) {
   }
 
   const body = await req.json();
+  console.log("Request Body:", body);
   if (!Array.isArray(body)) {
     return new NextResponse("Invalid request body. Expected an array.", {
       status: 400,

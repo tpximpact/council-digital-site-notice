@@ -2,7 +2,7 @@ import { createSwaggerSpec } from "next-swagger-doc";
 
 export async function getApiDocs() {
   const spec: Record<string, any> = createSwaggerSpec({
-    apiFolder: "src/app/api",
+    apiFolder: "src/app/api/applications/uniform",
     definition: {
       openapi: "3.0.0",
       info: {
