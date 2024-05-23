@@ -7,34 +7,40 @@ import { verifyApiKey } from "../../../lib/apiKey";
 import { NextRequest, NextResponse } from "next/server";
 import { validateUniformData } from "@/app/actions/uniformValidator";
 
+interface ApplicationError {
+  application: any;
+  error: string;
+}
+
+interface ApplicationResult {
+  success: string[];
+  errors: ApplicationError[];
+}
+
 /**
  * @swagger
  * /api/application/uniform:
  *   put:
  *     summary: Insert new planning application
- *     parameters:
- *      - in: query
- *        name: body
- *        schema:
- *          type: object
- *          example:
- *             _id: g5ft6pk79js
- *             applicationNumber: 00/12345/ABC
- *             applicationType: Full Planning Permission
- *             isActive: true
- *             _type: planning-application
- *        description: Update planning application
+ *     requestBody:
+ *        required: true
+ *        content:
+ *            schema:
+ *              type: object
+ *              example:
+ *                "DCAPPL[REFVAL]": "25553/5377/HSE"
+ *                "DCAPPL[BLPU_CLASS_DESC]": "Residential, Dwellings, Semi-Detached hello"
+ *                "DCAPPL[Application Type_D]": "Householder Application"
  *     responses:
  *       200:
  *         description: returns updated planning applications
- *         content:
- *           application/json:
- *             schema:
- *               details: any
+ *       400:
+ *         description: Invalid request body or missing required fields
  *       401:
  *         description: Not authorized
  *       500:
- *         message: Internal Error
+ *         description: An error occurred while updating the applications
+ *
  */
 
 export async function PUT(req: NextRequest) {
@@ -50,40 +56,59 @@ export async function PUT(req: NextRequest) {
       status: 401,
     });
   }
+  const data = await req.json();
+  // const bodyObj = Object.fromEntries(data);
 
-  const body = req.nextUrl.searchParams as any;
-  const bodyObj = Object.fromEntries(body);
-
+  const results: ApplicationResult = { success: [], errors: [] };
   // validate
-  const validationErrors = await validateUniformData(bodyObj as any);
+  const validationErrors = await validateUniformData(data as any);
   if (validationErrors.errors.length > 0) {
-    return new NextResponse(`${validationErrors?.errors[0]}`, {
-      status: validationErrors.status,
+    return NextResponse.json(
+      JSON.stringify({ errors: validationErrors.errors }),
+      {
+        status: validationErrors.status,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+  }
+
+  if (!data || typeof data !== "object") {
+    return new NextResponse("Invalid request body. Expected an object.", {
+      status: 400,
     });
   }
 
-  const applicationNumber = req.nextUrl.searchParams.get(
-    "applicationNumber",
-  ) as string;
-  const _id = req.nextUrl.searchParams.get("_id") as string;
-  const application = await checkExistingReference(applicationNumber);
+  const applicationData = {
+    applicationNumber: data["DCAPPL[REFVAL]"],
+    description: data["DCAPPL[BLPU_CLASS_DESC]"],
+    applicationType: data["DCAPPL[Application Type_D]"],
+    isActive: true,
+    _type: "planning-application",
+  };
+
+  if (!applicationData?.applicationNumber) {
+    return new NextResponse("Missing required field: applicationNumber", {
+      status: 400,
+    });
+  }
 
   try {
-    if (application && application._id) {
-      await updateApplication(_id, bodyObj);
-      success.push(`${bodyObj.applicationNumber} updated`);
+    const existingApplication = await checkExistingReference(
+      data["DCAPPL[REFVAL]"],
+    );
+    if (existingApplication && existingApplication._id) {
+      // Application found, check if update is needed
+      await updateApplication(existingApplication._id, applicationData);
+      success.push(`${data["DCAPPL[REFVAL]"]} updated`);
     } else {
-      await createApplication(bodyObj);
-      success.push(`Application ${bodyObj.applicationNumber} created`);
+      await createApplication(applicationData);
+      success.push(`Application ${data["DCAPPL[REFVAL]"]} created`);
     }
     return NextResponse.json({ data: { success } });
   } catch (error) {
     errors.push(validationErrors.errors[0].message);
-    return new NextResponse(
-      "An error occurred while creating the application",
-      {
-        status: 500,
-      },
-    );
+    new NextResponse("An error occurred while creating the application", {
+      status: 500,
+    });
   }
 }
