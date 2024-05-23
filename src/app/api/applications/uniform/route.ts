@@ -19,7 +19,7 @@ interface ApplicationResult {
 
 /**
  * @swagger
- * /api/applications:
+ * /api/applications/uniform:
  *   put:
  *     summary: Update multiple planning applications or create new ones if they don't exist
  *     requestBody:
@@ -31,51 +31,33 @@ interface ApplicationResult {
  *             items:
  *               type: object
  *               properties:
- *                 _id:
+ *                 DCAPPL[REFVAL]:
  *                   type: string
- *                 applicationNumber:
+ *                 DCAPPL[BLPU_CLASS_DESC]:
  *                   type: string
- *                 description:
+ *                 DCAPPL[Application Type_D]:
  *                   type: string
- *             example:
- *               - _id: abc123
- *                 applicationNumber: 0850/1235/C
- *                 description: Lorem ipsum dolor sit amet, consectetur adipiscing elit
- *                 address: 123 Example Street Name Town Name City
- *                 applicationType: Full Planning Permission
- *                 height: 14
- *                 developmentType: Change of Use
- *                 consultationDeadline: 31/12/2023 12:00:00 am
- *                 openSpaceGardens: true
- *               - _id: def456
- *                 applicationNumber: 0034/6789/F
- *                 description: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
- *                 address: 123 Example Street Name Town Name City
- *                 applicationType: Full Planning Permission
- *                 height: 14
- *                 developmentType: Change of Use
- *                 consultationDeadline: 31/12/2023 12:00:00 am
- *                 openSpaceGardens: true
+ *           example:
+ *               - DCAPPL[REFVAL]: 1234/5678/A
+ *                 DCAPPL[BLPU_CLASS_DESC]: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+ *                 DCAPPL[Application Type_D]: Full Planning Permission
+ *               - DCAPPL[REFVAL]: 9876/5432/A
+ *                 DCAPPL[BLPU_CLASS_DESC]: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+ *                 DCAPPL[Application Type_D]: Full Planning Permission
  *     responses:
- *       200:
+ *       '200':
  *         description: Returns updated planning applications
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 details:
- *                   type: any
- *       400:
+ *       '400':
  *         description: Invalid request body or missing required fields
- *       401:
+ *       '401':
  *         description: Not authorized
- *       403:
+ *       '403':
  *         description: Forbidden
- *       500:
+ *       '207':
+ *         description: Some applications were updated or created, while others failed
+ *       '500':
  *         description: An error occurred while updating the applications
  */
-
 export async function PUT(req: NextRequest) {
   // Verify API key
   const referer = req.headers.get("x-api-key");
@@ -171,10 +153,18 @@ export async function PUT(req: NextRequest) {
       JSON.stringify({ data: { errors: results.errors } }),
       {
         status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
     );
   } else if (results.errors.length > 0) {
-    return new NextResponse(JSON.stringify({ data: results }), { status: 207 });
+    return new NextResponse(JSON.stringify({ data: results }), {
+      status: 207,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } else {
     return NextResponse.json({ data: { success: results.success } });
   }
