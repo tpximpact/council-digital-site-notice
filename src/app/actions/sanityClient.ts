@@ -1,6 +1,6 @@
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
-import { Data } from "@/app/lib/type";
+import { PlanningApplication } from "../../../sanity/sanity.types";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -140,7 +140,7 @@ export async function updateApplication(_id: string, body: any) {
 
 export async function checkExistingReference(
   applicationNumber: string,
-): Promise<Data | null> {
+): Promise<PlanningApplication | null> {
   const query =
     '*[_type == "planning-application" && applicationNumber == $applicationNumber]';
   const application = await client.fetch(query, { applicationNumber });
