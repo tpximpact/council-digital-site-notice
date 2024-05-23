@@ -23,7 +23,7 @@ export async function PUT(req: NextRequest) {
   const apiKey = referer as string;
   const isValidApiKey = verifyApiKey(apiKey);
   if (!isValidApiKey) {
-    return new Response("Invalid API key", { status: 401 });
+    return new NextResponse("Invalid API key", { status: 401 });
   }
 
   const body = await req.json();
