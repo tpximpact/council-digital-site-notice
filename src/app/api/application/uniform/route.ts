@@ -57,7 +57,6 @@ export async function PUT(req: NextRequest) {
     });
   }
   const data = await req.json();
-  // const bodyObj = Object.fromEntries(data);
 
   const results: ApplicationResult = { success: [], errors: [] };
   // validate
@@ -97,7 +96,7 @@ export async function PUT(req: NextRequest) {
       data["DCAPPL[REFVAL]"],
     );
     if (existingApplication && existingApplication._id) {
-      // Application found, check if update is needed
+      // Application found, now update it
       await updateApplication(existingApplication._id, applicationData);
       success.push(`${data["DCAPPL[REFVAL]"]} updated`);
     } else {
