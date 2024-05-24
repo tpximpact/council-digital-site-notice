@@ -68,7 +68,7 @@ export async function PUT(req: NextRequest) {
   }
 
   const body = await req.json();
-  console.log("Request Body:", body);
+
   if (!Array.isArray(body)) {
     return new NextResponse("Invalid request body. Expected an array.", {
       status: 400,

@@ -35,3 +35,38 @@ export async function validateUniformData(
 
   return validationResult;
 }
+
+const RefvalValidation = z.object({
+  applicationNumber: z.string(),
+  description: z.string().optional(),
+  applicationType: z.string().optional(),
+  isActive: z.boolean().optional(),
+  _type: z.string().optional(),
+});
+export type RefvalValidationType = z.infer<typeof RefvalValidation>;
+
+export async function applicationNumberValidation(
+  data: RefvalValidationType,
+): Promise<ValidationResult> {
+  let validationResult: ValidationResult = { status: 200, errors: [] };
+  try {
+    RefvalValidation.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      validationResult.errors = error.errors.map((err) => {
+        if (err.path.length > 0) {
+          return {
+            message: `Invalid value for field application number`,
+          };
+        } else {
+          return { message: err.message };
+        }
+      });
+      validationResult.status = 400;
+    } else {
+      validationResult.errors.push({ message: "Unexpected error occurred" });
+      validationResult.status = 500;
+    }
+  }
+  return validationResult;
+}

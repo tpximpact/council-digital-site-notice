@@ -5,7 +5,10 @@ import {
 } from "@/app/actions/sanityClient";
 import { verifyApiKey } from "../../../lib/apiKey";
 import { NextRequest, NextResponse } from "next/server";
-import { validateUniformData } from "@/app/actions/uniformValidator";
+import {
+  validateUniformData,
+  applicationNumberValidation,
+} from "@/app/actions/uniformValidator";
 
 interface ApplicationError {
   application: any;
@@ -85,10 +88,16 @@ export async function PUT(req: NextRequest) {
     _type: "planning-application",
   };
 
-  if (!applicationData?.applicationNumber) {
-    return new NextResponse("Missing required field: applicationNumber", {
-      status: 400,
-    });
+  const checkApplicationNumber =
+    await applicationNumberValidation(applicationData);
+
+  if (checkApplicationNumber.errors.length > 0) {
+    return NextResponse.json(
+      JSON.stringify({ errors: checkApplicationNumber.errors }),
+      {
+        status: checkApplicationNumber.status,
+      },
+    );
   }
 
   try {

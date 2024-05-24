@@ -2,7 +2,10 @@
  * @jest-environment node
  */
 import { NextRequest, NextResponse } from "next/server";
-import { validateUniformData } from "../src/app/actions/uniformValidator";
+import {
+  validateUniformData,
+  applicationNumberValidation,
+} from "../src/app/actions/uniformValidator";
 import { ValidationResult } from "../models/validationResult";
 import {
   checkExistingReference,
@@ -29,6 +32,11 @@ const verifyApiKeyMock = verifyApiKey as jest.MockedFunction<
   typeof verifyApiKey
 >;
 
+const applicationNumberValidationMock =
+  applicationNumberValidation as jest.MockedFunction<
+    typeof applicationNumberValidation
+  >;
+
 describe("Applications PUT endpoint", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -47,6 +55,10 @@ describe("Applications PUT endpoint", () => {
     } as unknown as NextRequest;
 
     validateUniformDataMock.mockResolvedValue({ errors: [], status: 200 });
+    applicationNumberValidationMock.mockResolvedValue({
+      errors: [],
+      status: 200,
+    });
     checkExistingReferenceMock.mockResolvedValue(null);
     createApplicationMock.mockResolvedValue(
       {} as SanityDocument<Record<string, any>>,
