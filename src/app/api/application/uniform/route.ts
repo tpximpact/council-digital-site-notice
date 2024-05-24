@@ -37,6 +37,15 @@ interface ApplicationResult {
  *     responses:
  *       200:
  *         description: returns updated planning applications
+ *         content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                example: 
+ *                  data: {
+ *                    success: [
+                        "25553/5377/HSE updated"
+                      ]}
  *       400:
  *         description: Invalid request body or missing required fields
  *       401:
