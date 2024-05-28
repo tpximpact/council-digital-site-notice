@@ -14,6 +14,7 @@ export default defineType({
         list: [
           { title: "Manual", value: "manual" },
           { title: "OpenAPI", value: "openAPI" },
+          { title: "UniformAPI", value: "uniformAPI" },
         ],
         layout: "radio",
         direction: "vertical",

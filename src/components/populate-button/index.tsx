@@ -78,7 +78,7 @@ export default function PopulateButton() {
 
   return (
     <div>
-      {integrationMethod === "manual" ? (
+      {integrationMethod === "manual" || integrationMethod === "uniformAPI" ? (
         <p>No integration detected. Manual data entry is required.</p>
       ) : (
         <button type="button" onClick={handlePopulate}>

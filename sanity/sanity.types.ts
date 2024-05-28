@@ -73,7 +73,7 @@ export type GlobalContent = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  integrations?: "manual" | "openAPI";
+  integrations?: "manual" | "openAPI" | "uniformAPI";
   concernUrl?: string;
   concernContent?: string;
   cookiePolicyContent?: string;
