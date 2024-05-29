@@ -2,23 +2,20 @@
  * @jest-environment node
  */
 import { NextRequest, NextResponse } from "next/server";
-import {
-  validateUniformData,
-  applicationNumberValidation,
-} from "../src/app/actions/uniformValidator";
-import { ValidationResult } from "../models/validationResult";
+import { validateUniformData } from "../../src/app/actions/uniformValidator";
+import { ValidationResult } from "../../models/validationResult";
 import {
   checkExistingReference,
   updateApplication,
   createApplication,
-} from "../src/app/actions/sanityClient";
-import { verifyApiKey } from "../src/app/lib/apiKey";
-import { PUT } from "@/app/api/application/uniform/route";
+} from "../../src/app/actions/sanityClient";
+import { verifyApiKey } from "../../src/app/lib/apiKey";
+import { PUT } from "@/app/api/applications/uniform/route";
 import { SanityDocument } from "next-sanity";
 
-jest.mock("../src/app/actions/sanityClient");
-jest.mock("../src/app/actions/uniformValidator");
-jest.mock("../src/app/lib/apiKey");
+jest.mock("../../src/app/actions/sanityClient");
+jest.mock("../../src/app/actions/uniformValidator");
+jest.mock("../../src/app/lib/apiKey");
 
 const validateUniformDataMock = validateUniformData as jest.MockedFunction<
   typeof validateUniformData
@@ -32,11 +29,6 @@ const verifyApiKeyMock = verifyApiKey as jest.MockedFunction<
   typeof verifyApiKey
 >;
 
-const applicationNumberValidationMock =
-  applicationNumberValidation as jest.MockedFunction<
-    typeof applicationNumberValidation
-  >;
-
 describe("Applications PUT endpoint", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -47,18 +39,16 @@ describe("Applications PUT endpoint", () => {
       headers: {
         get: jest.fn().mockReturnValue("valid_key"),
       },
-      json: jest.fn().mockResolvedValue({
-        "DCAPPL[REFVAL]": "1234/5678/A",
-        "DCAPPL[BLPU_CLASS_DESC]": "This is a test description.",
-        "DCAPPL[Application Type_D]": "Test type",
-      }),
+      json: jest.fn().mockResolvedValue([
+        {
+          "DCAPPL[REFVAL]": "1234/5678/A",
+          "DCAPPL[BLPU_CLASS_DESC]": "This is a test description.",
+          "DCAPPL[Application Type_D]": "Test type",
+        },
+      ]),
     } as unknown as NextRequest;
 
     validateUniformDataMock.mockResolvedValue({ errors: [], status: 200 });
-    applicationNumberValidationMock.mockResolvedValue({
-      errors: [],
-      status: 200,
-    });
     checkExistingReferenceMock.mockResolvedValue(null);
     createApplicationMock.mockResolvedValue(
       {} as SanityDocument<Record<string, any>>,
@@ -99,12 +89,19 @@ describe("Applications PUT endpoint", () => {
     expect(response.status).toBe(400);
   });
 
-  it("should return 400 when application fail validation", async () => {
-    const requestBody = {
-      "DCAPPL[REFVAL]": "",
-      "DCAPPL[BLPU_CLASS_DESC]": "Commercial",
-      "DCAPPL[Application Type_D]": "Extension",
-    };
+  it("should return 400 when all applications fail validation", async () => {
+    const requestBody = [
+      {
+        "DCAPPL[REFVAL]": "",
+        "DCAPPL[BLPU_CLASS_DESC]": "Residential",
+        "DCAPPL[Application Type_D]": "New Build",
+      },
+      {
+        "DCAPPL[REFVAL]": "",
+        "DCAPPL[BLPU_CLASS_DESC]": "Commercial",
+        "DCAPPL[Application Type_D]": "Extension",
+      },
+    ];
 
     const mockRequest = {
       headers: {
@@ -125,5 +122,51 @@ describe("Applications PUT endpoint", () => {
     const response = (await PUT(mockRequest)) as NextResponse;
 
     expect(response.status).toBe(400);
+  });
+
+  it("should return 207 for successful and failed applications", async () => {
+    const requestBody = [
+      {
+        "DCAPPL[REFVAL]": "1234/5678/A",
+        "DCAPPL[BLPU_CLASS_DESC]": "Test description",
+        "DCAPPL[Application Type_D]": "New Build",
+      },
+      {
+        "DCAPPL[REFVAL]": "",
+        "DCAPPL[BLPU_CLASS_DESC]": "Test description",
+        "DCAPPL[Application Type_D]": "Extension",
+      },
+    ];
+
+    const mockRequest = {
+      headers: {
+        get: jest.fn().mockReturnValue("valid_key"),
+      },
+      json: jest.fn().mockResolvedValue(requestBody),
+    } as unknown as NextRequest;
+
+    validateUniformDataMock.mockImplementation((data) => {
+      if (data["DCAPPL[REFVAL]"] === "67890") {
+        return Promise.resolve({
+          errors: [{ message: "Invalid application data" }],
+          status: 400,
+        });
+      }
+      return Promise.resolve({ errors: [], status: 200 });
+    });
+    const checkExistingReferenceMock =
+      checkExistingReference as jest.MockedFunction<
+        typeof checkExistingReference
+      >;
+    checkExistingReferenceMock.mockResolvedValue(null);
+    createApplicationMock.mockResolvedValue(
+      {} as SanityDocument<Record<string, any>>,
+    );
+
+    verifyApiKeyMock.mockReturnValue(true);
+
+    const response = (await PUT(mockRequest)) as NextResponse;
+
+    expect(response.status).toBe(207);
   });
 });
