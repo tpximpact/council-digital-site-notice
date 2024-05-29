@@ -17,9 +17,9 @@ import { verifyApiKey } from "../../src/app/lib/apiKey";
 import { PUT } from "@/app/api/application/uniform/route";
 import { SanityDocument } from "next-sanity";
 
-jest.mock("../src/app/actions/sanityClient");
-jest.mock("../src/app/actions/uniformValidator");
-jest.mock("../src/app/lib/apiKey");
+jest.mock("../../src/app/actions/sanityClient");
+jest.mock("../../src/app/actions/uniformValidator");
+jest.mock("../../src/app/lib/apiKey");
 
 const validateUniformDataMock = validateUniformData as jest.MockedFunction<
   typeof validateUniformData
