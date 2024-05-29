@@ -24,7 +24,7 @@ interface ApplicationResult {
  * @swagger
  * /api/application/uniform:
  *   put:
- *     summary: Insert new planning application
+ *     summary: Insert a new planning application or update one if it already exists
  *     requestBody:
  *        required: true
  *        content:
