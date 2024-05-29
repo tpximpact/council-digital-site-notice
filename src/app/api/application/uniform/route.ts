@@ -56,8 +56,6 @@ interface ApplicationResult {
  */
 
 export async function PUT(req: NextRequest) {
-  const errors: string[] = [];
-  const success: string[] = [];
   // Verify API key
   const referer = req.headers.get("x-api-key");
   const apiKey = referer as string;
@@ -69,12 +67,17 @@ export async function PUT(req: NextRequest) {
     });
   }
   const data = await req.json();
+  const results: ApplicationResult = { success: [], errors: [] };
 
   // validate
   const validationErrors = await validateUniformData(data as any);
   if (validationErrors.errors.length > 0) {
+    results.errors = validationErrors.errors.map((error) => ({
+      application: data,
+      error: error.message,
+    }));
     return NextResponse.json(
-      JSON.stringify({ errors: validationErrors.errors }),
+      { data: { errors: results.errors } },
       {
         status: validationErrors.status,
         headers: { "Content-Type": "application/json" },
@@ -83,9 +86,17 @@ export async function PUT(req: NextRequest) {
   }
 
   if (!data || typeof data !== "object") {
-    return new NextResponse("Invalid request body. Expected an object.", {
-      status: 400,
+    results.errors.push({
+      application: data,
+      error: "Invalid request body. Expected an object.",
     });
+    return NextResponse.json(
+      { data: { errors: results.errors } },
+      {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   }
 
   const applicationData = {
@@ -100,10 +111,15 @@ export async function PUT(req: NextRequest) {
     await applicationNumberValidation(applicationData);
 
   if (checkApplicationNumber.errors.length > 0) {
+    results.errors = checkApplicationNumber.errors.map((error) => ({
+      application: data,
+      error: error.message,
+    }));
     return NextResponse.json(
-      JSON.stringify({ errors: checkApplicationNumber.errors }),
+      { data: { errors: results.errors } },
       {
         status: checkApplicationNumber.status,
+        headers: { "Content-Type": "application/json" },
       },
     );
   }
@@ -115,16 +131,23 @@ export async function PUT(req: NextRequest) {
     if (existingApplication && existingApplication._id) {
       // Application found, now update it
       await updateApplication(existingApplication._id, applicationData);
-      success.push(`${data["DCAPPL[REFVAL]"]} updated`);
+      results.success.push(`${data["DCAPPL[REFVAL]"]} updated`);
     } else {
       await createApplication(applicationData);
-      success.push(`Application ${data["DCAPPL[REFVAL]"]} created`);
+      results.success.push(`Application ${data["DCAPPL[REFVAL]"]} created`);
     }
-    return NextResponse.json({ data: { success } });
+    return NextResponse.json({ data: { success: results.success } });
   } catch (error) {
-    errors.push(validationErrors.errors[0].message);
-    new NextResponse("An error occurred while creating the application", {
-      status: 500,
+    results.errors.push({
+      application: data,
+      error: "An error occurred while creating the application",
     });
+    return NextResponse.json(
+      { data: { errors: results.errors } },
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      },
+    );
   }
 }
