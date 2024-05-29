@@ -5,14 +5,15 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   validateUniformData,
   applicationNumberValidation,
-} from "../src/app/actions/uniformValidator";
-import { ValidationResult } from "../models/validationResult";
+  isUniformIntegrationEnabled,
+} from "../../src/app/actions/uniformValidator";
+import { ValidationResult } from "../../models/validationResult";
 import {
   checkExistingReference,
   updateApplication,
   createApplication,
-} from "../src/app/actions/sanityClient";
-import { verifyApiKey } from "../src/app/lib/apiKey";
+} from "../../src/app/actions/sanityClient";
+import { verifyApiKey } from "../../src/app/lib/apiKey";
 import { PUT } from "@/app/api/application/uniform/route";
 import { SanityDocument } from "next-sanity";
 
@@ -37,11 +38,32 @@ const applicationNumberValidationMock =
     typeof applicationNumberValidation
   >;
 
+const isUniformIntegrationEnabledMock =
+  isUniformIntegrationEnabled as jest.MockedFunction<
+    typeof isUniformIntegrationEnabled
+  >;
+
 describe("Applications PUT endpoint", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+  it("should return 403 for uniformAPI not selected", async () => {
+    const mockRequest = {
+      headers: {
+        get: jest.fn().mockReturnValue("valid_key"),
+      },
+      json: jest.fn().mockResolvedValue({
+        "DCAPPL[REFVAL]": "1234/5678/A",
+        "DCAPPL[BLPU_CLASS_DESC]": "This is a test description.",
+        "DCAPPL[Application Type_D]": "Test type",
+      }),
+    } as unknown as NextRequest;
+    isUniformIntegrationEnabledMock.mockResolvedValue(false);
 
+    const response = (await PUT(mockRequest)) as NextResponse;
+
+    expect(response.status).toBe(403);
+  });
   it("should return 200 for valid request", async () => {
     const mockRequest = {
       headers: {
@@ -54,6 +76,7 @@ describe("Applications PUT endpoint", () => {
       }),
     } as unknown as NextRequest;
 
+    isUniformIntegrationEnabledMock.mockResolvedValue(true);
     validateUniformDataMock.mockResolvedValue({ errors: [], status: 200 });
     applicationNumberValidationMock.mockResolvedValue({
       errors: [],
@@ -77,6 +100,7 @@ describe("Applications PUT endpoint", () => {
       },
     } as unknown as NextRequest;
 
+    isUniformIntegrationEnabledMock.mockResolvedValue(true);
     verifyApiKeyMock.mockReturnValue(false);
 
     const response = (await PUT(mockRequest)) as NextResponse;
@@ -92,6 +116,7 @@ describe("Applications PUT endpoint", () => {
       json: jest.fn().mockResolvedValue("invalid_data"),
     } as unknown as NextRequest;
 
+    isUniformIntegrationEnabledMock.mockResolvedValue(true);
     verifyApiKeyMock.mockReturnValue(true);
 
     const response = (await PUT(mockRequest)) as NextResponse;
@@ -120,6 +145,7 @@ describe("Applications PUT endpoint", () => {
       });
     });
 
+    isUniformIntegrationEnabledMock.mockResolvedValue(true);
     verifyApiKeyMock.mockReturnValue(true);
 
     const response = (await PUT(mockRequest)) as NextResponse;

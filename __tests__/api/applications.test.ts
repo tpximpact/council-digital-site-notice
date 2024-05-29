@@ -2,7 +2,10 @@
  * @jest-environment node
  */
 import { NextRequest, NextResponse } from "next/server";
-import { validateUniformData } from "../../src/app/actions/uniformValidator";
+import {
+  validateUniformData,
+  isUniformIntegrationEnabled,
+} from "../../src/app/actions/uniformValidator";
 import { ValidationResult } from "../../models/validationResult";
 import {
   checkExistingReference,
@@ -28,6 +31,10 @@ const createApplicationMock = createApplication as jest.MockedFunction<
 const verifyApiKeyMock = verifyApiKey as jest.MockedFunction<
   typeof verifyApiKey
 >;
+const isUniformIntegrationEnabledMock =
+  isUniformIntegrationEnabled as jest.MockedFunction<
+    typeof isUniformIntegrationEnabled
+  >;
 
 describe("Applications PUT endpoint", () => {
   beforeEach(() => {
@@ -48,6 +55,7 @@ describe("Applications PUT endpoint", () => {
       ]),
     } as unknown as NextRequest;
 
+    isUniformIntegrationEnabledMock.mockResolvedValue(true);
     validateUniformDataMock.mockResolvedValue({ errors: [], status: 200 });
     checkExistingReferenceMock.mockResolvedValue(null);
     createApplicationMock.mockResolvedValue(
@@ -67,6 +75,7 @@ describe("Applications PUT endpoint", () => {
       },
     } as unknown as NextRequest;
 
+    isUniformIntegrationEnabledMock.mockResolvedValue(true);
     verifyApiKeyMock.mockReturnValue(false);
 
     const response = (await PUT(mockRequest)) as NextResponse;
@@ -82,6 +91,7 @@ describe("Applications PUT endpoint", () => {
       json: jest.fn().mockResolvedValue("invalid_data"),
     } as unknown as NextRequest;
 
+    isUniformIntegrationEnabledMock.mockResolvedValue(true);
     verifyApiKeyMock.mockReturnValue(true);
 
     const response = (await PUT(mockRequest)) as NextResponse;
@@ -117,6 +127,7 @@ describe("Applications PUT endpoint", () => {
       });
     });
 
+    isUniformIntegrationEnabledMock.mockResolvedValue(true);
     verifyApiKeyMock.mockReturnValue(true);
 
     const response = (await PUT(mockRequest)) as NextResponse;
@@ -145,6 +156,7 @@ describe("Applications PUT endpoint", () => {
       json: jest.fn().mockResolvedValue(requestBody),
     } as unknown as NextRequest;
 
+    isUniformIntegrationEnabledMock.mockResolvedValue(true);
     validateUniformDataMock.mockImplementation((data) => {
       if (data["DCAPPL[REFVAL]"] === "67890") {
         return Promise.resolve({

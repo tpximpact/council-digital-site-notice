@@ -1,6 +1,7 @@
 "use server";
 import { z } from "zod";
 import { ValidationResult } from "../../../models/validationResult";
+import { getGlobalContent } from "./sanityClient";
 
 const UniformValidation = z.object({
   "DCAPPL[REFVAL]": z.string().optional(),
@@ -69,4 +70,13 @@ export async function applicationNumberValidation(
     }
   }
   return validationResult;
+}
+
+export async function isUniformIntegrationEnabled(): Promise<boolean> {
+  try {
+    const globalContent = await getGlobalContent();
+    return globalContent.integrations === "uniformAPI";
+  } catch (error) {
+    return false;
+  }
 }
