@@ -1,5 +1,6 @@
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
+import { PlanningApplication } from "../../../sanity/sanity.types";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -124,15 +125,23 @@ export async function getGlobalContent() {
 }
 
 export async function createApplication(post: any) {
-  const result = client.create(post);
+  const result = await client.create(post);
+  return result;
+}
+
+export async function updateApplication(_id: string, body: any) {
+  const result = await client
+    .patch(_id)
+    .set({ ...body })
+    .commit();
   return result;
 }
 
 export async function checkExistingReference(
   applicationNumber: string,
-): Promise<{ exists: boolean }> {
+): Promise<PlanningApplication | null> {
   const query =
     '*[_type == "planning-application" && applicationNumber == $applicationNumber]';
-  const posts = await client.fetch(query, { applicationNumber });
-  return { exists: posts.length > 0 };
+  const application = await client.fetch(query, { applicationNumber });
+  return application ? application[0] : null;
 }

@@ -9,6 +9,20 @@ export async function getApiDocs() {
         title: "Lambeth Site Notice CMS API",
         version: "1.0",
       },
+      components: {
+        securitySchemes: {
+          ApiKeyAuth: {
+            type: "apiKey",
+            in: "header",
+            name: "X-API-Key",
+          },
+        },
+      },
+      security: [
+        {
+          ApiKeyAuth: ["write:apiKey"],
+        },
+      ],
     },
   });
 
