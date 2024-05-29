@@ -37,7 +37,7 @@ export async function validateUniformData(
 }
 
 const RefvalValidation = z.object({
-  applicationNumber: z.string(),
+  applicationNumber: z.string().min(1),
   description: z.string().optional(),
   applicationType: z.string().optional(),
   isActive: z.boolean().optional(),

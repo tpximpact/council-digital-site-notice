@@ -70,7 +70,6 @@ export async function PUT(req: NextRequest) {
   }
   const data = await req.json();
 
-  const results: ApplicationResult = { success: [], errors: [] };
   // validate
   const validationErrors = await validateUniformData(data as any);
   if (validationErrors.errors.length > 0) {
