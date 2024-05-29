@@ -32,7 +32,7 @@ interface ApplicationResult {
  *              type: object
  *              example:
  *                "DCAPPL[REFVAL]": "25553/5377/HSE"
- *                "DCAPPL[BLPU_CLASS_DESC]": "Residential, Dwellings, Semi-Detached hello"
+ *                "DCAPPL[BLPU_CLASS_DESC]": "Residential, Dwellings, Semi-Detached"
  *                "DCAPPL[Application Type_D]": "Householder Application"
  *     responses:
  *       200:
