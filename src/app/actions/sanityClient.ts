@@ -134,7 +134,6 @@ export async function updateApplication(_id: string, body: any) {
     .patch(_id)
     .set({ ...body })
     .commit();
-  console.log({ result });
   return result;
 }
 
