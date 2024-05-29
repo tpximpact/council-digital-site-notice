@@ -6,6 +6,7 @@ import {
   decision,
 } from "../structure/helper";
 import PopulateButton from "../../src/components/populate-button";
+import ApplicationNumber from "@/components/applicationNumber";
 
 export default defineType({
   title: "Planning application",
@@ -41,6 +42,9 @@ export default defineType({
       title: "Application number",
       name: "applicationNumber",
       type: "string",
+      components: {
+        input: ApplicationNumber,
+      },
       description: "Required",
       validation: (Rule: any) =>
         Rule.required().custom((field: any) => {
@@ -50,7 +54,6 @@ export default defineType({
           }
           return true;
         }),
-      readOnly: false,
     }),
     defineField({
       name: "populateApi",
