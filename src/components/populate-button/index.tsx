@@ -30,7 +30,7 @@ export default function PopulateButton() {
   );
 
   const getApplicationNumber: any = useFormValue(["applicationNumber"]);
-  const applicationNumber: any = getApplicationNumber.toUpperCase();
+  const applicationNumber: any = getApplicationNumber?.toUpperCase();
 
   const handlePopulate = async () => {
     setFetchStatus("idle");
