@@ -8,6 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   validateUniformData,
   applicationNumberValidation,
+  isUniformIntegrationEnabled,
 } from "@/app/actions/uniformValidator";
 
 interface ApplicationError {
@@ -56,6 +57,12 @@ interface ApplicationResult {
  */
 
 export async function PUT(req: NextRequest) {
+  const isUniformEnabled = await isUniformIntegrationEnabled();
+
+  if (!isUniformEnabled)
+    return new NextResponse("Uniform integration is not enabled", {
+      status: 403,
+    });
   // Verify API key
   const referer = req.headers.get("x-api-key");
   const apiKey = referer as string;
