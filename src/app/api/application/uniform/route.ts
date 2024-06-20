@@ -139,8 +139,6 @@ export async function PUT(req: NextRequest) {
     );
     if (existingApplication && existingApplication._id) {
       // Application found, now update it
-      // await updateApplication(existingApplication._id, applicationData);
-      // results.success.push(`${data["DCAPPL[REFVAL]"]} updated`);
       if (checkAllowedUpdateFields(existingApplication, updateData)) {
         // Update the application
         await updateApplication(existingApplication._id, updateData);
