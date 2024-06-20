@@ -7,6 +7,7 @@ import {
 } from "../structure/helper";
 import PopulateButton from "../../src/components/populate-button";
 import ApplicationNumber from "@/components/applicationNumber";
+import { getGlobalContent } from "@/app/actions/sanityClient";
 
 export default defineType({
   title: "Planning application",
@@ -47,9 +48,13 @@ export default defineType({
       },
       description: "Required",
       validation: (Rule: any) =>
-        Rule.required().custom((field: any) => {
+        Rule.required().custom(async (field: any, context: any, props: any) => {
+          const integration = await getGlobalContent()
+            .then((res) => res.integrations)
+            .catch((err) => console.log(err));
+
           const regex = /^((\d{4})(\/)(\d{4})(\/)([a-zA-Z]{1}))?$/;
-          if (regex.test(field) !== true) {
+          if (regex.test(field) !== true && integration == "openAPI") {
             return "Application Number format is wrong. It should be NNNN/NNNN/L or NNNN/NNNN/l";
           }
           return true;
