@@ -114,6 +114,8 @@ export async function PUT(req: NextRequest) {
     _type: "planning-application",
   };
 
+  const { applicationNumber, ...updateData } = applicationData;
+
   const checkApplicationNumber =
     await applicationNumberValidation(applicationData);
 
@@ -137,8 +139,17 @@ export async function PUT(req: NextRequest) {
     );
     if (existingApplication && existingApplication._id) {
       // Application found, now update it
-      await updateApplication(existingApplication._id, applicationData);
-      results.success.push(`${data["DCAPPL[REFVAL]"]} updated`);
+      // await updateApplication(existingApplication._id, applicationData);
+      // results.success.push(`${data["DCAPPL[REFVAL]"]} updated`);
+      if (checkAllowedUpdateFields(existingApplication, updateData)) {
+        // Update the application
+        await updateApplication(existingApplication._id, updateData);
+        results.success.push(`Application ${applicationNumber} updated`);
+      } else {
+        results.success.push(
+          `Application ${applicationNumber} no update needed`,
+        );
+      }
     } else {
       await createApplication(applicationData);
       results.success.push(`Application ${data["DCAPPL[REFVAL]"]} created`);
@@ -155,6 +166,16 @@ export async function PUT(req: NextRequest) {
         status: 500,
         headers: { "Content-Type": "application/json" },
       },
+    );
+  }
+
+  function checkAllowedUpdateFields(
+    application: { [key: string]: any },
+    data: { [key: string]: any },
+  ) {
+    return (
+      application.applicationType !== data.applicationType ||
+      application.description !== data.description
     );
   }
 }
