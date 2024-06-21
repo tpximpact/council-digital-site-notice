@@ -10,6 +10,7 @@ import {
   applicationNumberValidation,
   isUniformIntegrationEnabled,
 } from "@/app/actions/uniformValidator";
+import { checkAllowedUpdateFields } from "../../checkAllowedUpdateFields";
 
 interface ApplicationError {
   application: any;
@@ -164,16 +165,6 @@ export async function PUT(req: NextRequest) {
         status: 500,
         headers: { "Content-Type": "application/json" },
       },
-    );
-  }
-
-  function checkAllowedUpdateFields(
-    application: { [key: string]: any },
-    data: { [key: string]: any },
-  ) {
-    return (
-      application.applicationType !== data.applicationType ||
-      application.description !== data.description
     );
   }
 }
