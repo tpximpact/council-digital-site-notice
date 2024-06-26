@@ -9,6 +9,7 @@ import {
 } from "@/app/actions/uniformValidator";
 import { verifyApiKey } from "@/app/lib/apiKey";
 import { NextRequest, NextResponse } from "next/server";
+import { checkAllowedUpdateFields } from "../../checkAllowedUpdateFields";
 
 interface ApplicationError {
   application: any;
@@ -187,14 +188,4 @@ export async function PUT(req: NextRequest) {
   } else {
     return NextResponse.json({ data: { success: results.success } });
   }
-}
-
-function checkAllowedUpdateFields(
-  application: { [key: string]: any },
-  data: { [key: string]: any },
-) {
-  return (
-    application.applicationType !== data.applicationType ||
-    application.description !== data.description
-  );
 }
