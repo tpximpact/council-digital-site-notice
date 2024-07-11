@@ -6,6 +6,7 @@ exports[`renders homepage unchanged 1`] = `
     class="wrap-home"
   >
     <h1
+      aria-level="1"
       class="govuk-heading-xl"
       role="heading"
       style="display: inline-block;"
@@ -29,15 +30,16 @@ exports[`renders homepage unchanged 1`] = `
         >
           <label
             class="govuk-label govuk-label--l false"
-            for="Enter a postcode to find planning applications nearby"
+            for="search-postcode"
             role="definition"
           >
             Enter a postcode to find planning applications nearby
           </label>
         </h1>
         <input
+          autocomplete="postal-code"
           class="govuk-input false"
-          id="Enter a postcode to find planning applications nearby"
+          id="search-postcode"
           name="eventName"
           role="textbox"
           type="text"
@@ -54,8 +56,10 @@ exports[`renders homepage unchanged 1`] = `
           style="margin-left: 10px; vertical-align: middle;"
         >
           <svg
+            aria-label="search postcode"
             fill="none"
             height="19"
+            role="img"
             viewBox="0 0 19 19"
             width="19"
             xmlns="http://www.w3.org/2000/svg"

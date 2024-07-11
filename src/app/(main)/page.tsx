@@ -144,6 +144,7 @@ const Home = () => {
       <h1
         className="govuk-heading-xl"
         role="heading"
+        aria-level={1}
         style={{ display: "inline-block" }}
       >
         Find planning applications near you
@@ -154,12 +155,14 @@ const Home = () => {
       </p>
       <section className="search-grid">
         <Input
+          id="search-postcode"
           label="Enter a postcode to find planning applications nearby"
           type="text"
           value={postcode}
           onChange={(e) => setPostcode(e)}
           isError={locationNotFound}
           messageError="Please enter a valid postcode"
+          autocomplete="postal-code"
         />
         <Button
           className="grid-button-search"

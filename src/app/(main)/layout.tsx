@@ -46,9 +46,9 @@ export default async function RootLayout({
           )}
         <Header globalConfig={globalContent} />
         <Banner globalConfig={globalContent} />
-        <div className="layout-wrap">
+        <main className="layout-wrap">
           <Suspense>{children}</Suspense>
-        </div>
+        </main>
       </body>
     </html>
   );
