@@ -32,7 +32,8 @@ const TextArea = ({
         id={id}
         name="moreDetail"
         rows={5}
-        aria-describedby="more-detail-hint"
+        aria-describedby={id}
+        autoComplete="off"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       ></textarea>
