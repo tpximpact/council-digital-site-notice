@@ -54,7 +54,7 @@ const FeedbackMessage = () => {
         {application?.image_head && (
           <Image
             src={urlFor(application?.image_head)?.url()}
-            alt="development-image"
+            alt="development"
             width={80}
             height={56}
           />

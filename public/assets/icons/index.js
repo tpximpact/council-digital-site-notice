@@ -6,6 +6,8 @@ export const Happy = ({ color = "white" }) => {
       height="65"
       viewBox="0 0 64 65"
       fill="none"
+      role="img"
+      aria-label="1 support"
     >
       <circle cx="31.9999" cy="32.1769" r="30.2619" fill={color} />
       <path
@@ -40,6 +42,8 @@ export const Opposed = ({ color = "white" }) => {
       height="65"
       viewBox="0 0 64 65"
       fill="none"
+      role="img"
+      aria-label="2 opposed"
     >
       <circle cx="31.9999" cy="32.423" r="30.2619" fill={color} />
       <path
@@ -64,6 +68,8 @@ export const Neutral = ({ color = "white" }) => {
       height="65"
       viewBox="0 0 64 65"
       fill="none"
+      role="img"
+      aria-label="3 neutral"
     >
       <circle cx="31.9999" cy="32.5786" r="30.2619" fill={color} />
       <path

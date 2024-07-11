@@ -30,7 +30,7 @@ function Instructions() {
           <Image
             width={80}
             height={57}
-            alt="Development image"
+            alt="Development"
             src={urlFor(application?.image_head)?.url()}
           />
         )}
