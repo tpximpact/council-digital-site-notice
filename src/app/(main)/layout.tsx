@@ -44,9 +44,16 @@ export default async function RootLayout({
           globalContent?.googleAnalytics && (
             <GoogleAnalytics gaId={globalContent?.googleAnalytics} />
           )}
+        <a
+          href="#main"
+          className="govuk-skip-link"
+          data-module="govuk-skip-link"
+        >
+          Skip to main content
+        </a>
         <Header globalConfig={globalContent} />
         <Banner globalConfig={globalContent} />
-        <main className="layout-wrap">
+        <main className="layout-wrap" id="main">
           <Suspense>{children}</Suspense>
         </main>
       </body>
