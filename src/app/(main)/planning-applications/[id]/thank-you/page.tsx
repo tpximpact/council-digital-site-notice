@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "../../../../lib/application";
-import Breadcrumbs from "@/components/breadcrumbs";
 import { getGlobalContent, urlFor } from "../../../../actions/sanityClient";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 
@@ -28,23 +27,8 @@ const FeedbackMessage = () => {
     })();
   }, []);
 
-  const breadcrumbs_array = [
-    {
-      name: "Planning application",
-      href: "/",
-    },
-    {
-      name: application?.name || application?.address,
-      href: `/planning-applications/${application?._id}`,
-    },
-    {
-      name: "Thank you",
-      href: "",
-    },
-  ];
   return (
     <section>
-      <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
       <div className="wrap-message-reference">
         <h1 className="govuk-heading-l"> Comment submitted</h1>
         <h2 className="govuk-body-l"> Your reference number</h2>

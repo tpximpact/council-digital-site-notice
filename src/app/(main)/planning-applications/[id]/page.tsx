@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Breadcrumbs from "@/components/breadcrumbs";
 import About from "@/components/about";
 import Impact from "@/components/impact";
 import Process from "@/components/process";
@@ -69,7 +68,6 @@ const PlanningApplicationItem = () => {
     <>
       {data && (
         <>
-          <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
           <About data={data} />
           {(showAccess ||
             showCarbon ||

@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Breadcrumbs from "@/components/breadcrumbs";
 import Instructions from "./instructions";
 import Questions from "../../../../../components/questions";
 import { getLocalStorage } from "../../../../lib/application";
@@ -49,23 +48,8 @@ const Feedback = () => {
     }
   };
 
-  const breadcrumbs_array = [
-    {
-      name: "Planning application",
-      href: "/",
-    },
-    {
-      name: application?.name || "",
-      href: `/planning-applications/${application?._id}`,
-    },
-    {
-      name: "Tell us what you think",
-      href: "",
-    },
-  ];
   return (
     <>
-      <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
       {question !== 0 && question !== 13 && <Instructions />}
       <Questions
         question={question}
