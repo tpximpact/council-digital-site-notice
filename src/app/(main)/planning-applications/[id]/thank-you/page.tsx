@@ -32,7 +32,7 @@ const FeedbackMessage = () => {
       <div className="wrap-message-reference">
         <h1 className="govuk-heading-l"> Comment submitted</h1>
         <h2 className="govuk-body-l"> Your reference number</h2>
-        <p className="govuk-body-l">{formId}</p>
+        <h2 className="govuk-body-l">{formId}</h2>
       </div>
       <div style={{ display: "flex", marginTop: "25px" }}>
         {application?.image_head && (
@@ -52,12 +52,12 @@ const FeedbackMessage = () => {
           >
             {application?.address}
           </Link>
-          <p
+          <h3
             className="govuk-body govuk-!-font-weight-bold"
             style={{ marginBottom: 0 }}
           >
             Application reference{" "}
-          </p>
+          </h3>
           <p className="govuk-body">{application?.applicationNumber}</p>
         </div>
       </div>
@@ -78,12 +78,14 @@ const FeedbackMessage = () => {
         your area, you can view all currently active applications and provide
         comments on them.
       </p>
-      <Link
-        href="/"
-        className="govuk-button govuk-button--secondary govuk-!-font-size-16"
-      >
-        View local planning applications
-      </Link>
+      <nav>
+        <Link
+          href="/"
+          className="govuk-button govuk-button--secondary govuk-!-font-size-16"
+        >
+          View local planning applications
+        </Link>
+      </nav>
       {globalConfig?.howToGetInvolveUrl && (
         <>
           <h1 className="govuk-heading-m">

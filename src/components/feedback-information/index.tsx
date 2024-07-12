@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import Link from "next/link";
-import { Button } from "@/components/button";
+import { BackLink, Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "@/app/lib/application";
 import { getGlobalContent } from "@/app/actions/sanityClient";
+import { useRouter } from "next/navigation";
 
 function FeedbackInformation({
   onChangeQuestion,
@@ -15,6 +16,7 @@ function FeedbackInformation({
   const [globalConfig, setGlobalConfig] = useState<any>();
   const [urlConcern, setUrlConcern] = useState();
   const [id, setId] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -43,13 +45,17 @@ function FeedbackInformation({
             What you need to know before you comment
           </h1>
         </div>
-        <Link
+        <BackLink
+          onClick={() => router.push(`/planning-applications/${id}`)}
+          content="Back"
+        />
+        {/* <Link
           href={`/planning-applications/${id}`}
           className={`govuk-back-link`}
           data-module="govuk-button"
         >
           Back
-        </Link>
+        </Link> */}
         <h2 className="govuk-heading-l">
           What isn’t considered in planning approval
         </h2>
