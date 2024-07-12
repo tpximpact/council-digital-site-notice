@@ -49,9 +49,9 @@ function Process({
       )}
       <div className="wrap-grid-button">
         <div className="process-grid">
-          <p className="govuk-body govuk-!-font-weight-bold process-consultation">
+          <h3 className="govuk-body govuk-!-font-weight-bold process-consultation">
             {checkStage}
-          </p>
+          </h3>
           <p
             className={`govuk-body process-consultation-result ${aplicationStageStyle(singleApplicationStatus ?? "")}`}
           >

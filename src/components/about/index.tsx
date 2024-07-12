@@ -30,7 +30,9 @@ function About({ data }: { data: PlanningApplication }) {
       )}
       {data?.name && <h1 className="govuk-heading-l">{data?.name}</h1>}
       {data?.address && (
-        <p className="govuk-body-m govuk-!-font-weight-bold">{data?.address}</p>
+        <h2 className="govuk-body-m govuk-!-font-weight-bold">
+          {data?.address}
+        </h2>
       )}
       <div className="wrap-carousel-desktop">
         {(data?.image_head || data?.image_gallery) && (

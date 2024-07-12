@@ -94,12 +94,12 @@ function FeedbackInformation({
           applications:
         </p>
         <div>
-          <p
+          <h3
             style={{ fontWeight: "bold", marginBottom: 0 }}
             className="govuk-body"
           >
             1. To use your knowledge of the area
-          </p>
+          </h3>
           <p className="govuk-body">
             You may be able to highlight on-the-ground details we don’t know
             about – for example, that a mature tree was left out of a
@@ -107,12 +107,12 @@ function FeedbackInformation({
           </p>
         </div>
         <div>
-          <p
+          <h3
             style={{ fontWeight: "bold", marginBottom: 0 }}
             className="govuk-body"
           >
             2. To influence the details
-          </p>
+          </h3>
           <p className="govuk-body">
             Your understanding of an area’s needs can help planners decide on
             things like amount of open space, cycling facilities, or what
@@ -120,12 +120,12 @@ function FeedbackInformation({
           </p>
         </div>
         <div>
-          <p
+          <h3
             style={{ fontWeight: "bold", marginBottom: 0 }}
             className="govuk-body"
           >
             3. To make sure we balance our priorities
-          </p>
+          </h3>
           <p className="govuk-body">
             It's useful know which priorities are most important to residents,
             so we can push developers to be more ambitious with their targets.
