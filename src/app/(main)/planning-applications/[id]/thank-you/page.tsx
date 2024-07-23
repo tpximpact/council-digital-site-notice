@@ -32,7 +32,16 @@ const FeedbackMessage = () => {
       <div className="wrap-message-reference">
         <h1 className="govuk-heading-l"> Comment submitted</h1>
         <h2 className="govuk-body-l"> Your reference number</h2>
-        <h2 className="govuk-body-l">{formId}</h2>
+        <h2
+          className="govuk-body-l"
+          aria-label={
+            formId
+              ? `Reference Number: ${formId}`
+              : "No Reference Number Provided"
+          }
+        >
+          {formId || "Reference Number Unavailable"}
+        </h2>
       </div>
       <div style={{ display: "flex", marginTop: "25px" }}>
         {application?.image_head && (
@@ -45,13 +54,15 @@ const FeedbackMessage = () => {
         )}
 
         <div style={{ marginLeft: "15px" }}>
-          <Link
-            className="govuk-body govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state"
-            href={`/planning-applications/${application?._id}`}
-            style={{ marginBottom: "5px", textDecoration: "none" }}
-          >
-            {application?.address}
-          </Link>
+          {application && application.address && (
+            <Link
+              className="govuk-body govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state"
+              href={`/planning-applications/${application?._id}`}
+              style={{ marginBottom: "5px", textDecoration: "none" }}
+            >
+              {application?.address}
+            </Link>
+          )}
           <h3
             className="govuk-body govuk-!-font-weight-bold"
             style={{ marginBottom: 0 }}
