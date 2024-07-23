@@ -26,8 +26,8 @@ function Process({
   }, []);
 
   const singleApplicationStatus =
-    data.applicationStage.status[
-      data.applicationStage.stage.toLowerCase() as keyof typeof data.applicationStage.status
+    data?.applicationStage?.status[
+      data?.applicationStage?.stage.toLowerCase() as keyof typeof data.applicationStage.status
     ];
   const checkStage =
     parseFloat(consultationDeadline) <= 0 &&
