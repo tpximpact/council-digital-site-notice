@@ -28,12 +28,18 @@ function About({ data }: { data: PlanningApplication }) {
       {isModalOpen && (
         <Modal setIsModalOpen={setIsModalOpen} image={imageSelected} />
       )}
-      <h1 className="govuk-heading-l">{data?.name}</h1>
-      {data?.address && (
-        <h2 className="govuk-body-m govuk-!-font-weight-bold">
-          {data?.address}
-        </h2>
-      )}
+      {data?.name ? (
+        <>
+          <h1 className="govuk-heading-l">{data.name}</h1>
+          {data.address && (
+            <h2 className="govuk-body-m govuk-!-font-weight-bold">
+              {data.address}
+            </h2>
+          )}
+        </>
+      ) : data?.address ? (
+        <h1 className="govuk-heading-l">{data.address}</h1>
+      ) : null}
       <div className="wrap-carousel-desktop">
         {(data?.image_head || data?.image_gallery) && (
           <Gallery

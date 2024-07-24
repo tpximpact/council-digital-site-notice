@@ -51,7 +51,7 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         all comments which are ‘material considerations’ to the proposed
         development. These include (but aren't limited to):
       </p>
-      <ul className="govuk-body-s">
+      <ul className="govuk-body-s govuk-list govuk-list--bullet">
         <li>overlooking/loss of privacy</li>
         <li>loss of light or overshadowing</li>
         <li>traffic parking</li>

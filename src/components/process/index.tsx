@@ -87,7 +87,7 @@ function Process({
                 src="/assets/images/comments-and-docs.png"
                 width={64}
                 height={64}
-                alt="summary and comment icon"
+                alt="documents and comments"
                 style={{ marginLeft: "20px" }}
               />
             </div>
