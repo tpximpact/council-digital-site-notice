@@ -27,7 +27,7 @@ function Impact({ data }: { data: PlanningApplication }) {
                   src="/assets/images/icon-homes.png"
                   width={64}
                   height={64}
-                  alt="icon homes"
+                  alt=""
                 />
               </div>
 
@@ -80,7 +80,7 @@ function Impact({ data }: { data: PlanningApplication }) {
                   src="/assets/images/icon-open-spaces.png"
                   width={64}
                   height={64}
-                  alt="icon open spaces"
+                  alt=""
                 />
               </div>
               <p className="govuk-body large-margin-top">
@@ -105,7 +105,7 @@ function Impact({ data }: { data: PlanningApplication }) {
                   src="/assets/images/icon-office.png"
                   width={64}
                   height={64}
-                  alt="icon office"
+                  alt=""
                 />
               </div>
               <p className="govuk-body large-margin-top">
@@ -132,7 +132,7 @@ function Impact({ data }: { data: PlanningApplication }) {
                   src="/assets/images/icon-co2.png"
                   width={64}
                   height={64}
-                  alt="icon carbon"
+                  alt=""
                 />
               </div>
               <p className="govuk-body large-margin-top">
@@ -159,7 +159,7 @@ function Impact({ data }: { data: PlanningApplication }) {
                   src="/assets/images/icon-crossing.png"
                   width={64}
                   height={48}
-                  alt="icon pedestrian crossing"
+                  alt=""
                 />
               </div>
               <p className="govuk-body" style={{ gridColumnEnd: 3 }}>

@@ -28,7 +28,7 @@ function About({ data }: { data: PlanningApplication }) {
       {isModalOpen && (
         <Modal setIsModalOpen={setIsModalOpen} image={imageSelected} />
       )}
-      {data?.name && <h1 className="govuk-heading-l">{data?.name}</h1>}
+      <h1 className="govuk-heading-l">{data?.name}</h1>
       {data?.address && (
         <h2 className="govuk-body-m govuk-!-font-weight-bold">
           {data?.address}

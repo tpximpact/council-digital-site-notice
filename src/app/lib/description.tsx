@@ -4,7 +4,10 @@ import { ReactElement } from "react";
 export const descriptionDetail: { [key: string]: ReactElement } = {
   about: (
     <>
-      <h4 style={{ fontWeight: 700, marginBottom: 0 }}>
+      <h4
+        className="govuk-heading-s"
+        style={{ fontWeight: 700, marginBottom: 0 }}
+      >
         Full planning application
       </h4>
       <p className="govuk-body">
@@ -13,21 +16,25 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         development in one go.
       </p>
 
-      <h4 style={{ fontWeight: 700 }}>Outline planning application</h4>
+      <h4 className="govuk-heading-s" style={{ fontWeight: 700 }}>
+        Outline planning application
+      </h4>
       <p className="govuk-body">
         An application seeking approval for the principle of the development —
         including size, layout, uses and key features. The rest of the details
         are provided later with a reserved matters applications.
       </p>
 
-      <h4 style={{ fontWeight: 700 }}>Reserved matters application</h4>
+      <h4 className="govuk-heading-s" style={{ fontWeight: 700 }}>
+        Reserved matters application
+      </h4>
       <p className="govuk-body">
         Provides the additional details that aren't provided in an outline
         planning application. This could include layout, materials and landscape
         details.
       </p>
 
-      <h4 style={{ fontWeight: 700 }}>
+      <h4 className="govuk-heading-s" style={{ fontWeight: 700 }}>
         Application for removal/variation of conditions
       </h4>
       <p className="govuk-body">
