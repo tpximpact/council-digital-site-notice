@@ -8,12 +8,13 @@ import { getApplicationById } from "../../../actions/sanityClient";
 import moment from "moment";
 import { useParams } from "next/navigation";
 import { PlanningApplication } from "../../../../../sanity/sanity.types";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 const PlanningApplicationItem = () => {
   const [consultationDeadline, setConsultationDeadline] = useState<string>("");
-  const [data, setData] = useState<PlanningApplication>();
+  const [data, setData] = useState<PlanningApplication | null>();
   const params = useParams();
   const { id } = params;
 
@@ -22,7 +23,7 @@ const PlanningApplicationItem = () => {
       const result = await getApplicationById(id as string);
       console.log({ result }, "id");
       const getData = result[0];
-      setData(getData);
+      result.length == 0 ? setData(null) : setData(getData);
       let deadlineTime;
 
       if (getData?.enableComments) {
@@ -65,6 +66,9 @@ const PlanningApplicationItem = () => {
     showJobs,
     showOpenSpace,
   } = data || {};
+
+  if (data === null) return notFound();
+
   return (
     <>
       {data && (
