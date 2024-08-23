@@ -3,12 +3,6 @@ ARG NEXT_PUBLIC_SANITY_DATASET
 
 # Use the official Node.js 20 Alpine image as the base image
 FROM node:20-alpine as base
-
-# ////////////////////////////// dependencies
-FROM base as deps
-ENV HUSKY=0
-# we dont want it to install chrome as it will fail in alpine - also we're not running tests in this container but we need dev dependencies to build the app 🤷‍♀️
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 RUN apk add --no-cache --virtual .gyp \
@@ -16,6 +10,11 @@ RUN apk add --no-cache --virtual .gyp \
   make \
   g++ \
   && apk del .gyp
+# ////////////////////////////// dependencies
+FROM base as deps
+ENV HUSKY=0
+# we dont want it to install chrome as it will fail in alpine - also we're not running tests in this container but we need dev dependencies to build the app 🤷‍♀️
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 WORKDIR /app
 # Copy package.json and package-lock.json to the working directory
 COPY yarn.lock ./
