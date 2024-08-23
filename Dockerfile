@@ -8,8 +8,8 @@ RUN apk add --no-cache libc6-compat
 RUN apk add --no-cache --virtual .gyp \
   python3 \
   make \
-  g++ \
-  && apk del .gyp
+  g++ 
+
 # ////////////////////////////// dependencies
 FROM base as deps
 ENV HUSKY=0
