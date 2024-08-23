@@ -30,7 +30,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN yarn --frozen-lockfile
+RUN yarn build
 CMD ["tail", "-f", "/dev/null"]
 
 # ////////////////////////////// run
