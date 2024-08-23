@@ -16,6 +16,7 @@ const nextConfig = {
     return config;
   },
   env: {},
+  output: "standalone",
 };
 
 module.exports = nextConfig;
