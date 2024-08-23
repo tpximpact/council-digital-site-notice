@@ -1,4 +1,5 @@
-
+ARG NEXT_PUBLIC_SANITY_PROJECT_ID
+ARG NEXT_PUBLIC_SANITY_DATASET
 
 # Use the official Node.js 20 Alpine image as the base image
 FROM node:20-alpine as base
@@ -17,7 +18,8 @@ RUN apk add --no-cache --virtual .gyp \
   && apk del .gyp
 WORKDIR /app
 # Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+COPY yarn.lock ./
+COPY package.json ./
 # Husky install file needed too
 COPY .husky/install.mjs ./.husky/install.mjs
 # Install dependencies
@@ -25,6 +27,12 @@ RUN yarn --frozen-lockfile
 
 # ////////////////////////////// build
 FROM base as builder
+
+ARG NEXT_PUBLIC_SANITY_PROJECT_ID
+ARG NEXT_PUBLIC_SANITY_DATASET
+ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID}
+ENV NEXT_PUBLIC_SANITY_DATASET=${NEXT_PUBLIC_SANITY_PROJECT_ID}
+
 ENV HUSKY=0
 ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /app
