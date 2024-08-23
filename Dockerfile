@@ -10,6 +10,11 @@ ENV HUSKY=0
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache --virtual .gyp \
+  python3 \
+  make \
+  g++ \
+  && apk del .gyp
 WORKDIR /app
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
