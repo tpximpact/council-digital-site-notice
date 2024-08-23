@@ -3,9 +3,13 @@ services:
   app:
     build:
       context: .
+      args:
+        NEXT_PUBLIC_SANITY_PROJECT_ID: ${NEXT_PUBLIC_SANITY_PROJECT_ID}
+        NEXT_PUBLIC_SANITY_DATASET: ${NEXT_PUBLIC_SANITY_DATASET}
     ports:
       - 3000:3000
     volumes:
       - /app/node_modules
     env_file:
       - ./.env
+    
