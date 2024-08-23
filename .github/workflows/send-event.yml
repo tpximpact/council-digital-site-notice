@@ -1,0 +1,19 @@
+name: Production branch updated
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  send-event:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send repository dispatch event
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ secrets.DEPLOYMENT_TARGET_OWNER }}/${{ secrets.DEPLOYMENT_TARGET_REPO }}/dispatches \
+            -d '{"event_type":"code_update","client_payload":{"description":"main branch has been updated"}}'
