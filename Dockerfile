@@ -3,16 +3,22 @@ ARG NEXT_PUBLIC_SANITY_DATASET
 
 # Use the official Node.js 20 Alpine image as the base image
 FROM node:20-alpine as base
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
-RUN apk add --no-cache \
+
+
+# ////////////////////////////// baseimg
+FROM base as baseimg
+# python needed by deps and builder
+RUN apk add --no-cache .gyp \
   python3 \
   make \
   g++ 
 
 # ////////////////////////////// dependencies
-FROM base as deps
+FROM baseimg as deps
 ENV HUSKY=0
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+
 # we dont want it to install chrome as it will fail in alpine - also we're not running tests in this container but we need dev dependencies to build the app 🤷‍♀️
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 WORKDIR /app
@@ -25,8 +31,7 @@ COPY .husky/install.mjs ./.husky/install.mjs
 RUN yarn --frozen-lockfile
 
 # ////////////////////////////// build
-FROM base as builder
-
+FROM baseimg as builder
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG NEXT_PUBLIC_SANITY_DATASET
 ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID}
