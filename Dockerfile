@@ -8,10 +8,7 @@ FROM node:20-alpine as base
 # ////////////////////////////// baseimg
 FROM base as baseimg
 # python needed by deps and builder
-RUN apk add --no-cache .gyp \
-  python3 \
-  make \
-  g++ 
+RUN apk add --no-cache python3
 
 # ////////////////////////////// dependencies
 FROM baseimg as deps
