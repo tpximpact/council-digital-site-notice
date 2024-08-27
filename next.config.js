@@ -2,7 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["cdn.sanity.io"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+    ],
   },
   webpack: (config) => {
     config.resolve.fallback = {
@@ -16,7 +21,6 @@ const nextConfig = {
     return config;
   },
   env: {},
-  output: "standalone",
 };
 
 module.exports = nextConfig;
