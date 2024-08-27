@@ -3,6 +3,10 @@ name: Accessibility Tests
 on:
   pull_request:
     branches: [main]
+env:
+  NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ vars.NEXT_PUBLIC_SANITY_SECRET_TOKEN }}
+  NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+  NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET }}
 
 jobs:
   pa11y:
