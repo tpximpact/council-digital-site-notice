@@ -62,6 +62,7 @@ export async function getActiveApplications(
 
     const response = await sanityFetch<sanityApplicationResponse>({ query });
     console.log("DEBUG RESPONSE: ", response);
+    console.log(projectId, dataset);
     return response;
   } catch (error) {
     throw new Error("Error fetching data from Sanity");
