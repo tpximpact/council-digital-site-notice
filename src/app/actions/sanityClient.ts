@@ -119,7 +119,7 @@ export async function getGlobalContent() {
   const info = await client.fetch(
     '*[_type == "global-content"][0]',
     {},
-    { cache: "force-cache", next: { revalidate: 86400 } },
+    { next: { revalidate: 86400 } },
   );
   return info;
 }

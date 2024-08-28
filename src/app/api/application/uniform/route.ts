@@ -10,6 +10,7 @@ import {
   applicationNumberValidation,
   isUniformIntegrationEnabled,
 } from "@/app/actions/uniformValidator";
+import { checkAllowedUpdateFields } from "../../checkAllowedUpdateFields";
 
 interface ApplicationError {
   application: any;
@@ -114,6 +115,8 @@ export async function PUT(req: NextRequest) {
     _type: "planning-application",
   };
 
+  const { applicationNumber, ...updateData } = applicationData;
+
   const checkApplicationNumber =
     await applicationNumberValidation(applicationData);
 
@@ -137,8 +140,15 @@ export async function PUT(req: NextRequest) {
     );
     if (existingApplication && existingApplication._id) {
       // Application found, now update it
-      await updateApplication(existingApplication._id, applicationData);
-      results.success.push(`${data["DCAPPL[REFVAL]"]} updated`);
+      if (checkAllowedUpdateFields(existingApplication, updateData)) {
+        // Update the application
+        await updateApplication(existingApplication._id, updateData);
+        results.success.push(`Application ${applicationNumber} updated`);
+      } else {
+        results.success.push(
+          `Application ${applicationNumber} no update needed`,
+        );
+      }
     } else {
       await createApplication(applicationData);
       results.success.push(`Application ${data["DCAPPL[REFVAL]"]} created`);
