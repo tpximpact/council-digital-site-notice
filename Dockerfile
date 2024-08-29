@@ -10,8 +10,9 @@ COPY package.json yarn.lock ./
 # Install dependencies
 RUN yarn install
 
-# Copy the rest of the application code
-COPY . .
+# Set environment variables for config vars
+ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID} \
+  NEXT_PUBLIC_SANITY_PROJECT_DATASET=${NEXT_PUBLIC_SANITY_PROJECT_DATASET}
 
 # Build the Next.js application
 RUN yarn build
