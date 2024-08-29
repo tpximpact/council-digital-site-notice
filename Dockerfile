@@ -1,9 +1,8 @@
 # Use official Node.js image as the base image, set to Node.js v20
 FROM node:20
 
-RUN mkdir -p /src/app
 # Set working directory
-WORKDIR /src/app
+WORKDIR /app
 
 # Copy package.json and yarn.lock files
 COPY package.json yarn.lock ./
@@ -16,6 +15,7 @@ ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID} \
   NEXT_PUBLIC_SANITY_PROJECT_DATASET=${NEXT_PUBLIC_SANITY_PROJECT_DATASET}
 
 # Build the Next.js application
+COPY . .
 RUN yarn build
 
 # Expose port 3000 to the outside world
