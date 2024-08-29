@@ -10,7 +10,7 @@ WORKDIR /app
 
 # 4. Copy the yarn.lock and package.json files to the container
 COPY package.json yarn.lock ./
-
+COPY ./tsconfig.json ./tsconfig.json
 # 5. Install dependencies
 RUN yarn install --frozen-lockfile
 
