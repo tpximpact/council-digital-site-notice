@@ -1,85 +1,46 @@
+# 1. Use the official Node.js 20 image as the base image
+FROM node:20-alpine AS build
 
-# Use the official Node.js 20 Alpine image as the base image
-FROM node:20-alpine as base
-
-ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID} \
-  NEXT_PUBLIC_SANITY_PROJECT_DATASET=${NEXT_PUBLIC_SANITY_PROJECT_DATASET}
-
-
-# ////////////////////////////// baseimg
-FROM base as baseimg
-# python needed by deps and builder
-RUN apk add --no-cache \
-  python3 \
-  make \
-  g++ 
-
-# ////////////////////////////// dependencies
-FROM baseimg as deps
-ENV HUSKY=0
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
-
-# we dont want it to install chrome as it will fail in alpine - also we're not running tests in this container but we need dev dependencies to build the app 🤷‍♀️
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-WORKDIR /app
-# Copy package.json and package-lock.json to the working directory
-COPY yarn.lock ./
-COPY package.json ./
-# Husky install file needed too
-COPY .husky/install.mjs ./.husky/install.mjs
-# Install dependencies
-RUN yarn --frozen-lockfile
-
-# ////////////////////////////// build
-FROM baseimg as builder
+# 2. Accept build-time environment variables from Heroku
 ARG NEXT_PUBLIC_SANITY_PROJECT_ID
 ARG NEXT_PUBLIC_SANITY_DATASET
-ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID}
-ENV NEXT_PUBLIC_SANITY_DATASET=${NEXT_PUBLIC_SANITY_DATASET}
 
-# print the NEXT_PUBLIC_SANITY_PROJECT_ID and NEXT_PUBLIC_SANITY_DATASET
-RUN echo "NEXT_PUBLIC_SANITY_PROJECT_ID 1: $NEXT_PUBLIC_SANITY_PROJECT_ID"
-RUN echo "NEXT_PUBLIC_SANITY_DATASET 1: $NEXT_PUBLIC_SANITY_DATASET"
-
-ENV HUSKY=0
-ENV NEXT_TELEMETRY_DISABLED=1
+# 3. Set the working directory in the container
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+
+# 4. Copy the yarn.lock and package.json files to the container
+COPY package.json yarn.lock ./
+
+# 5. Install dependencies
+RUN yarn install --frozen-lockfile
+
+# 6. Copy the rest of the application source code to the container
+COPY ./src ./src
+
+# 7. Set environment variables for the build process (making them available to Next.js)
+ENV NEXT_PUBLIC_SANITY_PROJECT_ID=$NEXT_PUBLIC_SANITY_PROJECT_ID
+ENV NEXT_PUBLIC_SANITY_DATASET=$NEXT_PUBLIC_SANITY_DATASET
+
+# 8. Build the Next.js app
 RUN yarn build
-CMD ["tail", "-f", "/dev/null"]
 
-# ////////////////////////////// run
-FROM base AS runner
-ENV HUSKY=0
-ENV NEXT_TELEMETRY_DISABLED=1
+# 9. Use a smaller base image for the final build
+FROM node:20-alpine AS runner
 
-WORKDIR /app
+# 10. Set environment variables for runtime
 ENV NODE_ENV=production
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
 
-# print the NEXT_PUBLIC_SANITY_PROJECT_ID and NEXT_PUBLIC_SANITY_DATASET
-RUN echo "NEXT_PUBLIC_SANITY_PROJECT_ID 2: $NEXT_PUBLIC_SANITY_PROJECT_ID"
-RUN echo "NEXT_PUBLIC_SANITY_DATASET 2: $NEXT_PUBLIC_SANITY_DATASET"
+# 11. Set the working directory in the container
+WORKDIR /app
 
-# we want to use output:standalone but it doesn't seem to want to work yet
-# I suspect something to do with sanity plugin
-# for now we will keep the standalone structure in the dockerfile but we'll just copy
-# everything over to the final step and run it the old fashioned way 
-COPY --from=builder /app/ ./
+# 12. Copy the built application from the build stage
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/package*.json ./
 
-# @TODO uncomment when we can run output:'standalone'
-# COPY --from=builder /app/public ./public
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-# COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-# COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-
-USER nextjs
+# 13. Expose the port the app runs on
 EXPOSE 3000
-ENV PORT=3000
 
-CMD yarn start
+# 14. Command to run the Next.js application
+CMD ["yarn", "start"]

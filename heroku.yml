@@ -1,6 +1,9 @@
 build:
   docker:
     web: Dockerfile
+  config:
+    NEXT_PUBLIC_SANITY_PROJECT_ID: $(NEXT_PUBLIC_SANITY_PROJECT_ID)
+    NEXT_PUBLIC_SANITY_DATASET: $(NEXT_PUBLIC_SANITY_DATASET)
 
 run:
   web: yarn start
