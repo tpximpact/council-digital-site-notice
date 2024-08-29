@@ -1,6 +1,7 @@
 # Use official Node.js image as the base image, set to Node.js v20
 FROM node:20
 
+RUN mkdir -p /src/app
 # Set working directory
 WORKDIR /src/app
 
