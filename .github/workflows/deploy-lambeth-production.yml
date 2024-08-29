@@ -28,8 +28,8 @@ jobs:
           heroku_email: ${{ secrets.LAMBETH_HEROKU_EMAIL }}
           usedocker: true
           stack: "container"
-          appdir: "./council-digital-site-notice"
-          # dontuseforce: 1
+          # appdir: "./council-digital-site-notice"
+          dontuseforce: false
           docker_build_args: |
             ARG_NEXT_PUBLIC_SANITY_PROJECT_ID
             ARG_NEXT_PUBLIC_SANITY_DATASET
