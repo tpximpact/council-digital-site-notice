@@ -1,0 +1,62 @@
+name: Deploy to Lambeth Heroku Production new
+
+on:
+  push:
+    branches:
+      - testing-heroku-deploy
+
+jobs:
+  handle-event:
+    runs-on: ubuntu-latest
+    environment: production - lambeth
+
+    steps:
+      - name: Handle repository dispatch event new
+        run: |
+          echo "Received repository dispatch event new"
+          echo "${{ github.event.client_payload.description }}"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: actions/checkout@v4
+
+      # - name: Checkout DSN code
+      #   run: |
+      #     git submodule add https://github.com/tpximpact/council-digital-site-notice
+      #     ls -lah council-digital-site-notice
+      #     cd council-digital-site-notice
+      #     git checkout testing-heroku-deploy
+      #     ls -lah
+
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.13.15
+        with:
+          heroku_api_key: ${{ secrets.LAMBETH_HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.LAMBETH_HEROKU_APP_NAME }}
+          heroku_email: ${{ secrets.LAMBETH_HEROKU_EMAIL }}
+          usedocker: true
+          stack: "container"
+          appdir: "./council-digital-site-notice"
+          # dontuseforce: 1
+          docker_build_args: |
+            ARG_NEXT_PUBLIC_SANITY_PROJECT_ID
+            ARG_NEXT_PUBLIC_SANITY_DATASET
+        env:
+          ARG_NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          ARG_NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_DATASET }}
+          # Sanity CMS
+          HD_NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          HD_NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_SECRET_TOKEN }}
+          HD_NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_DATASET }}
+          # Sanity Studio
+          HD_NEXT_PUBLIC_API_URL: ${{ secrets.LAMBETH_NEXT_PUBLIC_API_URL }}
+          # Feedback Spreadsheet
+          HD_NEXT_PUBLIC_SPREADSHEET_ID: ${{ secrets.LAMBETH_NEXT_PUBLIC_SPREADSHEET_ID }}
+          HD_NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL: ${{ secrets.LAMBETH_NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL }}
+          HD_GOOGLE_SERVICE_PRIVATE_KEY: ${{ secrets.LAMBETH_GOOGLE_SERVICE_PRIVATE_KEY }}
+          # Emails
+          HD_SENDGRID_API_KEY: ${{ secrets.LAMBETH_SENDGRID_API_KEY }}
+          HD_FEEDBACK_TO_EMAIL: ${{ secrets.LAMBETH_FEEDBACK_TO_EMAIL }}
+          HD_FEEDBACK_FROM_EMAIL: ${{ secrets.LAMBETH_FEEDBACK_FROM_EMAIL }}
+          # Api key
+          HD_NEXT_PUBLIC_API_KEY: ${{ secrets.LAMBETH_NEXT_PUBLIC_API_KEY }}
