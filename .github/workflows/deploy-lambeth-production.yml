@@ -11,10 +11,10 @@ jobs:
     environment: dsn-lambeth-production
 
     steps:
-      - name: Handle repository dispatch event new
-        run: |
-          echo "Received repository dispatch event new"
-          echo "${{ github.event.client_payload.description }}"
+      # - name: Handle repository dispatch event new
+      #   run: |
+      #     echo "Received repository dispatch event new"
+      #     echo "${{ github.event.client_payload.description }}"
 
       - uses: docker/setup-buildx-action@v3
 
