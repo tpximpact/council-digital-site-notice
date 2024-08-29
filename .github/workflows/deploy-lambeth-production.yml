@@ -31,6 +31,9 @@ jobs:
           --build-arg LAMBETH_NEXT_PUBLIC_SANITY_SECRET_TOKEN=${{secrets.LAMBETH_NEXT_PUBLIC_SANITY_SECRET_TOKEN}} \
           -t registry.heroku.com/${{ secrets.LAMBETH_HEROKU_APP_NAME }}/web .
 
+      - name: Tag the Docker image
+        run: docker tag registry.heroku.com/${{ secrets.LAMBETH_HEROKU_APP_NAME }}/web registry.heroku.com/${{ secrets.LAMBETH_HEROKU_APP_NAME }}/web
+
       - name: Push the Docker image
         run: docker push registry.heroku.com/${{ secrets.LAMBETH_HEROKU_APP_NAME }}/web
 
@@ -41,48 +44,3 @@ jobs:
       - name: Notify on successful deployment
         if: success()
         run: echo "Deployment to dsn-lambeth-production successful!"
-      # - name: Deploy to Heroku
-      #   uses: akhileshns/heroku-deploy@v3.13.15
-      #   with:
-      #     heroku_api_key: ${{ secrets.LAMBETH_HEROKU_API_KEY }}
-      #     heroku_app_name: ${{ secrets.LAMBETH_HEROKU_APP_NAME }}
-      #     heroku_email: ${{ secrets.LAMBETH_HEROKU_EMAIL }}
-      #     usedocker: true
-      #     stack: "container"
-      #     dontuseforce: false
-      #     docker_build_args: |
-      #       ARG_NEXT_PUBLIC_SANITY_PROJECT_ID
-      #       ARG_NEXT_PUBLIC_SANITY_DATASET
-      #       ARG_LAMBETH_NEXT_PUBLIC_SANITY_SECRET_TOKEN
-      #     run: |
-      #       cd ${DOCKERFILE_DIRECTORY}
-      #       echo ${HEROKU_API_KEY} | docker login \
-      #         --username=${HEROKU_EMAIL} \
-      #         registry.heroku.com \
-      #         --password-stdin
-      #       docker build \
-      #         --file ${DOCKERFILE_NAME} \
-      #         ${DOCKER_OPTIONS} \
-      #         --tag registry.heroku.com/${HEROKU_APP_NAME}/web .
-      #       heroku container:push web --app ${HEROKU_APP_NAME}
-      #       heroku container:release web --app ${HEROKU_APP_NAME}
-      #   # env:
-      #   #   ARG_NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_PROJECT_ID }}
-      #   #   ARG_NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_DATASET }}
-      #   #   ARG_LAMBETH_NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_SECRET_TOKEN }}
-      #   #   # Sanity CMS
-      #   #   HD_NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_PROJECT_ID }}
-      #   #   HD_NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_SECRET_TOKEN }}
-      #   #   HD_NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_DATASET }}
-      #   #   # Sanity Studio
-      #   #   HD_NEXT_PUBLIC_API_URL: ${{ secrets.LAMBETH_NEXT_PUBLIC_API_URL }}
-      #   #   # Feedback Spreadsheet
-      #   #   HD_NEXT_PUBLIC_SPREADSHEET_ID: ${{ secrets.LAMBETH_NEXT_PUBLIC_SPREADSHEET_ID }}
-      #   #   HD_NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL: ${{ secrets.LAMBETH_NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL }}
-      #   #   HD_GOOGLE_SERVICE_PRIVATE_KEY: ${{ secrets.LAMBETH_GOOGLE_SERVICE_PRIVATE_KEY }}
-      #   #   # Emails
-      #   #   HD_SENDGRID_API_KEY: ${{ secrets.LAMBETH_SENDGRID_API_KEY }}
-      #   #   HD_FEEDBACK_TO_EMAIL: ${{ secrets.LAMBETH_FEEDBACK_TO_EMAIL }}
-      #   #   HD_FEEDBACK_FROM_EMAIL: ${{ secrets.LAMBETH_FEEDBACK_FROM_EMAIL }}
-      #   #   # Api key
-      #   #   HD_NEXT_PUBLIC_API_KEY: ${{ secrets.LAMBETH_NEXT_PUBLIC_API_KEY }}
