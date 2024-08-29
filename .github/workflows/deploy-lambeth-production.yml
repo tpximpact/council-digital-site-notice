@@ -28,7 +28,7 @@ jobs:
           docker build \
           --build-arg ARG_NEXT_PUBLIC_SANITY_PROJECT_ID=${{secrets.LAMBETH_NEXT_PUBLIC_SANITY_PROJECT_ID}} \
           --build-arg ARG_NEXT_PUBLIC_SANITY_DATASET=${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_DATASET }} \
-          --build-arg LAMBETH_NEXT_PUBLIC_SANITY_SECRET_TOKEN=${{secrets.LAMBETH_NEXT_PUBLIC_SANITY_SECRET_TOKEN}} \
+          --build-arg ARG_LAMBETH_NEXT_PUBLIC_SANITY_SECRET_TOKEN=${{secrets.LAMBETH_NEXT_PUBLIC_SANITY_SECRET_TOKEN}} \
           -t registry.heroku.com/${{ secrets.LAMBETH_HEROKU_APP_NAME }}/web .
 
       - name: Tag the Docker image
