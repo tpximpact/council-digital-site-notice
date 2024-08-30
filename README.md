@@ -76,7 +76,7 @@ Ensure that the .env or .env.local file also has the following environment keys 
 
 |          Variable Name          |                                         Description                                         |
 | :-----------------------------: | :-----------------------------------------------------------------------------------------: |
-| NEXT_PUBLIC_SANITY_SECRET_TOKEN |  API token for accessing the data with editor permissions - nb ensure CORS origins are set  |
+|       SANITY_SECRET_TOKEN       |  API token for accessing the data with editor permissions - nb ensure CORS origins are set  |
 |  NEXT_PUBLIC_SANITY_PROJECT_ID  |                                ID for the project in sanity                                 |
 |   NEXT_PUBLIC_SANITY_DATASET    |                                   Dataset - eg production                                   |
 |       NEXT_PUBLIC_API_URL       | Url from which data is pulled in to populate sanity when button is clicked in sanity studio |
