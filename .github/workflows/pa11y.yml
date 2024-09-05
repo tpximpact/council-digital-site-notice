@@ -14,6 +14,7 @@ jobs:
 
     container:
       image: buildkite/puppeteer:10.0.0
+
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -24,20 +25,21 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Build the application
-        run: npm run build
+        run: yarn build
 
       - name: Start the application
-        run: npm start & echo $! > pid.txt
+        run: yarn start & echo $! > pid.txt
 
       - name: Wait for the application to start
-        run: npx wait-on http://localhost:3000
+        run: yarn add wait-on && yarn wait-on http://localhost:3000
 
-      - name: Run pa11y-ci
+      - name: Install and run pa11y-ci
         run: |
-          npm install -g pa11y-ci
-          pa11y-ci --config .pa11yci
+          yarn global add pa11y-ci
+          yarn pa11y-ci --config .pa11yci
+
       - name: Stop the application
         run: kill $(cat pid.txt)
