@@ -3,19 +3,17 @@ name: Accessibility Tests
 on:
   pull_request:
     branches: [main]
-
+env:
+  NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ vars.NEXT_PUBLIC_SANITY_SECRET_TOKEN }}
+  NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+  NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET }}
+  NEXT_PUBLIC_API_MOCKING: enabled
 jobs:
   pa11y:
     runs-on: ubuntu-latest
 
     container:
       image: buildkite/puppeteer:10.0.0
-
-    env:
-      NEXT_PUBLIC_API_MOCKING: enabled
-      NEXT_PUBLIC_SANITY_DATASET: staging
-      NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.NEXT_PUBLIC_SANITY_SECRET_TOKEN }}
-      NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
 
     steps:
       - name: Check out code
@@ -31,13 +29,9 @@ jobs:
 
       - name: Build the application
         run: yarn build
-        env:
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
 
       - name: Start the application
         run: yarn start & echo $! > pid.txt
-        env:
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
 
       - name: Wait for the application to start
         run: yarn add wait-on && yarn wait-on http://localhost:3000
