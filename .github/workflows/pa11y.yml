@@ -31,9 +31,13 @@ jobs:
 
       - name: Build the application
         run: yarn build
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
 
       - name: Start the application
         run: yarn start & echo $! > pid.txt
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
 
       - name: Wait for the application to start
         run: yarn add wait-on && yarn wait-on http://localhost:3000
