@@ -12,9 +12,9 @@
   },
   "urls": [
     "http://localhost:3000/",
-    "http://localhost:3000/planning-applications/{id}",
-    "http://localhost:3000/planning-applications/{id}/feedback",
-    "http://localhost:3000/planning-applications/{id}/thank-you",
+    "http://localhost:3000/planning-applications/123",
+    "http://localhost:3000/planning-applications/123/feedback",
+    "http://localhost:3000/planning-applications/123/thank-you",
     "http://localhost:3000/not-found"
   ]
 }
