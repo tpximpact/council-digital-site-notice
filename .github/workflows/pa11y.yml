@@ -12,9 +12,10 @@ jobs:
       image: buildkite/puppeteer:10.0.0
 
     env:
-      NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
-      NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
       NEXT_PUBLIC_API_MOCKING: enabled
+      NEXT_PUBLIC_SANITY_DATASET: staging
+      NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.NEXT_PUBLIC_SANITY_SECRET_TOKEN }}
+      NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
 
     steps:
       - name: Check out code
