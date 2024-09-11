@@ -42,10 +42,12 @@ jobs:
       - name: Wait for the application to start
         run: yarn add wait-on && yarn wait-on http://localhost:3000
 
-      - name: Install and run pa11y-ci
+      - name: Install Pa11y
         run: |
-          yarn global add pa11y-ci
-          npx pa11y-ci --config .pa11yci
+          yarn global add pa11y@latest pa11y-ci@latest
+
+      - name: Run Pa11y
+        run: npx pa11y-ci
 
       - name: Stop the application
         run: kill $(cat pid.txt)
