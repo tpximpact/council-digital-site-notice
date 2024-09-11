@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 import { getGlobalContent } from "./actions/sanityClient";
 import { Suspense } from "react";
 import { MSWInitializer } from "@/components/msw-initialiser";
+import Head from "next/head";
 
 export const globalContent = await getGlobalContent();
 export async function generateMetadata(): Promise<Metadata> {
@@ -38,6 +39,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <Head>
+        <title>Digital Site Notice</title>
+      </Head>
       <body>
         {isShowCookie == true && <CookiesBanner />}
         {isConsentCookie &&
