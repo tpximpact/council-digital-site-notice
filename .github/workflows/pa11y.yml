@@ -29,8 +29,8 @@ jobs:
 
       - name: Build the application
         env:
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
-          NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.TEST_ENV_SANITY_TOKEN }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ vars.TEST_ENV_SANITY_TOKEN }}
           NEXT_PUBLIC_SANITY_DATASET: staging
           NEXT_PUBLIC_API_MOCKING: enabled
         run: yarn build
