@@ -4,13 +4,14 @@ on:
   pull_request:
     branches: [main]
 env:
-  NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+  NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.TEST_ENV_SANITY_PROJECT_ID  }}
   NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.TEST_ENV_SANITY_TOKEN }}
-  NEXT_PUBLIC_SANITY_DATASET: staging
+  NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.TEST_ENV_SANITY_DATASET }}
   NEXT_PUBLIC_API_MOCKING: enabled
 jobs:
   pa11y:
     runs-on: ubuntu-latest
+    environment: test
 
     container:
       image: buildkite/puppeteer:10.0.0
@@ -29,16 +30,11 @@ jobs:
 
       - name: Build the application
         env:
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.TEST_ENV_SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.TEST_ENV_SANITY_TOKEN }}
-          NEXT_PUBLIC_SANITY_DATASET: staging
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.TEST_ENV_SANITY_DATASET }}
           NEXT_PUBLIC_API_MOCKING: enabled
-        run: |
-          echo "Starting build process..."
-          echo "NEXT_PUBLIC_SANITY_PROJECT_ID is set: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID != '' }}"
-          echo "NEXT_PUBLIC_SANITY_DATASET is set: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET != '' }}"
-          echo "TEST_ENV_SANITY_TOKEN is set: ${{ secrets.TEST_ENV_SANITY_TOKEN != '' }}"
-          yarn build || (echo "Build failed. Error code: $?" && exit 1)
+        run: yarn build
 
       - name: Start the application and get port
         run: |
