@@ -26,7 +26,7 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: yarn add --frozen-lockfile
+        run: yarn install --frozen-lockfile
 
       - name: Build the application
         env:
@@ -43,7 +43,7 @@ jobs:
         run: npx wait-on http://localhost:3000
 
       - name: Run Pa11y
-        run: pa11y-ci --config .pa11yci
+        run: npx pa11y-ci
 
       - name: Stop the application
         run: kill $(cat pid.txt)
