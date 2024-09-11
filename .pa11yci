@@ -1,10 +1,5 @@
 {
   "defaults": {
-    "chromeLaunchConfig": {
-      "args": [
-        "--no-sandbox"
-      ]
-    },
     "standard": "WCAG2.2"
   },
   "urls": [
