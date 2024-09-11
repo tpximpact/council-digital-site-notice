@@ -30,11 +30,18 @@ jobs:
       - name: Build the application
         run: yarn build
 
-      - name: Start the application
-        run: yarn start & echo $! > pid.txt
+      - name: Start the application and get port
+        run: |
+          yarn start & echo $! > pid.txt
+          sleep 10  # Give the app some time to start
+          PORT=$(lsof -i -P -n | grep LISTEN | grep node | awk '{print $9}' | cut -d ':' -f 2)
+          echo "Application is running on port: $PORT"
+          echo "PORT=$PORT" >> $GITHUB_ENV
 
-      - name: Wait for the application to start
-        run: yarn add wait-on && yarn wait-on http://localhost:3000
+      - name: Use the port
+        run: |
+          echo "The application is running on port ${{ env.PORT }}"
+          # You can use ${{ env.PORT }} in subsequent steps
 
       - name: Install and run pa11y-ci
         run: |
