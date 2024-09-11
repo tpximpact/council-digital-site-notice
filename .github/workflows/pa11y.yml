@@ -36,23 +36,16 @@ jobs:
           NEXT_PUBLIC_API_MOCKING: enabled
         run: yarn build
 
-      - name: Start the application and get port
-        run: |
-          yarn start & echo $! > pid.txt
-          sleep 10
-          PORT=$(lsof -i -P -n | grep LISTEN | grep node | awk '{print $9}' | cut -d ':' -f 2)
-          echo "Application is running on port: $PORT"
-          echo "PORT=$PORT" >> $GITHUB_ENV
+      - name: Start the application
+        run: yarn start & echo $! > pid.txt
 
-      - name: Use the port
-        run: |
-          echo "The application is running on port ${{ env.PORT }}"
-          # You can use ${{ env.PORT }} in subsequent steps
+      - name: Wait for the application to start
+        run: yarn add wait-on && yarn wait-on http://localhost:3000
 
       - name: Install and run pa11y-ci
         run: |
           yarn global add pa11y-ci
-          yarn pa11y-ci --config .pa11yci
+          npx pa11y-ci --config .pa11yci
 
       - name: Stop the application
         run: kill $(cat pid.txt)
