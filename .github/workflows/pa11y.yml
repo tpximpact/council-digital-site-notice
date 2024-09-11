@@ -4,8 +4,8 @@ on:
   pull_request:
     branches: [main]
 env:
-  NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.LAMBETH_NEXT_PUBLIC_SANITY_PROJECT_ID }}
-  NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.LAMBETH_SANITY_SECRET_TOKEN }}
+  NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+  NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.TEST_ENV_SANITY_TOKEN }}
   NEXT_PUBLIC_SANITY_DATASET: staging
   NEXT_PUBLIC_API_MOCKING: enabled
 jobs:
@@ -28,6 +28,11 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build the application
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.TEST_ENV_SANITY_TOKEN }}
+          NEXT_PUBLIC_SANITY_DATASET: staging
+          NEXT_PUBLIC_API_MOCKING: enabled
         run: yarn build
 
       - name: Start the application and get port
