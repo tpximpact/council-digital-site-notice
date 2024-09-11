@@ -33,7 +33,7 @@ jobs:
       - name: Start the application and get port
         run: |
           yarn start & echo $! > pid.txt
-          sleep 10  # Give the app some time to start
+          sleep 10
           PORT=$(lsof -i -P -n | grep LISTEN | grep node | awk '{print $9}' | cut -d ':' -f 2)
           echo "Application is running on port: $PORT"
           echo "PORT=$PORT" >> $GITHUB_ENV
