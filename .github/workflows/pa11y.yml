@@ -3,11 +3,13 @@ name: Accessibility Tests
 on:
   pull_request:
     branches: [main]
+
 env:
   NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.TEST_ENV_SANITY_PROJECT_ID }}
   NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.TEST_ENV_SANITY_TOKEN }}
   NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.TEST_ENV_SANITY_DATASET }}
   NEXT_PUBLIC_API_MOCKING: enabled
+
 jobs:
   pa11y:
     runs-on: ubuntu-latest
@@ -26,33 +28,20 @@ jobs:
         run: |
           yarn install
           yarn global add pa11y-ci wait-on
-          echo "Node version: $(node -v)"
-          echo "Yarn version: $(yarn -v)"
-          echo "Pa11y-ci version: $(pa11y-ci --version)"
 
       - name: Build the application
-        run: |
-          yarn build
-          echo "Build output:"
-          ls -R .next/
+        run: yarn build
 
       - name: Start the application
         run: |
           yarn start > app.log 2>&1 &
           echo $! > pid.txt
-          sleep 10
-          echo "Application logs:"
-          cat app.log
 
       - name: Wait for the application to start
-        run: |
-          wait-on http://localhost:3000 -t 60000
-          curl -I http://localhost:3000
+        run: wait-on http://localhost:3000 -t 60000
 
       - name: Run Pa11y
-        run: |
-          echo "Running Pa11y..."
-          pa11y-ci
+        run: pa11y-ci
 
       - name: Stop the application
         if: always()
@@ -60,6 +49,4 @@ jobs:
 
       - name: Output application logs on failure
         if: failure()
-        run: |
-          echo "Application logs:"
-          cat app.log
+        run: cat app.log
