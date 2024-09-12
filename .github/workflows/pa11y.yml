@@ -2,7 +2,7 @@ name: Accessibility Tests
 
 on:
   pull_request:
-    branches: [main]
+    branches: [staging]
 
 env:
   NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.TEST_ENV_SANITY_PROJECT_ID }}
