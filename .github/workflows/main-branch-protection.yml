@@ -19,7 +19,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '🚫 Error: Pull request must come from 'staging' or 'hotfix/' branch'
+              body: '🚫 Error: Pull request must come from staging or hotfix/ branch'
             })
 
       - name: Check branch
