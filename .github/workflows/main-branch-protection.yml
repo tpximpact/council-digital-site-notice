@@ -4,8 +4,7 @@ name: Main Branch Protection
 on:
   pull_request:
     branches:
-      # - main
-      - DSNPI-45-sort-hosting-out-for-lambeth-dsn
+      - main
 
 jobs:
   check-branch:
