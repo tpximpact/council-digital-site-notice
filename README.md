@@ -16,7 +16,7 @@ If the application number is invalid it will error and will not be able to sync 
 
 ## Getting Started
 
-Ensure you have Node.js and npm (Node Package Manager) installed on your machine.
+Ensure you have Node.js and yarn installed on your machine.
 
 Install dependencies:
 
