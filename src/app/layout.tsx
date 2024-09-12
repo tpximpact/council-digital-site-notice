@@ -39,9 +39,6 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <Head>
-        <title>Digital Site Notice</title>
-      </Head>
       <body>
         {isShowCookie == true && <CookiesBanner />}
         {isConsentCookie &&
