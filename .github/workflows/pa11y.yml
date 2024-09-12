@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          yarn install --frozen-lockfile
+          yarn install
           yarn global add pa11y-ci wait-on
           echo "Node version: $(node -v)"
           echo "Yarn version: $(yarn -v)"
@@ -52,7 +52,7 @@ jobs:
       - name: Run Pa11y
         run: |
           echo "Running Pa11y..."
-          pa11y-ci --config .pa11yci --debug
+          pa11y-ci
 
       - name: Stop the application
         if: always()
