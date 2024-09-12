@@ -18,3 +18,14 @@ jobs:
             echo "Error: Pull request must come from 'staging' or 'hotfix/' branch"
             exit 1
           fi
+
+      - name: Create comment
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🚫 Error: Pull request must come from 'staging' or 'hotfix/' branch'
+            })
