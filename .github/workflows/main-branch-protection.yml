@@ -11,14 +11,6 @@ jobs:
   check-branch:
     runs-on: ubuntu-latest
     steps:
-      - name: Check branch
-        run: |
-          if [[ ${GITHUB_HEAD_REF} != staging ]] && ! [[ ${GITHUB_HEAD_REF} =~ ^hotfix/ ]]; 
-          then
-            echo "Error: Pull request must come from 'staging' or 'hotfix/' branch"
-            exit 1
-          fi
-
       - name: Create comment
       - uses: actions/github-script@v6
         with:
@@ -29,3 +21,11 @@ jobs:
               repo: context.repo.repo,
               body: '🚫 Error: Pull request must come from 'staging' or 'hotfix/' branch'
             })
+
+      - name: Check branch
+        run: |
+          if [[ ${GITHUB_HEAD_REF} != staging ]] && ! [[ ${GITHUB_HEAD_REF} =~ ^hotfix/ ]]; 
+          then
+            echo "Error: Pull request must come from 'staging' or 'hotfix/' branch"
+            exit 1
+          fi
