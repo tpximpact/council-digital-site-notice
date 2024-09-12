@@ -1,4 +1,4 @@
-name: Accessibility Tests
+name: Automated Accessibility Tests
 
 on:
   pull_request:
