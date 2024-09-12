@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
 env:
-  NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.TEST_ENV_SANITY_PROJECT_ID  }}
+  NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.TEST_ENV_SANITY_PROJECT_ID }}
   NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.TEST_ENV_SANITY_TOKEN }}
   NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.TEST_ENV_SANITY_DATASET }}
   NEXT_PUBLIC_API_MOCKING: enabled
@@ -12,9 +12,6 @@ jobs:
   pa11y:
     runs-on: ubuntu-latest
     environment: test
-
-    container:
-      image: buildkite/puppeteer:10.0.0
 
     steps:
       - name: Check out code
@@ -26,24 +23,43 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: |
+          yarn install --frozen-lockfile
+          yarn global add pa11y-ci wait-on
+          echo "Node version: $(node -v)"
+          echo "Yarn version: $(yarn -v)"
+          echo "Pa11y-ci version: $(pa11y-ci --version)"
 
       - name: Build the application
-        env:
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.TEST_ENV_SANITY_PROJECT_ID }}
-          NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.TEST_ENV_SANITY_TOKEN }}
-          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.TEST_ENV_SANITY_DATASET }}
-          NEXT_PUBLIC_API_MOCKING: enabled
-        run: yarn build
+        run: |
+          yarn build
+          echo "Build output:"
+          ls -R .next/
 
       - name: Start the application
-        run: yarn start & echo $! > pid.txt
+        run: |
+          yarn start > app.log 2>&1 &
+          echo $! > pid.txt
+          sleep 10
+          echo "Application logs:"
+          cat app.log
 
       - name: Wait for the application to start
-        run: npx wait-on http://localhost:3000
+        run: |
+          wait-on http://localhost:3000 -t 60000
+          curl -I http://localhost:3000
 
       - name: Run Pa11y
-        run: npx pa11y-ci
+        run: |
+          echo "Running Pa11y..."
+          pa11y-ci --config .pa11yci --debug
 
       - name: Stop the application
+        if: always()
         run: kill $(cat pid.txt)
+
+      - name: Output application logs on failure
+        if: failure()
+        run: |
+          echo "Application logs:"
+          cat app.log
