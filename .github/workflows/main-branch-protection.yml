@@ -1,5 +1,5 @@
 # only allow merging from the staging branch or a hotfix/ branch into main
-# hello
+# change
 name: Main Branch Protection
 
 on:
