@@ -74,25 +74,21 @@ yarn test:update
 
 Ensure that the .env or .env.local file also has the following environment keys :
 
-|          Variable Name          | Value |
-| :-----------------------------: | :---: |
-| NEXT_PUBLIC_SANITY_SECRET_TOKEN |  ###  |
-|  NEXT_PUBLIC_SANITY_PROJECT_ID  |  ###  |
-|   NEXT_PUBLIC_SANITY_DATASET    |  ###  |
-|       NEXT_PUBLIC_API_KEY       |  ###  |
-|       NEXT_PUBLIC_API_URL       |  ###  |
-|   NEXT_PUBLIC_SPREADSHEET_ID    |  ###  |
-|      NEXT_PUBLIC_SHEET_ID       |  ###  |
-| NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL |  ###  |
-|     NEXT_PUBLIC_ENVIRONMENT     |  ###  |
-|        SENDGRID_API_KEY         |  ###  |
-|        FEEDBACK_TO_EMAIL        |  ###  |
-|       FEEDBACK_FROM_EMAIL       |  ###  |
-|   GOOGLE_SERVICE_PRIVATE_KEY    |  ###  |
-| NEXT_PUBLIC_COOKIE_CONTROL_KEY  |  ###  |
-|   GOOGLE_SERVICE_PRIVATE_KEY    |  ###  |
+|          Variable Name          |                                         Description                                         |
+| :-----------------------------: | :-----------------------------------------------------------------------------------------: |
+|       SANITY_SECRET_TOKEN       |  API token for accessing the data with editor permissions - nb ensure CORS origins are set  |
+|  NEXT_PUBLIC_SANITY_PROJECT_ID  |                                ID for the project in sanity                                 |
+|   NEXT_PUBLIC_SANITY_DATASET    |                                   Dataset - eg production                                   |
+|       NEXT_PUBLIC_API_URL       | Url from which data is pulled in to populate sanity when button is clicked in sanity studio |
+|       NEXT_PUBLIC_API_KEY       |                            API key for adding data from uniform                             |
+|   NEXT_PUBLIC_SPREADSHEET_ID    |                           ID for google spreadsheet with comments                           |
+| NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL |                               client email for google console                               |
+|   GOOGLE_SERVICE_PRIVATE_KEY    |          private key for accessing google console - with Google sheets API enabled          |
+|        SENDGRID_API_KEY         |                                    API key for sendgrid                                     |
+|        FEEDBACK_TO_EMAIL        |                                  email to send replies to                                   |
+|       FEEDBACK_FROM_EMAIL       |                               email address emails come from                                |
 
-The environment variables are also shown in the .env.example file. Copy the variables and add the values to a new .env file.
+The environment variables are also shown in the sample.env file. Copy the variables and add the values to a new .env file.
 
 ## CMS setp
 
@@ -129,3 +125,24 @@ The project structure follows the Next.js App Router conventions and includes [R
     - `lib/`: Includes libraries and helper functions that are used across various components of the application.
     - `components/`: Contains reusable React components used throughout the application.
     - `styles/`: Contains CSS / Sass stylesheets for styling the application.
+
+# Building application
+
+```sh
+# build the image
+docker build --pull --rm \
+--build-arg NEXT_PUBLIC_SANITY_PROJECT_ID=<PROJECTID> \
+--build-arg NEXT_PUBLIC_SANITY_DATASET=production \
+-t councildigitalsitenotice:latest .
+
+# run the image
+docker run \
+-p 3000:3000 \
+--name dsn-lambeth \
+--env-file ./.env \
+-d councildigitalsitenotice:latest
+
+
+# use ngrok to view behing https
+ngrok http 3000
+```
