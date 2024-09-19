@@ -165,11 +165,6 @@ export default defineType({
           type: "object",
           validation: (Rule: any) =>
             Rule.custom((field: any, context: any) => {
-              console.log(
-                field[
-                  `${context.document?.applicationStage.stage.toLowerCase()}`
-                ] === undefined,
-              );
               if (
                 field[
                   `${context.document?.applicationStage.stage.toLowerCase()}`
