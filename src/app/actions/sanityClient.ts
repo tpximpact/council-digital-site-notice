@@ -5,13 +5,16 @@ import { PlanningApplication } from "../../../sanity/sanity.types";
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2023-05-03";
-const token = process.env.NEXT_PUBLIC_SANITY_SECRET_TOKEN;
+const token = process.env.SANITY_SECRET_TOKEN;
 
 const client = createClient({
   projectId,
   dataset,
   apiVersion,
   useCdn: false,
+});
+
+const clientWithToken = client.withConfig({
   token,
 });
 
@@ -125,12 +128,12 @@ export async function getGlobalContent() {
 }
 
 export async function createApplication(post: any) {
-  const result = await client.create(post);
+  const result = await clientWithToken.create(post);
   return result;
 }
 
 export async function updateApplication(_id: string, body: any) {
-  const result = await client
+  const result = await clientWithToken
     .patch(_id)
     .set({ ...body })
     .commit();
