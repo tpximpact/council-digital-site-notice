@@ -27,7 +27,7 @@ export default async function MainLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const environment = process.env.NEXT_PUBLIC_ENVIRONMENT;
+  const environment = process.env.NODE_ENV;
   const cookieStore = cookies();
   const isShowCookie = cookieStore.get("isShowCookie")?.value || true;
   const isConsentCookie = cookieStore.get("isConsentCookie")?.value || false;

@@ -2,7 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["cdn.sanity.io"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+    ],
   },
   experimental: {
     instrumentationHook: process.env.NEXT_PUBLIC_API_MOCKING === "enabled",
