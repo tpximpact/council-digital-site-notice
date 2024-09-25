@@ -13,7 +13,11 @@
     "test": "jest",
     "test:update": "jest -u",
     "prepare": "husky",
-    "msw:init": "NODE_ENV=test msw init public/ --save"
+    "msw:init": "msw init public/ --save",
+    "msw:cleanup": "rm -f public/mockServiceWorker.js",
+    "pa11y": "pa11y-ci",
+    "test:a11y": "yarn msw:init && yarn pa11y && yarn msw:cleanup",
+    "test:all": "yarn msw:init && yarn test && yarn test:a11y && yarn msw:cleanup"
   },
   "dependencies": {
     "@sanity/client": "6.12.4",
