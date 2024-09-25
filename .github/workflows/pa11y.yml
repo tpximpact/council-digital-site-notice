@@ -9,6 +9,7 @@ env:
   NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ secrets.TEST_ENV_SANITY_TOKEN }}
   NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.TEST_ENV_SANITY_DATASET }}
   NEXT_PUBLIC_API_MOCKING: enabled
+  NODE_ENV: test
 
 jobs:
   pa11y:
@@ -28,6 +29,9 @@ jobs:
         run: |
           yarn install
           yarn global add pa11y-ci wait-on
+
+      - name: Initialize MSW
+        run: yarn msw:init
 
       - name: Build the application
         run: yarn build

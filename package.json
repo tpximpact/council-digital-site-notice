@@ -13,7 +13,7 @@
     "test": "jest",
     "test:update": "jest -u",
     "prepare": "husky",
-    "msw:init": "msw init public/ --save"
+    "msw:init": "NODE_ENV=test msw init public/ --save"
   },
   "dependencies": {
     "@sanity/client": "6.12.4",
