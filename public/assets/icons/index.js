@@ -6,6 +6,8 @@ export const Happy = ({ color = "white" }) => {
       height="65"
       viewBox="0 0 64 65"
       fill="none"
+      role="img"
+      aria-label="1 support"
     >
       <circle cx="31.9999" cy="32.1769" r="30.2619" fill={color} />
       <path
@@ -40,6 +42,8 @@ export const Opposed = ({ color = "white" }) => {
       height="65"
       viewBox="0 0 64 65"
       fill="none"
+      role="img"
+      aria-label="2 opposed"
     >
       <circle cx="31.9999" cy="32.423" r="30.2619" fill={color} />
       <path
@@ -64,6 +68,8 @@ export const Neutral = ({ color = "white" }) => {
       height="65"
       viewBox="0 0 64 65"
       fill="none"
+      role="img"
+      aria-label="3 neutral"
     >
       <circle cx="31.9999" cy="32.5786" r="30.2619" fill={color} />
       <path
@@ -82,6 +88,8 @@ export const LocalIcon = () => {
       width="14"
       height="20"
       viewBox="0 -4 10 18"
+      aria-label="location icon"
+      role="img"
       fill="none"
     >
       <path
@@ -103,7 +111,9 @@ export const ArrowIcon = () => {
       width="19"
       height="19"
       viewBox="0 0 19 19"
+      aria-label="search postcode"
       fill="none"
+      role="img"
     >
       <path
         fillRule="evenodd"
@@ -122,7 +132,9 @@ export const NextIcon = () => {
       width="15"
       height="13"
       viewBox="0 0 15 13"
+      role="img"
       fill="none"
+      aria-label="next page"
     >
       <path
         d="M8.107 -0.0078125L6.6934 1.40619L10.986 5.69919H-2V7.69919H10.896L6.7105 11.6758L8.0875 13.125L14.8316 6.71879L8.107 -0.0078125Z"
@@ -139,6 +151,8 @@ export const PreviewIcon = () => {
       width="15"
       height="13"
       viewBox="0 0 15 13"
+      aria-label="preview page"
+      role="img"
       fill="none"
     >
       <path

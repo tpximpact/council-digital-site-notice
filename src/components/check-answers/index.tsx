@@ -144,9 +144,9 @@ function CheckAnswers({
       {questionId.map((label: any) => {
         return (
           <div key={label} className="wrap-answers">
-            <p className="govuk-body govuk-body govuk-!-font-weight-bold">
+            <h3 className="govuk-body govuk-body govuk-!-font-weight-bold">
               {questions[label]}
-            </p>
+            </h3>
             <p className="govuk-body">
               {commentForm[label] ? commentForm[label] : "No comment"}
             </p>

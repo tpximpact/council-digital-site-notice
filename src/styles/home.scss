@@ -57,6 +57,9 @@
 .planning-application-link:hover .link-application {
   color: #003078;
 }
+.planning-application-link:hover {
+  cursor: pointer;
+}
 
 .planning-application-last-item {
   border-bottom: none;
@@ -148,4 +151,8 @@
   .grid-button-signup {
     height: 42px;
   }
+}
+
+.govuk-back-link {
+cursor: pointer;
 }

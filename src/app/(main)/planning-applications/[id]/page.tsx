@@ -1,14 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import Breadcrumbs from "@/components/breadcrumbs";
 import About from "@/components/about";
 import Impact from "@/components/impact";
 import Process from "@/components/process";
 import { getApplicationById } from "../../../actions/sanityClient";
 import moment from "moment";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { PlanningApplication } from "../../../../../sanity/sanity.types";
 import { notFound } from "next/navigation";
+import { BackLink } from "@/components/button";
 
 export const dynamic = "force-dynamic";
 
@@ -17,9 +17,17 @@ const PlanningApplicationItem = () => {
   const [data, setData] = useState<PlanningApplication | null>();
   const params = useParams();
   const { id } = params;
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchData() {
+      // Defer the response if API mocking is enabled to give time for the async mock service worker's promise to resolve
+      if (
+        process.env.NEXT_PUBLIC_API_MOCKING === "enabled" &&
+        process.env.NODE_ENV !== "production"
+      ) {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
       const result = await getApplicationById(id as string);
       console.log({ result }, "id");
       const getData = result[0];
@@ -73,7 +81,7 @@ const PlanningApplicationItem = () => {
     <>
       {data && (
         <>
-          <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
+          <BackLink content="Back" onClick={() => router.push(`/`)} />
           <About data={data} />
           {(showAccess ||
             showCarbon ||

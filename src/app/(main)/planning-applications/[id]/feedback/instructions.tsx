@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getLocalStorage } from "../../../../lib/application";
 import { urlFor, getGlobalContent } from "../../../../actions/sanityClient";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
+import Link from "next/link";
 
 function Instructions() {
   const [application, setApplication] = useState<PlanningApplication>();
@@ -30,12 +31,17 @@ function Instructions() {
           <Image
             width={80}
             height={57}
-            alt="Development image"
+            alt="Development"
             src={urlFor(application?.image_head)?.url()}
           />
         )}
         <div>
-          <h3 className="govuk-heading-s">{application?.address}</h3>
+          <Link
+            className="govuk-heading-s"
+            href={`/planning-applications/${application?._id}`}
+          >
+            {application?.name || application?.address}
+          </Link>
           <p className="govuk-body">{application?.applicationNumber}</p>
         </div>
       </div>

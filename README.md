@@ -190,7 +190,11 @@ You can provide config with a `.env` file. Run `cp sample.env .env` to create a 
 
 ## Testing the application
 
-The project is using [Jest](https://jestjs.io/) for testing.
+The project is using:
+
+- [Jest](https://jestjs.io/) for testing.
+- [pa11y-ci](https://github.com/pa11y/pa11y-ci) for accessibility testing
+- [Mock Service Worker (MSW)](https://mswjs.io/) for API mocking during tests
 
 #### Run the tests:
 
@@ -203,6 +207,35 @@ yarn test
 ```bash
 yarn test:update
 ```
+
+#### Run accessibility tests:
+
+To run accessibility tests manually, you must ensure that the app is running before running these commands in another terminal.
+
+```bash
+yarn test:a11y
+```
+
+This runs pa11y-ci to check for common accessibility issues. It sets up MSW before running tests and cleans up afterwards.
+
+#### Run all tests (Jest and accessibility):
+
+```bash
+yarn test:all
+```
+
+This is the most comprehensive test command. It:
+
+1. Initialises Mock Service Worker
+2. Runs all Jest tests
+3. Runs pa11y-ci accessibility tests
+4. Cleans up MSW files
+
+### Additional test-related commands:
+
+- `yarn msw:init`: Initialises Mock Service Worker
+- `yarn msw:cleanup`: Removes Mock Service Worker files
+- `yarn pa11y`: Runs pa11y-ci accessibility tests directly (without MSW setup/cleanup)
 
 ## Project Structure
 

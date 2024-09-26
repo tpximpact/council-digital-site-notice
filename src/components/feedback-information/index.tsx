@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import Link from "next/link";
-import { Button } from "@/components/button";
+import { BackLink, Button } from "@/components/button";
 import { ArrowIcon } from "../../../public/assets/icons";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "@/app/lib/application";
 import { getGlobalContent } from "@/app/actions/sanityClient";
+import { useRouter } from "next/navigation";
 
 function FeedbackInformation({
   onChangeQuestion,
@@ -15,6 +16,7 @@ function FeedbackInformation({
   const [globalConfig, setGlobalConfig] = useState<any>();
   const [urlConcern, setUrlConcern] = useState();
   const [id, setId] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -43,13 +45,17 @@ function FeedbackInformation({
             What you need to know before you comment
           </h1>
         </div>
-        <Link
+        <BackLink
+          onClick={() => router.push(`/planning-applications/${id}`)}
+          content="Back"
+        />
+        {/* <Link
           href={`/planning-applications/${id}`}
           className={`govuk-back-link`}
           data-module="govuk-button"
         >
           Back
-        </Link>
+        </Link> */}
         <h2 className="govuk-heading-l">
           What isn’t considered in planning approval
         </h2>
@@ -94,12 +100,12 @@ function FeedbackInformation({
           applications:
         </p>
         <div>
-          <p
+          <h3
             style={{ fontWeight: "bold", marginBottom: 0 }}
             className="govuk-body"
           >
             1. To use your knowledge of the area
-          </p>
+          </h3>
           <p className="govuk-body">
             You may be able to highlight on-the-ground details we don’t know
             about – for example, that a mature tree was left out of a
@@ -107,12 +113,12 @@ function FeedbackInformation({
           </p>
         </div>
         <div>
-          <p
+          <h3
             style={{ fontWeight: "bold", marginBottom: 0 }}
             className="govuk-body"
           >
             2. To influence the details
-          </p>
+          </h3>
           <p className="govuk-body">
             Your understanding of an area’s needs can help planners decide on
             things like amount of open space, cycling facilities, or what
@@ -120,12 +126,12 @@ function FeedbackInformation({
           </p>
         </div>
         <div>
-          <p
+          <h3
             style={{ fontWeight: "bold", marginBottom: 0 }}
             className="govuk-body"
           >
             3. To make sure we balance our priorities
-          </p>
+          </h3>
           <p className="govuk-body">
             It's useful know which priorities are most important to residents,
             so we can push developers to be more ambitious with their targets.

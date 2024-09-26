@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getLocalStorage } from "../../../../lib/application";
-import Breadcrumbs from "@/components/breadcrumbs";
 import { getGlobalContent, urlFor } from "../../../../actions/sanityClient";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 
@@ -28,52 +27,48 @@ const FeedbackMessage = () => {
     })();
   }, []);
 
-  const breadcrumbs_array = [
-    {
-      name: "Planning application",
-      href: "/",
-    },
-    {
-      name: application?.name || application?.address,
-      href: `/planning-applications/${application?._id}`,
-    },
-    {
-      name: "Thank you",
-      href: "",
-    },
-  ];
   return (
     <section>
-      <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
       <div className="wrap-message-reference">
         <h1 className="govuk-heading-l"> Comment submitted</h1>
         <h2 className="govuk-body-l"> Your reference number</h2>
-        <p className="govuk-body-l">{formId}</p>
+        <h2
+          className="govuk-body-l"
+          aria-label={
+            formId
+              ? `Reference Number: ${formId}`
+              : "No Reference Number Provided"
+          }
+        >
+          {formId || "Reference Number Unavailable"}
+        </h2>
       </div>
       <div style={{ display: "flex", marginTop: "25px" }}>
         {application?.image_head && (
           <Image
             src={urlFor(application?.image_head)?.url()}
-            alt="development-image"
+            alt="development"
             width={80}
             height={56}
           />
         )}
 
         <div style={{ marginLeft: "15px" }}>
-          <Link
-            className="govuk-body govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state"
-            href={`/planning-applications/${application?._id}`}
-            style={{ marginBottom: "5px", textDecoration: "none" }}
-          >
-            {application?.address}
-          </Link>
-          <p
+          {application && application.address && (
+            <Link
+              className="govuk-body govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state"
+              href={`/planning-applications/${application?._id}`}
+              style={{ marginBottom: "5px", textDecoration: "none" }}
+            >
+              {application?.address}
+            </Link>
+          )}
+          <h3
             className="govuk-body govuk-!-font-weight-bold"
             style={{ marginBottom: 0 }}
           >
             Application reference{" "}
-          </p>
+          </h3>
           <p className="govuk-body">{application?.applicationNumber}</p>
         </div>
       </div>
@@ -94,12 +89,14 @@ const FeedbackMessage = () => {
         your area, you can view all currently active applications and provide
         comments on them.
       </p>
-      <Link
-        href="/"
-        className="govuk-button govuk-button--secondary govuk-!-font-size-16"
-      >
-        View local planning applications
-      </Link>
+      <nav>
+        <Link
+          href="/"
+          className="govuk-button govuk-button--secondary govuk-!-font-size-16"
+        >
+          View local planning applications
+        </Link>
+      </nav>
       {globalConfig?.howToGetInvolveUrl && (
         <>
           <h1 className="govuk-heading-m">

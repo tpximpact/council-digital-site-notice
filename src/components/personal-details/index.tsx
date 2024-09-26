@@ -140,6 +140,8 @@ const PersonalDetails = ({
         type="text"
         isError={isNameError}
         messageError="Your name is required"
+        autocomplete="off"
+        id="name"
       />
       <Input
         label="Address"
@@ -148,6 +150,8 @@ const PersonalDetails = ({
         type="text"
         isError={isAddressError}
         messageError="Your address is required"
+        autocomplete="off"
+        id="address"
       />
       <Input
         label="Postcode"
@@ -156,6 +160,8 @@ const PersonalDetails = ({
         type="text"
         isError={isPostcodeError}
         messageError={`${personalDetailsForm?.postcode == "" ? "Your postcode is required" : "Invalid postcode"}`}
+        autocomplete="off"
+        id="postcode"
       />
       <Input
         label="Email address"
@@ -165,6 +171,8 @@ const PersonalDetails = ({
         type="email"
         isError={isEmailError}
         messageError="Invalid email"
+        autocomplete="off"
+        id="email"
       />
       <Input
         label="Telephone number"
@@ -174,6 +182,8 @@ const PersonalDetails = ({
         type="tel"
         isError={isPhoneError}
         messageError="Invalid telephone number"
+        autocomplete="off"
+        id="telephone"
       />
       <div>
         <Checkbox

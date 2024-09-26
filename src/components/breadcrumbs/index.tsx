@@ -11,7 +11,7 @@ const Breadcrumbs = ({
   breadcrumbs_info: BreadcrumbsInfo[];
 }) => {
   return (
-    <div className="govuk-breadcrumbs">
+    <nav className="govuk-breadcrumbs">
       <ol className="govuk-breadcrumbs__list">
         {breadcrumbs_info?.map((el, index) =>
           index === breadcrumbs_info.length - 1 ? (
@@ -31,7 +31,7 @@ const Breadcrumbs = ({
           ),
         )}
       </ol>
-    </div>
+    </nav>
   );
 };
 
