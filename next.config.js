@@ -9,9 +9,6 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    instrumentationHook: process.env.NEXT_PUBLIC_API_MOCKING === "enabled",
-  },
   webpack: (config) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,

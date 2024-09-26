@@ -48,7 +48,10 @@ const Home = () => {
 
   useEffect(() => {
     async function fetchData() {
-      if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
+      if (
+        process.env.NEXT_PUBLIC_API_MOCKING === "enabled" &&
+        process.env.NODE_ENV !== "production"
+      ) {
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
       const paramsPage = searchParams.get("page");
