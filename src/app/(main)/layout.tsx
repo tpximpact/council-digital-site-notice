@@ -8,7 +8,6 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getGlobalContent } from "../actions/sanityClient";
 import { Suspense } from "react";
-import { MSWInitializer } from "@/components/msw-initialiser";
 
 export const globalContent = await getGlobalContent();
 
@@ -46,13 +45,7 @@ export default async function MainLayout({
       <Header globalConfig={globalContent} />
       <Banner globalConfig={globalContent} />
       <main className="layout-wrap" id="main">
-        {process.env.NEXT_PUBLIC_API_MOCKING === "enabled" ? (
-          <MSWInitializer>
-            <Suspense>{children}</Suspense>
-          </MSWInitializer>
-        ) : (
-          <Suspense>{children}</Suspense>
-        )}
+        <Suspense>{children}</Suspense>
       </main>
     </>
   );

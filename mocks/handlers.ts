@@ -71,7 +71,6 @@ export const handlers = [
 
         return HttpResponse.json({
           result: [mockApplication],
-          ms: faker.number.int({ min: 20, max: 100 }),
         });
       }
 
@@ -81,14 +80,13 @@ export const handlers = [
         query?.includes("isActive == true") &&
         !query?.includes("(_id == $_id || planningId == $_id)")
       ) {
-        const totalCount = 1;
+        const totalCount = 20;
         const pageSize = 6;
         return HttpResponse.json({
           result: {
             results: Array.from({ length: pageSize }, generateMockApplication),
             total: totalCount,
           },
-          ms: faker.number.int({ min: 20, max: 100 }),
         });
       }
 
@@ -103,11 +101,40 @@ export const handlers = [
               lastUpdated: faker.date.recent().toISOString(),
             },
           ],
-          ms: faker.number.int({ min: 20, max: 100 }),
         });
       }
 
-      return fetch(request);
+      // Handler for getActiveApplicationsByLocation
+      if (
+        query?.includes('_type == "planning-application"') &&
+        query?.includes("defined(location)") &&
+        query?.includes("isActive == true")
+      ) {
+        const totalCount = 20;
+        const offset = parseInt(url.searchParams.get("$offSet") || "0");
+        const limit = parseInt(url.searchParams.get("$itemsPerPage") || "6");
+        const latitude = parseFloat(url.searchParams.get("$latitude") || "0");
+        const longitude = parseFloat(url.searchParams.get("$longitude") || "0");
+
+        return HttpResponse.json({
+          result: {
+            results: Array.from(
+              { length: Math.min(limit, totalCount - offset) },
+              () => ({
+                ...generateMockApplication(),
+                distance: faker.number.float({
+                  min: 0,
+                  max: 10,
+                  fractionDigits: 1,
+                }),
+              }),
+            ),
+            total: totalCount,
+          },
+        });
+      }
+
+      return HttpResponse.json({ error: "Not Found" }, { status: 404 });
     },
   ),
 ];

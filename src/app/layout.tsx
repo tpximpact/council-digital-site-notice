@@ -1,9 +1,6 @@
-import { Metadata } from "next";
+"use client";
 import "../styles/app.scss";
-
-export const metadata: Metadata = {
-  title: "Digital Site Notice",
-};
+import { useEffect } from "react";
 
 export default function RootLayout({
   children,
@@ -14,6 +11,17 @@ export default function RootLayout({
     const govUk = require("govuk-frontend");
     govUk.initAll();
   }
+
+  useEffect(() => {
+    async function initMSW() {
+      if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
+        const { default: initMocks } = await import("../../mocks");
+        await initMocks();
+      }
+    }
+    initMSW();
+  }, []);
+
   return (
     <html lang="en">
       <body>{children}</body>

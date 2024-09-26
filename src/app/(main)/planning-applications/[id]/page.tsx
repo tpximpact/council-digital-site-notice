@@ -21,6 +21,10 @@ const PlanningApplicationItem = () => {
 
   useEffect(() => {
     async function fetchData() {
+      // Defer the response if API mocking is enabled to give time for the async mock service worker's promise to resolve
+      if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
       const result = await getApplicationById(id as string);
       console.log({ result }, "id");
       const getData = result[0];
