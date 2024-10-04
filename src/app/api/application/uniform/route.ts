@@ -33,9 +33,15 @@ interface ApplicationResult {
  *            schema:
  *              type: object
  *              example:
- *                "DCAPPL[REFVAL]": "25553/5377/HSE"
- *                "DCAPPL[BLPU_CLASS_DESC]": "Residential, Dwellings, Semi-Detached"
- *                "DCAPPL[Application Type_D]": "Householder Application"
+ *                "DCAPPL[KeyVal]": "123"
+ *                "DCAPPL[REFVAL]": "1234/5678/A"
+ *                "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Householder Application"
+ *                "DCAPPL[PROPOSAL]": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+ *                "DCAPPL[ADDRESS]": "1 Test Street, Test Town, Test County, Test Postcode"
+ *                "DCAPPL[Application_Documents_URL]": "https://www.test.com"
+ *                "DCAPPL[DATEEXPNEI]": "2025-01-01"
+ *                "DCAPPL[BLD_HGT]": 2.5
+ *                "DCAPPL[DCGLAUSE]": {"classB": true, "classC": false, "classE": false, "classF": false, "suiGeneris": false}
  *     responses:
  *       200:
  *         description: returns updated planning applications
@@ -46,7 +52,7 @@ interface ApplicationResult {
  *                example: 
  *                  data: {
  *                    success: [
-                        "25553/5377/HSE updated"
+                        "1234/5678/A updated"
                       ]}
  *       400:
  *         description: Invalid request body or missing required fields
@@ -106,13 +112,20 @@ export async function PUT(req: NextRequest) {
       },
     );
   }
+  console.log(data, "data");
 
   const applicationData = {
     applicationNumber: data["DCAPPL[REFVAL]"],
-    description: data["DCAPPL[BLPU_CLASS_DESC]"],
-    applicationType: data["DCAPPL[Application Type_D]"],
+    planningId: data["DCAPPL[KeyVal]"],
+    description: data["DCAPPL[PROPOSAL]"],
+    applicationType: data["DCAPPL[DCAPPTYP_CNCODE_CODETEXT]"],
     isActive: true,
     _type: "planning-application",
+    address: data["DCAPPL[ADDRESS]"],
+    applicationDocumentsUrl: data["DCAPPL[Application_Documents_URL]"],
+    consultationDeadline: data["DCAPPL[DATEEXPNEI]"],
+    height: data["DCAPPL[BLD_HGT]"],
+    proposedLandUse: data["DCAPPL[DCGLAUSE]"],
   };
 
   const { applicationNumber, ...updateData } = applicationData;

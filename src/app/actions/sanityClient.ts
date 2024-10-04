@@ -33,7 +33,7 @@ export async function sanityFetch<T>({
   params?: any;
   config?: any;
 }): Promise<T> {
-  return client.fetch<T>(query, params, config);
+  return clientWithToken.fetch<T>(query, params, config);
 }
 
 type sanityApplicationResponse = {
@@ -73,7 +73,7 @@ export async function getActiveApplications(
 export async function getApplicationById(id: string) {
   const query =
     '*[_type == "planning-application" && (_id == $_id || planningId == $_id) && isActive == true]';
-  const post = await client.fetch(query, { _id: id, planningId: id });
+  const post = await clientWithToken.fetch(query, { _id: id, planningId: id });
 
   return post;
 }
@@ -119,7 +119,7 @@ export async function getActiveApplicationsByLocation(
 }
 
 export async function getGlobalContent() {
-  const info = await client.fetch(
+  const info = await clientWithToken.fetch(
     '*[_type == "global-content"][0]',
     {},
     { next: { revalidate: 86400 } },
@@ -145,6 +145,6 @@ export async function checkExistingReference(
 ): Promise<PlanningApplication | null> {
   const query =
     '*[_type == "planning-application" && applicationNumber == $applicationNumber]';
-  const application = await client.fetch(query, { applicationNumber });
+  const application = await clientWithToken.fetch(query, { applicationNumber });
   return application ? application[0] : null;
 }
