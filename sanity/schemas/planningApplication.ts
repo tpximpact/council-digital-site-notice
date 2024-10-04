@@ -163,6 +163,17 @@ export default defineType({
           description: "please select the status of the stage",
           name: "status",
           type: "object",
+          validation: (Rule: any) =>
+            Rule.custom((field: any, context: any) => {
+              if (
+                field[
+                  `${context.document?.applicationStage.stage.toLowerCase()}`
+                ] === undefined
+              ) {
+                return "This field must not be empty.";
+              }
+              return true;
+            }),
           fields: [
             {
               title: "Consultation",
