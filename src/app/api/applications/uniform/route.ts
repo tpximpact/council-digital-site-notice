@@ -37,17 +37,57 @@ interface ApplicationResult {
  *               properties:
  *                 DCAPPL[REFVAL]:
  *                   type: string
- *                 DCAPPL[BLPU_CLASS_DESC]:
+ *                 DCAPPL[KeyVal]:
+ *                  type: string
+ *                 DCAPPL[PROPOSAL]:
  *                   type: string
- *                 DCAPPL[Application Type_D]:
+ *                 DCAPPL[DCAPPTYP_CNCODE_CODETEXT]:
  *                   type: string
+ *                 DCAPPL[ADDRESS]:
+ *                   type: string
+ *                 DCAPPL[Application_Documents_URL]:
+ *                   type: string
+ *                 DCAPPL[DATEEXPNEI]:
+ *                   type: string
+ *                 DCAPPL[BLD_HGT]:
+ *                   type: number
+ *                 DCAPPL[DCGLAUSE]:
+ *                   type: object
+ *                   properties:
+ *                     classB:
+ *                       type: boolean
+ *                       default: false
+ *                     classC:
+ *                       type: boolean
+ *                       default: false
+ *                     classE:
+ *                       type: boolean
+ *                       default: false
+ *                     classF:
+ *                       type: boolean
+ *                       default: false
+ *                     suiGeneris:
+ *                       type: boolean
+ *                       default: false
  *           example:
- *               - DCAPPL[REFVAL]: 1234/5678/A
- *                 DCAPPL[BLPU_CLASS_DESC]: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
- *                 DCAPPL[Application Type_D]: Full Planning Permission
- *               - DCAPPL[REFVAL]: 9876/5432/A
- *                 DCAPPL[BLPU_CLASS_DESC]: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
- *                 DCAPPL[Application Type_D]: Full Planning Permission
+ *               - "DCAPPL[REFVAL]": "1234/5678/A"
+ *                 "DCAPPL[KeyVal]": "123"
+ *                 "DCAPPL[PROPOSAL]": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+ *                 "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Full Planning Permission"
+ *                 "DCAPPL[ADDRESS]": "1 Test Street, Test Town, Test County, Test Postcode"
+ *                 "DCAPPL[Application_Documents_URL]": "https://www.test.com"
+ *                 "DCAPPL[DATEEXPNEI]": "2025-01-01"
+ *                 "DCAPPL[BLD_HGT]": 2.5
+ *                 "DCAPPL[DCGLAUSE]": {"classB": true, "classC": false, "classE": false, "classF": false, "suiGeneris": false}
+ *               - "DCAPPL[REFVAL]": "9876/5432/A"
+ *                 "DCAPPL[KeyVal]": "123"
+ *                 "DCAPPL[PROPOSAL]": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+ *                 "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Full Planning Permission"
+ *                 "DCAPPL[ADDRESS]": "2 Test Street, Test Town, Test County, Test Postcode"
+ *                 "DCAPPL[Application_Documents_URL]": "https://www.test.com"
+ *                 "DCAPPL[DATEEXPNEI]": "2025-01-01"
+ *                 "DCAPPL[BLD_HGT]": 2.5
+ *                 "DCAPPL[DCGLAUSE]": {"classB": true, "classC": false, "classE": false, "classF": false, "suiGeneris": false}
  *     responses:
  *       '200':
  *         description: Returns updated planning applications
@@ -114,13 +154,18 @@ export async function PUT(req: NextRequest) {
       });
       continue;
     }
-
     const applicationData = {
       applicationNumber: application["DCAPPL[REFVAL]"],
-      description: application["DCAPPL[BLPU_CLASS_DESC]"],
-      applicationType: application["DCAPPL[Application Type_D]"],
+      planningId: application["DCAPPL[KeyVal]"],
+      description: application["DCAPPL[PROPOSAL]"],
+      applicationType: application["DCAPPL[DCAPPTYP_CNCODE_CODETEXT]"],
       isActive: true,
       _type: "planning-application",
+      address: application["DCAPPL[ADDRESS]"],
+      applicationDocumentsUrl: application["DCAPPL[Application_Documents_URL]"],
+      consultationDeadline: application["DCAPPL[DATEEXPNEI]"],
+      height: application["DCAPPL[BLD_HGT]"],
+      proposedLandUse: application["DCAPPL[DCGLAUSE]"],
     };
 
     const { applicationNumber, ...updateData } = applicationData;
