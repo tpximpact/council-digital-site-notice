@@ -54,8 +54,22 @@ describe("Applications PUT endpoint", () => {
       },
       json: jest.fn().mockResolvedValue({
         "DCAPPL[REFVAL]": "1234/5678/A",
-        "DCAPPL[BLPU_CLASS_DESC]": "This is a test description.",
-        "DCAPPL[Application Type_D]": "Test type",
+        "DCAPPL[KeyVal]": "123",
+        "DCAPPL[PROPOSAL]":
+          "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Householder Application",
+        "DCAPPL[ADDRESS]":
+          "1 Test Street, Test Town, Test County, Test Postcode",
+        "DCAPPL[Application_Documents_URL]": "https://www.test.com",
+        "DCAPPL[DATEEXPNEI]": "2025-01-01",
+        "DCAPPL[BLD_HGT]": 2.5,
+        "DCAPPL[DCGLAUSE]": {
+          classB: true,
+          classC: false,
+          classE: false,
+          classF: false,
+          suiGeneris: false,
+        },
       }),
     } as unknown as NextRequest;
     isUniformIntegrationEnabledMock.mockResolvedValue(false);
@@ -71,8 +85,22 @@ describe("Applications PUT endpoint", () => {
       },
       json: jest.fn().mockResolvedValue({
         "DCAPPL[REFVAL]": "1234/5678/A",
-        "DCAPPL[BLPU_CLASS_DESC]": "This is a test description.",
-        "DCAPPL[Application Type_D]": "Test type",
+        "DCAPPL[KeyVal]": "123",
+        "DCAPPL[PROPOSAL]":
+          "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Householder Application",
+        "DCAPPL[ADDRESS]":
+          "1 Test Street, Test Town, Test County, Test Postcode",
+        "DCAPPL[Application_Documents_URL]": "https://www.test.com",
+        "DCAPPL[DATEEXPNEI]": "2025-01-01",
+        "DCAPPL[BLD_HGT]": 2.5,
+        "DCAPPL[DCGLAUSE]": {
+          classB: true,
+          classC: false,
+          classE: false,
+          classF: false,
+          suiGeneris: false,
+        },
       }),
     } as unknown as NextRequest;
 
@@ -126,9 +154,22 @@ describe("Applications PUT endpoint", () => {
 
   it("should return 400 when application fail validation", async () => {
     const requestBody = {
-      "DCAPPL[REFVAL]": "",
-      "DCAPPL[BLPU_CLASS_DESC]": "Commercial",
-      "DCAPPL[Application Type_D]": "Extension",
+      "DCAPPL[REFVAL]": "1234/5678/A",
+      "DCAPPL[KeyVal]": "123",
+      "DCAPPL[PROPOSAL]":
+        "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+      "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Householder Application",
+      "DCAPPL[ADDRESS]": "1 Test Street, Test Town, Test County, Test Postcode",
+      "DCAPPL[Application_Documents_URL]": "https://www.test.com",
+      "DCAPPL[DATEEXPNEI]": "2025-01-01",
+      "DCAPPL[BLD_HGT]": 2.5,
+      "DCAPPL[DCGLAUSE]": {
+        classB: true,
+        classC: false,
+        classE: false,
+        classF: false,
+        suiGeneris: false,
+      },
     };
 
     const mockRequest = {
