@@ -4,7 +4,7 @@ import { ValidationResult } from "../../../models/validationResult";
 import { getGlobalContent } from "./sanityClient";
 
 const UniformValidation = z.object({
-  "DCAPPL[REFVAL]": z.string().optional(),
+  "DCAPPL[REFVAL]": z.string(),
   "DCAPPL[KeyVal]": z.string().optional(),
   "DCAPPL[PROPOSAL]": z.string().optional(),
   "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": z.string().optional(),
@@ -51,6 +51,7 @@ export async function validateUniformData(
 
 const RefvalValidation = z.object({
   applicationNumber: z.string().min(1),
+  planningId: z.string().optional(),
   description: z.string().optional(),
   applicationType: z.string().optional(),
   isActive: z.boolean().optional(),
