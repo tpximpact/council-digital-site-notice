@@ -7,7 +7,7 @@ import { EmailJSON } from "@sendgrid/helpers/classes/email-address";
 
 export async function savefeedbackToGoogleSheet(data: any): Promise<boolean> {
   const SPREADSHEET_ID = process.env.NEXT_PUBLIC_SPREADSHEET_ID || "";
-  const GOOGLE_CLIENT_EMAIL = process.env.GOOGLE_SERVICE_CLIENT_EMAIL;
+  const GOOGLE_CLIENT_EMAIL = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL;
   const GOOGLE_SERVICE_PRIVATE_KEY = process.env.GOOGLE_SERVICE_PRIVATE_KEY;
 
   try {

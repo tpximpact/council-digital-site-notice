@@ -168,11 +168,11 @@ You can provide config with a `.env` file. Run `cp sample.env .env` to create a 
 
 ### COMMENTS & FEEDBACK
 
-| Variable                      | Description                                             | Example                                                            | Required?                        |
-| ----------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------- |
-| `NEXT_PUBLIC_SPREADSHEET_ID`  | ID for spreadsheet where comments are stored            | `api-key`                                                          | Only if using commenting feature |
-| `GOOGLE_SERVICE_CLIENT_EMAIL` | Google service account authorised to update spreadsheet | `google-service-account@google.cloud.com`                          | Only if using commenting feature |
-| `GOOGLE_SERVICE_PRIVATE_KEY`  | Private key for google cloud account                    | `-----BEGIN PRIVATE KEY-----\nthings\n-----END PRIVATE KEY-----\n` | Only if using commenting feature |
+| Variable                          | Description                                             | Example                                                            | Required?                        |
+| --------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------- |
+| `NEXT_PUBLIC_SPREADSHEET_ID`      | ID for spreadsheet where comments are stored            | `api-key`                                                          | Only if using commenting feature |
+| `NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL` | Google service account authorised to update spreadsheet | `google-service-account@google.cloud.com`                          | Only if using commenting feature |
+| `GOOGLE_SERVICE_PRIVATE_KEY`      | Private key for google cloud account                    | `-----BEGIN PRIVATE KEY-----\nthings\n-----END PRIVATE KEY-----\n` | Only if using commenting feature |
 
 ### SANITY STUDIO
 
