@@ -1,3 +1,3 @@
 export function verifyApiKey(key: string): boolean {
-  return process.env.NEXT_PUBLIC_API_KEY === key;
+  return process.env.OUR_API_KEY === key;
 }
