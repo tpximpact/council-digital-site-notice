@@ -12,16 +12,16 @@ export default function RootLayout({
     govUk.initAll();
   }
 
-  async function initMSW() {
-    if (
-      process.env.NEXT_PUBLIC_API_MOCKING === "enabled" &&
-      process.env.NODE_ENV !== "production"
-    ) {
-      const { default: initMocks } = await import("../../mocks");
-      await initMocks();
-    }
-  }
-  initMSW();
+  // async function initMSW() {
+  //   if (
+  //     process.env.NEXT_PUBLIC_API_MOCKING === "enabled" &&
+  //     process.env.NODE_ENV !== "production"
+  //   ) {
+  //     const { default: initMocks } = await import("../../mocks");
+  //     await initMocks();
+  //   }
+  // }
+  // initMSW();
 
   return (
     <html lang="en">

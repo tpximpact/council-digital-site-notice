@@ -21,6 +21,7 @@ const PlanningApplicationItem = () => {
 
   useEffect(() => {
     async function fetchData() {
+      console.log("fetchData");
       // Defer the response if API mocking is enabled to give time for the async mock service worker's promise to resolve
       if (
         process.env.NEXT_PUBLIC_API_MOCKING === "enabled" &&
@@ -29,6 +30,7 @@ const PlanningApplicationItem = () => {
         await new Promise((resolve) => setTimeout(resolve, 100));
       }
       const result = await getApplicationById(id as string);
+      console.log("result", result);
       console.log({ result }, "id");
       const getData = result[0];
       result.length == 0 ? setData(null) : setData(getData);
@@ -74,6 +76,8 @@ const PlanningApplicationItem = () => {
     showJobs,
     showOpenSpace,
   } = data || {};
+
+  console.log("data", data);
 
   if (data === null) return notFound();
 

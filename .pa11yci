@@ -1,5 +1,8 @@
 {
   "defaults": {
+    "reporters": [
+      "cli"
+    ],
     "chromeLaunchConfig": {
       "args": [
         "--no-sandbox"
@@ -13,10 +16,6 @@
     "wait": 5000
   },
   "urls": [
-    "http://localhost:3000/",
-    "http://localhost:3000/planning-applications/123",
-    "http://localhost:3000/planning-applications/123/feedback",
-    "http://localhost:3000/planning-applications/123/thank-you",
-    "http://localhost:3000/not-found"
+    "http://localhost:3000/planning-applications/029235b5-96ff-4352-8b48-aa437ca06b5b"
   ]
 }

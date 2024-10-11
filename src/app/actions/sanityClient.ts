@@ -71,10 +71,11 @@ export async function getActiveApplications(
 }
 
 export async function getApplicationById(id: string) {
+  console.log("getApplicationById", id);
   const query =
     '*[_type == "planning-application" && (_id == $_id || planningId == $_id) && isActive == true]';
   const post = await client.fetch(query, { _id: id, planningId: id });
-
+  console.log("postResults", post);
   return post;
 }
 
