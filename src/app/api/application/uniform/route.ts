@@ -112,7 +112,6 @@ export async function PUT(req: NextRequest) {
       },
     );
   }
-  console.log(data, "data");
 
   const applicationData = {
     applicationNumber: data["DCAPPL[REFVAL]"],
