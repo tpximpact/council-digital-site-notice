@@ -26,8 +26,8 @@ function Process({
   }, []);
 
   const singleApplicationStatus =
-    data.applicationStage.status[
-      data.applicationStage.stage.toLowerCase() as keyof typeof data.applicationStage.status
+    data?.applicationStage?.status[
+      data?.applicationStage?.stage.toLowerCase() as keyof typeof data.applicationStage.status
     ];
   const checkStage =
     parseFloat(consultationDeadline) <= 0 &&
@@ -49,9 +49,9 @@ function Process({
       )}
       <div className="wrap-grid-button">
         <div className="process-grid">
-          <p className="govuk-body govuk-!-font-weight-bold process-consultation">
+          <h3 className="govuk-body govuk-!-font-weight-bold process-consultation">
             {checkStage}
-          </p>
+          </h3>
           <p
             className={`govuk-body process-consultation-result ${aplicationStageStyle(singleApplicationStatus ?? "")}`}
           >
@@ -87,7 +87,7 @@ function Process({
                 src="/assets/images/comments-and-docs.png"
                 width={64}
                 height={64}
-                alt="summary and comment icon"
+                alt="documents and comments"
                 style={{ marginLeft: "20px" }}
               />
             </div>

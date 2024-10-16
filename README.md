@@ -190,7 +190,9 @@ You can provide config with a `.env` file. Run `cp sample.env .env` to create a 
 
 ## Testing the application
 
-The project is using [Jest](https://jestjs.io/) for testing.
+The project is using:
+
+- [Jest](https://jestjs.io/) for testing.
 
 #### Run the tests:
 

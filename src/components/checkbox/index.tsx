@@ -22,10 +22,8 @@ const Checkbox = ({
           <input
             className={`govuk-checkboxes__input`}
             id={id}
-            name="checkbox"
+            name={label}
             type="checkbox"
-            value="carcasses"
-            role="checkbox"
             data-testid="checkbox"
             onChange={(e) => onChange(e)}
             checked={checked}

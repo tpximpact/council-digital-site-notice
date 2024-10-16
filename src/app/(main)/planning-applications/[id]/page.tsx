@@ -1,14 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import Breadcrumbs from "@/components/breadcrumbs";
 import About from "@/components/about";
 import Impact from "@/components/impact";
 import Process from "@/components/process";
 import { getApplicationById } from "../../../actions/sanityClient";
 import moment from "moment";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { PlanningApplication } from "../../../../../sanity/sanity.types";
 import { notFound } from "next/navigation";
+import { BackLink } from "@/components/button";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +17,7 @@ const PlanningApplicationItem = () => {
   const [data, setData] = useState<PlanningApplication | null>();
   const params = useParams();
   const { id } = params;
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchData() {
@@ -73,7 +74,7 @@ const PlanningApplicationItem = () => {
     <>
       {data && (
         <>
-          <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
+          <BackLink content="Back" onClick={() => router.push(`/`)} />
           <About data={data} />
           {(showAccess ||
             showCarbon ||

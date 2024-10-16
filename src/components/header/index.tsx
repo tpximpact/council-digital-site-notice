@@ -4,7 +4,7 @@ import { urlFor } from "@/app/actions/sanityClient";
 
 const Header = async ({ globalConfig }: any) => {
   return (
-    <header className="govuk-header" role="banner" data-module="govuk-header">
+    <header className="govuk-header" data-module="govuk-header">
       <div className="govuk-header__container govuk-width-container">
         <div className="govuk-header__logo">
           <Link

@@ -13,7 +13,7 @@ const TextArea = ({
 }) => {
   return (
     <>
-      <h3 className="govuk-label-wrapper">
+      <h2 className="govuk-label-wrapper">
         <label
           className="govuk-label govuk-label--l"
           htmlFor={id}
@@ -21,7 +21,7 @@ const TextArea = ({
         >
           {label}
         </label>
-      </h3>
+      </h2>
       {hint && (
         <p className="govuk-body" style={{ color: "#505A5F" }}>
           {hint}
@@ -32,7 +32,8 @@ const TextArea = ({
         id={id}
         name="moreDetail"
         rows={5}
-        aria-describedby="more-detail-hint"
+        aria-describedby={id}
+        autoComplete="off"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       ></textarea>
