@@ -1,6 +1,10 @@
-import Feeling from "../../src/components/feelings";
+import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { axe, toHaveNoViolations } from "jest-axe";
+import Feeling from "../../src/components/feelings";
+
+expect.extend(toHaveNoViolations);
 
 beforeEach(() => {
   Storage.prototype.getItem = jest.fn(() =>
@@ -13,7 +17,7 @@ describe("Feeling component", () => {
   const mockOnChangeQuestion = jest.fn();
   const mockSetQuestion = jest.fn();
 
-  test("renders the component", () => {
+  it("renders the component", () => {
     render(
       <Feeling
         onChangeQuestion={mockOnChangeQuestion}
@@ -26,7 +30,7 @@ describe("Feeling component", () => {
     expect(headingElement).toBeInTheDocument();
   });
 
-  test("displays an error message when Next button is clicked without selecting an option", () => {
+  it("displays an error message when Next button is clicked without selecting an option", () => {
     render(
       <Feeling
         onChangeQuestion={mockOnChangeQuestion}
@@ -37,5 +41,16 @@ describe("Feeling component", () => {
     fireEvent.click(nextButton);
     const errorMessage = screen.getByText(/Please select one/i);
     expect(errorMessage).toBeInTheDocument();
+  });
+
+  it("should have no accessibility violations", async () => {
+    const { container } = render(
+      <Feeling
+        onChangeQuestion={mockOnChangeQuestion}
+        setQuestion={mockSetQuestion}
+      />,
+    );
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });

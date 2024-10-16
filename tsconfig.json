@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "__tests__/**/*",
-    "global.d.ts"
+    "global.d.ts",
+    "accessibility.test.js"
   ],
   "exclude": ["node_modules"]
 }
