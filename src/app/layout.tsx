@@ -1,6 +1,5 @@
 "use client";
 import "../styles/app.scss";
-import { useEffect } from "react";
 
 export default function RootLayout({
   children,

@@ -5,6 +5,10 @@ on:
     branches:
       - staging
 
+permissions:
+  contents: write
+  actions: read
+
 jobs:
   send-event:
     runs-on: ubuntu-latest
