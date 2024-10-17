@@ -8,7 +8,6 @@ exports[`renders homepage unchanged 1`] = `
     <h1
       aria-level="1"
       class="govuk-heading-xl"
-      role="heading"
       style="display: inline-block;"
     >
       Find planning applications near you
@@ -31,7 +30,6 @@ exports[`renders homepage unchanged 1`] = `
           <label
             class="govuk-label govuk-label--l false"
             for="search-postcode"
-            role="definition"
           >
             Enter a postcode to find planning applications nearby
           </label>
@@ -41,7 +39,6 @@ exports[`renders homepage unchanged 1`] = `
           class="govuk-input false"
           id="search-postcode"
           name="eventName"
-          role="textbox"
           type="text"
           value=""
         />

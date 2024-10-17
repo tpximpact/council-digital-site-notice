@@ -1,13 +1,85 @@
-import Input from "../src/components/input";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { axe, toHaveNoViolations } from "jest-axe";
+import Input from "../src/components/input";
 
-test("it should render correctly", () => {
-  render(<Input />);
-  expect(screen.getByRole("textbox", { type: "text" }));
-  expect(
-    screen.getByRole("definition", {
-      definition: "Enter a postcode to find planning applications nearby",
-    }),
-  );
+expect.extend(toHaveNoViolations);
+
+describe("Input", () => {
+  it("should render correctly", () => {
+    render(
+      <Input
+        label="Enter a postcode"
+        id="postcode"
+        type="text"
+        onChange={() => {}}
+        autocomplete="postal-code"
+      />,
+    );
+    expect(screen.getByLabelText("Enter a postcode")).toBeInTheDocument();
+  });
+
+  it("should render hint when provided", () => {
+    render(
+      <Input
+        label="Enter a postcode"
+        hint="Enter a postcode to find planning applications nearby"
+        id="postcode"
+        type="text"
+        onChange={() => {}}
+        autocomplete="postal-code"
+      />,
+    );
+    expect(
+      screen.getByText("Enter a postcode to find planning applications nearby"),
+    ).toBeInTheDocument();
+  });
+
+  it("should render error message when isError is true", () => {
+    render(
+      <Input
+        label="Enter a postcode"
+        id="postcode"
+        type="text"
+        onChange={() => {}}
+        autocomplete="postal-code"
+        isError={true}
+        messageError="Please enter a valid postcode"
+      />,
+    );
+    expect(
+      screen.getByText("Please enter a valid postcode"),
+    ).toBeInTheDocument();
+  });
+
+  it("should have no accessibility violations", async () => {
+    const { container } = render(
+      <Input
+        label="Enter a postcode"
+        id="postcode"
+        type="text"
+        onChange={() => {}}
+        autocomplete="postal-code"
+      />,
+    );
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it("should have no accessibility violations with hint and error", async () => {
+    const { container } = render(
+      <Input
+        label="Enter a postcode"
+        hint="Enter a postcode to find planning applications nearby"
+        id="postcode"
+        type="text"
+        onChange={() => {}}
+        autocomplete="postal-code"
+        isError={true}
+        messageError="Please enter a valid postcode"
+      />,
+    );
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 });

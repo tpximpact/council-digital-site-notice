@@ -14,8 +14,8 @@ const Banner = ({ globalConfig }: any) => {
             <a
               className="govuk-link"
               href={feedbackUrl}
-              role="link"
               target="_blank"
+              rel="noopener noreferrer"
             >
               feedback
             </a>{" "}
