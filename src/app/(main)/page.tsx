@@ -154,7 +154,6 @@ const Home = () => {
     <div className="wrap-home">
       <h1
         className="govuk-heading-xl"
-        role="heading"
         aria-level={1}
         style={{ display: "inline-block" }}
       >

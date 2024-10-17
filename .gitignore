@@ -36,6 +36,3 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Mock Service Worker (MSW)
-public/mockServiceWorker.js
-**/mockServiceWorker.js
