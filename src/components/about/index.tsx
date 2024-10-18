@@ -6,11 +6,20 @@ import { useEffect, useState } from "react";
 import Modal from "@/components/modal";
 import Gallery from "@/components/gallery";
 import { PlanningApplication } from "../../../sanity/sanity.types";
+import { getGlobalContent } from "@/app/actions/sanityClient";
 
 function About({ data }: { data: PlanningApplication }) {
   const [loadImage, setLoadImage] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageSelected, setImageSelected] = useState<any>();
+  const [globalConfig, setGlobalConfig] = useState<any>();
+
+  useEffect(() => {
+    (async () => {
+      const fetchGlobalConfig = await getGlobalContent();
+      setGlobalConfig(fetchGlobalConfig);
+    })();
+  }, []);
 
   useEffect(() => {
     if (data?.image_gallery && data?.image_gallery?.length < 8) {
@@ -60,7 +69,7 @@ function About({ data }: { data: PlanningApplication }) {
         )}
       </div>
       <div className="wrap-comment-application">
-        {data?.enableComments && (
+        {globalConfig?.globalEnableComments && data?.enableComments && (
           <Link
             className="govuk-button govuk-!-font-weight-bold"
             style={{ textDecoration: "none" }}
