@@ -4,12 +4,16 @@ import Instructions from "./instructions";
 import Questions from "../../../../../components/questions";
 import { getLocalStorage } from "../../../../lib/application";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
+import { getGlobalContent } from "@/app/actions/sanityClient";
+import { useRouter } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 const Feedback = () => {
   const [application, setApplication] = useState<PlanningApplication>();
   const [question, setQuestion] = useState<number>(0);
+  const [globalConfig, setGlobalConfig] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const getStorage = getLocalStorage({
@@ -18,6 +22,27 @@ const Feedback = () => {
     });
     setApplication(getStorage);
   }, []);
+
+  useEffect(() => {
+    const fetchGlobalConfig = async () => {
+      try {
+        const config = await getGlobalContent();
+        setGlobalConfig(config);
+      } catch (error) {
+        console.error("Failed to fetch global config:", error);
+      }
+    };
+
+    fetchGlobalConfig();
+  }, []);
+
+  useEffect(() => {
+    if (globalConfig && globalConfig.globalEnableComments === false) {
+      router.push(`/planning-applications/${application?._id}`);
+    }
+  }, [globalConfig, router, application]);
+  const isEnabled = globalConfig?.globalEnableComments;
+  console.log(isEnabled);
 
   const onChangeQuestion = () => {
     const getStorageSelectedCheckbox = getLocalStorage({
