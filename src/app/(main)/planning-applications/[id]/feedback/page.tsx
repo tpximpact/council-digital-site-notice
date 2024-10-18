@@ -41,8 +41,6 @@ const Feedback = () => {
       router.push(`/planning-applications/${application?._id}`);
     }
   }, [globalConfig, router, application]);
-  const isEnabled = globalConfig?.globalEnableComments;
-  console.log(isEnabled);
 
   const onChangeQuestion = () => {
     const getStorageSelectedCheckbox = getLocalStorage({
