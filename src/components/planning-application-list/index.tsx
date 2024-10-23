@@ -30,13 +30,18 @@ const PlanningApplicationList = ({
             return (
               <div
                 key={_id}
-                // href={`/planning-applications/${_id}`}
                 onClick={() => {
                   router.push(`/planning-applications/${_id}`);
                 }}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    router.push(`/planning-applications/${_id}`);
+                  }
+                }}
                 className={`planning-application-link ${isLastItem && "planning-application-last-item"} ${isLastRowOnPage && "planning-application-last-row"} ${isFirstRowOnPage && "planning-application-first-row"}`}
               >
-                {/* <Link href={`/planning-applications/${_id}`}> */}
                 {image_head && (
                   <Image
                     width={310}
@@ -46,7 +51,6 @@ const PlanningApplicationList = ({
                     style={{ maxWidth: "100%" }}
                   />
                 )}
-                {/* </Link> */}
                 <div style={{ paddingTop: "20px" }}>
                   <Link
                     className="govuk-link govuk-link--no-visited-state link-application"

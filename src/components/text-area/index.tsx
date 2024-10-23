@@ -14,11 +14,7 @@ const TextArea = ({
   return (
     <>
       <h2 className="govuk-label-wrapper">
-        <label
-          className="govuk-label govuk-label--l"
-          htmlFor={id}
-          role="definition"
-        >
+        <label className="govuk-label govuk-label--l" htmlFor={id}>
           {label}
         </label>
       </h2>
