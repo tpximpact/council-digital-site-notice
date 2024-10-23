@@ -35,23 +35,29 @@ interface ApplicationResult {
  *             items:
  *               type: object
  *               properties:
- *                 DCAPPL[REFVAL]:
+ *                 applicationNumber:
  *                   type: string
- *                 DCAPPL[KeyVal]:
- *                  type: string
- *                 DCAPPL[PROPOSAL]:
+ *                 isActive:
+ *                   type: boolean
+ *                 planningId:
  *                   type: string
- *                 DCAPPL[DCAPPTYP_CNCODE_CODETEXT]:
+ *                 name:
  *                   type: string
- *                 DCAPPL[ADDRESS]:
+ *                 description:
  *                   type: string
- *                 DCAPPL[Application_Documents_URL]:
+ *                 applicationType:
  *                   type: string
- *                 DCAPPL[DATEEXPNEI]:
+ *                 address:
  *                   type: string
- *                 DCAPPL[BLD_HGT]:
+ *                 applicationDocumentsUrl:
+ *                   type: string
+ *                 applicationUpdatesUrl:
+ *                   type: string
+ *                 consultationDeadline:
+ *                   type: string
+ *                 height:
  *                   type: number
- *                 DCAPPL[DCGLAUSE]:
+ *                 proposedLandUse:
  *                   type: object
  *                   properties:
  *                     classB:
@@ -69,38 +75,152 @@ interface ApplicationResult {
  *                     suiGeneris:
  *                       type: boolean
  *                       default: false
+ *                     suiGenerisDetail:
+ *                       type: string
+ *                       default: null
+ *                 applicationStage:
+ *                   type: object
+ *                   properties:
+ *                     stage:
+ *                       type: string
+ *                       enum: ["Consultation", "Assessment", "Decision", "Appeal"]
+ *                       description: "The current stage of the application"
+ *                     status:
+ *                       type: object
+ *                       description: "The status within the current stage. Only one property should be present, corresponding to the current stage."
+ *                       properties:
+ *                         consultation:
+ *                           type: string
+ *                           enum: ["in progress", "extended"]
+ *                         assessment:
+ *                           type: string
+ *                           enum: ["in progress"]
+ *                         decision:
+ *                           type: string
+ *                           enum: ["approved", "pending approval", "rejected"]
+ *                         appeal:
+ *                           type: string
+ *                           enum: ["in progress", "unsuccessful", "successful"]
+ *                 location:
+ *                   type: object
+ *                   description: "Geographical location"
+ *                   required:
+ *                     - lat
+ *                     - lng
+ *                   properties:
+ *                     lat:
+ *                       type: number
+ *                       description: "Latitude"
+ *                     lng:
+ *                       type: number
+ *                       description: "Longitude"
+ *                     alt:
+ *                       type: number
+ *                       description: "Altitude (optional)"
+ *                 constructionTime:
+ *                   type: string
+ *                 enableComments:
+ *                   type: boolean
+ *                 showOpenSpace:
+ *                   type: boolean
+ *                 openSpaceArea:
+ *                   type: number
+ *                 showHousing:
+ *                   type: boolean
+ *                 housing:
+ *                   type: object
+ *                   properties:
+ *                     residentialUnits:
+ *                       type: number
+ *                     affordableResidentialUnits:
+ *                       type: number
+ *                 showCarbon:
+ *                   type: boolean
+ *                 carbonEmissions:
+ *                   type: number
+ *                 showAccess:
+ *                   type: boolean
+ *                 access:
+ *                   type: string
+ *                 showJobs:
+ *                   type: boolean
+ *                 jobs:
+ *                   type: object
+ *                   properties:
+ *                     min:
+ *                       type: number
+ *                     max:
+ *                       type: number
  *           example:
- *               - "DCAPPL[REFVAL]": "1234/5678/A"
- *                 "DCAPPL[KeyVal]": "123"
- *                 "DCAPPL[PROPOSAL]": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
- *                 "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Full Planning Permission"
- *                 "DCAPPL[ADDRESS]": "1 Test Street, Test Town, Test County, Test Postcode"
- *                 "DCAPPL[Application_Documents_URL]": "https://www.test.com"
- *                 "DCAPPL[DATEEXPNEI]": "2025-01-01"
- *                 "DCAPPL[BLD_HGT]": 2.5
- *                 "DCAPPL[DCGLAUSE]": {"classB": true, "classC": false, "classE": false, "classF": false, "suiGeneris": false}
- *               - "DCAPPL[REFVAL]": "9876/5432/A"
- *                 "DCAPPL[KeyVal]": "123"
- *                 "DCAPPL[PROPOSAL]": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
- *                 "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Full Planning Permission"
- *                 "DCAPPL[ADDRESS]": "2 Test Street, Test Town, Test County, Test Postcode"
- *                 "DCAPPL[Application_Documents_URL]": "https://www.test.com"
- *                 "DCAPPL[DATEEXPNEI]": "2025-01-01"
- *                 "DCAPPL[BLD_HGT]": 2.5
- *                 "DCAPPL[DCGLAUSE]": {"classB": true, "classC": false, "classE": false, "classF": false, "suiGeneris": false}
+ *             - applicationNumber: "1234/5678/A"
+ *               isActive: true
+ *               planningId: "123"
+ *               name: "The Test Building"
+ *               description: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+ *               applicationType: "Full Planning Permission"
+ *               address: "1 Test Street, Test Town, Test County, Test Postcode"
+ *               location: {"lat": 51.5074, "lng": -0.1278}
+ *               applicationDocumentsUrl: "https://www.test.com"
+ *               applicationUpdatesUrl: "https://www.test.com/updates"
+ *               consultationDeadline: "2025-01-01"
+ *               height: 2
+ *               proposedLandUse: {"classB": true, "classC": false, "classE": false, "classF": false, "suiGeneris": false, "suiGenerisDetail": null}
+ *               applicationStage: { "stage": "Consultation", "status": { "consultation": "in progress" } }
+ *               constructionTime: "2024-2026"
+ *               enableComments: true
+ *               showOpenSpace: true
+ *               openSpaceArea: 100
+ *               showHousing: true
+ *               housing: { "residentialUnits": 50, "affordableResidentialUnits": 15 }
+ *               showCarbon: true
+ *               carbonEmissions: 500
+ *               showAccess: true
+ *               access: "There is a path parallel to the development."
+ *               showJobs: true
+ *               jobs: { "min": 10, "max": 20 }
+ *             - applicationNumber: "9876/5432/A"
+ *               isActive: true
+ *               planningId: "124"
+ *               name: "Another Test Building"
+ *               description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+ *               applicationType: "Full Planning Permission"
+ *               address: "2 Test Street, Test Town, Test County, Test Postcode"
+ *               location: {"lat": 51.5074, "lng": -0.1278, "alt": 10}
+ *               applicationDocumentsUrl: "https://www.test.com"
+ *               applicationUpdatesUrl: "https://www.test.com/updates"
+ *               consultationDeadline: "2025-01-01"
+ *               height: 2
+ *               proposedLandUse: {"classB": false, "classC": false, "classE": false, "classF": false, "suiGeneris": true, "suiGenerisDetail": "Unique use case description"}
+ *               applicationStage: { "stage": "Decision", "status": { "decision": "pending approval" } }
+ *               constructionTime: "2025-2027"
+ *               enableComments: false
+ *               showOpenSpace: false
+ *               showHousing: false
+ *               showCarbon: true
+ *               carbonEmissions: 300
+ *               showAccess: false
+ *               showJobs: true
+ *               jobs: { "min": 5, "max": 15 }
  *     responses:
  *       '200':
  *         description: Returns updated planning applications
  *         content:
- *            application/json:
- *              schema:
- *                type: object
- *                example: 
- *                  data: {
- *                    success: [
-                        "Application 1234/5678/A no update needed",
-                        "Application 9876/5432/A updated"
-                      ]}
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     success:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *               example:
+ *                 data:
+ *                   success:
+ *                     - "Application 1234/5678/A no update needed"
+ *                     - "Application 9876/5432/A updated"
  *       '400':
  *         description: Invalid request body or missing required fields
  *       '401':
@@ -154,18 +274,35 @@ export async function PUT(req: NextRequest) {
       });
       continue;
     }
+
     const applicationData = {
-      applicationNumber: application["DCAPPL[REFVAL]"],
-      planningId: application["DCAPPL[KeyVal]"],
-      description: application["DCAPPL[PROPOSAL]"],
-      applicationType: application["DCAPPL[DCAPPTYP_CNCODE_CODETEXT]"],
-      isActive: true,
+      applicationNumber: application["applicationNumber"],
       _type: "planning-application",
-      address: application["DCAPPL[ADDRESS]"],
-      applicationDocumentsUrl: application["DCAPPL[Application_Documents_URL]"],
-      consultationDeadline: application["DCAPPL[DATEEXPNEI]"],
-      height: application["DCAPPL[BLD_HGT]"],
-      proposedLandUse: application["DCAPPL[DCGLAUSE]"],
+      isActive: application["isActive"],
+      planningId: application["planningId"],
+      applicationType: application["applicationType"],
+      name: application["name"],
+      description: application["description"],
+      address: application["address"],
+      applicationStage: application["applicationStage"],
+      enableComments: application["enableComments"],
+      consultationDeadline: application["consultationDeadline"],
+      height: application["height"],
+      constructionTime: application["constructionTime"],
+      location: application["location"],
+      proposedLandUse: application["proposedLandUse"],
+      applicationDocumentsUrl: application["applicationDocumentsUrl"],
+      applicationUpdatesUrl: application["applicationUpdatesUrl"],
+      showOpenSpace: application["showOpenSpace"],
+      openSpaceArea: application["openSpaceArea"],
+      showHousing: application["showHousing"],
+      housing: application["housing"],
+      showCarbon: application["showCarbon"],
+      carbonEmissions: application["carbonEmissions"],
+      showAccess: application["showAccess"],
+      access: application["access"],
+      showJobs: application["showJobs"],
+      jobs: application["jobs"],
     };
 
     const { applicationNumber, ...updateData } = applicationData;
