@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import FeedbackQuestions from "../../src/components/questions";
 import "@testing-library/jest-dom";
+import { axe, toHaveNoViolations } from "jest-axe";
 
 beforeEach(() => {
   Storage.prototype.getItem = jest.fn(() =>
@@ -20,6 +21,8 @@ jest.mock("next/navigation", () => ({
     };
   },
 }));
+
+expect.extend(toHaveNoViolations);
 
 describe("FeedbackQuestions", () => {
   const mockOnChangeQuestion = jest.fn();
@@ -97,5 +100,70 @@ describe("FeedbackQuestions", () => {
       />,
     );
     expect(screen.queryByText("Comment submitted")).toBeNull();
+  });
+
+  it("should have no accessibility violations when question is 1", () => {
+    const { container } = render(
+      <FeedbackQuestions
+        question={1}
+        onChangeQuestion={mockOnChangeQuestion}
+        setQuestion={mockSetQuestion}
+      />,
+    );
+    return axe(container).then((results) => {
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  it("should have no accessibility violations when question is 2", () => {
+    const { container } = render(
+      <FeedbackQuestions
+        question={2}
+        onChangeQuestion={mockOnChangeQuestion}
+        setQuestion={mockSetQuestion}
+      />,
+    );
+    return axe(container).then((results) => {
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  it("should have no accessibility violations when question is 11", () => {
+    const { container } = render(
+      <FeedbackQuestions
+        question={11}
+        onChangeQuestion={mockOnChangeQuestion}
+        setQuestion={mockSetQuestion}
+      />,
+    );
+    return axe(container).then((results) => {
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  it("should have no accessibility violations when question is 12", () => {
+    const { container } = render(
+      <FeedbackQuestions
+        question={12}
+        onChangeQuestion={mockOnChangeQuestion}
+        setQuestion={mockSetQuestion}
+      />,
+    );
+    return axe(container).then((results) => {
+      expect(results).toHaveNoViolations();
+    });
+  });
+
+  it("should have no accessibility violations when question is 13", () => {
+    const { container } = render(
+      <FeedbackQuestions
+        question={13}
+        onChangeQuestion={mockOnChangeQuestion}
+        setQuestion={mockSetQuestion}
+      />,
+    );
+    return axe(container).then((results) => {
+      expect(results).toHaveNoViolations();
+    });
   });
 });

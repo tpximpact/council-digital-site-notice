@@ -27,7 +27,6 @@ const Input = ({
         <label
           className={`govuk-label govuk-label--l ${isError && "govuk-error-message"}`}
           htmlFor={id}
-          role="definition"
           style={{ ...style }}
         >
           {label}
@@ -40,7 +39,6 @@ const Input = ({
         id={id}
         name="eventName"
         type={type}
-        role="textbox"
         onChange={(e) => onChange(e.target.value)}
         value={value}
         autoComplete={autocomplete}

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { Button } from "../button";
 import { urlFor } from "@/app/actions/sanityClient";
+import { useEffect } from "react";
+
 const Gallery = ({
   images,
   loadImage,
@@ -10,6 +12,20 @@ const Gallery = ({
   imageSelected,
   image_head,
 }: any) => {
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsModalOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [setIsModalOpen]);
+
   return (
     <>
       <div className="carousel-wrap">
@@ -20,7 +36,16 @@ const Gallery = ({
           height={240}
           style={{ maxWidth: "100%" }}
           onClick={() => {
-            setIsModalOpen(true), setImageSelected(image_head || images[0]);
+            setIsModalOpen(true);
+            setImageSelected(image_head || images[0]);
+          }}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              setIsModalOpen(true);
+              setImageSelected(image_head || images[0]);
+            }
           }}
         />
         <div className="carousel-image-list">
@@ -30,7 +55,16 @@ const Gallery = ({
                 <div
                   key={index}
                   onClick={() => {
-                    setIsModalOpen(true), setImageSelected(el);
+                    setIsModalOpen(true);
+                    setImageSelected(el);
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setIsModalOpen(true);
+                      setImageSelected(el);
+                    }
                   }}
                 >
                   <Image
