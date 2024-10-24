@@ -67,32 +67,26 @@ const UniformValidation = z
         classE: z.boolean().optional(),
         classF: z.boolean().optional(),
         suiGeneris: z.boolean().optional(),
-        suiGenerisDetail: z.string().nullable().optional(),
+        suiGenerisDetail: z.string().optional(),
       })
       .refine(
         (data) => {
           // If suiGeneris is true, suiGenerisDetail must be a non-empty string
           if (
             data.suiGeneris &&
-            (data.suiGenerisDetail === null ||
-              data.suiGenerisDetail === undefined ||
-              data.suiGenerisDetail.trim() === "")
+            (!data.suiGenerisDetail || data.suiGenerisDetail.trim() === "")
           ) {
             return false;
           }
-          // If suiGeneris is false, suiGenerisDetail must be null or undefined
-          if (
-            !data.suiGeneris &&
-            data.suiGenerisDetail !== null &&
-            data.suiGenerisDetail !== undefined
-          ) {
+          // If suiGeneris is false, suiGenerisDetail should not be present
+          if (!data.suiGeneris && data.suiGenerisDetail !== undefined) {
             return false;
           }
           return true;
         },
         {
           message:
-            "suiGenerisDetail must be provided when suiGeneris is true, and must be empty when suiGeneris is false",
+            "suiGenerisDetail must be provided when suiGeneris is true, and must not be present when suiGeneris is false",
         },
       )
       .optional(),

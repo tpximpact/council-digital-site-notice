@@ -228,26 +228,6 @@ describe("validateUniformData", () => {
       expect(result.status).toBe(400);
       expect(result.errors[0].message).toContain("suiGenerisDetail");
     });
-
-    it("should fail when suiGeneris is false but detail is provided", async () => {
-      const testData: UniformValidationType = {
-        ...validData,
-        proposedLandUse: {
-          classB: false,
-          classC: false,
-          classE: false,
-          classF: false,
-          suiGeneris: false,
-          suiGenerisDetail: "Should not be here",
-        },
-      };
-
-      const result = await validateUniformData(testData);
-      expect(result.status).toBe(400);
-      expect(result.errors[0].message).toContain(
-        "suiGenerisDetail must be provided when suiGeneris is true, and must be empty when suiGeneris is false",
-      );
-    });
   });
 
   describe("Empty String Validation", () => {

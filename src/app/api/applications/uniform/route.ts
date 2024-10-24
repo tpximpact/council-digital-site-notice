@@ -9,17 +9,7 @@ import {
 } from "@/app/actions/uniformValidator";
 import { verifyApiKey } from "@/app/lib/apiKey";
 import { NextRequest, NextResponse } from "next/server";
-import { checkAllowedUpdateFields } from "../../checkAllowedUpdateFields";
-
-interface ApplicationError {
-  application: any;
-  error: string;
-}
-
-interface ApplicationResult {
-  success: string[];
-  errors: ApplicationError[];
-}
+import { processMultipleApplications } from "../../handlers/handler";
 
 /**
  * @swagger
@@ -77,7 +67,7 @@ interface ApplicationResult {
  *                       default: false
  *                     suiGenerisDetail:
  *                       type: string
- *                       default: null
+ *                       description: "Required when suiGeneris is true, must not be present when suiGeneris is false"
  *                 applicationStage:
  *                   type: object
  *                   properties:
@@ -164,7 +154,7 @@ interface ApplicationResult {
  *               applicationUpdatesUrl: "https://www.test.com/updates"
  *               consultationDeadline: "2025-01-01"
  *               height: 2
- *               proposedLandUse: {"classB": true, "classC": false, "classE": false, "classF": false, "suiGeneris": false, "suiGenerisDetail": null}
+ *               proposedLandUse: {"classB": true, "classC": false, "classE": false, "classF": false, "suiGeneris": false}
  *               applicationStage: { "stage": "Consultation", "status": { "consultation": "in progress" } }
  *               constructionTime: "2024-2026"
  *               enableComments: true
@@ -232,13 +222,14 @@ interface ApplicationResult {
  *       '500':
  *         description: An error occurred while updating the applications
  */
+
 export async function PUT(req: NextRequest) {
   const isUniformEnabled = await isUniformIntegrationEnabled();
-
-  if (!isUniformEnabled)
+  if (!isUniformEnabled) {
     return new NextResponse("Uniform integration is not enabled", {
       status: 403,
     });
+  }
   // Verify API key
   const referer = req.headers.get("x-api-key");
   const apiKey = referer as string;
@@ -255,119 +246,20 @@ export async function PUT(req: NextRequest) {
     });
   }
 
-  const results: ApplicationResult = { success: [], errors: [] };
-
-  for (const application of body) {
-    const validationErrors = await validateUniformData(application);
-    if (validationErrors.errors.length > 0) {
-      results.errors.push({
-        application,
-        error: validationErrors.errors[0].message,
-      });
-      continue;
-    }
-
-    if (!application || typeof application !== "object") {
-      results.errors.push({
-        application,
-        error: "Invalid application data",
-      });
-      continue;
-    }
-
-    const applicationData = {
-      applicationNumber: application["applicationNumber"],
-      _type: "planning-application",
-      isActive: application["isActive"],
-      planningId: application["planningId"],
-      applicationType: application["applicationType"],
-      name: application["name"],
-      description: application["description"],
-      address: application["address"],
-      applicationStage: application["applicationStage"],
-      enableComments: application["enableComments"],
-      consultationDeadline: application["consultationDeadline"],
-      height: application["height"],
-      constructionTime: application["constructionTime"],
-      location: application["location"],
-      proposedLandUse: application["proposedLandUse"],
-      applicationDocumentsUrl: application["applicationDocumentsUrl"],
-      applicationUpdatesUrl: application["applicationUpdatesUrl"],
-      showOpenSpace: application["showOpenSpace"],
-      openSpaceArea: application["openSpaceArea"],
-      showHousing: application["showHousing"],
-      housing: application["housing"],
-      showCarbon: application["showCarbon"],
-      carbonEmissions: application["carbonEmissions"],
-      showAccess: application["showAccess"],
-      access: application["access"],
-      showJobs: application["showJobs"],
-      jobs: application["jobs"],
-    };
-
-    const { applicationNumber, ...updateData } = applicationData;
-
-    if (!applicationNumber) {
-      results.errors.push({
-        application,
-        error: "Missing required field: applicationNumber",
-      });
-      continue;
-    }
-
-    try {
-      const existingApplication =
-        await checkExistingReference(applicationNumber);
-      if (existingApplication && existingApplication._id) {
-        // Application found, check if update is needed
-        if (checkAllowedUpdateFields(existingApplication, updateData)) {
-          // Update the application
-          await updateApplication(existingApplication._id, updateData);
-          results.success.push(`Application ${applicationNumber} updated`);
-        } else {
-          results.success.push(
-            `Application ${applicationNumber} no update needed`,
-          );
-        }
-      } else {
-        // Application not found, create a new one
-        const newApplication = {
-          applicationNumber,
-          ...updateData,
-        };
-        await createApplication(newApplication);
-        results.success.push(`Application ${applicationNumber} created`);
-      }
-    } catch (error) {
-      console.error("Error updating application:", error);
-      results.errors.push({
-        application,
-        error: "An error occurred while updating the application",
-      });
-    }
+  if (body.length === 0) {
+    return new NextResponse("No applications provided", { status: 400 });
   }
 
-  // Handle different response scenarios
-  if (results.success.length === 0 && results.errors.length === 0) {
-    return new NextResponse("No applications provided", { status: 400 });
-  } else if (results.success.length === 0 && results.errors.length > 0) {
-    return new NextResponse(
-      JSON.stringify({ data: { errors: results.errors } }),
-      {
-        status: 400,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
+  const results = await processMultipleApplications(body);
+
+  if (results.success.length === 0 && results.errors.length > 0) {
+    return NextResponse.json(
+      { data: { errors: results.errors } },
+      { status: 400 },
     );
   } else if (results.errors.length > 0) {
-    return new NextResponse(JSON.stringify({ data: results }), {
-      status: 207,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  } else {
-    return NextResponse.json({ data: { success: results.success } });
+    return NextResponse.json({ data: results }, { status: 207 });
   }
+
+  return NextResponse.json({ data: { success: results.success } });
 }

@@ -1,26 +1,7 @@
-import {
-  createApplication,
-  updateApplication,
-  checkExistingReference,
-} from "@/app/actions/sanityClient";
 import { verifyApiKey } from "../../../lib/apiKey";
 import { NextRequest, NextResponse } from "next/server";
-import {
-  validateUniformData,
-  applicationNumberValidation,
-  isUniformIntegrationEnabled,
-} from "@/app/actions/uniformValidator";
-import { checkAllowedUpdateFields } from "../../checkAllowedUpdateFields";
-
-interface ApplicationError {
-  application: any;
-  error: string;
-}
-
-interface ApplicationResult {
-  success: string[];
-  errors: ApplicationError[];
-}
+import { isUniformIntegrationEnabled } from "@/app/actions/uniformValidator";
+import { processApplication } from "../../handlers/handler";
 
 /**
  * @swagger
@@ -122,6 +103,7 @@ interface ApplicationResult {
  *                     type: boolean
  *                   suiGenerisDetail:
  *                     type: string
+ *                     description: "Required when suiGeneris is true, must not be present when suiGeneris is false"
  *               applicationDocumentsUrl:
  *                 type: string
  *                 format: uri
@@ -227,11 +209,11 @@ interface ApplicationResult {
  */
 export async function PUT(req: NextRequest) {
   const isUniformEnabled = await isUniformIntegrationEnabled();
-
-  if (!isUniformEnabled)
+  if (!isUniformEnabled) {
     return new NextResponse("Uniform integration is not enabled", {
       status: 403,
     });
+  }
   // Verify API key
   const referer = req.headers.get("x-api-key");
   const apiKey = referer as string;
@@ -242,119 +224,23 @@ export async function PUT(req: NextRequest) {
       status: 401,
     });
   }
-  const data = await req.json();
-  const results: ApplicationResult = { success: [], errors: [] };
 
-  // validate
-  const validationErrors = await validateUniformData(data as any);
-  if (validationErrors.errors.length > 0) {
-    results.errors = validationErrors.errors.map((error) => ({
-      application: data,
-      error: error.message,
-    }));
-    return NextResponse.json(
-      { data: { errors: results.errors } },
-      {
-        status: validationErrors.status,
-        headers: { "Content-Type": "application/json" },
-      },
-    );
-  }
+  const body = await req.json();
 
-  if (!data || typeof data !== "object") {
-    results.errors.push({
-      application: data,
-      error: "Invalid request body. Expected an object.",
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return new NextResponse("Invalid request body. Expected an object.", {
+      status: 400,
     });
+  }
+
+  const result = await processApplication(body);
+
+  if (result.error) {
     return NextResponse.json(
-      { data: { errors: results.errors } },
-      {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      },
+      { data: { errors: [{ application: body, error: result.error }] } },
+      { status: 400 },
     );
   }
 
-  const applicationData = {
-    applicationNumber: data["applicationNumber"],
-    _type: "planning-application",
-    isActive: data["isActive"],
-    planningId: data["planningId"],
-    applicationType: data["applicationType"],
-    name: data["name"],
-    description: data["description"],
-    address: data["address"],
-    applicationStage: data["applicationStage"],
-    enableComments: data["enableComments"],
-    consultationDeadline: data["consultationDeadline"],
-    height: data["height"],
-    constructionTime: data["constructionTime"],
-    location: data["location"],
-    proposedLandUse: data["proposedLandUse"],
-    applicationDocumentsUrl: data["applicationDocumentsUrl"],
-    applicationUpdatesUrl: data["applicationUpdatesUrl"],
-    showOpenSpace: data["showOpenSpace"],
-    openSpaceArea: data["openSpaceArea"],
-    showHousing: data["showHousing"],
-    housing: data["housing"],
-    showCarbon: data["showCarbon"],
-    carbonEmissions: data["carbonEmissions"],
-    showAccess: data["showAccess"],
-    access: data["access"],
-    showJobs: data["showJobs"],
-    jobs: data["jobs"],
-  };
-
-  const { applicationNumber, ...updateData } = applicationData;
-
-  const checkApplicationNumber =
-    await applicationNumberValidation(applicationData);
-
-  if (checkApplicationNumber.errors.length > 0) {
-    results.errors = checkApplicationNumber.errors.map((error) => ({
-      application: data,
-      error: error.message,
-    }));
-    return NextResponse.json(
-      { data: { errors: results.errors } },
-      {
-        status: checkApplicationNumber.status,
-        headers: { "Content-Type": "application/json" },
-      },
-    );
-  }
-
-  try {
-    const existingApplication = await checkExistingReference(
-      data["applicationNumber"],
-    );
-    if (existingApplication && existingApplication._id) {
-      // Application found, now update it
-      if (checkAllowedUpdateFields(existingApplication, updateData)) {
-        // Update the application
-        await updateApplication(existingApplication._id, updateData);
-        results.success.push(`Application ${applicationNumber} updated`);
-      } else {
-        results.success.push(
-          `Application ${applicationNumber} no update needed`,
-        );
-      }
-    } else {
-      await createApplication(applicationData);
-      results.success.push(`Application ${data["applicationNumber"]} created`);
-    }
-    return NextResponse.json({ data: { success: results.success } });
-  } catch (error) {
-    results.errors.push({
-      application: data,
-      error: "An error occurred while creating the application",
-    });
-    return NextResponse.json(
-      { data: { errors: results.errors } },
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      },
-    );
-  }
+  return NextResponse.json({ data: { success: [result.success] } });
 }
