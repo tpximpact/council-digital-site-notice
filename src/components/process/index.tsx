@@ -80,6 +80,7 @@ function Process({
                 data-module="govuk-button"
                 href={data?.applicationDocumentsUrl}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 View application documents and comments
               </Link>
@@ -95,7 +96,7 @@ function Process({
           <div
             className={`${(data?.enableComments || data?.applicationDocumentsUrl) && "wrap-button"}`}
           >
-            {data?.enableComments && (
+            {globalConfig?.globalEnableComments && data?.enableComments && (
               <Link
                 className="govuk-button govuk-!-font-weight-bold"
                 style={{ textDecoration: "none" }}
