@@ -48,23 +48,52 @@ describe("Applications PUT endpoint", () => {
       },
       json: jest.fn().mockResolvedValue([
         {
-          "DCAPPL[REFVAL]": "1234/5678/A",
-          "DCAPPL[KeyVal]": "123",
-          "DCAPPL[PROPOSAL]":
-            "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-          "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Householder Application",
-          "DCAPPL[ADDRESS]":
-            "1 Test Street, Test Town, Test County, Test Postcode",
-          "DCAPPL[Application_Documents_URL]": "https://www.test.com",
-          "DCAPPL[DATEEXPNEI]": "2025-01-01",
-          "DCAPPL[BLD_HGT]": 2.5,
-          "DCAPPL[DCGLAUSE]": {
-            classB: true,
+          applicationNumber: "1234/5678/A",
+          isActive: true,
+          planningId: "123",
+          name: "The Test Building",
+          description: "Test description",
+          applicationType: "Householder Application",
+          address: "1 Test Street",
+          applicationStage: {
+            stage: "Consultation",
+            status: {
+              consultation: "in progress",
+            },
+          },
+          location: {
+            lat: 51.5074,
+            lng: -0.1278,
+          },
+          proposedLandUse: {
+            classB: false,
             classC: false,
             classE: false,
             classF: false,
             suiGeneris: false,
           },
+          applicationDocumentsUrl: "https://www.test.com",
+          applicationUpdatesUrl: "https://www.test.com/updates",
+          showOpenSpace: true,
+          openSpaceArea: 100,
+          showHousing: true,
+          housing: {
+            residentialUnits: 50,
+            affordableResidentialUnits: 15,
+          },
+          showCarbon: true,
+          carbonEmissions: 500,
+          showAccess: true,
+          access: "Valid access description",
+          showJobs: true,
+          jobs: {
+            min: 10,
+            max: 20,
+          },
+          enableComments: true,
+          consultationDeadline: "2025-01-01",
+          height: 2.5,
+          constructionTime: "2024-2026",
         },
       ]),
     } as unknown as NextRequest;
@@ -116,42 +145,100 @@ describe("Applications PUT endpoint", () => {
   it("should return 400 when all applications fail validation", async () => {
     const requestBody = [
       {
-        "DCAPPL[REFVAL]": "1234/5678/A",
-        "DCAPPL[KeyVal]": "123",
-        "DCAPPL[PROPOSAL]":
-          "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-        "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Householder Application",
-        "DCAPPL[ADDRESS]":
-          "1 Test Street, Test Town, Test County, Test Postcode",
-        "DCAPPL[Application_Documents_URL]": "https://www.test.com",
-        "DCAPPL[DATEEXPNEI]": "2025-01-01",
-        "DCAPPL[BLD_HGT]": 2.5,
-        "DCAPPL[DCGLAUSE]": {
-          classB: true,
+        applicationNumber: "1234/5678/A",
+        isActive: true,
+        planningId: "123",
+        name: "The Test Building",
+        description: "Test description",
+        applicationType: "Householder Application",
+        address: "1 Test Street",
+        applicationStage: {
+          stage: "Consultation",
+          status: {
+            consultation: "in progress",
+          },
+        },
+        location: {
+          lat: 51.5074,
+          lng: -0.1278,
+        },
+        proposedLandUse: {
+          classB: false,
           classC: false,
           classE: false,
           classF: false,
           suiGeneris: false,
         },
+        applicationDocumentsUrl: "https://www.test.com",
+        applicationUpdatesUrl: "https://www.test.com/updates",
+        showOpenSpace: true,
+        openSpaceArea: 100,
+        showHousing: true,
+        housing: {
+          residentialUnits: 50,
+          affordableResidentialUnits: 15,
+        },
+        showCarbon: true,
+        carbonEmissions: 500,
+        showAccess: true,
+        access: "Valid access description",
+        showJobs: true,
+        jobs: {
+          min: 10,
+          max: 20,
+        },
+        enableComments: true,
+        consultationDeadline: "2025-01-01",
+        height: 2.5,
+        constructionTime: "2024-2026",
       },
       {
-        "DCAPPL[REFVAL]": "67890",
-        "DCAPPL[KeyVal]": "123",
-        "DCAPPL[PROPOSAL]":
-          "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-        "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Householder Application",
-        "DCAPPL[ADDRESS]":
-          "1 Test Street, Test Town, Test County, Test Postcode",
-        "DCAPPL[Application_Documents_URL]": "https://www.test.com",
-        "DCAPPL[DATEEXPNEI]": "2025-01-01",
-        "DCAPPL[BLD_HGT]": 2.5,
-        "DCAPPL[DCGLAUSE]": {
-          classB: true,
+        applicationNumber: "1234/5678/A",
+        isActive: true,
+        planningId: "123",
+        name: "The Test Building",
+        description: "Test description",
+        applicationType: "Householder Application",
+        address: "1 Test Street",
+        applicationStage: {
+          stage: "Consultation",
+          status: {
+            consultation: "in progress",
+          },
+        },
+        location: {
+          lat: 51.5074,
+          lng: -0.1278,
+        },
+        proposedLandUse: {
+          classB: false,
           classC: false,
           classE: false,
           classF: false,
           suiGeneris: false,
         },
+        applicationDocumentsUrl: "https://www.test.com",
+        applicationUpdatesUrl: "https://www.test.com/updates",
+        showOpenSpace: true,
+        openSpaceArea: 100,
+        showHousing: true,
+        housing: {
+          residentialUnits: 50,
+          affordableResidentialUnits: 15,
+        },
+        showCarbon: true,
+        carbonEmissions: 500,
+        showAccess: true,
+        access: "Valid access description",
+        showJobs: true,
+        jobs: {
+          min: 10,
+          max: 20,
+        },
+        enableComments: true,
+        consultationDeadline: "2025-01-01",
+        height: 2.5,
+        constructionTime: "2024-2026",
       },
     ];
 
@@ -180,42 +267,100 @@ describe("Applications PUT endpoint", () => {
   it("should return 207 for successful and failed applications", async () => {
     const requestBody = [
       {
-        "DCAPPL[REFVAL]": "1234/5678/A",
-        "DCAPPL[KeyVal]": "123",
-        "DCAPPL[PROPOSAL]":
-          "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-        "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Householder Application",
-        "DCAPPL[ADDRESS]":
-          "1 Test Street, Test Town, Test County, Test Postcode",
-        "DCAPPL[Application_Documents_URL]": "https://www.test.com",
-        "DCAPPL[DATEEXPNEI]": "2025-01-01",
-        "DCAPPL[BLD_HGT]": 2.5,
-        "DCAPPL[DCGLAUSE]": {
-          classB: true,
+        applicationNumber: "1234/5678/A",
+        isActive: true,
+        planningId: "123",
+        name: "The Test Building",
+        description: "Test description",
+        applicationType: "Householder Application",
+        address: "1 Test Street",
+        applicationStage: {
+          stage: "Consultation",
+          status: {
+            consultation: "in progress",
+          },
+        },
+        location: {
+          lat: 51.5074,
+          lng: -0.1278,
+        },
+        proposedLandUse: {
+          classB: false,
           classC: false,
           classE: false,
           classF: false,
           suiGeneris: false,
         },
+        applicationDocumentsUrl: "https://www.test.com",
+        applicationUpdatesUrl: "https://www.test.com/updates",
+        showOpenSpace: true,
+        openSpaceArea: 100,
+        showHousing: true,
+        housing: {
+          residentialUnits: 50,
+          affordableResidentialUnits: 15,
+        },
+        showCarbon: true,
+        carbonEmissions: 500,
+        showAccess: true,
+        access: "Valid access description",
+        showJobs: true,
+        jobs: {
+          min: 10,
+          max: 20,
+        },
+        enableComments: true,
+        consultationDeadline: "2025-01-01",
+        height: 2.5,
+        constructionTime: "2024-2026",
       },
       {
-        "DCAPPL[REFVAL]": "67890",
-        "DCAPPL[KeyVal]": "123",
-        "DCAPPL[PROPOSAL]":
-          "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-        "DCAPPL[DCAPPTYP_CNCODE_CODETEXT]": "Householder Application",
-        "DCAPPL[ADDRESS]":
-          "1 Test Street, Test Town, Test County, Test Postcode",
-        "DCAPPL[Application_Documents_URL]": "https://www.test.com",
-        "DCAPPL[DATEEXPNEI]": "2025-01-01",
-        "DCAPPL[BLD_HGT]": 2.5,
-        "DCAPPL[DCGLAUSE]": {
-          classB: true,
+        applicationNumber: null,
+        isActive: true,
+        planningId: "123",
+        name: "The Test Building",
+        description: "Test description",
+        applicationType: "Householder Application",
+        address: "1 Test Street",
+        applicationStage: {
+          stage: "Consultation",
+          status: {
+            consultation: "in progress",
+          },
+        },
+        location: {
+          lat: 51.5074,
+          lng: -0.1278,
+        },
+        proposedLandUse: {
+          classB: false,
           classC: false,
           classE: false,
           classF: false,
           suiGeneris: false,
         },
+        applicationDocumentsUrl: "https://www.test.com",
+        applicationUpdatesUrl: "https://www.test.com/updates",
+        showOpenSpace: true,
+        openSpaceArea: 100,
+        showHousing: true,
+        housing: {
+          residentialUnits: 50,
+          affordableResidentialUnits: 15,
+        },
+        showCarbon: true,
+        carbonEmissions: 500,
+        showAccess: true,
+        access: "Valid access description",
+        showJobs: true,
+        jobs: {
+          min: 10,
+          max: 20,
+        },
+        enableComments: true,
+        consultationDeadline: "2025-01-01",
+        height: 2.5,
+        constructionTime: "2024-2026",
       },
     ];
 
@@ -228,7 +373,7 @@ describe("Applications PUT endpoint", () => {
 
     isUniformIntegrationEnabledMock.mockResolvedValue(true);
     validateUniformDataMock.mockImplementation((data) => {
-      if (data["DCAPPL[REFVAL]"] === "67890") {
+      if (data["applicationNumber"] === "67890") {
         return Promise.resolve({
           errors: [{ message: "Invalid application data" }],
           status: 400,
