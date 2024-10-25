@@ -53,6 +53,7 @@ const UniformValidation = z
     address: z.string().min(1, "Address cannot be empty"),
 
     // Optional fields
+    planningId: z.string().optional(),
     applicationType: z.string().optional(),
     name: z.string().optional(),
     description: z.string().optional(),

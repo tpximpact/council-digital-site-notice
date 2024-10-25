@@ -6,15 +6,14 @@ import {
   validateUniformData,
   isUniformIntegrationEnabled,
 } from "../../src/app/actions/uniformValidator";
-import { ValidationResult } from "../../models/validationResult";
 import {
   checkExistingReference,
-  updateApplication,
   createApplication,
 } from "../../src/app/actions/sanityClient";
 import { verifyApiKey } from "../../src/app/lib/apiKey";
 import { PUT } from "@/app/api/applications/uniform/route";
 import { SanityDocument } from "next-sanity";
+import { generateUniformData } from "../../mockdata/mockData";
 
 jest.mock("../../src/app/actions/sanityClient");
 jest.mock("../../src/app/actions/uniformValidator");
@@ -46,56 +45,7 @@ describe("Applications PUT endpoint", () => {
       headers: {
         get: jest.fn().mockReturnValue("valid_key"),
       },
-      json: jest.fn().mockResolvedValue([
-        {
-          applicationNumber: "1234/5678/A",
-          isActive: true,
-          planningId: "123",
-          name: "The Test Building",
-          description: "Test description",
-          applicationType: "Householder Application",
-          address: "1 Test Street",
-          applicationStage: {
-            stage: "Consultation",
-            status: {
-              consultation: "in progress",
-            },
-          },
-          location: {
-            lat: 51.5074,
-            lng: -0.1278,
-          },
-          proposedLandUse: {
-            classB: false,
-            classC: false,
-            classE: false,
-            classF: false,
-            suiGeneris: false,
-          },
-          applicationDocumentsUrl: "https://www.test.com",
-          applicationUpdatesUrl: "https://www.test.com/updates",
-          showOpenSpace: true,
-          openSpaceArea: 100,
-          showHousing: true,
-          housing: {
-            residentialUnits: 50,
-            affordableResidentialUnits: 15,
-          },
-          showCarbon: true,
-          carbonEmissions: 500,
-          showAccess: true,
-          access: "Valid access description",
-          showJobs: true,
-          jobs: {
-            min: 10,
-            max: 20,
-          },
-          enableComments: true,
-          consultationDeadline: "2025-01-01",
-          height: 2.5,
-          constructionTime: "2024-2026",
-        },
-      ]),
+      json: jest.fn().mockResolvedValue([generateUniformData()]),
     } as unknown as NextRequest;
 
     isUniformIntegrationEnabledMock.mockResolvedValue(true);
@@ -143,104 +93,12 @@ describe("Applications PUT endpoint", () => {
   });
 
   it("should return 400 when all applications fail validation", async () => {
-    const requestBody = [
-      {
-        applicationNumber: "1234/5678/A",
-        isActive: true,
-        planningId: "123",
-        name: "The Test Building",
-        description: "Test description",
-        applicationType: "Householder Application",
-        address: "1 Test Street",
-        applicationStage: {
-          stage: "Consultation",
-          status: {
-            consultation: "in progress",
-          },
-        },
-        location: {
-          lat: 51.5074,
-          lng: -0.1278,
-        },
-        proposedLandUse: {
-          classB: false,
-          classC: false,
-          classE: false,
-          classF: false,
-          suiGeneris: false,
-        },
-        applicationDocumentsUrl: "https://www.test.com",
-        applicationUpdatesUrl: "https://www.test.com/updates",
-        showOpenSpace: true,
-        openSpaceArea: 100,
-        showHousing: true,
-        housing: {
-          residentialUnits: 50,
-          affordableResidentialUnits: 15,
-        },
-        showCarbon: true,
-        carbonEmissions: 500,
-        showAccess: true,
-        access: "Valid access description",
-        showJobs: true,
-        jobs: {
-          min: 10,
-          max: 20,
-        },
-        enableComments: true,
-        consultationDeadline: "2025-01-01",
-        height: 2.5,
-        constructionTime: "2024-2026",
-      },
-      {
-        applicationNumber: "1234/5678/A",
-        isActive: true,
-        planningId: "123",
-        name: "The Test Building",
-        description: "Test description",
-        applicationType: "Householder Application",
-        address: "1 Test Street",
-        applicationStage: {
-          stage: "Consultation",
-          status: {
-            consultation: "in progress",
-          },
-        },
-        location: {
-          lat: 51.5074,
-          lng: -0.1278,
-        },
-        proposedLandUse: {
-          classB: false,
-          classC: false,
-          classE: false,
-          classF: false,
-          suiGeneris: false,
-        },
-        applicationDocumentsUrl: "https://www.test.com",
-        applicationUpdatesUrl: "https://www.test.com/updates",
-        showOpenSpace: true,
-        openSpaceArea: 100,
-        showHousing: true,
-        housing: {
-          residentialUnits: 50,
-          affordableResidentialUnits: 15,
-        },
-        showCarbon: true,
-        carbonEmissions: 500,
-        showAccess: true,
-        access: "Valid access description",
-        showJobs: true,
-        jobs: {
-          min: 10,
-          max: 20,
-        },
-        enableComments: true,
-        consultationDeadline: "2025-01-01",
-        height: 2.5,
-        constructionTime: "2024-2026",
-      },
-    ];
+    const requestBody = [generateUniformData(), generateUniformData()];
+
+    validateUniformDataMock.mockResolvedValue({
+      errors: [{ message: "Invalid application data" }],
+      status: 400,
+    });
 
     const mockRequest = {
       headers: {
@@ -248,13 +106,6 @@ describe("Applications PUT endpoint", () => {
       },
       json: jest.fn().mockResolvedValue(requestBody),
     } as unknown as NextRequest;
-
-    validateUniformDataMock.mockImplementation(() => {
-      return Promise.resolve({
-        errors: [{ message: "Invalid application data" }],
-        status: 400,
-      });
-    });
 
     isUniformIntegrationEnabledMock.mockResolvedValue(true);
     verifyApiKeyMock.mockReturnValue(true);
@@ -265,115 +116,16 @@ describe("Applications PUT endpoint", () => {
   });
 
   it("should return 207 for successful and failed applications", async () => {
-    const requestBody = [
-      {
-        applicationNumber: "1234/5678/A",
-        isActive: true,
-        planningId: "123",
-        name: "The Test Building",
-        description: "Test description",
-        applicationType: "Householder Application",
-        address: "1 Test Street",
-        applicationStage: {
-          stage: "Consultation",
-          status: {
-            consultation: "in progress",
-          },
-        },
-        location: {
-          lat: 51.5074,
-          lng: -0.1278,
-        },
-        proposedLandUse: {
-          classB: false,
-          classC: false,
-          classE: false,
-          classF: false,
-          suiGeneris: false,
-        },
-        applicationDocumentsUrl: "https://www.test.com",
-        applicationUpdatesUrl: "https://www.test.com/updates",
-        showOpenSpace: true,
-        openSpaceArea: 100,
-        showHousing: true,
-        housing: {
-          residentialUnits: 50,
-          affordableResidentialUnits: 15,
-        },
-        showCarbon: true,
-        carbonEmissions: 500,
-        showAccess: true,
-        access: "Valid access description",
-        showJobs: true,
-        jobs: {
-          min: 10,
-          max: 20,
-        },
-        enableComments: true,
-        consultationDeadline: "2025-01-01",
-        height: 2.5,
-        constructionTime: "2024-2026",
-      },
-      {
-        applicationNumber: null,
-        isActive: true,
-        planningId: "123",
-        name: "The Test Building",
-        description: "Test description",
-        applicationType: "Householder Application",
-        address: "1 Test Street",
-        applicationStage: {
-          stage: "Consultation",
-          status: {
-            consultation: "in progress",
-          },
-        },
-        location: {
-          lat: 51.5074,
-          lng: -0.1278,
-        },
-        proposedLandUse: {
-          classB: false,
-          classC: false,
-          classE: false,
-          classF: false,
-          suiGeneris: false,
-        },
-        applicationDocumentsUrl: "https://www.test.com",
-        applicationUpdatesUrl: "https://www.test.com/updates",
-        showOpenSpace: true,
-        openSpaceArea: 100,
-        showHousing: true,
-        housing: {
-          residentialUnits: 50,
-          affordableResidentialUnits: 15,
-        },
-        showCarbon: true,
-        carbonEmissions: 500,
-        showAccess: true,
-        access: "Valid access description",
-        showJobs: true,
-        jobs: {
-          min: 10,
-          max: 20,
-        },
-        enableComments: true,
-        consultationDeadline: "2025-01-01",
-        height: 2.5,
-        constructionTime: "2024-2026",
-      },
-    ];
+    const validApplication = generateUniformData();
+    const invalidApplication = generateUniformData({
+      applicationNumber: undefined,
+    });
 
-    const mockRequest = {
-      headers: {
-        get: jest.fn().mockReturnValue("valid_key"),
-      },
-      json: jest.fn().mockResolvedValue(requestBody),
-    } as unknown as NextRequest;
+    const requestBody = [validApplication, invalidApplication];
 
     isUniformIntegrationEnabledMock.mockResolvedValue(true);
     validateUniformDataMock.mockImplementation((data) => {
-      if (data["applicationNumber"] === "67890") {
+      if (!data.applicationNumber) {
         return Promise.resolve({
           errors: [{ message: "Invalid application data" }],
           status: 400,
@@ -381,16 +133,18 @@ describe("Applications PUT endpoint", () => {
       }
       return Promise.resolve({ errors: [], status: 200 });
     });
-    const checkExistingReferenceMock =
-      checkExistingReference as jest.MockedFunction<
-        typeof checkExistingReference
-      >;
     checkExistingReferenceMock.mockResolvedValue(null);
     createApplicationMock.mockResolvedValue(
       {} as SanityDocument<Record<string, any>>,
     );
-
     verifyApiKeyMock.mockReturnValue(true);
+
+    const mockRequest = {
+      headers: {
+        get: jest.fn().mockReturnValue("valid_key"),
+      },
+      json: jest.fn().mockResolvedValue(requestBody),
+    } as unknown as NextRequest;
 
     const response = (await PUT(mockRequest)) as NextResponse;
 

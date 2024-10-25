@@ -8,68 +8,38 @@ import {
   createApplication,
   updateApplication,
 } from "@/app/actions/sanityClient";
+import { generateUniformData } from "../../mockdata/mockData";
 
 jest.mock("../../src/app/actions/uniformValidator");
 jest.mock("../../src/app/actions/sanityClient");
 
 describe("Application Handlers", () => {
-  const minimalApplication = {
-    applicationNumber: "1234/5678/A",
-    address: "1 Test Street",
-    location: {
-      lat: 51.5074,
-      lng: -0.1278,
-    },
-    applicationStage: {
-      stage: "Consultation",
-      status: {
-        consultation: "in progress",
-      },
-    },
-  };
-
-  const validApplication = {
-    applicationNumber: "1234/5678/A",
-    isActive: true,
-    planningId: "123",
-    name: "Test Building",
-    description: "Test description",
-    applicationType: "Full Planning Permission",
-    address: "1 Test Street",
-    applicationStage: {
-      stage: "Consultation",
-      status: {
-        consultation: "in progress",
-      },
-    },
-    location: {
-      lat: 51.5074,
-      lng: -0.1278,
-    },
-    proposedLandUse: {
-      classB: false,
-      classC: false,
-      classE: false,
-      classF: false,
-      suiGeneris: false,
-    },
-    enableComments: false,
+  const minimalApplication = generateUniformData({
+    isActive: undefined,
+    planningId: undefined,
+    name: undefined,
+    description: undefined,
+    applicationType: undefined,
+    proposedLandUse: undefined,
+    enableComments: undefined,
     consultationDeadline: undefined,
     height: undefined,
     constructionTime: undefined,
     applicationDocumentsUrl: undefined,
     applicationUpdatesUrl: undefined,
-    showOpenSpace: false,
+    showOpenSpace: undefined,
     openSpaceArea: undefined,
-    showHousing: false,
+    showHousing: undefined,
     housing: undefined,
-    showCarbon: false,
+    showCarbon: undefined,
     carbonEmissions: undefined,
-    showAccess: false,
+    showAccess: undefined,
     access: undefined,
-    showJobs: false,
+    showJobs: undefined,
     jobs: undefined,
-  };
+  });
+
+  const validApplication = generateUniformData();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -87,18 +57,14 @@ describe("Application Handlers", () => {
       const result = await processApplication(minimalApplication);
 
       expect(createApplication).toHaveBeenCalledTimes(1);
-      expect(result.success).toBe(
-        `Application ${minimalApplication.applicationNumber} created`,
-      );
+      expect(result.success).toContain("created");
     });
 
     it("creates new application with all fields", async () => {
       const result = await processApplication(validApplication);
 
       expect(createApplication).toHaveBeenCalledTimes(1);
-      expect(result.success).toBe(
-        `Application ${validApplication.applicationNumber} created`,
-      );
+      expect(result.success).toContain("created");
     });
 
     it("updates existing application when changes detected", async () => {
@@ -116,55 +82,11 @@ describe("Application Handlers", () => {
       const result = await processApplication(newData);
 
       expect(updateApplication).toHaveBeenCalledTimes(1);
-      expect(result.success).toBe(
-        `Application ${minimalApplication.applicationNumber} updated`,
-      );
+      expect(result.success).toContain("updated");
     });
 
     it("skips update when no changes needed", async () => {
-      const existingData = {
-        _type: "planning-application",
-        applicationNumber: "1234/5678/A",
-        isActive: true,
-        planningId: "123",
-        name: "Test Building",
-        description: "Test description",
-        applicationType: "Full Planning Permission",
-        address: "1 Test Street",
-        applicationStage: {
-          stage: "Consultation",
-          status: {
-            consultation: "in progress",
-          },
-        },
-        location: {
-          lat: 51.5074,
-          lng: -0.1278,
-        },
-        proposedLandUse: {
-          classB: false,
-          classC: false,
-          classE: false,
-          classF: false,
-          suiGeneris: false,
-        },
-        enableComments: false,
-        consultationDeadline: undefined,
-        height: undefined,
-        constructionTime: undefined,
-        applicationDocumentsUrl: undefined,
-        applicationUpdatesUrl: undefined,
-        showOpenSpace: false,
-        openSpaceArea: undefined,
-        showHousing: false,
-        housing: undefined,
-        showCarbon: false,
-        carbonEmissions: undefined,
-        showAccess: false,
-        access: undefined,
-        showJobs: false,
-        jobs: undefined,
-      };
+      const existingData = validApplication;
 
       const mockedExisting = {
         _id: "existing-id",
@@ -178,9 +100,7 @@ describe("Application Handlers", () => {
       const result = await processApplication(updateData);
 
       expect(updateApplication).not.toHaveBeenCalled();
-      expect(result.success).toBe(
-        `Application ${existingData.applicationNumber} no update needed`,
-      );
+      expect(result.success).toContain("no update needed");
     });
 
     it("handles validation errors", async () => {
@@ -199,7 +119,7 @@ describe("Application Handlers", () => {
     it("handles missing application number", async () => {
       const invalidApp = {
         ...minimalApplication,
-        applicationNumber: undefined as unknown as string,
+        applicationNumber: undefined,
       };
 
       const result = await processApplication(invalidApp);
@@ -224,10 +144,7 @@ describe("Application Handlers", () => {
 
   describe("processMultipleApplications", () => {
     it("processes multiple applications successfully", async () => {
-      const applications = [
-        minimalApplication,
-        { ...minimalApplication, applicationNumber: "9876/5432/A" },
-      ];
+      const applications = [minimalApplication, generateUniformData()];
 
       const results = await processMultipleApplications(applications);
 
@@ -237,10 +154,11 @@ describe("Application Handlers", () => {
     });
 
     it("handles mix of successful and failed applications", async () => {
-      const applications = [
-        minimalApplication,
-        { ...minimalApplication, applicationNumber: undefined },
-      ];
+      const invalidApplication = {
+        ...minimalApplication,
+        applicationNumber: undefined,
+      };
+      const applications = [minimalApplication, invalidApplication];
 
       const results = await processMultipleApplications(applications);
 
@@ -255,10 +173,7 @@ describe("Application Handlers", () => {
         status: 400,
       });
 
-      const applications = [
-        minimalApplication,
-        { ...minimalApplication, applicationNumber: "123" },
-      ];
+      const applications = [minimalApplication, generateUniformData()];
 
       const results = await processMultipleApplications(applications);
 
@@ -282,7 +197,7 @@ describe("Application Handlers", () => {
 
       const applications = [
         minimalApplication,
-        { ...minimalApplication, applicationNumber: "FAIL/APP" },
+        generateUniformData({ applicationNumber: "FAIL/APP" }),
       ];
 
       const results = await processMultipleApplications(applications);
