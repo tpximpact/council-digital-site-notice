@@ -12,35 +12,28 @@ export const dynamic = "force-dynamic";
 const Feedback = () => {
   const [application, setApplication] = useState<PlanningApplication>();
   const [question, setQuestion] = useState<number>(0);
-  const [globalConfig, setGlobalConfig] = useState<any>(null);
+  const [initialized, setInitialized] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    const getStorage = getLocalStorage({
-      key: "application",
-      defaultValue: {},
-    });
-    setApplication(getStorage);
-  }, []);
+    const initializePage = async () => {
+      const globalConfig = await getGlobalContent();
+      const storedApplication = getLocalStorage({
+        key: "application",
+        defaultValue: {},
+      });
 
-  useEffect(() => {
-    const fetchGlobalConfig = async () => {
-      try {
-        const config = await getGlobalContent();
-        setGlobalConfig(config);
-      } catch (error) {
-        console.error("Failed to fetch global config:", error);
+      if (globalConfig.globalEnableComments === false) {
+        router.push(`/planning-applications/${storedApplication?._id}`);
+        return;
       }
+
+      setApplication(storedApplication);
+      setInitialized(true);
     };
 
-    fetchGlobalConfig();
-  }, []);
-
-  useEffect(() => {
-    if (globalConfig && globalConfig.globalEnableComments === false) {
-      router.push(`/planning-applications/${application?._id}`);
-    }
-  }, [globalConfig, router, application]);
+    initializePage();
+  }, [router]);
 
   const onChangeQuestion = () => {
     const getStorageSelectedCheckbox = getLocalStorage({
@@ -70,6 +63,10 @@ const Feedback = () => {
       setQuestion(newQuestion);
     }
   };
+
+  if (!initialized) {
+    return null;
+  }
 
   return (
     <>
