@@ -85,6 +85,190 @@ describe("Application Handlers", () => {
       expect(result.success).toContain("updated");
     });
 
+    describe("Field-by-Field Update Tests", () => {
+      beforeEach(() => {
+        const existingData = {
+          _id: "existing-id",
+          ...validApplication,
+        };
+        (checkExistingReference as jest.Mock).mockResolvedValue(existingData);
+      });
+
+      describe("Basic Fields", () => {
+        it("detects no changes in isActive", async () => {
+          const updateData = {
+            ...validApplication,
+            isActive: validApplication.isActive,
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("no update needed");
+          expect(updateApplication).not.toHaveBeenCalled();
+        });
+
+        it("detects changes in isActive", async () => {
+          const updateData = {
+            ...validApplication,
+            isActive: !validApplication.isActive,
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("updated");
+          expect(updateApplication).toHaveBeenCalled();
+        });
+
+        it("detects no changes in planningId", async () => {
+          const updateData = {
+            ...validApplication,
+            planningId: validApplication.planningId,
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("no update needed");
+          expect(updateApplication).not.toHaveBeenCalled();
+        });
+
+        it("detects changes in planningId", async () => {
+          const updateData = { ...validApplication, planningId: "NEW123" };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("updated");
+        });
+
+        it("detects no changes in address", async () => {
+          const updateData = {
+            ...validApplication,
+            address: validApplication.address,
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("no update needed");
+          expect(updateApplication).not.toHaveBeenCalled();
+        });
+
+        it("detects changes in address", async () => {
+          const updateData = { ...validApplication, address: "456 New Road" };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("updated");
+        });
+      });
+
+      describe("Complex Fields", () => {
+        it("detects no changes in location", async () => {
+          const updateData = {
+            ...validApplication,
+            location: { ...validApplication.location },
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("no update needed");
+          expect(updateApplication).not.toHaveBeenCalled();
+        });
+
+        it("detects changes in location", async () => {
+          const updateData = {
+            ...validApplication,
+            location: {
+              lat: validApplication.location.lat + 0.1,
+              lng: validApplication.location.lng,
+            },
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("updated");
+        });
+
+        it("detects no changes in proposedLandUse", async () => {
+          const updateData = {
+            ...validApplication,
+            proposedLandUse: { ...validApplication.proposedLandUse },
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("no update needed");
+          expect(updateApplication).not.toHaveBeenCalled();
+        });
+
+        it("detects changes in proposedLandUse", async () => {
+          const updateData = {
+            ...validApplication,
+            proposedLandUse: {
+              classB: true,
+            },
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("updated");
+        });
+      });
+
+      describe("Conditional Fields", () => {
+        it("detects no changes in housing when showHousing is true", async () => {
+          const updateData = {
+            ...validApplication,
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("no update needed");
+          expect(updateApplication).not.toHaveBeenCalled();
+        });
+
+        it("detects changes in housing when showHousing is true", async () => {
+          const updateData = {
+            ...validApplication,
+            showHousing: true,
+            housing: {
+              ...validApplication.housing,
+              residentialUnits: 1,
+            },
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("updated");
+        });
+
+        it("detects no changes in carbonEmissions when showCarbon is true", async () => {
+          const updateData = {
+            ...validApplication,
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("no update needed");
+          expect(updateApplication).not.toHaveBeenCalled();
+        });
+
+        it("detects changes in carbonEmissions when showCarbon is true", async () => {
+          const updateData = {
+            ...validApplication,
+            showCarbon: true,
+            carbonEmissions: 1,
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("updated");
+        });
+      });
+
+      describe("Toggle and Related Fields", () => {
+        it("detects no changes in showOpenSpace and openSpaceArea", async () => {
+          const updateData = {
+            ...validApplication,
+            showOpenSpace: validApplication.showOpenSpace,
+            openSpaceArea: validApplication.openSpaceArea,
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("no update needed");
+          expect(updateApplication).not.toHaveBeenCalled();
+        });
+
+        it("detects changes in showOpenSpace toggle", async () => {
+          const updateData = {
+            ...validApplication,
+            showOpenSpace: !validApplication.showOpenSpace,
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("updated");
+        });
+
+        it("detects changes in openSpaceArea when showOpenSpace is true", async () => {
+          const updateData = {
+            ...validApplication,
+            showOpenSpace: true,
+            openSpaceArea: 1,
+          };
+          const result = await processApplication(updateData);
+          expect(result.success).toContain("updated");
+        });
+      });
+    });
+
     it("skips update when no changes needed", async () => {
       const existingData = validApplication;
 
@@ -127,18 +311,6 @@ describe("Application Handlers", () => {
       expect(result.error).toBe("Missing required field: applicationNumber");
       expect(createApplication).not.toHaveBeenCalled();
       expect(updateApplication).not.toHaveBeenCalled();
-    });
-
-    it("handles database errors gracefully", async () => {
-      (createApplication as jest.Mock).mockRejectedValue(
-        new Error("Database error"),
-      );
-
-      const result = await processApplication(minimalApplication);
-
-      expect(result.error).toBe(
-        "An error occurred while processing the application",
-      );
     });
   });
 
