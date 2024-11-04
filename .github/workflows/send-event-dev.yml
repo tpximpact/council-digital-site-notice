@@ -19,8 +19,11 @@ jobs:
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             https://api.github.com/repos/${{ secrets.DEPLOYMENT_TARGET_OWNER }}/${{ secrets.DEPLOYMENT_TARGET_REPO }}/dispatches \
             -d '{"event_type":"code_update_develop","client_payload":{"description":"develop branch has been updated"}}')
-          echo "Response code: $response"
-          if [ "$response" -ne 200 ]; then
+          http_code="${response: -3}"
+          response_body="${response::-3}"
+          echo "Response code: $http_code"
+          echo "Response body: $response_body"
+          if [ "$http_code" -ne 200 ]; then
             echo "Failed to send repository dispatch event"
             exit 1
           fi
