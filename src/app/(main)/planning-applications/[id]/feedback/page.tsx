@@ -4,20 +4,36 @@ import Instructions from "./instructions";
 import Questions from "../../../../../components/questions";
 import { getLocalStorage } from "../../../../lib/application";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
+import { getGlobalContent } from "@/app/actions/sanityClient";
+import { useRouter } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 const Feedback = () => {
   const [application, setApplication] = useState<PlanningApplication>();
   const [question, setQuestion] = useState<number>(0);
+  const [initialized, setInitialized] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    const getStorage = getLocalStorage({
-      key: "application",
-      defaultValue: {},
-    });
-    setApplication(getStorage);
-  }, []);
+    const initializePage = async () => {
+      const globalConfig = await getGlobalContent();
+      const storedApplication = getLocalStorage({
+        key: "application",
+        defaultValue: {},
+      });
+
+      if (globalConfig.globalEnableComments === false) {
+        router.push(`/planning-applications/${storedApplication?._id}`);
+        return;
+      }
+
+      setApplication(storedApplication);
+      setInitialized(true);
+    };
+
+    initializePage();
+  }, [router]);
 
   const onChangeQuestion = () => {
     const getStorageSelectedCheckbox = getLocalStorage({
@@ -47,6 +63,10 @@ const Feedback = () => {
       setQuestion(newQuestion);
     }
   };
+
+  if (!initialized) {
+    return null;
+  }
 
   return (
     <>
