@@ -1,7 +1,7 @@
 // src/app/(studio)/studio/page.tsx
 "use client";
+import { metadata } from "next-sanity/studio";
 import Head from "next/head";
-import { metadata } from "next-sanity/studio/metadata";
 
 function StudioPage() {
   return (
