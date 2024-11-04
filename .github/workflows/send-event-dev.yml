@@ -6,8 +6,7 @@ on:
       - fix/deployment-workflow
 
 permissions:
-  contents: write
-  actions: read
+  permissions: write-all
 
 jobs:
   send-event:
