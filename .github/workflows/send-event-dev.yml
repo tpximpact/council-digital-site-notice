@@ -5,8 +5,7 @@ on:
     branches:
       - fix/deployment-workflow
 
-permissions:
-  permissions: write-all
+permissions: write-all
 
 jobs:
   send-event:
