@@ -1,0 +1,6 @@
+@import "node_modules/govuk-frontend/dist/govuk/base";
+@import "node_modules/govuk-frontend/dist/govuk/objects/index";
+
+footer {
+  margin-top: govuk-spacing(6);
+}

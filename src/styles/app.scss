@@ -1,12 +1,26 @@
-$govuk-font-family: Arial, Helvetica, sans-serif;
+// 01-settings
+@import "./01-settings/vars";
 
-@import "node_modules/govuk-frontend/govuk/all";
+// 02-tools
+
+// 03-generic
+@import "node_modules/govuk-frontend/dist/govuk/all";
 @import "~react-image-gallery/styles/scss/image-gallery.scss";
-@import "./layout.scss";
-@import "./home.scss";
-@import "./feedback.scss";
-@import "./application.scss";
 
-$govuk-assets-path: 'public/assets/';
+// 04-elements
 
+// 05-objects
 
+// 06-components
+@import "./06-components/footer";
+@import "./06-components/header";
+@import "./06-components/planning-application-cards";
+@import "./06-components/planning-application-card";
+@import "./06-components/pagination";
+
+// 07-trumps
+
+// @import "./layout.scss";
+// @import "./home.scss";
+// @import "./feedback.scss";
+// @import "./application.scss";
