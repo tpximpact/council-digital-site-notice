@@ -14,19 +14,13 @@ const PlanningApplicationList = ({
 }) => {
   const router = useRouter();
   return (
-    <section className="wrap-planning-application">
+    <section className="dsn-planning-application-cards">
       {data &&
         data.map(
           (
             { _id, image_head, name, address, location, distance }: any,
             index,
           ) => {
-            const itemsPerRow = 3;
-            const itemsPerPage = itemsPerRow * 2;
-            const isLastItem = index === data.length - 1;
-            const isFirstRowOnPage = index % itemsPerPage < itemsPerRow;
-            const isLastRowOnPage = index % itemsPerPage >= itemsPerRow;
-
             return (
               <div
                 key={_id}
@@ -40,36 +34,32 @@ const PlanningApplicationList = ({
                     router.push(`/planning-applications/${_id}`);
                   }
                 }}
-                className={`planning-application-link ${isLastItem && "planning-application-last-item"} ${isLastRowOnPage && "planning-application-last-row"} ${isFirstRowOnPage && "planning-application-first-row"}`}
+                className={`dsn-planning-application-card`}
               >
-                {image_head && (
-                  <Image
-                    width={310}
-                    height={223}
-                    alt={`development ${_id}`}
-                    src={urlFor(image_head).url()}
-                    style={{ maxWidth: "100%" }}
-                  />
-                )}
-                <div style={{ paddingTop: "20px" }}>
+                <div
+                  className="dsn-planning-application-card__image"
+                  style={{
+                    backgroundImage: image_head
+                      ? `url(${urlFor(image_head).url()})`
+                      : "none",
+                  }}
+                ></div>
+                <p className="dsn-planning-application-card__title">
                   <Link
-                    className="govuk-link govuk-link--no-visited-state link-application"
+                    className=" govuk-link govuk-link--no-visited-state"
                     href={`/planning-applications/${_id}`}
                   >
                     {name || address}
                   </Link>
-                  <span className="planning-application-text">
-                    <p className="govuk-body" style={{ marginBottom: 0 }}>
-                      <LocalIcon />{" "}
-                      {distance != undefined && (
-                        <span style={{ marginRight: "2px" }}>
-                          {distance}{" "}
-                          {parseFloat(distance) > 0 ? "miles" : "mile"} &#x2022;
-                        </span>
-                      )}
-                      {address}
-                    </p>
-                  </span>
+                </p>
+                <div className="govuk-body dsn-planning-application-card__meta">
+                  {distance || (address && <LocalIcon />)}
+                  {distance && (
+                    <span>
+                      {distance} {parseFloat(distance) > 0 ? "miles" : "mile"}
+                    </span>
+                  )}
+                  {address && <span>{address}</span>}
                 </div>
               </div>
             );

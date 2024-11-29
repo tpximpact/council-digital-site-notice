@@ -1,0 +1,31 @@
+@import "node_modules/govuk-frontend/dist/govuk/base";
+@import "node_modules/govuk-frontend/dist/govuk/objects/index";
+
+.dsn-planning-application-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: $govuk-gutter-half * 2;
+  @include govuk-media-query($from: tablet) {
+    grid-template-columns: 1fr 1fr;
+
+    // # last row
+    > *:nth-last-child(-n + 2) {
+      border-color: transparent;
+    }
+  }
+  @include govuk-media-query($from: desktop) {
+    gap: $govuk-gutter-half * 3;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    // # first row
+    // > *:nth-child(-n + 3) {
+    // background-color: red;
+    // }
+
+    // # last row
+    > *:nth-last-child(-n + 3) {
+      border-color: transparent;
+    }
+  }
+}
