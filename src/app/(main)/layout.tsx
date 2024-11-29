@@ -3,7 +3,6 @@ import Banner from "@/components/banner";
 import CookiesBanner from "@/components/cookies";
 import GoogleAnalytics from "@/components/google-analytics";
 import { urlFor } from "../actions/sanityClient";
-import "../../styles/app.scss";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getGlobalContent } from "../actions/sanityClient";

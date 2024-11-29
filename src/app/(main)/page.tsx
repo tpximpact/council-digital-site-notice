@@ -1,6 +1,5 @@
 "use client";
 
-import "../../styles/app.scss";
 import { useEffect, useState, useCallback } from "react";
 import PlanningApplicationList from "@/components/planning-application-list";
 import {
@@ -18,6 +17,7 @@ import { getLocationFromPostcode } from "../actions/actions";
 import { getGlobalContent } from "../actions/sanityClient";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { PlanningApplication } from "../../../sanity/sanity.types";
+import ButtonStart from "@/components/buttonStart";
 
 const Home = () => {
   const itemsPerPage = 6;
@@ -145,36 +145,34 @@ const Home = () => {
   };
 
   return (
-    <div className="wrap-home">
-      <h1
-        className="govuk-heading-xl"
-        aria-level={1}
-        style={{ display: "inline-block" }}
-      >
+    <>
+      <h1 className="govuk-heading-xl" aria-level={1}>
         Find planning applications near you
       </h1>
-      <p className="govuk-body-m">
-        Find, review and leave your comments on planning applications in{" "}
-        {globalConfig?.councilName}
-      </p>
-      <section className="search-grid">
-        <Input
-          id="search-postcode"
-          label="Enter a postcode to find planning applications nearby"
-          type="text"
-          value={postcode}
-          onChange={(e) => setPostcode(e)}
-          isError={locationNotFound}
-          messageError="Please enter a valid postcode"
-          autocomplete="postal-code"
-        />
-        <Button
-          className="grid-button-search"
-          content="Search"
-          icon={<ArrowIcon />}
-          onClick={() => onSearchPostCode()}
-        />
-        <div className="grid-button-signup">
+
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-two-thirds">
+          <p className="govuk-body">
+            Find, review and leave your comments on planning applications in{" "}
+            {globalConfig?.councilName}
+          </p>
+        </div>
+      </div>
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-one-half">
+          <Input
+            id="search-postcode"
+            label="Enter a postcode to find planning applications nearby"
+            type="text"
+            value={postcode}
+            onChange={(e) => setPostcode(e)}
+            isError={locationNotFound}
+            messageError="Please enter a valid postcode"
+            autocomplete="postal-code"
+          />
+          <ButtonStart content="Search" onClick={() => onSearchPostCode()} />
+        </div>
+        <div className="govuk-grid-column-one-half">
           {globalConfig?.signUpUrl && (
             <Link
               className="govuk-button govuk-button--secondary"
@@ -186,39 +184,35 @@ const Home = () => {
             </Link>
           )}
         </div>
-      </section>
+      </div>
       {displayData && (
         <PlanningApplicationList data={displayData} searchLocation={location} />
       )}
 
-      <div className="wrap-pagination">
-        <ul>
-          {pageCount > 0 && (
-            <ReactPaginate
-              breakLabel="..."
-              nextLabel={<NextIcon />}
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={2}
-              marginPagesDisplayed={1}
-              pageCount={pageCount}
-              previousLabel={<PreviewIcon />}
-              pageClassName="page-item"
-              pageLinkClassName="page-link"
-              previousClassName="page-item"
-              previousLinkClassName="page-link"
-              nextClassName="page-item"
-              nextLinkClassName="page-link"
-              breakClassName="page-item"
-              breakLinkClassName="page-link"
-              containerClassName="pagination govuk-body"
-              activeClassName="active"
-              forcePage={selectedPage}
-              renderOnZeroPageCount={null}
-            />
-          )}
-        </ul>
-      </div>
-    </div>
+      {pageCount > 0 && (
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel={<NextIcon />}
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={2}
+          marginPagesDisplayed={1}
+          pageCount={pageCount}
+          previousLabel={<PreviewIcon />}
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination govuk-body"
+          activeClassName="active"
+          forcePage={selectedPage}
+          renderOnZeroPageCount={null}
+        />
+      )}
+    </>
   );
 };
 
