@@ -1,0 +1,45 @@
+$govuk-accordion-base-colour: govuk-colour("black");
+$govuk-accordion-hover-colour: govuk-colour("light-grey");
+
+.pagination {
+  @include govuk-font($size: 16, $line-height: 1);
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: $govuk-gutter-half;
+
+  $button-shadow-size: $govuk-border-width-form-element;
+
+  .page-link {
+    cursor: pointer;
+    padding: govuk-spacing(3) govuk-spacing(4);
+
+    &:hover {
+      color: $govuk-accordion-base-colour;
+      background: $govuk-accordion-hover-colour;
+    }
+
+    &:focus {
+      @include govuk-focused-text;
+    }
+  }
+
+  .page-item.active .page-link {
+    background-color: $govuk-brand-colour;
+    color: govuk-colour("white");
+
+    &:hover {
+      background-color: govuk-shade($govuk-brand-colour, 10%);
+      color: govuk-colour("white");
+    }
+  }
+}

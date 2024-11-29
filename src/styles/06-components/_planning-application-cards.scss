@@ -4,6 +4,7 @@
 .dsn-planning-application-cards {
   display: grid;
   grid-template-columns: 1fr;
+  margin-bottom: govuk-spacing(6);
 
   gap: $govuk-gutter-half * 2;
   @include govuk-media-query($from: tablet) {

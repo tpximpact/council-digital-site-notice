@@ -11,28 +11,26 @@ const Pagination = ({ data, onSelectPage, itemsPerPage }: any) => {
   };
 
   return (
-    <div className="wrap-pagination">
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel={<NextIcon />}
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={2}
-        marginPagesDisplayed={1}
-        pageCount={pageCount}
-        previousLabel={<PreviewIcon />}
-        pageClassName="page-item"
-        pageLinkClassName="page-link"
-        previousClassName="page-item"
-        previousLinkClassName="page-link"
-        nextClassName="page-item"
-        nextLinkClassName="page-link"
-        breakClassName="page-item"
-        breakLinkClassName="page-link"
-        containerClassName="pagination govuk-body"
-        activeClassName="active"
-        renderOnZeroPageCount={null}
-      />
-    </div>
+    <ReactPaginate
+      breakLabel="..."
+      nextLabel={<NextIcon />}
+      onPageChange={handlePageClick}
+      pageRangeDisplayed={2}
+      marginPagesDisplayed={1}
+      pageCount={pageCount}
+      previousLabel={<PreviewIcon />}
+      pageClassName="page-item"
+      pageLinkClassName="page-link"
+      previousClassName="page-item"
+      previousLinkClassName="page-link"
+      nextClassName="page-item"
+      nextLinkClassName="page-link"
+      breakClassName="page-item"
+      breakLinkClassName="page-link"
+      containerClassName="pagination govuk-body"
+      activeClassName="active"
+      renderOnZeroPageCount={null}
+    />
   );
 };
 
