@@ -1,0 +1,27 @@
+.dsn-comment-head {
+  display: flex;
+  flex-direction: row;
+  gap: govuk-spacing(4);
+
+  &__image {
+    background-color: govuk-colour("light-grey");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 57px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: govuk-spacing(1);
+
+    > * {
+      margin: 0;
+      color: govuk-colour("white");
+    }
+
+    @extend .govuk-body;
+  }
+}

@@ -1,0 +1,38 @@
+// feeling style
+.wrap-icons-feeling {
+  display: flex;
+  justify-content: space-between;
+  max-width: 25rem;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+
+    > span {
+      text-align: center;
+      margin-top: 5px;
+    }
+  }
+}
+
+.sentiment-button {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  background: none;
+  padding: 10px;
+  height: fit-content;
+
+  svg {
+    margin: 0 auto;
+  }
+
+  span {
+    margin-bottom: 0;
+  }
+
+  &::focus-visible {
+    background-color: $govuk-focus-colour;
+    outline: govuk-focus-colour;
+  }
+}

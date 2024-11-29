@@ -28,21 +28,16 @@ const FeedbackMessage = () => {
   }, []);
 
   return (
-    <section>
-      <div className="wrap-message-reference">
-        <h1 className="govuk-heading-l"> Comment submitted</h1>
-        <h2 className="govuk-body-l"> Your reference number</h2>
-        <h2
-          className="govuk-body-l"
-          aria-label={
-            formId
-              ? `Reference Number: ${formId}`
-              : "No Reference Number Provided"
-          }
-        >
-          {formId || "Reference Number Unavailable"}
-        </h2>
+    <>
+      <div className="govuk-panel govuk-panel--confirmation">
+        <h1 className="govuk-panel__title">Comment submitted</h1>
+        <div className="govuk-panel__body">
+          {formId
+            ? `Your reference number ${formId}`
+            : "Reference Number Unavailable"}
+        </div>
       </div>
+
       <div style={{ display: "flex", marginTop: "25px" }}>
         {application?.image_head && (
           <Image
@@ -114,7 +109,7 @@ const FeedbackMessage = () => {
           </Link>
         </>
       )}
-    </section>
+    </>
   );
 };
 

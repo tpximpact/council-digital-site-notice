@@ -135,7 +135,7 @@ function CheckAnswers({
   };
 
   return (
-    <div style={{ maxWidth: "64rem" }}>
+    <>
       <BackLink content="Back" onClick={() => setQuestion(11)} />
       <h1 className="govuk-heading-xl">
         Check your responses before submitting
@@ -193,7 +193,7 @@ function CheckAnswers({
       />
 
       <Button content="Submit your comments" onClick={() => submit()} />
-    </div>
+    </>
   );
 }
 

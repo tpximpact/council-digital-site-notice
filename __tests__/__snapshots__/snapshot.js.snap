@@ -74,11 +74,6 @@ exports[`renders homepage unchanged 1`] = `
         class="grid-button-signup"
       />
     </section>
-    <div
-      class="wrap-pagination"
-    >
-      <ul />
-    </div>
   </div>
 </div>
 `;

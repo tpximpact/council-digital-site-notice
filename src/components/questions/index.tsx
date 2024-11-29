@@ -59,9 +59,7 @@ const FeedbackQuestions = ({
     }
   };
 
-  return (
-    <section className="wrap-feedback-question">{switchComponent()}</section>
-  );
+  return <>{switchComponent()}</>;
 };
 
 export default FeedbackQuestions;
