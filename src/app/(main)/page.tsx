@@ -1,6 +1,4 @@
 "use client";
-
-import "../../styles/app.scss";
 import { useEffect, useState, useCallback } from "react";
 import PlanningApplicationList from "@/components/planning-application-list";
 import {
