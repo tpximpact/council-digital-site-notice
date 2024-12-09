@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 import { getGlobalContent } from "../actions/sanityClient";
 import { Suspense } from "react";
 import { GovUkInitAll } from "@/components/GovUkInitAll";
+import Footer from "@/components/footer";
 
 export const globalContent = await getGlobalContent();
 
@@ -44,12 +45,16 @@ export default async function MainLayout({
         Skip to main content
       </a>
       <Header globalConfig={globalContent} />
+      {/* uncomment to have banner centered */}
+      {/* <div className="govuk-width-container"> */}
       <Banner globalConfig={globalContent} />
+      {/* </div> */}
       <main className="govuk-main-wrapper" id="main">
         <div className="govuk-width-container">
           <Suspense>{children}</Suspense>
         </div>
       </main>
+      <Footer />
       <GovUkInitAll />
     </>
   );
