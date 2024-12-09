@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 const PlanningApplicationList = ({ data }: { data: PlanningApplication[] }) => {
   const router = useRouter();
+  console.log(data);
   return (
     <section className="dsn-planning-application-cards">
       {data &&
