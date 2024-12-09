@@ -2,24 +2,24 @@
 
 exports[`renders homepage unchanged 1`] = `
 <div>
-  <div
-    class="wrap-home"
+  <h1
+    aria-level="1"
+    class="govuk-heading-xl"
+    style="display: inline-block;"
   >
-    <h1
-      aria-level="1"
-      class="govuk-heading-xl"
-      style="display: inline-block;"
-    >
-      Find planning applications near you
-    </h1>
-    <p
-      class="govuk-body-m"
-    >
-      Find, review and leave your comments on planning applications in
-       
-    </p>
-    <section
-      class="search-grid"
+    Find planning applications near you
+  </h1>
+  <p
+    class="govuk-body-m"
+  >
+    Find, review and leave your comments on planning applications in
+     
+  </p>
+  <div
+    class="govuk-grid-row"
+  >
+    <div
+      class="govuk-grid-column-one-half"
     >
       <div
         class="govuk-form-group false"
@@ -44,41 +44,29 @@ exports[`renders homepage unchanged 1`] = `
         />
       </div>
       <button
-        class="govuk-button grid-button-search"
-        data-module="govuk-button"
+        class="govuk-button govuk-button--start"
+        draggable="false"
       >
         Search
-        <span
-          class="undefined"
-          style="margin-left: 10px; vertical-align: middle;"
+        <svg
+          aria-hidden="true"
+          class="govuk-button__start-icon"
+          focusable="false"
+          height="19"
+          viewBox="0 0 33 40"
+          width="17.5"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <svg
-            aria-label="search postcode"
-            fill="none"
-            height="19"
-            role="img"
-            viewBox="0 0 19 19"
-            width="19"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              clip-rule="evenodd"
-              d="M0.772461 0L10.8382 9.5L0.772461 19H8.20461L16.5662 11.1083L18.2703 9.5L16.5662 7.89172L8.20461 0H0.772461Z"
-              fill="white"
-              fill-rule="evenodd"
-            />
-          </svg>
-        </span>
+          <path
+            d="M0 0h13l20 20-20 20H0l20-20z"
+            fill="currentColor"
+          />
+        </svg>
       </button>
-      <div
-        class="grid-button-signup"
-      />
-    </section>
-    <div
-      class="wrap-pagination"
-    >
-      <ul />
     </div>
+    <div
+      class="govuk-grid-column-one-half"
+    />
   </div>
 </div>
 `;

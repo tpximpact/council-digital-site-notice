@@ -117,25 +117,6 @@
   padding: 10px 18px;
 }
 
-.wrap-pagination {
-  display: flex;
-  justify-content: center;
-}
-.pagination {
-  display: flex;
-  justify-content: space-between;
-  height: 2rem;
-  padding: 10px;
-  min-width: 15rem;
-}
-
-.active {
-  background-color: #1d70b8;
-  color: white;
-  font-weight: 700;
-  align-self: baseline;
-}
-
 @media (max-width: 900px) {
   .search-grid {
     display: flex;
@@ -154,5 +135,5 @@
 }
 
 .govuk-back-link {
-cursor: pointer;
+  cursor: pointer;
 }
