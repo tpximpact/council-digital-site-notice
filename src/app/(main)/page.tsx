@@ -156,9 +156,7 @@ const Home = () => {
         postcode={postcode}
       />
 
-      {displayData && (
-        <PlanningApplicationList data={displayData} searchLocation={location} />
-      )}
+      {displayData && <PlanningApplicationList data={displayData} />}
 
       {pageCount > 0 && (
         <ReactPaginate

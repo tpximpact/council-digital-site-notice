@@ -1,80 +1,65 @@
 import Link from "next/link";
-import Image from "next/image";
 import { LocalIcon } from "../../../public/assets/icons";
 import { urlFor } from "@/app/actions/sanityClient";
 import { PlanningApplication } from "../../../sanity/sanity.types";
 import { useRouter } from "next/navigation";
 
-const PlanningApplicationList = ({
-  data,
-  searchLocation,
-}: {
-  data: PlanningApplication[];
-  searchLocation: any;
-}) => {
+const PlanningApplicationList = ({ data }: { data: PlanningApplication[] }) => {
   const router = useRouter();
   return (
-    <section className="wrap-planning-application">
+    <section className="dsn-planning-application-cards">
       {data &&
-        data.map(
-          (
-            { _id, image_head, name, address, location, distance }: any,
-            index,
-          ) => {
-            const itemsPerRow = 3;
-            const itemsPerPage = itemsPerRow * 2;
-            const isLastItem = index === data.length - 1;
-            const isFirstRowOnPage = index % itemsPerPage < itemsPerRow;
-            const isLastRowOnPage = index % itemsPerPage >= itemsPerRow;
+        data.map(({ _id, image_head, name, address, distance }: any, index) => {
+          const MetaDistance = () => {
+            if (distance && parseFloat(distance) > 0) {
+              return (
+                <span>
+                  {distance} {parseFloat(distance) > 0 ? "miles" : "mile"}
+                </span>
+              );
+            }
+            return null;
+          };
 
+          const MetaAddress = () => {
+            if (address) {
+              return <span>{address}</span>;
+            }
+            return null;
+          };
+
+          if (name || address) {
             return (
-              <div
+              <Link
                 key={_id}
-                onClick={() => {
-                  router.push(`/planning-applications/${_id}`);
-                }}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    router.push(`/planning-applications/${_id}`);
-                  }
-                }}
-                className={`planning-application-link ${isLastItem && "planning-application-last-item"} ${isLastRowOnPage && "planning-application-last-row"} ${isFirstRowOnPage && "planning-application-first-row"}`}
+                href={`/planning-applications/${_id}`}
+                className={`dsn-planning-application-card`}
               >
-                {image_head && (
-                  <Image
-                    width={310}
-                    height={223}
-                    alt={`development ${_id}`}
-                    src={urlFor(image_head).url()}
-                    style={{ maxWidth: "100%" }}
-                  />
+                <div
+                  className="dsn-planning-application-card__image"
+                  style={{
+                    backgroundImage: image_head
+                      ? `url(${urlFor(image_head).url()})`
+                      : "none",
+                  }}
+                ></div>
+                <p className="dsn-planning-application-card__title">
+                  {name || address}
+                </p>
+                {(MetaAddress() || MetaDistance()) && (
+                  <div className="dsn-planning-application-card__meta">
+                    <div className="dsn-planning-application-card__meta-items">
+                      <MetaDistance />
+                      <MetaAddress />
+                    </div>
+                  </div>
                 )}
-                <div style={{ paddingTop: "20px" }}>
-                  <Link
-                    className="govuk-link govuk-link--no-visited-state link-application"
-                    href={`/planning-applications/${_id}`}
-                  >
-                    {name || address}
-                  </Link>
-                  <span className="planning-application-text">
-                    <p className="govuk-body" style={{ marginBottom: 0 }}>
-                      <LocalIcon />{" "}
-                      {distance != undefined && (
-                        <span style={{ marginRight: "2px" }}>
-                          {distance}{" "}
-                          {parseFloat(distance) > 0 ? "miles" : "mile"} &#x2022;
-                        </span>
-                      )}
-                      {address}
-                    </p>
-                  </span>
-                </div>
-              </div>
+              </Link>
             );
-          },
-        )}
+          } else {
+            return null;
+          }
+        })}
     </section>
   );
 };
