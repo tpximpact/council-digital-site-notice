@@ -38,7 +38,7 @@ const ImageGallery = ({
             }}
           ></div>
 
-          <div>
+          <div className="dpr-gallery__lightbox-navigation">
             <button
               className="dpr-gallery__button"
               onClick={() => setSelectedImage(selectedImage - 1)}
