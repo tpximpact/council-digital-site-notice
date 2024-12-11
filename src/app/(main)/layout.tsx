@@ -48,11 +48,7 @@ export default async function MainLayout({
       {/* <div className="govuk-width-container"> */}
       <Banner globalConfig={globalContent} />
       {/* </div> */}
-      <main className="govuk-main-wrapper" id="main">
-        <div className="govuk-width-container">
-          <Suspense>{children}</Suspense>
-        </div>
-      </main>
+      <Suspense>{children}</Suspense>
       <Footer />
       <GovUkInitAll />
     </>

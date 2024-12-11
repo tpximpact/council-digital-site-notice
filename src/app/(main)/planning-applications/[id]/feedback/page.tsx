@@ -6,6 +6,7 @@ import { getLocalStorage } from "../../../../lib/application";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 import { getGlobalContent } from "@/app/actions/sanityClient";
 import { useRouter } from "next/navigation";
+import PageWrapper from "@/components/pageWrapper";
 
 export const dynamic = "force-dynamic";
 
@@ -69,14 +70,14 @@ const Feedback = () => {
   }
 
   return (
-    <>
+    <PageWrapper isCentered={true}>
       {question !== 0 && question !== 13 && <Instructions />}
       <Questions
         question={question}
         onChangeQuestion={() => onChangeQuestion()}
         setQuestion={setQuestion}
       />
-    </>
+    </PageWrapper>
   );
 };
 

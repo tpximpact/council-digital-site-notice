@@ -136,7 +136,7 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div className="govuk-width-container">
       <h1
         className="govuk-heading-xl"
         aria-level={1}
@@ -181,7 +181,7 @@ const Home = () => {
           renderOnZeroPageCount={null}
         />
       )}
-    </>
+    </div>
   );
 };
 
