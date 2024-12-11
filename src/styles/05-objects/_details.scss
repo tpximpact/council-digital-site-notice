@@ -1,0 +1,25 @@
+.govuk-details--inverted {
+  color: govuk-colour("white");
+
+  .govuk-body {
+    color: govuk-colour("white");
+  }
+
+  @supports not (-ms-ime-align: auto) {
+    .govuk-details__summary {
+      color: govuk-colour("white");
+
+      &:hover {
+        color: govuk-colour("white");
+      }
+
+      &:focus {
+        color: govuk-colour("black");
+      }
+    }
+
+    .govuk-details__text {
+      border-left-color: govuk-colour("white");
+    }
+  }
+}

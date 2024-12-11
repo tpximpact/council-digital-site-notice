@@ -12,15 +12,13 @@ describe("Breadcrumbs", () => {
   ];
 
   it("should render correctly", () => {
-    render(<Breadcrumbs breadcrumbs_info={mockBreadcrumbs} />);
+    render(<Breadcrumbs breadcrumbs={mockBreadcrumbs} />);
     expect(screen.getByText("Planning applications")).toBeInTheDocument();
     expect(screen.getByText("Murphy's Yard")).toBeInTheDocument();
   });
 
   it("should have no accessibility violations", async () => {
-    const { container } = render(
-      <Breadcrumbs breadcrumbs_info={mockBreadcrumbs} />,
-    );
+    const { container } = render(<Breadcrumbs breadcrumbs={mockBreadcrumbs} />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

@@ -1,0 +1,77 @@
+.dsn-impact {
+  margin-bottom: govuk-spacing(4);
+  background-color: $govuk-brand-colour;
+  padding: govuk-spacing(6) 0;
+  color: govuk-colour("white");
+
+  &__heading {
+    @extend %govuk-heading-l;
+    color: govuk-colour("white");
+  }
+
+  &__body {
+    @extend %govuk-body-m;
+    color: govuk-colour("white");
+  }
+
+  &__sections {
+    margin-top: govuk-spacing(8);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: govuk-spacing(6);
+    row-gap: govuk-spacing(8);
+    @include govuk-media-query($from: tablet) {
+      grid-template-columns: 1fr 1fr;
+    }
+    @include govuk-media-query($from: desktop) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  // section
+
+  &__section-heading {
+    @extend %govuk-heading-m;
+    color: govuk-colour("white");
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    &:after {
+      content: "";
+      width: 64px;
+      height: 64px;
+      background-color: transparent;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: block;
+    }
+  }
+  &__section-body {
+    @extend %govuk-body-m;
+    color: govuk-colour("white");
+    p:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  $sections: (
+    "housing",
+    "healthcare",
+    "open-spaces",
+    "jobs",
+    "carbon-emissions",
+    "access"
+  );
+
+  @each $section in $sections {
+    &__section--#{$section} {
+      .dsn-impact__section-heading:after {
+        background-image: url("/assets/components/impact/#{$section}.svg");
+      }
+    }
+  }
+}

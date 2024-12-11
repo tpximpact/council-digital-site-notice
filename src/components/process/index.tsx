@@ -1,13 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowIcon } from "../../../public/assets/icons";
-import {
-  aplicationStageStyle,
-  applicationStageMessage,
-} from "@/app/lib/application";
 import { useEffect, useState } from "react";
 import { getGlobalContent } from "@/app/actions/sanityClient";
 import { PlanningApplication } from "../../../sanity/sanity.types";
+import PageCenter from "../pageCenter";
+import ButtonStart from "../buttonStart";
+import ApplicationStatus from "../applicationStatus";
 
 function Process({
   data,
@@ -25,100 +23,75 @@ function Process({
     })();
   }, []);
 
-  const singleApplicationStatus =
-    data?.applicationStage?.status[
-      data?.applicationStage?.stage.toLowerCase() as keyof typeof data.applicationStage.status
-    ];
-  const checkStage =
-    parseFloat(consultationDeadline) <= 0 &&
-    data?.applicationStage?.stage === "Consultation" &&
-    singleApplicationStatus === "in progress"
-      ? "Assessment"
-      : data?.applicationStage?.stage;
   return (
-    <section className="process-wrap">
+    <PageCenter>
       <h2 className="govuk-heading-l">Where are we in the process?</h2>
-      {globalConfig?.planningProcessUrl && (
-        <Link
-          className="govuk-link govuk-link--no-visited-state"
-          href={globalConfig?.planningProcessUrl}
-          target="_blank"
-        >
-          Find out more about the planning process
-        </Link>
-      )}
-      <div className="wrap-grid-button">
-        <div className="process-grid">
-          <h3 className="govuk-body govuk-!-font-weight-bold process-consultation">
-            {checkStage}
-          </h3>
-          <p
-            className={`govuk-body process-consultation-result ${aplicationStageStyle(singleApplicationStatus ?? "")}`}
-          >
-            <span>{singleApplicationStatus?.toUpperCase()}</span>
-          </p>
-          {data?.enableComments &&
-            parseFloat(consultationDeadline) > 0 &&
-            data?.applicationStage?.stage == "Consultation" && (
-              <p className="govuk-body application-days">
-                {consultationDeadline}{" "}
-                {parseFloat(consultationDeadline) > 1 ? "days" : "day"} left
-              </p>
-            )}
 
-          <p
-            className={`govuk-body ${data?.applicationStage?.stage !== "Consultation" ? "hiden-date" : "show-date"}`}
+      {globalConfig?.planningProcessUrl && (
+        <p className="govuk-body">
+          <Link
+            className="govuk-link govuk-link--no-visited-state"
+            href={globalConfig?.planningProcessUrl}
+            target="_blank"
           >
-            {applicationStageMessage(checkStage, singleApplicationStatus ?? "")}
-          </p>
+            Find out more about the planning process
+          </Link>
+        </p>
+      )}
+
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-one-half">
+          <ApplicationStatus
+            data={data}
+            consultationDeadline={consultationDeadline}
+          />
+          &nbsp;
         </div>
-        <div style={{ marginTop: "20px" }}>
+        <div className="govuk-grid-column-one-half">
           {data?.applicationDocumentsUrl && (
-            <div className="wrap-secondary-button-image">
-              <Link
-                className="govuk-button govuk-button--secondary"
-                data-module="govuk-button"
-                href={data?.applicationDocumentsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View application documents and comments
-              </Link>
-              <Image
-                src="/assets/images/comments-and-docs.png"
-                width={64}
-                height={64}
-                alt="documents and comments"
-                style={{ marginLeft: "20px" }}
-              />
+            <div className="govuk-grid-row">
+              <div className="govuk-grid-column-two-thirds">
+                <Link
+                  className="govuk-button govuk-button--secondary"
+                  data-module="govuk-button"
+                  href={data?.applicationDocumentsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View application documents and comments
+                </Link>
+              </div>
+              <div className="govuk-grid-column-one-third">
+                <Image
+                  src="/assets/images/comments-and-docs.png"
+                  width={64}
+                  height={64}
+                  alt="documents and comments"
+                />
+              </div>
             </div>
           )}
-          <div
-            className={`${(data?.enableComments || data?.applicationDocumentsUrl) && "wrap-button"}`}
-          >
-            {globalConfig?.globalEnableComments && data?.enableComments && (
+          {globalConfig?.globalEnableComments && data?.enableComments && (
+            <ButtonStart
+              content="Comment on this application"
+              href={`${data?._id}/feedback`}
+              noSpacing={data?.applicationUpdatesUrl ? true : false}
+            />
+          )}
+          {data?.applicationUpdatesUrl && (
+            <p className="govuk-body">
               <Link
-                className="govuk-button govuk-!-font-weight-bold"
-                style={{ textDecoration: "none" }}
-                href={`${data?._id}/feedback`}
-              >
-                Comment on this application <ArrowIcon />
-              </Link>
-            )}
-
-            {data?.applicationUpdatesUrl && (
-              <Link
-                className="govuk-link process-link govuk-link--no-visited-state"
+                href={data.applicationUpdatesUrl}
+                className="govuk-link govuk-link--no-visited-state"
                 target="_blank"
-                href={data?.applicationUpdatesUrl}
               >
                 Sign up for updates about this application
               </Link>
-            )}
-          </div>
+            </p>
+          )}
         </div>
       </div>
-    </section>
+    </PageCenter>
   );
 }
 

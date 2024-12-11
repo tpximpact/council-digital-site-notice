@@ -1,17 +1,14 @@
 import Details from "@/components/details";
 import Link from "next/link";
 import { descriptionDetail } from "@/app/lib/description";
-import { ArrowIcon } from "../../../public/assets/icons";
 import { useEffect, useState } from "react";
-import Modal from "@/components/modal";
-import Gallery from "@/components/gallery";
 import { PlanningApplication } from "../../../sanity/sanity.types";
 import { getGlobalContent } from "@/app/actions/sanityClient";
+import PageCenter from "../pageCenter";
+import ButtonStart from "../buttonStart";
+import ImageGallery from "../imageGallery";
 
 function About({ data }: { data: PlanningApplication }) {
-  const [loadImage, setLoadImage] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [imageSelected, setImageSelected] = useState<any>();
   const [globalConfig, setGlobalConfig] = useState<any>();
 
   useEffect(() => {
@@ -21,75 +18,42 @@ function About({ data }: { data: PlanningApplication }) {
     })();
   }, []);
 
-  useEffect(() => {
-    if (data?.image_gallery && data?.image_gallery?.length < 8) {
-      setLoadImage(data?.image_gallery?.length);
-    } else {
-      setLoadImage(6);
-    }
-    data?.image_head
-      ? setImageSelected(data?.image_head)
-      : setImageSelected(data?.image_gallery?.[0]);
-  }, [data?.image_gallery, data?.image_head]);
+  const galleryImages = data?.image_gallery
+    ? [data.image_head, ...data?.image_gallery]
+    : [data.image_head];
 
   return (
-    <div className="wrap-about">
-      {isModalOpen && (
-        <Modal setIsModalOpen={setIsModalOpen} image={imageSelected} />
-      )}
-      {data?.name ? (
-        <>
-          <h1 className="govuk-heading-l">{data.name}</h1>
-          {data.address && (
-            <h2 className="govuk-body-m govuk-!-font-weight-bold">
-              {data.address}
-            </h2>
-          )}
-        </>
-      ) : data?.address ? (
-        <h1 className="govuk-heading-l">{data.address}</h1>
-      ) : null}
-      <div className="wrap-carousel-desktop">
-        {(data?.image_head || data?.image_gallery) && (
-          <Gallery
-            image_head={data?.image_head}
-            images={data?.image_gallery}
-            loadImage={loadImage}
-            setIsModalOpen={setIsModalOpen}
-            setLoadImage={setLoadImage}
-            setImageSelected={setImageSelected}
-            imageSelected={imageSelected}
-          />
-        )}
-        {data?.description && (
-          <div>
-            <h2 className="govuk-heading-m">About this development</h2>
-            <p className="govuk-body">{data?.description}</p>
-          </div>
-        )}
-      </div>
-      <div className="wrap-comment-application">
-        {globalConfig?.globalEnableComments && data?.enableComments && (
-          <Link
-            className="govuk-button govuk-!-font-weight-bold"
-            style={{ textDecoration: "none" }}
-            href={`${data?._id}/feedback`}
-          >
-            Comment on this application <ArrowIcon />
-          </Link>
-        )}
+    <PageCenter>
+      {data.name && <h1 className="govuk-heading-l">{data.name}</h1>}
+      {data.address && <h2 className="govuk-heading-m">{data.address}</h2>}
 
-        {data?.applicationUpdatesUrl && (
+      <ImageGallery images={galleryImages} />
+
+      {data?.description && (
+        <>
+          <h2 className="govuk-heading-m">About this development</h2>
+          <p className="govuk-body">{data.description}</p>
+        </>
+      )}
+      {globalConfig?.globalEnableComments && data?.enableComments && (
+        <ButtonStart
+          content="Comment on this application"
+          href={`${data?._id}/feedback`}
+          noSpacing={data?.applicationUpdatesUrl ? true : false}
+        />
+      )}
+      {data?.applicationUpdatesUrl && (
+        <p className="govuk-body">
           <Link
-            href={data?.applicationUpdatesUrl}
-            style={{ marginTop: "-15px" }}
+            href={data.applicationUpdatesUrl}
             className="govuk-link govuk-link--no-visited-state"
             target="_blank"
           >
             Sign up for updates about this application
           </Link>
-        )}
-      </div>
+        </p>
+      )}
+
       {data?.applicationType && (
         <>
           <h3 className="govuk-heading-m">Application type</h3>
@@ -100,6 +64,7 @@ function About({ data }: { data: PlanningApplication }) {
           />
         </>
       )}
+
       {(data?.proposedLandUse?.classB ||
         data?.proposedLandUse?.classC ||
         data?.proposedLandUse?.classE ||
@@ -120,6 +85,7 @@ function About({ data }: { data: PlanningApplication }) {
           </div>
         </>
       )}
+
       {data?.height && (
         <>
           <h3 className="govuk-heading-m">Height</h3>
@@ -135,7 +101,7 @@ function About({ data }: { data: PlanningApplication }) {
 
       <h3 className="govuk-heading-m">Application reference</h3>
       <p className="govuk-body">{data?.applicationNumber}</p>
-    </div>
+    </PageCenter>
   );
 }
 
