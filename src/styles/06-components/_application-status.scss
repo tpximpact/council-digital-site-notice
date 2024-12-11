@@ -7,4 +7,12 @@ $selector: dsn-application-status;
     @extend %govuk-heading-s;
     color: govuk-colour("blue");
   }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  &__decision-information {
+    margin-top: govuk-spacing(4);
+  }
 }

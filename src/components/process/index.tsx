@@ -7,13 +7,7 @@ import PageCenter from "../pageCenter";
 import ButtonStart from "../buttonStart";
 import ApplicationStatus from "../applicationStatus";
 
-function Process({
-  data,
-  consultationDeadline,
-}: {
-  data: PlanningApplication;
-  consultationDeadline: string;
-}) {
+function Process({ data }: { data: PlanningApplication }) {
   const [globalConfig, setGlobalConfig] = useState<any>();
 
   useEffect(() => {
@@ -27,7 +21,7 @@ function Process({
     <PageCenter>
       <h2 className="govuk-heading-l">Where are we in the process?</h2>
 
-      {globalConfig?.planningProcessUrl && (
+      {globalConfig?.planningProcessUrl && data.applicationStage && (
         <p className="govuk-body">
           <Link
             className="govuk-link govuk-link--no-visited-state"
@@ -41,10 +35,12 @@ function Process({
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-half">
-          <ApplicationStatus
-            data={data}
-            consultationDeadline={consultationDeadline}
-          />
+          {data.applicationStage && (
+            <ApplicationStatus
+              applicationStage={data.applicationStage}
+              consultationDeadline={data.consultationDeadline ?? undefined}
+            />
+          )}
           &nbsp;
         </div>
         <div className="govuk-grid-column-one-half">
