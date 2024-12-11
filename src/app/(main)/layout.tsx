@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getGlobalContent } from "../actions/sanityClient";
 import { Suspense } from "react";
+import { GovUkInitAll } from "@/components/GovUkInitAll";
 
 export const globalContent = await getGlobalContent();
 
@@ -44,9 +45,12 @@ export default async function MainLayout({
       </a>
       <Header globalConfig={globalContent} />
       <Banner globalConfig={globalContent} />
-      <main className="layout-wrap" id="main">
-        <Suspense>{children}</Suspense>
+      <main className="govuk-main-wrapper" id="main">
+        <div className="govuk-width-container">
+          <Suspense>{children}</Suspense>
+        </div>
       </main>
+      <GovUkInitAll />
     </>
   );
 }

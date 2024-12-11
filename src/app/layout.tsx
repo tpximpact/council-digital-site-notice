@@ -6,14 +6,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  if (typeof window !== "undefined") {
-    const govUk = require("govuk-frontend");
-    govUk.initAll();
-  }
-
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className="govuk-template">
+      <body className="govuk-template__body">{children}</body>
     </html>
   );
 }
