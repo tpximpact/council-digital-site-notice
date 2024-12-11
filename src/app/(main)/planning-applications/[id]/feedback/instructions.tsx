@@ -5,6 +5,7 @@ import { getLocalStorage } from "../../../../lib/application";
 import { getGlobalContent } from "../../../../actions/sanityClient";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 import CommentHead from "@/components/commentHead";
+import PageCenter from "@/components/pageCenter";
 
 function Instructions() {
   const [application, setApplication] = useState<PlanningApplication>();
@@ -23,21 +24,19 @@ function Instructions() {
   }, []);
 
   return (
-    <>
-      <div className="govuk-panel govuk-panel--information">
-        <h1 className="govuk-panel__title">Tell us what you think</h1>
-        <div className="govuk-panel__body">
-          {application && (
-            <CommentHead application={application} isInverted={true} />
-          )}
-          <p className="govuk-body">
-            Your feedback helps us improve developments so they meet the needs
-            of people in {councilName}. It's important you let us know what you
-            think.
-          </p>
-        </div>
-      </div>
-    </>
+    <div className="dsn-impact">
+      <PageCenter>
+        <h1 className="dsn-impact__heading">Tell us what you think</h1>
+        {application && (
+          <CommentHead application={application} isInverted={true} />
+        )}
+        <p className="dsn-impact__body">
+          Your feedback helps us improve developments so they meet the needs of
+          people in {councilName}. It's important you let us know what you
+          think.
+        </p>
+      </PageCenter>
+    </div>
   );
 }
 
