@@ -5,7 +5,7 @@ const CookiePolicyPage = async () => {
   return (
     <>
       <h1 className="govuk-heading-l">Cookie Policy</h1>
-      <p className="govuk-body">{globalConfig?.cookiePolicyContent}</p>;
+      <p className="govuk-body">{globalConfig?.cookiePolicyContent}</p>
     </>
   );
 };
