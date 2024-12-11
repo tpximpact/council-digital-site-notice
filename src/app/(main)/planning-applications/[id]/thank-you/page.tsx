@@ -33,11 +33,11 @@ const FeedbackMessage = () => {
     <PageWrapper isCentered={true}>
       <div className="govuk-panel govuk-panel--confirmation">
         <h1 className="govuk-panel__title">Comment submitted</h1>
-        <div className="govuk-panel__body">
-          {formId
-            ? `Your reference number ${formId}`
-            : "Reference Number Unavailable"}
-        </div>
+        {formId && (
+          <div className="govuk-panel__body">
+            Your reference number {formId}
+          </div>
+        )}
       </div>
 
       {application && <CommentHead application={application} />}
