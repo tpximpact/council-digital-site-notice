@@ -11,8 +11,7 @@ $govuk-header-text: govuk-colour("white");
   background-color: govuk-colour("black");
 
   &__content {
-    // uncomment to have a non full width header!
-    // @include govuk-width-container();
+    @include govuk-width-container();
     display: flex;
     flex-direction: column;
     gap: $govuk-gutter-half;

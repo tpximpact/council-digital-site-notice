@@ -44,10 +44,9 @@ export default async function MainLayout({
         Skip to main content
       </a>
       <Header globalConfig={globalContent} />
-      {/* uncomment to have banner centered */}
-      {/* <div className="govuk-width-container"> */}
-      <Banner globalConfig={globalContent} />
-      {/* </div> */}
+      <div className="govuk-width-container">
+        <Banner globalConfig={globalContent} />
+      </div>
       <Suspense>{children}</Suspense>
       <Footer />
       <GovUkInitAll />
