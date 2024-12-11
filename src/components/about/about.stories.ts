@@ -77,6 +77,7 @@ const meta = {
       _createdAt: "2024-02-22T09:54:45Z",
       name: "Great Ormond Street Hospital Children's Cancer Centre (Frontage Building)",
       location: {
+        _type: "geopoint",
         lng: -0.119898,
         lat: 51.522212,
       },

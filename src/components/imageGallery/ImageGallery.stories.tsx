@@ -41,7 +41,7 @@ const meta = {
       },
     ],
   },
-} satisfies Meta<typeof ImageGallery>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

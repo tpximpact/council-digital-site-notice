@@ -128,16 +128,16 @@ export const AppealSuccessful: Story = {
     },
   },
 };
-export const Invalid: Story = {
-  args: {
-    applicationStage: {
-      stage: "s",
-      status: {
-        appeal: "bob",
-      },
-    },
-  },
-};
+// export const Invalid: Story = {
+//   args: {
+//     applicationStage: {
+//       stage: "s",
+//       status: {
+//         appeal: "bob",
+//       },
+//     },
+//   },
+// };
 export const ConsultationWithDeadlineInProgress: Story = {
   args: {
     consultationDeadline: fakeConsultationDeadline(20),

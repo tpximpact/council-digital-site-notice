@@ -44,7 +44,6 @@ const statusMap: Record<string, string[]> = {
 };
 
 const checkValidity = (stage: string, status: string): boolean => {
-  console.log(stage, status);
   const validStatuses = statusMap[stage.toLowerCase()];
   return validStatuses ? validStatuses.includes(status) : false;
 };
