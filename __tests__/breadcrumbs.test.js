@@ -8,7 +8,7 @@ expect.extend(toHaveNoViolations);
 describe("Breadcrumbs", () => {
   const mockBreadcrumbs = [
     { name: "Planning applications", href: "/" },
-    { name: "Murphy's Yard" },
+    { name: "Murphy's Yard", href: "/murphys-yard" },
   ];
 
   it("should render correctly", () => {

@@ -18,16 +18,19 @@ function About({ data }: { data: PlanningApplication }) {
     })();
   }, []);
 
-  const galleryImages = data?.image_gallery
-    ? [data.image_head, ...data?.image_gallery]
-    : [data.image_head];
+  let galleryImages = data.image_head ? [data.image_head] : [];
+
+  galleryImages =
+    data.image_gallery && data?.image_gallery?.length > 0
+      ? [...galleryImages, ...data?.image_gallery]
+      : [...galleryImages];
 
   return (
     <PageCenter>
       {data.name && <h1 className="govuk-heading-l">{data.name}</h1>}
       {data.address && <h2 className="govuk-heading-m">{data.address}</h2>}
 
-      <ImageGallery images={galleryImages} />
+      {galleryImages.length > 0 && <ImageGallery images={galleryImages} />}
 
       {data?.description && (
         <>

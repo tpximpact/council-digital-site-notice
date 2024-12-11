@@ -46,10 +46,10 @@ function Impact({ data }: { data: PlanningApplication }) {
             community.
           </p>
           <p className="dsn-impact__body">
-            We've outlined some of the ways we think this development would
-            impact your community, so that you can give us feedback on what's
-            important for us to consider when we're deciding what to give
-            planning permission for.
+            We&apos;ve outlined some of the ways we think this development would
+            impact your community, so that you can give us feedback on
+            what&apos;s important for us to consider when we&apos;re deciding
+            what to give planning permission for.
           </p>
           <div className="dsn-impact__sections">
             {data?.showHousing && housingData.length > 0 && (
