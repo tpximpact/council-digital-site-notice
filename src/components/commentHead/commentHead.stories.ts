@@ -16,23 +16,41 @@ const meta = {
   },
   args: {
     application: {
+      _id: "029235b5-96ff-4352-8b48-aa437ca06b5b",
       address:
         "Great Ormond Street Childrens Hospital, Frontage Building Great Ormond Street London WC1N 3JH",
-      image_head: {
-        _type: "image",
-        asset: {
-          _ref: "image-e9c3904ab9ac08d68a2fb9badcd64fbcb128355d-1920x1216-webp",
-          _type: "reference",
+      applicationNumber: "2022/2255/P",
+      carbonEmissions: 11,
+      _rev: "lNq1tjwfHBHFHBhJCPYIGD",
+      applicationStage: {
+        stage: "Decision",
+        status: {
+          decision: "approved",
+          consultation: "in progress",
         },
       },
+      proposedLandUse: {
+        classE: false,
+        classC: false,
+        classB: false,
+        suiGenerisDetail: "Hospital",
+        classF: false,
+        suiGeneris: true,
+      },
+      enableComments: false,
+      applicationDocumentsUrl:
+        "http://camdocs.camden.gov.uk/HPRMWebDrawer/PlanRec?q=recContainer:%222022/2255/P%22",
+      planningId: "592523",
+      description:
+        "Redevelopment of the Great Ormond Street Hospital (GOSH) Frontage Building comprising demolition of the existing building, and erection of a replacement hospital building (Class C2) with a basement, landscaped amenity spaces at roof top and balcony and ground floor levels, plant equipment, cycle storage, refuse storage and other ancillary and associated works pursuant to the development.",
       image_gallery: [
         {
+          asset: {
+            _ref: "image-df98cd040f22ca5365ea28254d4ba072a4860fcf-1396x1187-png",
+            _type: "reference",
+          },
           _type: "image",
           _key: "6ff035b78176",
-          asset: {
-            _type: "reference",
-            _ref: "image-df98cd040f22ca5365ea28254d4ba072a4860fcf-1396x1187-png",
-          },
         },
         {
           _type: "image",
@@ -43,16 +61,27 @@ const meta = {
           },
         },
       ],
-      name: "Great Ormond Street Hospital Children's Cancer Centre (Frontage Building)",
-      _id: "029235b5-96ff-4352-8b48-aa437ca06b5b",
-      applicationNumber: "2022/2255/P",
-      applicationStage: {
-        status: {
-          decision: "approved",
-          consultation: "in progress",
+      isActive: true,
+      constructionTime: "3 years",
+      showCarbon: true,
+      height: 8,
+      image_head: {
+        asset: {
+          _ref: "image-e9c3904ab9ac08d68a2fb9badcd64fbcb128355d-1920x1216-webp",
+          _type: "reference",
         },
-        stage: "Decision",
+        _type: "image",
       },
+      applicationType: "Full Planning Permission",
+      _type: "planning-application",
+      _createdAt: "2024-02-22T09:54:45Z",
+      name: "Great Ormond Street Hospital Children's Cancer Centre (Frontage Building)",
+      location: {
+        _type: "geopoint",
+        lng: -0.119898,
+        lat: 51.522212,
+      },
+      _updatedAt: "2024-03-19T14:21:38Z",
     },
   },
 } satisfies Meta<typeof commentHead>;

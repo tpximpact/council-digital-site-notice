@@ -40,7 +40,7 @@ export const BackLink = ({
   return (
     <nav>
       <button
-        className={`govuk-back-link backlink`}
+        className={`govuk-back-link govuk-back-link--button`}
         data-module="govuk-button"
         onClick={onClick}
       >

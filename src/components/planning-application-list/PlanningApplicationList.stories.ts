@@ -104,10 +104,10 @@ const meta = {
       },
     ],
   },
-} satisfies Meta<typeof PlanningApplicationList>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj;
 
 export const Default: Story = {};
 export const WithDistance: Story = {
