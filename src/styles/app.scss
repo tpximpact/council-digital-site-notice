@@ -10,6 +10,7 @@ $govuk-font-family: Arial, Helvetica, sans-serif;
 // 04-elements
 
 // 05-objects
+@import "./05-objects/panel";
 @import "./layout.scss";
 @import "./home.scss";
 @import "./feedback.scss";
@@ -21,5 +22,6 @@ $govuk-font-family: Arial, Helvetica, sans-serif;
 @import "./06-components/pagination";
 @import "./06-components/planning-application-card";
 @import "./06-components/planning-application-cards";
+@import "./06-components/comment-head";
 
 // 07-trumps
