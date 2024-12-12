@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import ButtonStart from ".";
+import DataPoints from ".";
 
 const meta = {
-  title: "DSN Components/ButtonStart",
-  component: ButtonStart,
+  title: "DSN Components/DataPoints",
+  component: DataPoints,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
   parameters: {
@@ -14,26 +14,17 @@ const meta = {
       appDirectory: true,
     },
   },
-  args: {},
-} satisfies Meta<typeof ButtonStart>;
+  args: {
+    data: [
+      { key: "new homes", value: "100" },
+      { key: "affordable housing", value: "20%" },
+      { key: "additional demand on GPs and hospitals", value: "12%" },
+      { key: "square meters", value: "21,360" },
+    ],
+  },
+} satisfies Meta<typeof DataPoints>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Button: Story = {
-  args: {
-    onClick: () => {
-      console.log("Button clicked");
-    },
-  },
-};
-export const Link: Story = {
-  args: {
-    href: "/",
-  },
-};
-export const NoSpacing: Story = {
-  args: {
-    noSpacing: true,
-  },
-};
+export const Default: Story = {};

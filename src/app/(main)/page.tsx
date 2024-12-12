@@ -13,6 +13,7 @@ import { getGlobalContent } from "../actions/sanityClient";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { PlanningApplication } from "../../../sanity/sanity.types";
 import FormSearch from "@/components/formSearch";
+import PageWrapper from "@/components/pageWrapper";
 
 const Home = () => {
   const itemsPerPage = 6;
@@ -136,7 +137,7 @@ const Home = () => {
   };
 
   return (
-    <>
+    <PageWrapper isCentered={true}>
       <h1
         className="govuk-heading-xl"
         aria-level={1}
@@ -181,7 +182,7 @@ const Home = () => {
           renderOnZeroPageCount={null}
         />
       )}
-    </>
+    </PageWrapper>
   );
 };
 

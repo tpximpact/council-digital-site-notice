@@ -1,0 +1,21 @@
+.dsn-tag {
+  @include govuk-font($size: 19, $weight: bold);
+  color: govuk-colour("white");
+  text-transform: uppercase;
+  padding: govuk-spacing(1) govuk-spacing(2);
+
+  &--approved-status {
+    background-color: #cce2d8;
+    color: #005a30;
+  }
+
+  &--rejected-status {
+    background-color: #f6d7d2;
+    color: #942514;
+  }
+
+  &--default-status {
+    background-color: #1d70b8;
+    color: white;
+  }
+}

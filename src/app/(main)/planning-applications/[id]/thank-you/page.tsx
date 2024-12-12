@@ -7,6 +7,7 @@ import { getLocalStorage } from "../../../../lib/application";
 import { getGlobalContent, urlFor } from "../../../../actions/sanityClient";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 import CommentHead from "@/components/commentHead";
+import PageWrapper from "@/components/pageWrapper";
 
 const FeedbackMessage = () => {
   const [globalConfig, setGlobalConfig] = useState<any>();
@@ -29,7 +30,7 @@ const FeedbackMessage = () => {
   }, []);
 
   return (
-    <>
+    <PageWrapper isCentered={true}>
       <div className="govuk-panel govuk-panel--confirmation">
         <h1 className="govuk-panel__title">Comment submitted</h1>
         <div className="govuk-panel__body">
@@ -96,7 +97,7 @@ const FeedbackMessage = () => {
           </div>
         </div>
       )}
-    </>
+    </PageWrapper>
   );
 };
 

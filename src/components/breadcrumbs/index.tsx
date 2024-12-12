@@ -1,35 +1,25 @@
 import Link from "next/link";
 
-type BreadcrumbsInfo = {
+type Breadcrumb = {
   name?: string;
   href: string;
 };
 
-const Breadcrumbs = ({
-  breadcrumbs_info,
-}: {
-  breadcrumbs_info: BreadcrumbsInfo[];
-}) => {
+const Breadcrumbs = ({ breadcrumbs }: { breadcrumbs: Breadcrumb[] }) => {
+  if (!breadcrumbs) {
+    return null;
+  }
+
   return (
-    <nav className="govuk-breadcrumbs">
+    <nav className="govuk-breadcrumbs" aria-label="Breadcrumb">
       <ol className="govuk-breadcrumbs__list">
-        {breadcrumbs_info?.map((el, index) =>
-          index === breadcrumbs_info.length - 1 ? (
-            <li className="govuk-breadcrumbs__list-item" key={index}>
-              {el.name}
-            </li>
-          ) : (
-            <li className="govuk-breadcrumbs__list-item" key={index}>
-              <Link
-                className="govuk-breadcrumbs__link"
-                href={el.href}
-                key={index}
-              >
-                {el.name}
-              </Link>
-            </li>
-          ),
-        )}
+        {breadcrumbs.map((breadcrumb, i) => (
+          <li key={i} className="govuk-breadcrumbs__list-item">
+            <Link className="govuk-breadcrumbs__link" href={breadcrumb.href}>
+              {breadcrumb.name}
+            </Link>
+          </li>
+        ))}
       </ol>
     </nav>
   );

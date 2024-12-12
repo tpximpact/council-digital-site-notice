@@ -1,0 +1,79 @@
+.dpr-gallery {
+  // lightbox
+
+  &__lightbox {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding-top: govuk-spacing(4);
+    display: flex;
+    flex-direction: column;
+    gap: govuk-spacing(4);
+    align-items: center;
+  }
+
+  &__lightbox-image {
+    background-color: govuk-colour("light-grey");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 85vw;
+    height: 85vh;
+  }
+
+  &__button {
+    @extend .govuk-button;
+    margin: 0;
+  }
+
+  // main image
+
+  &__button-fullscreen {
+    @extend .govuk-button;
+    // @extend .govuk-button--secondary;
+    // @include govuk-font-size($size: 14);
+    position: absolute;
+    margin: 0;
+    bottom: govuk-spacing(1);
+    right: govuk-spacing(1);
+  }
+
+  &__featured-image {
+    background-color: govuk-colour("light-grey");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    max-width: 385px;
+    height: 270px;
+    position: relative;
+  }
+
+  // thumbnails at the bottom
+
+  &__thumbnails {
+    display: flex;
+    flex-direction: row;
+    gap: govuk-spacing(4);
+    margin: govuk-spacing(4) 0;
+  }
+
+  &__thumbnail {
+    background-color: govuk-colour("light-grey");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 110px;
+    height: 77px;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+
+    &:focus {
+      @include govuk-focused-box;
+    }
+  }
+}

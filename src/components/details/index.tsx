@@ -2,21 +2,21 @@ import { ReactNode } from "react";
 
 const Details = ({
   summary,
-  color,
   className,
   description,
+  isInverted,
 }: {
   summary: string;
-  color?: string;
   className?: string;
   description: ReactNode;
+  isInverted?: boolean;
 }) => {
   return (
     <details
-      className={`govuk-details ${className}`}
+      className={`govuk-details ${className} ${isInverted ? "govuk-details--inverted" : ""}`}
       data-module="govuk-details"
     >
-      <summary className="govuk-details__summary" style={{ color: color }}>
+      <summary className="govuk-details__summary">
         <span className="govuk-details__summary-text" role="definition">
           {summary}
         </span>
