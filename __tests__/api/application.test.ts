@@ -12,7 +12,7 @@ import {
   createApplication,
 } from "../../src/app/actions/sanityClient";
 import { verifyApiKey } from "../../src/app/lib/apiKey";
-import { PUT } from "@/app/api/application/uniform/route";
+import { PUT } from "@/app/api/application/route";
 import { SanityDocument } from "next-sanity";
 import { generateUniformData } from "../../mockdata/mockData";
 

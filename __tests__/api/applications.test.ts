@@ -11,7 +11,7 @@ import {
   createApplication,
 } from "../../src/app/actions/sanityClient";
 import { verifyApiKey } from "../../src/app/lib/apiKey";
-import { PUT } from "@/app/api/applications/uniform/route";
+import { PUT } from "@/app/api/applications/route";
 import { SanityDocument } from "next-sanity";
 import { generateUniformData } from "../../mockdata/mockData";
 
