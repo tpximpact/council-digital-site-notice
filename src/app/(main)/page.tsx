@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import PlanningApplicationList from "@/components/planning-application-list";
 import {
   getActiveApplicationsByLocation,
@@ -8,14 +8,11 @@ import {
 import ReactPaginate from "react-paginate";
 import { NextIcon } from "../../../public/assets/icons";
 import { PreviewIcon } from "../../../public/assets/icons";
-import Input from "@/components/input";
-import { Button } from "@/components/button";
-import { ArrowIcon } from "../../../public/assets/icons";
-import Link from "next/link";
 import { getLocationFromPostcode } from "../actions/actions";
 import { getGlobalContent } from "../actions/sanityClient";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { PlanningApplication } from "../../../sanity/sanity.types";
+import FormSearch from "@/components/formSearch";
 
 const Home = () => {
   const itemsPerPage = 6;
@@ -32,17 +29,13 @@ const Home = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
-      return params.toString();
-    },
-    [searchParams],
-  );
-
   const pageCount =
     dynamicTotalResults > 0 ? Math.ceil(dynamicTotalResults / itemsPerPage) : 0;
+
+  useEffect(() => {
+    setPostcode(searchParams.get("search") || "");
+    setLocation(searchParams.get("page") || "");
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -143,7 +136,7 @@ const Home = () => {
   };
 
   return (
-    <div className="wrap-home">
+    <>
       <h1
         className="govuk-heading-xl"
         aria-level={1}
@@ -155,68 +148,40 @@ const Home = () => {
         Find, review and leave your comments on planning applications in{" "}
         {globalConfig?.councilName}
       </p>
-      <section className="search-grid">
-        <Input
-          id="search-postcode"
-          label="Enter a postcode to find planning applications nearby"
-          type="text"
-          value={postcode}
-          onChange={(e) => setPostcode(e)}
-          isError={locationNotFound}
-          messageError="Please enter a valid postcode"
-          autocomplete="postal-code"
-        />
-        <Button
-          className="grid-button-search"
-          content="Search"
-          icon={<ArrowIcon />}
-          onClick={() => onSearchPostCode()}
-        />
-        <div className="grid-button-signup">
-          {globalConfig?.signUpUrl && (
-            <Link
-              className="govuk-button govuk-button--secondary"
-              target="_blank"
-              style={{ textDecoration: "none" }}
-              href={`${globalConfig?.signUpUrl}`}
-            >
-              Sign up for alerts on applications near you
-            </Link>
-          )}
-        </div>
-      </section>
-      {displayData && (
-        <PlanningApplicationList data={displayData} searchLocation={location} />
-      )}
+      <FormSearch
+        locationNotFound={locationNotFound}
+        onSearchPostCode={onSearchPostCode}
+        setPostcode={setPostcode}
+        signUpUrl={globalConfig?.signUpUrl}
+        postcode={postcode}
+      />
 
-      <div className="wrap-pagination">
-        <ul>
-          {pageCount > 0 && (
-            <ReactPaginate
-              breakLabel="..."
-              nextLabel={<NextIcon />}
-              onPageChange={handlePageClick}
-              pageRangeDisplayed={2}
-              marginPagesDisplayed={1}
-              pageCount={pageCount}
-              previousLabel={<PreviewIcon />}
-              pageClassName="page-item"
-              pageLinkClassName="page-link"
-              previousClassName="page-item"
-              previousLinkClassName="page-link"
-              nextClassName="page-item"
-              nextLinkClassName="page-link"
-              breakClassName="page-item"
-              breakLinkClassName="page-link"
-              containerClassName="pagination govuk-body"
-              activeClassName="active"
-              forcePage={selectedPage}
-              renderOnZeroPageCount={null}
-            />
-          )}
-        </ul>
-      </div>
-    </div>
+      {displayData && <PlanningApplicationList data={displayData} />}
+
+      {pageCount > 0 && (
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel={<NextIcon />}
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={2}
+          marginPagesDisplayed={1}
+          pageCount={pageCount}
+          previousLabel={<PreviewIcon />}
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination govuk-body"
+          activeClassName="active"
+          forcePage={selectedPage}
+          renderOnZeroPageCount={null}
+        />
+      )}
+    </>
   );
 };
 

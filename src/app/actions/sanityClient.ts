@@ -51,7 +51,7 @@ export async function getActiveApplications(
 ): Promise<sanityApplicationResponse> {
   try {
     const query = `{
-        "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) 
+        "results": *[_type == "planning-application" && isActive == true && (defined(name) || defined(address)) && !(_id in path("drafts.**"))] | order(_id) 
           ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} {
             _id, 
             image_head, 
@@ -60,7 +60,7 @@ export async function getActiveApplications(
             applicationName, 
             address
           },
-        "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])
+        "total": count(*[_type == "planning-application" && isActive == true && (defined(name) || defined(address)) && !(_id in path("drafts.**"))])
       }`;
 
     const response = await sanityFetch<sanityApplicationResponse>({ query });
@@ -90,7 +90,7 @@ export async function getActiveApplicationsByLocation(
   try {
     const query = `{
         "results": 
-        *[_type == "planning-application" && defined(location) && isActive == true && !(_id in path("drafts.**"))] | order(geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude}))) ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} 
+        *[_type == "planning-application" && defined(location) && isActive == true && (defined(name) || defined(address)) && !(_id in path("drafts.**"))] | order(geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude}))) ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} 
            {
             _id, 
             image_head, 
@@ -100,7 +100,7 @@ export async function getActiveApplicationsByLocation(
             address,
             "distance": geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude}))
           },
-        "total": count(*[_type == "planning-application" && defined(location) && isActive == true && !(_id in path("drafts.**"))]),
+        "total": count(*[_type == "planning-application" && defined(location) && isActive == true && (defined(name) || defined(address)) && !(_id in path("drafts.**"))]),
       }`;
     const response = await sanityFetch<sanityApplicationResponse>({ query });
     if (response.results) {
