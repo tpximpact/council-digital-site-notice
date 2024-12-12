@@ -7,6 +7,7 @@ import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 import { getGlobalContent } from "@/app/actions/sanityClient";
 import { useRouter } from "next/navigation";
 import PageWrapper from "@/components/pageWrapper";
+import PageCenter from "@/components/pageCenter";
 
 export const dynamic = "force-dynamic";
 
@@ -70,13 +71,15 @@ const Feedback = () => {
   }
 
   return (
-    <PageWrapper isCentered={true}>
+    <PageWrapper isCentered={false}>
       {question !== 0 && question !== 13 && <Instructions />}
-      <Questions
-        question={question}
-        onChangeQuestion={() => onChangeQuestion()}
-        setQuestion={setQuestion}
-      />
+      <PageCenter>
+        <Questions
+          question={question}
+          onChangeQuestion={() => onChangeQuestion()}
+          setQuestion={setQuestion}
+        />
+      </PageCenter>
     </PageWrapper>
   );
 };
