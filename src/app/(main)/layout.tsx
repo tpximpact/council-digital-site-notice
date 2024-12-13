@@ -29,16 +29,25 @@ export default async function MainLayout({
 }) {
   const environment = process.env.NODE_ENV;
   const cookieStore = cookies();
-  const isShowCookie = cookieStore.get("isShowCookie")?.value || true;
-  const isConsentCookie = cookieStore.get("isConsentCookie")?.value || false;
+  const isShowCookieValue = cookieStore.get("isShowCookie")?.value;
+  const isShowCookie =
+    isShowCookieValue === undefined ? true : isShowCookieValue === "true";
+  const isConsentCookieValue = cookieStore.get("isConsentCookie")?.value;
+  const isConsentCookie =
+    isConsentCookieValue === undefined
+      ? false
+      : isConsentCookieValue === "true";
 
+  console.log(typeof isShowCookie, isShowCookie);
   return (
     <>
       {isShowCookie && <CookiesBanner />}
       {isConsentCookie &&
         environment !== "development" &&
         globalContent?.googleAnalytics && (
-          <GoogleAnalytics gaId={globalContent?.googleAnalytics} />
+          <>
+            <GoogleAnalytics gaId={globalContent?.googleAnalytics} />
+          </>
         )}
       <a href="#main" className="govuk-skip-link" data-module="govuk-skip-link">
         Skip to main content
