@@ -1,19 +1,11 @@
-import {
-  checkExistingReference,
-  updateApplication,
-  createApplication,
-} from "@/app/actions/sanityClient";
-import {
-  validateUniformData,
-  isUniformIntegrationEnabled,
-} from "@/app/actions/uniformValidator";
+import { isUniformIntegrationEnabled } from "@/app/actions/uniformValidator";
 import { verifyApiKey } from "@/app/lib/apiKey";
 import { NextRequest, NextResponse } from "next/server";
-import { processMultipleApplications } from "../../handlers/handler";
+import { processMultipleApplications } from "../handlers/handler";
 
 /**
  * @swagger
- * /api/applications/uniform:
+ * /api/applications:
  *   put:
  *     summary: Update multiple planning applications or create new ones if they don't exist
  *     requestBody:

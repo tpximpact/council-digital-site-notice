@@ -1,11 +1,11 @@
-import { verifyApiKey } from "../../../lib/apiKey";
+import { verifyApiKey } from "../../lib/apiKey";
 import { NextRequest, NextResponse } from "next/server";
 import { isUniformIntegrationEnabled } from "@/app/actions/uniformValidator";
-import { processApplication } from "../../handlers/handler";
+import { processApplication } from "../handlers/handler";
 
 /**
  * @swagger
- * /api/application/uniform:
+ * /api/application:
  *   put:
  *     summary: Insert a new planning application or update one if it already exists
  *     requestBody:
