@@ -46,6 +46,13 @@ The application uses https://sanity.io/ as its cms. When the application is runn
 
 Data schemas are stored in /sanity/schemas.
 
+### Setting up commenting and feedback
+
+- [see readme here for more information](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication?id=service-account)
+- Create a service account in google cloud console, don't grant any roles or access
+- Generate a key for that service account and make a note of the private_key for the env vars
+- Add that user as an editor to your google sheet
+
 ## Features
 
 ### Emails
@@ -168,11 +175,11 @@ You can provide config with a `.env` file. Run `cp sample.env .env` to create a 
 
 ### COMMENTS & FEEDBACK
 
-| Variable                          | Description                                             | Example                                                            | Required?                        |
-| --------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------- |
-| `NEXT_PUBLIC_SPREADSHEET_ID`      | ID for spreadsheet where comments are stored            | `api-key`                                                          | Only if using commenting feature |
-| `NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL` | Google service account authorised to update spreadsheet | `google-service-account@google.cloud.com`                          | Only if using commenting feature |
-| `GOOGLE_SERVICE_PRIVATE_KEY`      | Private key for google cloud account                    | `-----BEGIN PRIVATE KEY-----\nthings\n-----END PRIVATE KEY-----\n` | Only if using commenting feature |
+| Variable                       | Description                                             | Example                                                            | Required?                        |
+| ------------------------------ | ------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------- |
+| `COMMENT_SPREADSHEET_ID`       | ID for spreadsheet where comments are stored            | `api-key`                                                          | Only if using commenting feature |
+| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | Google service account authorised to update spreadsheet | `google-service-account@google.cloud.com`                          | Only if using commenting feature |
+| `GOOGLE_SERVICE_PRIVATE_KEY`   | Private key for google cloud account                    | `-----BEGIN PRIVATE KEY-----\nthings\n-----END PRIVATE KEY-----\n` | Only if using commenting feature |
 
 ### SANITY STUDIO
 

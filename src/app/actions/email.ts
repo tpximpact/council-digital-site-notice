@@ -6,18 +6,32 @@ import sgMail from "@sendgrid/mail";
 import { EmailJSON } from "@sendgrid/helpers/classes/email-address";
 
 export async function savefeedbackToGoogleSheet(data: any): Promise<boolean> {
-  const SPREADSHEET_ID = process.env.NEXT_PUBLIC_SPREADSHEET_ID || "";
-  const GOOGLE_CLIENT_EMAIL = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL;
-  const GOOGLE_SERVICE_PRIVATE_KEY = process.env.GOOGLE_SERVICE_PRIVATE_KEY;
-
   try {
+    const {
+      GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      GOOGLE_SERVICE_PRIVATE_KEY,
+      COMMENT_SPREADSHEET_ID,
+    } = process.env;
+
+    if (
+      !GOOGLE_SERVICE_ACCOUNT_EMAIL ||
+      !GOOGLE_SERVICE_PRIVATE_KEY ||
+      !COMMENT_SPREADSHEET_ID
+    ) {
+      console.error("Missing required environment variables");
+      return false;
+    }
+
     const serviceAccountAuth = new JWT({
-      email: GOOGLE_CLIENT_EMAIL,
-      key: GOOGLE_SERVICE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+      email: GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      key: GOOGLE_SERVICE_PRIVATE_KEY.replace(/\\n/g, "\n"),
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
 
-    const doc = new GoogleSpreadsheet(SPREADSHEET_ID, serviceAccountAuth);
+    const doc = new GoogleSpreadsheet(
+      COMMENT_SPREADSHEET_ID,
+      serviceAccountAuth,
+    );
     await doc.loadInfo();
 
     const sheet = doc.sheetsByIndex[0];
