@@ -37,12 +37,12 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
   ),
   topics: (
     <>
-      <p className="govuk-body-s">
+      <p className="govuk-body">
         As part of the negotiation, the case officer can take into consideration
         all comments which are 'material considerations' to the proposed
         development. These include (but aren't limited to):
       </p>
-      <ul className="govuk-body-s govuk-list govuk-list--bullet">
+      <ul className="govuk-body govuk-list govuk-list--bullet">
         <li>overlooking/loss of privacy</li>
         <li>loss of light or overshadowing</li>
         <li>traffic parking</li>
@@ -56,16 +56,16 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         <li>previous planning decisions (including appeal decisions)</li>
         <li>trees and nature conservation</li>
       </ul>
-      <p className="govuk-body-s">
+      <p className="govuk-body">
         Issues such as loss of private view or negative impact on property
         values, or civil matters like 'right to light', party walls and property
         damage are not considered 'material planning considerations'.
       </p>
-      <p className="govuk-body-s">
+      <p className="govuk-body">
         The case officer will summarise their findings in the officer's report
         and/or decision notice.
       </p>
-      <p className="govuk-body-s">
+      <p className="govuk-body">
         We won't acknowledge receipt of your comments, or get in touch with you
         directly about the issues you've raised. You can check the officer's
         report or decision notice to see if your, and other, comments have been
@@ -224,7 +224,7 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         <Link
           href="https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/key-definitions/what-is-personal-data/"
           target="_blank"
-          style={{ color: "black" }}
+          className="govuk-link"
         >
           General Data Protection Regulation
         </Link>{" "}
@@ -233,7 +233,7 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         <Link
           href="https://www.camden.gov.uk/contact-the-planning-advice-and-information-service"
           target="_blank"
-          style={{ color: "black" }}
+          className="govuk-link"
         >
           contact the Planning Advice and Information Service.
         </Link>
@@ -244,7 +244,7 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         <Link
           href="https://www.camden.gov.uk/data-protection-privacy-and-cookies"
           target="_blank"
-          style={{ color: "black" }}
+          className="govuk-link"
         >
           corporate privacy statement
         </Link>{" "}
@@ -252,7 +252,7 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         <Link
           href="https://www.camden.gov.uk/documents/20142/2247044/Privacy+Notice_regenerationandplanning+-+updated+May19.pdf/23506373-1b95-2cc5-55b2-55897cfe4b42"
           target="_blank"
-          style={{ color: "black" }}
+          className="govuk-link"
         >
           planning service privacy statement
         </Link>{" "}

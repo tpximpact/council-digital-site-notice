@@ -26,7 +26,7 @@ function Instructions() {
   return (
     <div className="dsn-impact">
       <PageCenter>
-        <h1 className="dsn-impact__heading">Tell us what you think</h1>
+        <h2 className="dsn-impact__heading">Tell us what you think</h2>
         {application && (
           <CommentHead application={application} isInverted={true} />
         )}
