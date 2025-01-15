@@ -16,47 +16,51 @@ const ImageGallery = ({
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   return (
-    <div className="dpr-gallery">
-      {lightboxOpen && (
-        <div className="dpr-gallery__lightbox" id="lightbox">
-          <div>
-            <button
-              className="dpr-gallery__button"
-              onClick={() => setLightboxOpen(false)}
-              aria-controls="lightbox"
-            >
-              Close
-            </button>
-          </div>
-
-          <div
-            className="dpr-gallery__lightbox-image"
-            style={{
-              backgroundImage: images[selectedImage]
-                ? `url(${urlFor(images[selectedImage]).url()})`
-                : "none",
-            }}
-          ></div>
-
-          <div className="dpr-gallery__lightbox-navigation">
-            <button
-              className="dpr-gallery__button"
-              onClick={() => setSelectedImage(selectedImage - 1)}
-              disabled={selectedImage <= 0}
-            >
-              Previous image
-            </button>
-
-            <button
-              className="dpr-gallery__button"
-              onClick={() => setSelectedImage(selectedImage + 1)}
-              disabled={selectedImage >= images.length - 1}
-            >
-              Next image
-            </button>
-          </div>
+    <div className={`dpr-gallery ${lightboxOpen ? "" : "dpr-gallery--closed"}`}>
+      <div
+        className="dpr-gallery__lightbox"
+        id="lightbox"
+        aria-hidden={lightboxOpen}
+        {...{ hidden: !lightboxOpen }}
+      >
+        <div>
+          <button
+            className="dpr-gallery__button"
+            onClick={() => setLightboxOpen(false)}
+            aria-controls="lightbox"
+          >
+            Close
+          </button>
         </div>
-      )}
+
+        <div
+          className="dpr-gallery__lightbox-image"
+          style={{
+            backgroundImage: images[selectedImage]
+              ? `url(${urlFor(images[selectedImage]).url()})`
+              : "none",
+          }}
+        ></div>
+
+        <div className="dpr-gallery__lightbox-navigation">
+          <button
+            className="dpr-gallery__button"
+            onClick={() => setSelectedImage(selectedImage - 1)}
+            disabled={selectedImage <= 0}
+          >
+            Previous image
+          </button>
+
+          <button
+            className="dpr-gallery__button"
+            onClick={() => setSelectedImage(selectedImage + 1)}
+            disabled={selectedImage >= images.length - 1}
+          >
+            Next image
+          </button>
+        </div>
+      </div>
+
       <div
         className="dpr-gallery__featured-image"
         id="current-image"
