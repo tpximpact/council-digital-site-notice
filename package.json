@@ -11,6 +11,9 @@
     "start": "next start",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx}\" --quiet",
     "test": "jest",
+    "test:unit": "jest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "test:update": "jest -u",
     "prepare": "husky"
   },
