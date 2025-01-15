@@ -18,11 +18,7 @@ const TextArea = ({
           {label}
         </label>
       </h2>
-      {hint && (
-        <p className="govuk-body" style={{ color: "#505A5F" }}>
-          {hint}
-        </p>
-      )}
+      {hint && <p className="govuk-hint">{hint}</p>}
       <textarea
         className={`govuk-textarea`}
         id={id}

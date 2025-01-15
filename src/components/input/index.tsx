@@ -4,7 +4,6 @@ const Input = ({
   onChange,
   value,
   type,
-  style,
   isError,
   messageError,
   id,
@@ -13,7 +12,6 @@ const Input = ({
 }: {
   messageError?: string;
   isError?: boolean;
-  style?: any;
   label: string;
   hint?: string;
   onChange: (value: any) => void;
@@ -29,7 +27,6 @@ const Input = ({
     <label
       className={`govuk-label ${headingLevel ? "govuk-label--l" : ""} ${isError ? "govuk-error-message" : ""}`}
       htmlFor={id}
-      style={{ ...style }}
     >
       {label}
     </label>
