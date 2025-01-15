@@ -10,9 +10,7 @@ exports[`renders homepage unchanged 1`] = `
       class="govuk-width-container"
     >
       <h1
-        aria-level="1"
         class="govuk-heading-xl"
-        style="display: inline-block;"
       >
         Find planning applications near you
       </h1>
@@ -29,18 +27,18 @@ exports[`renders homepage unchanged 1`] = `
           class="govuk-grid-column-one-half"
         >
           <div
-            class="govuk-form-group false"
+            class="govuk-form-group "
           >
-            <h1
+            <h2
               class="govuk-label-wrapper"
             >
               <label
-                class="govuk-label govuk-label--l false"
+                class="govuk-label govuk-label--l "
                 for="search-postcode"
               >
                 Enter a postcode to find planning applications nearby
               </label>
-            </h1>
+            </h2>
             <input
               autocomplete="postal-code"
               class="govuk-input false"
