@@ -138,13 +138,7 @@ const Home = () => {
 
   return (
     <PageWrapper isCentered={true}>
-      <h1
-        className="govuk-heading-xl"
-        aria-level={1}
-        style={{ display: "inline-block" }}
-      >
-        Find planning applications near you
-      </h1>
+      <h1 className="govuk-heading-xl">Find planning applications near you</h1>
       <p className="govuk-body-m">
         Find, review and leave your comments on planning applications in{" "}
         {globalConfig?.councilName}
