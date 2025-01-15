@@ -4,37 +4,28 @@ import { ReactElement } from "react";
 export const descriptionDetail: { [key: string]: ReactElement } = {
   about: (
     <>
-      <h4
-        className="govuk-heading-s"
-        style={{ fontWeight: 700, marginBottom: 0 }}
-      >
-        Full planning application
-      </h4>
+      <h4 className="govuk-heading-s">Full planning application</h4>
       <p className="govuk-body">
         An application to alter, change the use of or construct a building. A
         full planning application provides all the details of the proposed
         development in one go.
       </p>
 
-      <h4 className="govuk-heading-s" style={{ fontWeight: 700 }}>
-        Outline planning application
-      </h4>
+      <h4 className="govuk-heading-s">Outline planning application</h4>
       <p className="govuk-body">
         An application seeking approval for the principle of the development —
         including size, layout, uses and key features. The rest of the details
         are provided later with a reserved matters applications.
       </p>
 
-      <h4 className="govuk-heading-s" style={{ fontWeight: 700 }}>
-        Reserved matters application
-      </h4>
+      <h4 className="govuk-heading-s">Reserved matters application</h4>
       <p className="govuk-body">
         Provides the additional details that aren't provided in an outline
         planning application. This could include layout, materials and landscape
         details.
       </p>
 
-      <h4 className="govuk-heading-s" style={{ fontWeight: 700 }}>
+      <h4 className="govuk-heading-s">
         Application for removal/variation of conditions
       </h4>
       <p className="govuk-body">
@@ -48,7 +39,7 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
     <>
       <p className="govuk-body-s">
         As part of the negotiation, the case officer can take into consideration
-        all comments which are ‘material considerations’ to the proposed
+        all comments which are 'material considerations' to the proposed
         development. These include (but aren't limited to):
       </p>
       <ul className="govuk-body-s govuk-list govuk-list--bullet">
@@ -67,8 +58,8 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
       </ul>
       <p className="govuk-body-s">
         Issues such as loss of private view or negative impact on property
-        values, or civil matters like ‘right to light’, party walls and property
-        damage are not considered ‘material planning considerations’.
+        values, or civil matters like 'right to light', party walls and property
+        damage are not considered 'material planning considerations'.
       </p>
       <p className="govuk-body-s">
         The case officer will summarise their findings in the officer's report
@@ -110,14 +101,14 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
       <p className="govuk-body">
         Open space includes land and areas of water (such as rivers and canals)
         which can be used for sport, recreation and relaxation. Applicants
-        calculate the amount of open space, but it’s checked by council planners
+        calculate the amount of open space, but it's checked by council planners
         when assessing the application.
       </p>
     </>
   ),
   "new jobs": (
     <>
-      <p className="govuk-body" style={{ maxWidth: "25rem" }}>
+      <p className="govuk-body">
         The council estimates how many new jobs a new development will produce
         based on the size and type of development. This estimate is based on the
         Employment Density Guide (3rd addition) produced by Homes & Community
@@ -179,7 +170,7 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
     <>
       <p className="govuk-body-s">
         As part of the negotiation, the case officer can take into consideration
-        all comments which are ‘material considerations’ to the proposed
+        all comments which are 'material considerations' to the proposed
         development. These include (but aren't limited to):
       </p>
       <ul className="govuk-body-s">
@@ -198,8 +189,8 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
       </ul>
       <p className="govuk-body-s">
         Issues such as loss of private view or negative impact on property
-        values, or civil matters like ‘right to light’, party walls and property
-        damage are not considered ‘material planning considerations’.
+        values, or civil matters like 'right to light', party walls and property
+        damage are not considered 'material planning considerations'.
       </p>
       <p className="govuk-body-s">
         The case officer will summarise their findings in the officer's report
