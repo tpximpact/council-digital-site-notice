@@ -27,6 +27,7 @@ const FormSearch = ({
           isError={locationNotFound}
           messageError="Please enter a valid postcode"
           autocomplete="postal-code"
+          headingLevel="h2"
         />
         <ButtonStart content="Search" onClick={() => onSearchPostCode()} />
       </div>
