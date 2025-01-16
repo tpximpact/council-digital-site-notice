@@ -2,15 +2,14 @@ name: Run Tests
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, staging]
 
 env:
   NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ vars.NEXT_PUBLIC_SANITY_SECRET_TOKEN }}
   NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ vars.NEXT_PUBLIC_SANITY_PROJECT_ID }}
   NEXT_PUBLIC_SANITY_DATASET: ${{ vars.NEXT_PUBLIC_SANITY_DATASET }}
 jobs:
-  lint-unit:
-    name: Lint and Unit test code
+  test:
     runs-on: ubuntu-latest
 
     container:
