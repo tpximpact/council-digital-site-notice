@@ -7,6 +7,8 @@ const Input = ({
   style,
   isError,
   messageError,
+  id,
+  autocomplete,
 }: {
   messageError?: string;
   isError?: boolean;
@@ -16,14 +18,15 @@ const Input = ({
   onChange: (value: any) => void;
   value?: string;
   type: string;
+  id: string;
+  autocomplete: string;
 }) => {
   return (
     <div className={`govuk-form-group ${isError && "govuk-form-group--error"}`}>
       <h1 className="govuk-label-wrapper">
         <label
           className={`govuk-label govuk-label--l ${isError && "govuk-error-message"}`}
-          htmlFor={label}
-          role="definition"
+          htmlFor={id}
           style={{ ...style }}
         >
           {label}
@@ -33,12 +36,12 @@ const Input = ({
       {isError && <div className="govuk-error-message">{messageError}</div>}
       <input
         className={`govuk-input ${isError && `govuk-input--error`}`}
-        id={label}
+        id={id}
         name="eventName"
         type={type}
-        role="textbox"
         onChange={(e) => onChange(e.target.value)}
         value={value}
+        autoComplete={autocomplete}
       />
     </div>
   );

@@ -2,82 +2,80 @@
 
 exports[`renders homepage unchanged 1`] = `
 <div>
-  <div
-    class="wrap-home"
+  <main
+    class="govuk-main-wrapper"
+    id="main"
   >
-    <h1
-      class="govuk-heading-xl"
-      role="heading"
-      style="display: inline-block;"
+    <div
+      class="govuk-width-container"
     >
-      Find planning applications near you
-    </h1>
-    <p
-      class="govuk-body-m"
-    >
-      Find, review and leave your comments on planning applications in
-       
-    </p>
-    <section
-      class="search-grid"
-    >
-      <div
-        class="govuk-form-group false"
+      <h1
+        aria-level="1"
+        class="govuk-heading-xl"
+        style="display: inline-block;"
       >
-        <h1
-          class="govuk-label-wrapper"
+        Find planning applications near you
+      </h1>
+      <p
+        class="govuk-body-m"
+      >
+        Find, review and leave your comments on planning applications in
+         
+      </p>
+      <div
+        class="govuk-grid-row"
+      >
+        <div
+          class="govuk-grid-column-one-half"
         >
-          <label
-            class="govuk-label govuk-label--l false"
-            for="Enter a postcode to find planning applications nearby"
-            role="definition"
+          <div
+            class="govuk-form-group false"
           >
-            Enter a postcode to find planning applications nearby
-          </label>
-        </h1>
-        <input
-          class="govuk-input false"
-          id="Enter a postcode to find planning applications nearby"
-          name="eventName"
-          role="textbox"
-          type="text"
-          value=""
+            <h1
+              class="govuk-label-wrapper"
+            >
+              <label
+                class="govuk-label govuk-label--l false"
+                for="search-postcode"
+              >
+                Enter a postcode to find planning applications nearby
+              </label>
+            </h1>
+            <input
+              autocomplete="postal-code"
+              class="govuk-input false"
+              id="search-postcode"
+              name="eventName"
+              type="text"
+              value=""
+            />
+          </div>
+          <button
+            class="govuk-button govuk-button--start "
+            draggable="false"
+          >
+            Search
+            <svg
+              aria-hidden="true"
+              class="govuk-button__start-icon"
+              focusable="false"
+              height="19"
+              viewBox="0 0 33 40"
+              width="17.5"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h13l20 20-20 20H0l20-20z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="govuk-grid-column-one-half"
         />
       </div>
-      <button
-        class="govuk-button grid-button-search"
-        data-module="govuk-button"
-      >
-        Search
-        <span
-          class="undefined"
-          style="margin-left: 10px; vertical-align: middle;"
-        >
-          <svg
-            fill="none"
-            height="19"
-            viewBox="0 0 19 19"
-            width="19"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              clip-rule="evenodd"
-              d="M0.772461 0L10.8382 9.5L0.772461 19H8.20461L16.5662 11.1083L18.2703 9.5L16.5662 7.89172L8.20461 0H0.772461Z"
-              fill="white"
-              fill-rule="evenodd"
-            />
-          </svg>
-        </span>
-      </button>
-      <div
-        class="grid-button-signup"
-      />
-    </section>
-    <div
-      class="wrap-pagination"
-    >
-      <ul />
     </div>
-  </div>
+  </main>
 </div>
 `;

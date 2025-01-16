@@ -2,7 +2,7 @@ name: Run Tests
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, staging]
 
 env:
   NEXT_PUBLIC_SANITY_SECRET_TOKEN: ${{ vars.NEXT_PUBLIC_SANITY_SECRET_TOKEN }}
@@ -29,6 +29,6 @@ jobs:
 
       - name: Lint
         run: yarn lint
-        
+
       - name: Run tests
         run: yarn test

@@ -3,13 +3,15 @@ import Banner from "@/components/banner";
 import CookiesBanner from "@/components/cookies";
 import GoogleAnalytics from "@/components/google-analytics";
 import { urlFor } from "../actions/sanityClient";
-import "../../styles/app.scss";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { getGlobalContent } from "../actions/sanityClient";
 import { Suspense } from "react";
+import { GovUkInitAll } from "@/components/GovUkInitAll";
+import Footer from "@/components/footer";
 
 export const globalContent = await getGlobalContent();
+
 export async function generateMetadata(): Promise<Metadata> {
   const resMetadata = await globalContent?.favicon;
   return {
@@ -20,36 +22,43 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function RootLayout({
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const environment = process.env.NODE_ENV;
   const cookieStore = cookies();
-  const isShowCookie = cookieStore.get("isShowCookie")?.value || true;
-  const isConsentCookie = cookieStore.get("isConsentCookie")?.value || false;
+  const isShowCookieValue = cookieStore.get("isShowCookie")?.value;
+  const isShowCookie =
+    isShowCookieValue === undefined ? true : isShowCookieValue === "true";
+  const isConsentCookieValue = cookieStore.get("isConsentCookie")?.value;
+  const isConsentCookie =
+    isConsentCookieValue === undefined
+      ? false
+      : isConsentCookieValue === "true";
 
-  if (typeof window !== "undefined") {
-    const govUk = require("govuk-frontend");
-    govUk.initAll();
-  }
-
+  console.log(typeof isShowCookie, isShowCookie);
   return (
-    <html lang="en">
-      <body>
-        {isShowCookie == true && <CookiesBanner />}
-        {isConsentCookie &&
-          environment !== "development" &&
-          globalContent?.googleAnalytics && (
+    <>
+      {isShowCookie && <CookiesBanner />}
+      {isConsentCookie &&
+        environment !== "development" &&
+        globalContent?.googleAnalytics && (
+          <>
             <GoogleAnalytics gaId={globalContent?.googleAnalytics} />
-          )}
-        <Header globalConfig={globalContent} />
+          </>
+        )}
+      <a href="#main" className="govuk-skip-link" data-module="govuk-skip-link">
+        Skip to main content
+      </a>
+      <Header globalConfig={globalContent} />
+      <div className="govuk-width-container">
         <Banner globalConfig={globalContent} />
-        <div className="layout-wrap">
-          <Suspense>{children}</Suspense>
-        </div>
-      </body>
-    </html>
+      </div>
+      <Suspense>{children}</Suspense>
+      <Footer />
+      <GovUkInitAll />
+    </>
   );
 }

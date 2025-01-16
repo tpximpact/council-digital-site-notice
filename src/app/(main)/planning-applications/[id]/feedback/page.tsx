@@ -1,24 +1,41 @@
 "use client";
 import { useEffect, useState } from "react";
-import Breadcrumbs from "@/components/breadcrumbs";
 import Instructions from "./instructions";
 import Questions from "../../../../../components/questions";
 import { getLocalStorage } from "../../../../lib/application";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
+import { getGlobalContent } from "@/app/actions/sanityClient";
+import { useRouter } from "next/navigation";
+import PageWrapper from "@/components/pageWrapper";
+import PageCenter from "@/components/pageCenter";
 
 export const dynamic = "force-dynamic";
 
 const Feedback = () => {
   const [application, setApplication] = useState<PlanningApplication>();
   const [question, setQuestion] = useState<number>(0);
+  const [initialized, setInitialized] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    const getStorage = getLocalStorage({
-      key: "application",
-      defaultValue: {},
-    });
-    setApplication(getStorage);
-  }, []);
+    const initializePage = async () => {
+      const globalConfig = await getGlobalContent();
+      const storedApplication = getLocalStorage({
+        key: "application",
+        defaultValue: {},
+      });
+
+      if (globalConfig.globalEnableComments === false) {
+        router.push(`/planning-applications/${storedApplication?._id}`);
+        return;
+      }
+
+      setApplication(storedApplication);
+      setInitialized(true);
+    };
+
+    initializePage();
+  }, [router]);
 
   const onChangeQuestion = () => {
     const getStorageSelectedCheckbox = getLocalStorage({
@@ -49,30 +66,21 @@ const Feedback = () => {
     }
   };
 
-  const breadcrumbs_array = [
-    {
-      name: "Planning application",
-      href: "/",
-    },
-    {
-      name: application?.name || "",
-      href: `/planning-applications/${application?._id}`,
-    },
-    {
-      name: "Tell us what you think",
-      href: "",
-    },
-  ];
+  if (!initialized) {
+    return null;
+  }
+
   return (
-    <>
-      <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
+    <PageWrapper isCentered={false}>
       {question !== 0 && question !== 13 && <Instructions />}
-      <Questions
-        question={question}
-        onChangeQuestion={() => onChangeQuestion()}
-        setQuestion={setQuestion}
-      />
-    </>
+      <PageCenter>
+        <Questions
+          question={question}
+          onChangeQuestion={() => onChangeQuestion()}
+          setQuestion={setQuestion}
+        />
+      </PageCenter>
+    </PageWrapper>
   );
 };
 

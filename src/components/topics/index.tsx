@@ -86,11 +86,7 @@ const TopicsQuestion = ({
         />
       ))}
       {isError && <Validation message="Please select at least one topic" />}
-      <Button
-        content="Next"
-        className="button-topics-question"
-        onClick={() => onNextPage()}
-      />
+      <Button content="Next" onClick={() => onNextPage()} />
     </section>
   );
 };

@@ -1,19 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-import Breadcrumbs from "@/components/breadcrumbs";
 import About from "@/components/about";
 import Impact from "@/components/impact";
 import Process from "@/components/process";
 import { getApplicationById } from "../../../actions/sanityClient";
-import moment from "moment";
 import { useParams } from "next/navigation";
 import { PlanningApplication } from "../../../../../sanity/sanity.types";
 import { notFound } from "next/navigation";
 
+import PageWrapper from "@/components/pageWrapper";
+import Breadcrumbs from "@/components/breadcrumbs";
+
 export const dynamic = "force-dynamic";
 
 const PlanningApplicationItem = () => {
-  const [consultationDeadline, setConsultationDeadline] = useState<string>("");
   const [data, setData] = useState<PlanningApplication | null>();
   const params = useParams();
   const { id } = params;
@@ -21,20 +21,10 @@ const PlanningApplicationItem = () => {
   useEffect(() => {
     async function fetchData() {
       const result = await getApplicationById(id as string);
-      console.log({ result }, "id");
+      // console.log({ result }, "id");
       const getData = result[0];
       result.length == 0 ? setData(null) : setData(getData);
-      let deadlineTime;
 
-      if (getData?.enableComments) {
-        const deadline = moment(getData?.consultationDeadline);
-        const today = moment().hour(0).minute(0).second(0);
-        deadlineTime = moment
-          .duration(deadline.diff(today))
-          .asDays()
-          .toFixed(0);
-        setConsultationDeadline(deadlineTime);
-      }
       localStorage.setItem(
         "application",
         JSON.stringify({
@@ -53,35 +43,26 @@ const PlanningApplicationItem = () => {
     fetchData();
   }, [id]);
 
-  const breadcrumbs_array = [
-    { name: "Planning applications", href: "/" },
-    { name: data?.name || data?.address, href: "" },
-  ];
-
-  const {
-    showAccess,
-    showCarbon,
-    // showHealthcare,
-    showHousing,
-    showJobs,
-    showOpenSpace,
-  } = data || {};
-
   if (data === null) return notFound();
 
   return (
     <>
       {data && (
         <>
-          <Breadcrumbs breadcrumbs_info={breadcrumbs_array} />
-          <About data={data} />
-          {(showAccess ||
-            showCarbon ||
-            // showHealthcare ||
-            showHousing ||
-            showJobs ||
-            showOpenSpace) && <Impact data={data} />}
-          <Process data={data} consultationDeadline={consultationDeadline} />
+          <div className="govuk-width-container">
+            <Breadcrumbs
+              breadcrumbs={[
+                { name: "Planning applications", href: "/" },
+                { name: data?.name || data?.address, href: "" },
+              ]}
+            />
+          </div>
+          <PageWrapper isCentered={false}>
+            <About data={data} />
+            <Impact data={data} />
+            <hr className="govuk-section-break govuk-section-break--l" />
+            <Process data={data} />
+          </PageWrapper>
         </>
       )}
     </>

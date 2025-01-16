@@ -1,0 +1,38 @@
+.sentiment-button {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  background: none;
+  padding: 10px;
+  height: fit-content;
+}
+
+.sentiment-button svg {
+  margin: 0 auto;
+}
+
+.sentiment-button span {
+  margin-bottom: 0;
+}
+
+.sentiment-button:focus-visible {
+  background-color: #ffdd00;
+  outline: #ffdd00;
+}
+
+// feeling style
+.wrap-icons-feeling {
+  display: flex;
+  justify-content: space-between;
+  max-width: 25rem;
+}
+
+.wrap-icons-feeling > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrap-icons-feeling > div > span {
+  text-align: center;
+  margin-top: 5px;
+}

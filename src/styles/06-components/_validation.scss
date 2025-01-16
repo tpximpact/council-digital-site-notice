@@ -1,0 +1,16 @@
+.impact-validation {
+  border: 5px solid #d4351c;
+  margin-top: 20px;
+  padding: 15px;
+  max-width: 25rem;
+  margin-bottom: 20px;
+}
+
+.impact-validation :nth-child(2) {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: #d4351c;
+  text-decoration: underline;
+}

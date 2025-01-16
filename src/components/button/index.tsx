@@ -38,13 +38,15 @@ export const BackLink = ({
   onClick?: () => void;
 }) => {
   return (
-    <button
-      className={`govuk-back-link backlink`}
-      data-module="govuk-button"
-      onClick={onClick}
-    >
-      {content}
-    </button>
+    <nav>
+      <button
+        className={`govuk-back-link govuk-back-link--button`}
+        data-module="govuk-button"
+        onClick={onClick}
+      >
+        {content}
+      </button>
+    </nav>
   );
 };
 

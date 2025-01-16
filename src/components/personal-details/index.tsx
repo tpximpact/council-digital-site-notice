@@ -130,77 +130,91 @@ const PersonalDetails = ({
   };
 
   return (
-    <section className="wrap-personal-details">
+    <>
       <BackLink content="Back" onClick={() => setQuestion(backComponent)} />
-      <h1 className="govuk-heading-l">Your details</h1>
-      <Input
-        label="Name"
-        onChange={(value: any) => onChangeDetails(value, "name")}
-        value={personalDetailsForm?.name}
-        type="text"
-        isError={isNameError}
-        messageError="Your name is required"
-      />
-      <Input
-        label="Address"
-        onChange={(value: any) => onChangeDetails(value, "address")}
-        value={personalDetailsForm?.address}
-        type="text"
-        isError={isAddressError}
-        messageError="Your address is required"
-      />
-      <Input
-        label="Postcode"
-        onChange={(value: any) => onChangeDetails(value, "postcode")}
-        value={personalDetailsForm?.postcode}
-        type="text"
-        isError={isPostcodeError}
-        messageError={`${personalDetailsForm?.postcode == "" ? "Your postcode is required" : "Invalid postcode"}`}
-      />
-      <Input
-        label="Email address"
-        hint="Optional"
-        onChange={(value: any) => onChangeDetails(value, "email")}
-        value={personalDetailsForm?.email}
-        type="email"
-        isError={isEmailError}
-        messageError="Invalid email"
-      />
-      <Input
-        label="Telephone number"
-        hint="Optional"
-        onChange={(value: any) => onChangeDetails(value, "phone")}
-        value={personalDetailsForm?.phone}
-        type="tel"
-        isError={isPhoneError}
-        messageError="Invalid telephone number"
-      />
-      <div>
-        <Checkbox
-          labelClass="consent-label"
-          label={`I consent to ${globalConfig?.councilName} Council using my data for the purposes of assessing this planning application`}
-          isError={isConsentError}
-          messageError="You need to consent"
-          id="consent"
-          onChange={(e) => onChangeDetails(e.target.checked, "consent")}
-          checked={personalDetailsForm?.consent}
-        />
-      </div>
-      {isError && (
-        <Validation
-          message={generalMessage}
-          invalidPostCode={invalidPostcodeMessage}
-          optionalValidation={optionalValidationMessage}
-          consentError={consentErrorMessage}
-        />
-      )}
 
-      <Details
-        summary="How we handle your data"
-        description={descriptionDetail["consent"]}
-      />
-      <Button content="Next" onClick={() => nextPage()} />
-    </section>
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-two-thirds">
+          <h1 className="govuk-heading-l">Your details</h1>
+          <Input
+            label="Name"
+            onChange={(value: any) => onChangeDetails(value, "name")}
+            value={personalDetailsForm?.name}
+            type="text"
+            isError={isNameError}
+            messageError="Your name is required"
+            autocomplete="off"
+            id="name"
+          />
+          <Input
+            label="Address"
+            onChange={(value: any) => onChangeDetails(value, "address")}
+            value={personalDetailsForm?.address}
+            type="text"
+            isError={isAddressError}
+            messageError="Your address is required"
+            autocomplete="off"
+            id="address"
+          />
+          <Input
+            label="Postcode"
+            onChange={(value: any) => onChangeDetails(value, "postcode")}
+            value={personalDetailsForm?.postcode}
+            type="text"
+            isError={isPostcodeError}
+            messageError={`${personalDetailsForm?.postcode == "" ? "Your postcode is required" : "Invalid postcode"}`}
+            autocomplete="off"
+            id="postcode"
+          />
+          <Input
+            label="Email address"
+            hint="Optional"
+            onChange={(value: any) => onChangeDetails(value, "email")}
+            value={personalDetailsForm?.email}
+            type="email"
+            isError={isEmailError}
+            messageError="Invalid email"
+            autocomplete="off"
+            id="email"
+          />
+          <Input
+            label="Telephone number"
+            hint="Optional"
+            onChange={(value: any) => onChangeDetails(value, "phone")}
+            value={personalDetailsForm?.phone}
+            type="tel"
+            isError={isPhoneError}
+            messageError="Invalid telephone number"
+            autocomplete="off"
+            id="telephone"
+          />
+          <div>
+            <Checkbox
+              labelClass="consent-label"
+              label={`I consent to ${globalConfig?.councilName} Council using my data for the purposes of assessing this planning application`}
+              isError={isConsentError}
+              messageError="You need to consent"
+              id="consent"
+              onChange={(e) => onChangeDetails(e.target.checked, "consent")}
+              checked={personalDetailsForm?.consent}
+            />
+          </div>
+          {isError && (
+            <Validation
+              message={generalMessage}
+              invalidPostCode={invalidPostcodeMessage}
+              optionalValidation={optionalValidationMessage}
+              consentError={consentErrorMessage}
+            />
+          )}
+          <Details
+            summary="How we handle your data"
+            description={descriptionDetail["consent"]}
+          />
+          <Button content="Next" onClick={() => nextPage()} />
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -1,8 +1,10 @@
 "use client";
 import Link from "next/link";
 import { createCookies } from "@/app/actions/actions";
+import { useRouter } from "next/navigation";
 
 const CookiesBanner = () => {
+  const router = useRouter();
   return (
     <div
       className="govuk-cookie-banner"
@@ -34,6 +36,7 @@ const CookiesBanner = () => {
             data-module="govuk-button"
             onClick={() => {
               createCookies(true);
+              router.refresh();
             }}
           >
             Accept analytics cookies

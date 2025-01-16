@@ -1,0 +1,29 @@
+$govuk-header-background: govuk-colour("black");
+$govuk-header-border-color: $govuk-brand-colour;
+$govuk-header-text: govuk-colour("white");
+
+.dsn-header {
+  @include govuk-font($size: 16, $line-height: 1);
+  border-bottom: govuk-spacing(2) solid $govuk-header-border-color;
+  color: $govuk-header-text;
+  background: $govuk-header-background;
+  padding: govuk-spacing(3);
+  background-color: govuk-colour("black");
+
+  &__content {
+    @include govuk-width-container();
+    display: flex;
+    flex-direction: column;
+    gap: $govuk-gutter-half;
+
+    @include govuk-media-query($from: desktop) {
+      align-items: center;
+      flex-direction: row;
+    }
+  }
+
+  &__title {
+    @include govuk-font-size($size: 24, $line-height: 1);
+    @include govuk-typography-weight-bold;
+  }
+}

@@ -1,0 +1,18 @@
+@import "node_modules/govuk-frontend/dist/govuk/core/index";
+
+$selector: dsn-application-status;
+
+.#{$selector} {
+  &__heading {
+    @extend %govuk-heading-s;
+    color: govuk-colour("blue");
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  &__decision-information {
+    margin-top: govuk-spacing(4);
+  }
+}

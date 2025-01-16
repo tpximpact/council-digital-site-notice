@@ -1,0 +1,72 @@
+$selector: dsn-planning-application-card;
+.#{$selector} {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid govuk-colour("mid-grey");
+  gap: govuk-spacing(4);
+  padding: govuk-spacing(2);
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    color: govuk-colour("black");
+    background: govuk-colour("light-grey");
+
+    .#{$selector}__image {
+      background-color: govuk-shade(govuk-colour("light-grey"), 5%);
+    }
+  }
+
+  &:focus {
+    @include govuk-focused-box;
+  }
+
+  &__image {
+    background-color: govuk-colour("light-grey");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 223px;
+  }
+
+  &__title {
+    @extend %govuk-heading-m;
+    @extend %govuk-link;
+    color: $govuk-link-colour;
+    margin: 0;
+  }
+
+  &__meta {
+    @extend %govuk-body-s;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-auto-columns: max-content;
+    align-items: baseline;
+
+    &::before {
+      content: "";
+      width: 10px;
+      height: 14px;
+      background-color: transparent;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: inline-block;
+      background-image: url("/assets/components/planning-application-card/place.svg");
+      margin-right: govuk-spacing(2);
+    }
+  }
+
+  &__meta-items {
+    > * {
+      &::after {
+        content: "\2022";
+        padding: 0 govuk-spacing(2);
+      }
+      &:last-of-type::after {
+        content: "";
+        padding: 0;
+      }
+    }
+  }
+}

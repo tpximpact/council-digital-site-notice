@@ -45,13 +45,29 @@ type sanityApplicationResponse = {
   total: number;
 };
 
+/**
+ * Only return results that have the required fields
+ * @todo && !(applicationStage.stage == "Consultation" && !defined(consultationDeadline))
+ */
+const requiredFields = `&& defined(applicationNumber) 
+                        && (defined(name) || defined(address)) 
+                        && defined(applicationStage) 
+                        && defined(location.lat) 
+                        && defined(location.lng)`;
+
+/**
+ * Used on the search page to fetch all active applications to be paginated through
+ * @param offSet
+ * @param itemsPerPage
+ * @returns
+ */
 export async function getActiveApplications(
   offSet: number = 0,
   itemsPerPage?: number,
 ): Promise<sanityApplicationResponse> {
   try {
     const query = `{
-        "results": *[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))] | order(_id) 
+        "results": *[_type == "planning-application" && isActive == true ${requiredFields} && !(_id in path("drafts.**"))] | order(_id) 
           ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} {
             _id, 
             image_head, 
@@ -60,7 +76,7 @@ export async function getActiveApplications(
             applicationName, 
             address
           },
-        "total": count(*[_type == "planning-application" && isActive == true && !(_id in path("drafts.**"))])
+        "total": count(*[_type == "planning-application" && isActive == true ${requiredFields} && !(_id in path("drafts.**"))])
       }`;
 
     const response = await sanityFetch<sanityApplicationResponse>({ query });
@@ -70,14 +86,27 @@ export async function getActiveApplications(
   }
 }
 
+/**
+ * Used on show page to fetch a single active application by id
+ * @param id
+ * @returns
+ */
 export async function getApplicationById(id: string) {
-  const query =
-    '*[_type == "planning-application" && (_id == $_id || planningId == $_id) && isActive == true]';
+  const query = `*[_type == "planning-application" && (_id == $_id || planningId == $_id) && isActive == true ${requiredFields}]`;
   const post = await client.fetch(query, { _id: id, planningId: id });
 
   return post;
 }
 
+/**
+ * Used on the search page to fetch all active applications to be paginated through
+ * Adds distance to the response
+ * @todo distance isn't in the PlanningApplication type
+ * @param offSet
+ * @param location
+ * @param itemsPerPage
+ * @returns
+ */
 export async function getActiveApplicationsByLocation(
   offSet: number = 0,
   location: { latitude: number; longitude: number },
@@ -90,7 +119,7 @@ export async function getActiveApplicationsByLocation(
   try {
     const query = `{
         "results": 
-        *[_type == "planning-application" && defined(location) && isActive == true && !(_id in path("drafts.**"))] | order(geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude}))) ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} 
+        *[_type == "planning-application" && defined(location) && isActive == true ${requiredFields} && !(_id in path("drafts.**"))] | order(geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude}))) ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} 
            {
             _id, 
             image_head, 
@@ -100,7 +129,7 @@ export async function getActiveApplicationsByLocation(
             address,
             "distance": geo::distance(location, geo::latLng(${location.latitude}, ${location.longitude}))
           },
-        "total": count(*[_type == "planning-application" && defined(location) && isActive == true && !(_id in path("drafts.**"))]),
+        "total": count(*[_type == "planning-application" && defined(location) && isActive == true ${requiredFields} && !(_id in path("drafts.**"))]),
       }`;
     const response = await sanityFetch<sanityApplicationResponse>({ query });
     if (response.results) {

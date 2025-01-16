@@ -21,6 +21,12 @@ export default defineType({
       },
     }),
     defineField({
+      title: "Enable Comments",
+      name: "globalEnableComments",
+      type: "boolean",
+      initialValue: true,
+    }),
+    defineField({
       title: "Concern Url",
       name: "concernUrl",
       type: "string",
@@ -87,5 +93,6 @@ export default defineType({
   ],
   initialValue: {
     integrations: "manual",
+    globalEnableComments: true,
   },
 });

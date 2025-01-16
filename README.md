@@ -46,6 +46,13 @@ The application uses https://sanity.io/ as its cms. When the application is runn
 
 Data schemas are stored in /sanity/schemas.
 
+### Setting up commenting and feedback
+
+- [see readme here for more information](https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication?id=service-account)
+- Create a service account in google cloud console, don't grant any roles or access
+- Generate a key for that service account and make a note of the private_key for the env vars
+- Add that user as an editor to your google sheet
+
 ## Features
 
 ### Emails
@@ -91,7 +98,7 @@ If the application number is invalid it will error and will not be able to sync 
 
 #### UniformAPI
 
-When integrating with UniformAPI you can point your workflow to `/api/application` or `/api/applications` to POST data into sanity studio, you will need to include the value set in `NEXT_PUBLIC_API_KEY` in your `x-api-key` header to authenticate with the DSN.
+When integrating with UniformAPI you can point your workflow to `/api/application` or `/api/applications` to POST data into sanity studio, you will need to include the value set in `OUR_API_KEY` in your `x-api-key` header to authenticate with the DSN.
 
 For more information on the API end points see `/api-docs`
 
@@ -154,9 +161,9 @@ You can provide config with a `.env` file. Run `cp sample.env .env` to create a 
 
 ### OUR API
 
-| Variable              | Description                                                                                              | Example                        | Required?                                      |
-| --------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------ | ---------------------------------------------- |
-| `NEXT_PUBLIC_API_KEY` | API key an application must send and match against in order to add data to the sanityCMS through the DSN | `complex-passphrase-goes-here` | Only if using the API to add data to sanityCMS |
+| Variable      | Description                                                                                              | Example                        | Required?                                      |
+| ------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------ | ---------------------------------------------- |
+| `OUR_API_KEY` | API key an application must send and match against in order to add data to the sanityCMS through the DSN | `complex-passphrase-goes-here` | Only if using the API to add data to sanityCMS |
 
 ### EMAILS
 
@@ -168,11 +175,11 @@ You can provide config with a `.env` file. Run `cp sample.env .env` to create a 
 
 ### COMMENTS & FEEDBACK
 
-| Variable                          | Description                                             | Example                                                            | Required?                        |
-| --------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------- |
-| `NEXT_PUBLIC_SPREADSHEET_ID`      | ID for spreadsheet where comments are stored            | `api-key`                                                          | Only if using commenting feature |
-| `NEXT_PUBLIC_GOOGLE_CLIENT_EMAIL` | Google service account authorised to update spreadsheet | `google-service-account@google.cloud.com`                          | Only if using commenting feature |
-| `GOOGLE_SERVICE_PRIVATE_KEY`      | Private key for google cloud account                    | `-----BEGIN PRIVATE KEY-----\nthings\n-----END PRIVATE KEY-----\n` | Only if using commenting feature |
+| Variable                       | Description                                             | Example                                                            | Required?                        |
+| ------------------------------ | ------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------- |
+| `COMMENT_SPREADSHEET_ID`       | ID for spreadsheet where comments are stored            | `api-key`                                                          | Only if using commenting feature |
+| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | Google service account authorised to update spreadsheet | `google-service-account@google.cloud.com`                          | Only if using commenting feature |
+| `GOOGLE_SERVICE_PRIVATE_KEY`   | Private key for google cloud account                    | `-----BEGIN PRIVATE KEY-----\nthings\n-----END PRIVATE KEY-----\n` | Only if using commenting feature |
 
 ### SANITY STUDIO
 
@@ -190,7 +197,9 @@ You can provide config with a `.env` file. Run `cp sample.env .env` to create a 
 
 ## Testing the application
 
-The project is using [Jest](https://jestjs.io/) for testing.
+The project is using:
+
+- [Jest](https://jestjs.io/) for testing.
 
 #### Run the tests:
 
