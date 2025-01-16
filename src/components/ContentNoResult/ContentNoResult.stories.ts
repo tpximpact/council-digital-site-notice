@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ContentNoResult } from "./ContentNoResult";
-import { getAppConfig } from "@/config";
 
-const appConfig = getAppConfig("public-council-1");
 const meta = {
   title: "Content/No result",
   component: ContentNoResult,
@@ -19,9 +17,3 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
-
-export const WithCouncilConfig: Story = {
-  args: {
-    councilConfig: appConfig.council,
-  },
-};
