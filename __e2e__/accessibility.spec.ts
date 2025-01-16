@@ -3,9 +3,9 @@ import AxeBuilder from "@axe-core/playwright";
 
 const pages = [
   "/",
-  "/planning-applications/{id}",
-  "/planning-applications/{id}/feedback",
-  "/planning-applications/{id}/thank-you",
+  "/planning-applications/029235b5-96ff-4352-8b48-aa437ca06b5b",
+  "/planning-applications/029235b5-96ff-4352-8b48-aa437ca06b5b/feedback",
+  "/planning-applications/029235b5-96ff-4352-8b48-aa437ca06b5b/thank-you",
   "/not-found",
 ];
 
@@ -35,6 +35,7 @@ const testAccessibility = async (
   level: "full" | "current",
 ) => {
   await page.goto(path);
+  await page.waitForTimeout(3000);
 
   const accessibilityScanResults = await new AxeBuilder({ page })
     .disableRules("region")
