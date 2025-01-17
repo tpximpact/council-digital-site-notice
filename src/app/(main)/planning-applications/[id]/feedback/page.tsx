@@ -11,7 +11,8 @@ import PageCenter from "@/components/pageCenter";
 
 export const dynamic = "force-dynamic";
 
-const Feedback = () => {
+const Feedback = ({ params }: { params: { id: string } }) => {
+  const { id: applicationId } = params;
   const [application, setApplication] = useState<PlanningApplication>();
   const [question, setQuestion] = useState<number>(0);
   const [initialized, setInitialized] = useState(false);
@@ -25,6 +26,18 @@ const Feedback = () => {
         defaultValue: {},
       });
 
+      // if we've been sent a link to /feedback and don't have an application stored, redirect to the application page
+      if (
+        Object.keys(storedApplication).length === 0 &&
+        storedApplication.constructor === Object
+      ) {
+        console.info(
+          "Redirecting back to application as no application data stored",
+        );
+        router.push(`/planning-applications/${applicationId}`);
+        return;
+      }
+
       if (globalConfig.globalEnableComments === false) {
         router.push(`/planning-applications/${storedApplication?._id}`);
         return;
@@ -35,7 +48,7 @@ const Feedback = () => {
     };
 
     initializePage();
-  }, [router]);
+  }, [router, applicationId]);
 
   const onChangeQuestion = () => {
     const getStorageSelectedCheckbox = getLocalStorage({
