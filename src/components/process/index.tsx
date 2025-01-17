@@ -62,7 +62,7 @@ function Process({ data }: { data: PlanningApplication }) {
                   src="/assets/images/comments-and-docs.png"
                   width={64}
                   height={64}
-                  alt="documents and comments"
+                  alt=""
                 />
               </div>
             </div>
