@@ -188,16 +188,25 @@ const PersonalDetails = ({
             autocomplete="off"
             id="telephone"
           />
-          <div>
-            <Checkbox
-              labelClass="consent-label"
-              label={`I consent to ${globalConfig?.councilName} Council using my data for the purposes of assessing this planning application`}
-              isError={isConsentError}
-              messageError="You need to consent"
-              id="consent"
-              onChange={(e) => onChangeDetails(e.target.checked, "consent")}
-              checked={personalDetailsForm?.consent}
-            />
+
+          <div
+            className={`govuk-form-group ${isConsentError && "govuk-form-group--error"}`}
+          >
+            {isConsentError && (
+              <p id="consent-error" className="govuk-error-message">
+                <span className="govuk-visually-hidden">Error:</span> You need
+                to consent
+              </p>
+            )}
+            <div className="govuk-checkboxes" data-module="govuk-checkboxes">
+              <Checkbox
+                value="consent"
+                label={`I consent to ${globalConfig?.councilName} Council using my data for the purposes of assessing this planning application`}
+                id="consent"
+                onChange={(e) => onChangeDetails(e.target.checked, "consent")}
+                checked={personalDetailsForm?.consent}
+              />
+            </div>
           </div>
           {isError && (
             <Validation
