@@ -4,25 +4,32 @@ function Validation({
   optionalValidation,
   consentError,
 }: any) {
-  return (
-    <div className="impact-validation">
-      <p className="govuk-body-l govuk-!-font-weight-bold">
-        There is a problem
-      </p>
-      <p className="govuk-body govuk-!-font-weight-bold error-message">
-        {message}
-      </p>
-      <p className={`govuk-body govuk-!-font-weight-bold error-message`}>
-        {invalidPostCode}
-      </p>
-      <p className={`govuk-body govuk-!-font-weight-bold error-message`}>
-        {optionalValidation}
-      </p>
-      <p className={`govuk-body govuk-!-font-weight-bold error-message `}>
-        {consentError}
-      </p>
-    </div>
-  );
+  const errors = [
+    message,
+    invalidPostCode,
+    optionalValidation,
+    consentError,
+  ].filter(Boolean);
+  if (errors.length > 0) {
+    return (
+      <div className="govuk-error-summary" data-module="govuk-error-summary">
+        <div role="alert">
+          <h2 className="govuk-error-summary__title">There is a problem</h2>
+          <div className="govuk-error-summary__body">
+            <ul className="govuk-list govuk-error-summary__list">
+              {errors.map((error, index) => (
+                <li key={index} className="govuk-error-message">
+                  {error}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return null;
+  }
 }
 
 export default Validation;
