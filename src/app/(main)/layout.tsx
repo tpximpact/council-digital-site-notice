@@ -38,7 +38,6 @@ export default async function MainLayout({
       ? false
       : isConsentCookieValue === "true";
 
-  console.log(typeof isShowCookie, isShowCookie);
   return (
     <>
       {isShowCookie && <CookiesBanner />}

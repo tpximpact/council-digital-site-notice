@@ -135,7 +135,7 @@ function CheckAnswers({
   };
 
   return (
-    <div style={{ maxWidth: "64rem" }}>
+    <div className="dsn-comment-check-answers">
       <BackLink content="Back" onClick={() => setQuestion(11)} />
       <h1 className="govuk-heading-xl">
         Check your responses before submitting

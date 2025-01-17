@@ -12,7 +12,7 @@ const Header = ({ globalConfig }: any) => {
               <Image
                 width={100}
                 height={35}
-                alt=""
+                alt={`${globalConfig?.councilName} Council`}
                 src={urlFor(globalConfig?.logo)?.url()}
               />
             </Link>

@@ -57,9 +57,9 @@ const FeedbackMessage = () => {
       <br />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
-          <h1 className="govuk-heading-m">
+          <h2 className="govuk-heading-m">
             Discover other planning applications in your area
-          </h1>
+          </h2>
           <p className="govuk-body">
             If you’re interested in learning more about planning applications in
             your area, you can view all currently active applications and
@@ -80,9 +80,9 @@ const FeedbackMessage = () => {
       {globalConfig?.howToGetInvolveUrl && (
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
-            <h1 className="govuk-heading-m">
+            <h2 className="govuk-heading-m">
               Get involved in {globalConfig?.councilName}’s Local Plan
-            </h1>
+            </h2>
             <p className="govuk-body">
               You can have a big impact on developments in your local community
               by getting involved in {globalConfig?.councilName}'s planning
