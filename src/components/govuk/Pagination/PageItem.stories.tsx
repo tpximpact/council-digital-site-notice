@@ -27,9 +27,8 @@ export const Default: Story = {
     },
     link: "#",
     searchParams: {
-      resultsPerPage: 10,
       page: 1,
-      query: "value",
+      postcode: "value",
     },
   },
 };

@@ -39,9 +39,8 @@ export const PreviousButton: Story = {
       href: "",
       page: 1,
       searchParams: {
-        resultsPerPage: 10,
         page: 1,
-        query: "value",
+        postcode: "value",
       },
     },
   },
@@ -54,9 +53,8 @@ export const NextButton: Story = {
       href: "",
       page: 2,
       searchParams: {
-        resultsPerPage: 10,
-        page: 2,
-        query: "value",
+        page: 1,
+        postcode: "value",
       },
     },
   },

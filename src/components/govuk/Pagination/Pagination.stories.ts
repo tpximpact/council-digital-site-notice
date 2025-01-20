@@ -13,17 +13,12 @@ const meta = {
   args: {
     pagination: {
       page: 50,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
     baseUrl: "search",
     searchParams: {
-      resultsPerPage: 10,
       page: 1,
-      query: "value",
+      postcode: "value",
     },
   },
 } satisfies Meta<typeof Pagination>;
@@ -53,11 +48,7 @@ export const FirstPage: Story = {
   args: {
     pagination: {
       page: 1,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
@@ -66,11 +57,7 @@ export const SecondPage: Story = {
   args: {
     pagination: {
       page: 2,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
@@ -79,11 +66,7 @@ export const ThirdPage: Story = {
   args: {
     pagination: {
       page: 3,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
@@ -92,11 +75,7 @@ export const FourthPage: Story = {
   args: {
     pagination: {
       page: 4,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
@@ -105,11 +84,7 @@ export const FifthPage: Story = {
   args: {
     pagination: {
       page: 5,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
@@ -118,11 +93,7 @@ export const NinetyEighthPage: Story = {
   args: {
     pagination: {
       page: 98,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
@@ -131,11 +102,7 @@ export const NinetyNinthPage: Story = {
   args: {
     pagination: {
       page: 99,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
@@ -144,11 +111,7 @@ export const LastPage: Story = {
   args: {
     pagination: {
       page: 100,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
@@ -157,11 +120,7 @@ export const HigherThanPossiblePage: Story = {
   args: {
     pagination: {
       page: 101,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
@@ -170,11 +129,7 @@ export const LowerThanPossiblePage: Story = {
   args: {
     pagination: {
       page: 0,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
@@ -183,11 +138,7 @@ export const EvenLowerThanPossiblePage: Story = {
   args: {
     pagination: {
       page: -1,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
@@ -196,11 +147,7 @@ export const MoreItemsThanPages: Story = {
   args: {
     pagination: {
       page: 101,
-      from: 0,
-      to: 0,
       total_pages: 100,
-      results: 10,
-      total_results: 1000,
     },
   },
 };
