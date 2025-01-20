@@ -25,10 +25,13 @@ function About({ data }: { data: PlanningApplication }) {
       ? [...galleryImages, ...data?.image_gallery]
       : [...galleryImages];
 
+  const firstHeading = data.name || data.address;
+  const secondHeading = data.name && data.address ? data.address : undefined;
+
   return (
     <PageCenter>
-      {data.name && <h1 className="govuk-heading-l">{data.name}</h1>}
-      {data.address && <h2 className="govuk-heading-m">{data.address}</h2>}
+      {firstHeading && <h1 className="govuk-heading-l">{firstHeading}</h1>}
+      {secondHeading && <h2 className="govuk-heading-m">{secondHeading}</h2>}
 
       {galleryImages.length > 0 && <ImageGallery images={galleryImages} />}
 
