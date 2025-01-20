@@ -1,7 +1,6 @@
 import Header from "@/components/header";
 import Banner from "@/components/banner";
 import CookiesBanner from "@/components/cookies";
-import GoogleAnalytics from "@/components/google-analytics";
 import { urlFor } from "../actions/sanityClient";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
@@ -9,6 +8,7 @@ import { getGlobalContent } from "../actions/sanityClient";
 import { Suspense } from "react";
 import { GovUkInitAll } from "@/components/GovUkInitAll";
 import Footer from "@/components/footer";
+import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 
 export const globalContent = await getGlobalContent();
 
@@ -41,13 +41,6 @@ export default async function MainLayout({
   return (
     <>
       {isShowCookie && <CookiesBanner />}
-      {isConsentCookie &&
-        environment !== "development" &&
-        globalContent?.googleAnalytics && (
-          <>
-            <GoogleAnalytics gaId={globalContent?.googleAnalytics} />
-          </>
-        )}
       <a href="#main" className="govuk-skip-link" data-module="govuk-skip-link">
         Skip to main content
       </a>
@@ -58,6 +51,16 @@ export default async function MainLayout({
       <Suspense>{children}</Suspense>
       <Footer />
       <GovUkInitAll />
+      {isConsentCookie && environment !== "development" && (
+        <>
+          {globalContent?.googleTagManager && (
+            <GoogleTagManager gtmId={globalContent?.googleTagManager} />
+          )}
+          {globalContent?.googleAnalytics && (
+            <GoogleAnalytics gaId={globalContent?.googleAnalytics} />
+          )}
+        </>
+      )}
     </>
   );
 }
