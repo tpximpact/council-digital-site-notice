@@ -1,11 +1,8 @@
 import Link from "next/link";
-import { LocalIcon } from "../../../public/assets/icons";
 import { urlFor } from "@/app/actions/sanityClient";
 import { PlanningApplication } from "../../../sanity/sanity.types";
-import { useRouter } from "next/navigation";
 
 const PlanningApplicationList = ({ data }: { data: PlanningApplication[] }) => {
-  const router = useRouter();
   return (
     <section className="dsn-planning-application-cards">
       {data &&

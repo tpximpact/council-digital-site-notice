@@ -6,6 +6,7 @@ interface ButtonStartProps {
   onClick?: () => void;
   content?: string;
   noSpacing?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 const ButtonStart: React.FC<ButtonStartProps> = ({
@@ -13,6 +14,7 @@ const ButtonStart: React.FC<ButtonStartProps> = ({
   onClick,
   content = "Start now",
   noSpacing = false,
+  type,
 }) => {
   const commonProps: {
     className: string;
@@ -42,7 +44,11 @@ const ButtonStart: React.FC<ButtonStartProps> = ({
   return href ? (
     <Link href={href} {...commonProps} />
   ) : (
-    <button onClick={onClick} {...commonProps} />
+    <button
+      {...(type ? { type } : {})}
+      {...(onClick ? { onClick } : {})}
+      {...commonProps}
+    />
   );
 };
 

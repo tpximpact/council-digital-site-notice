@@ -1,140 +1,80 @@
-"use client";
-import { useEffect, useState } from "react";
-import PlanningApplicationList from "@/components/planning-application-list";
-import {
-  getActiveApplicationsByLocation,
-  getActiveApplications,
-} from "../actions/sanityClient";
-import ReactPaginate from "react-paginate";
-import { NextIcon } from "../../../public/assets/icons";
-import { PreviewIcon } from "../../../public/assets/icons";
-import { getLocationFromPostcode } from "../actions/actions";
-import { getGlobalContent } from "../actions/sanityClient";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { PlanningApplication } from "../../../sanity/sanity.types";
-import FormSearch from "@/components/formSearch";
 import PageWrapper from "@/components/pageWrapper";
+import { SearchParams } from "@/types";
+import {
+  getActiveApplications,
+  getActiveApplicationsByLocation,
+  getGlobalContent,
+} from "../actions/sanityClient";
+import PlanningApplicationList from "@/components/planning-application-list";
+import { Pagination } from "@/components/govuk/Pagination";
+import Link from "next/link";
+import PostcodeSearch from "@/components/postcodeSearch";
+import { getLocationFromPostcode } from "../actions/actions";
+import { ContentNoResult } from "@/components/ContentNoResult";
 
-const Home = () => {
-  const itemsPerPage = 6;
+interface HomeProps {
+  params: any;
+  searchParams?: SearchParams;
+}
 
-  const [postcode, setPostcode] = useState("");
-  const [location, setLocation] = useState<any>();
-  const [locationNotFound, setLocationNotFound] = useState<boolean>(false);
-  const [displayData, setDisplayData] = useState<PlanningApplication[]>();
-  const [dynamicTotalResults, setDynamicTotalResults] = useState<number>(0);
-  const [globalConfig, setGlobalConfig] = useState<any>();
-  const [selectedPage, setSelectedPage] = useState(0);
+const itemsPerPage = 6;
 
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+async function fetchData({ params, searchParams }: HomeProps): Promise<any> {
+  // site config
+  const globalConfig = await getGlobalContent();
 
-  const pageCount =
-    dynamicTotalResults > 0 ? Math.ceil(dynamicTotalResults / itemsPerPage) : 0;
+  // get applications
+  let applicationsResponse, applications, totalApplications, locationValid;
+  const offset = searchParams?.page
+    ? (searchParams.page - 1) * itemsPerPage
+    : 0;
 
-  useEffect(() => {
-    setPostcode(searchParams.get("search") || "");
-    setLocation(searchParams.get("page") || "");
-  }, []);
-
-  useEffect(() => {
-    async function fetchData() {
-      const paramsPage = searchParams.get("page");
-      const paramsSearch = searchParams.get("search");
-      const pageParams: number = paramsPage ? parseInt(paramsPage) : 1;
-
-      try {
-        const fetchGlobalConfig = await getGlobalContent();
-        setGlobalConfig(fetchGlobalConfig);
-
-        const offset =
-          dynamicTotalResults === 0
-            ? 0
-            : ((pageParams - 1) * itemsPerPage) % dynamicTotalResults;
-
-        if (paramsSearch) {
-          const location = await getLocationFromPostcode(paramsSearch);
-          if (!location) {
-            setLocationNotFound(true);
-            return;
-          }
-          const newData = await getActiveApplicationsByLocation(
-            offset,
-            location,
-            itemsPerPage,
-          );
-          setDisplayData(newData?.results as PlanningApplication[]);
-          setDynamicTotalResults(newData?.total as number);
-          setLocationNotFound(false);
-          setLocation(location);
-        } else {
-          const data = await getActiveApplications(offset, itemsPerPage);
-          setDisplayData(data.results as PlanningApplication[]);
-          setDynamicTotalResults(data.total);
-        }
-        setSelectedPage(pageParams - 1);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+  // determine search type
+  const postcode = searchParams?.postcode;
+  if (postcode) {
+    try {
+      const locationResponse = await getLocationFromPostcode(postcode);
+      if (locationResponse) {
+        applicationsResponse = await getActiveApplicationsByLocation(
+          offset,
+          locationResponse,
+          itemsPerPage,
+        );
+      } else {
+        locationValid = "Postcode not found. Please enter a valid postcode.";
       }
+    } catch (error) {
+      locationValid =
+        "Error occured while validating postcode. Please try again.";
+      console.error("Error validating postcode:", error);
     }
+  } else {
+    applicationsResponse = await getActiveApplications(offset, itemsPerPage);
+  }
 
-    fetchData();
-  }, [dynamicTotalResults, postcode, searchParams, itemsPerPage]);
+  applications =
+    applicationsResponse && applicationsResponse?.results
+      ? applicationsResponse.results
+      : {};
+  totalApplications =
+    applicationsResponse && applicationsResponse?.total
+      ? applicationsResponse.total
+      : 0;
 
-  const handlePageClick = async (event: any) => {
-    const newOffset = (event.selected * itemsPerPage) % dynamicTotalResults;
-    const newTotalPagecount = dynamicTotalResults - newOffset;
-    const totalPage =
-      newTotalPagecount >= itemsPerPage ? itemsPerPage : newTotalPagecount;
-
-    let newData;
-    if (location) {
-      newData = await getActiveApplicationsByLocation(
-        newOffset,
-        location,
-        totalPage,
-      );
-    } else {
-      newData = await getActiveApplications(newOffset, totalPage);
-    }
-    setDisplayData(newData?.results as PlanningApplication[]);
-    setDynamicTotalResults(newData?.total as number);
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("page", (event.selected + 1).toString());
-
-    router.push(pathname + "?" + params.toString());
-    setSelectedPage(event.selected);
+  const pagination = {
+    page: parseInt((searchParams?.page ?? "1").toString()),
+    total_pages: Math.ceil(totalApplications / itemsPerPage),
   };
 
-  const onSearchPostCode = async () => {
-    let location: any;
-    if (!postcode) {
-      setLocationNotFound(true);
-      return;
-    }
-    location = await getLocationFromPostcode(postcode);
-    if (!location) {
-      setLocationNotFound(true);
-      return;
-    }
-    setLocationNotFound(false);
-    setLocation(location);
-    // Fetching sorted applications based on lat/long
-    const newData = await getActiveApplicationsByLocation(
-      0,
-      location,
-      itemsPerPage,
-    );
-    setDisplayData(newData?.results as PlanningApplication[]);
-    setDynamicTotalResults(newData?.total as number);
-    const params = new URLSearchParams();
-    params.set("search", postcode);
-    params.set("page", "1");
+  return [globalConfig, applications, pagination, locationValid];
+}
 
-    router.push(pathname + "?" + params.toString());
-    setSelectedPage(0);
-  };
+const Home = async ({ params, searchParams }: HomeProps) => {
+  const [globalConfig, applications, pagination, locationValid] =
+    await fetchData({
+      params,
+      searchParams,
+    });
 
   return (
     <PageWrapper isCentered={true}>
@@ -143,37 +83,39 @@ const Home = () => {
         Find, review and leave your comments on planning applications in{" "}
         {globalConfig?.councilName}
       </p>
-      <FormSearch
-        locationNotFound={locationNotFound}
-        onSearchPostCode={onSearchPostCode}
-        setPostcode={setPostcode}
-        signUpUrl={globalConfig?.signUpUrl}
-        postcode={postcode}
-      />
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-one-half">
+          <form action="/" method="get">
+            <PostcodeSearch
+              postcode={searchParams?.postcode}
+              error={locationValid}
+            />
+          </form>
+        </div>
+        <div className="govuk-grid-column-one-half">
+          {globalConfig?.signUpUrl && (
+            <Link
+              className="govuk-button govuk-button--secondary"
+              target="_blank"
+              href={`${globalConfig?.signUpUrl}`}
+            >
+              Sign up for alerts on applications near you
+            </Link>
+          )}
+        </div>
+      </div>
 
-      {displayData && <PlanningApplicationList data={displayData} />}
+      {applications && applications.length > 0 ? (
+        <PlanningApplicationList data={applications} />
+      ) : (
+        <ContentNoResult />
+      )}
 
-      {pageCount > 0 && (
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel={<NextIcon />}
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={2}
-          marginPagesDisplayed={1}
-          pageCount={pageCount}
-          previousLabel={<PreviewIcon />}
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          previousClassName="page-item"
-          previousLinkClassName="page-link"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          containerClassName="pagination govuk-body"
-          activeClassName="active"
-          forcePage={selectedPage}
-          renderOnZeroPageCount={null}
+      {pagination && pagination.total_pages > 1 && (
+        <Pagination
+          baseUrl="/"
+          searchParams={searchParams}
+          pagination={pagination}
         />
       )}
     </PageWrapper>
