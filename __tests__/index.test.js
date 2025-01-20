@@ -6,13 +6,18 @@ import Home from "../src/app/(main)/page";
 expect.extend(toHaveNoViolations);
 
 jest.mock("next/link", () => {
-  return ({ href, children, className }) => {
+  const Link = ({ href, children, className }) => {
     return (
-      <a href={typeof href === "string" ? href : "#"} className={className}>
+      <a
+        {...(typeof href === "string" ? { href: href } : { href: "#" })}
+        className={className}
+      >
         {children}
       </a>
     );
   };
+  Link.displayName = "Link";
+  return Link;
 });
 
 jest.mock("../src/app/actions/sanityClient", () => ({
