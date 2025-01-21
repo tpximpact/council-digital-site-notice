@@ -40,9 +40,9 @@ const PlanningApplicationList = ({ data }: { data: PlanningApplication[] }) => {
                       : "none",
                   }}
                 ></div>
-                <p className="dsn-planning-application-card__title">
+                <h3 className="dsn-planning-application-card__title">
                   {name || address}
-                </p>
+                </h3>
                 {(MetaAddress() || MetaDistance()) && (
                   <div className="dsn-planning-application-card__meta">
                     <div className="dsn-planning-application-card__meta-items">
