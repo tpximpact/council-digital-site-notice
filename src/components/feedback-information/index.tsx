@@ -91,14 +91,16 @@ function FeedbackInformation({
         applications:
       </p>
       <div>
-        <h3 className="govuk-body">1. To use your knowledge of the area</h3>
+        <h3 className="govuk-heading-s">
+          1. To use your knowledge of the area
+        </h3>
         <p className="govuk-body">
           You may be able to highlight on-the-ground details we don’t know about
           – for example, that a mature tree was left out of a developer's plans.
         </p>
       </div>
       <div>
-        <h3 className="govuk-body">2. To influence the details</h3>
+        <h3 className="govuk-heading-s">2. To influence the details</h3>
         <p className="govuk-body">
           Your understanding of an area’s needs can help planners decide on
           things like amount of open space, cycling facilities, or what
@@ -106,7 +108,7 @@ function FeedbackInformation({
         </p>
       </div>
       <div>
-        <h3 className="govuk-body">
+        <h3 className="govuk-heading-s">
           3. To make sure we balance our priorities
         </h3>
         <p className="govuk-body">
