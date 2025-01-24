@@ -17,9 +17,7 @@ const Details = ({
       data-module="govuk-details"
     >
       <summary className="govuk-details__summary">
-        <span className="govuk-details__summary-text" role="definition">
-          {summary}
-        </span>
+        <span className="govuk-details__summary-text">{summary}</span>
       </summary>
       <div className="govuk-details__text">{description}</div>
     </details>

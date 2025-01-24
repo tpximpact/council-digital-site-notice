@@ -106,6 +106,7 @@ export type GlobalContent = {
     _type: "image";
   };
   googleAnalytics?: string;
+  googleTagManager?: string;
 };
 
 export type Comment = {

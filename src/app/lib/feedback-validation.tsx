@@ -1,21 +1,32 @@
 import { phoneRegex, postCodeRegex } from "./application";
 
-export function messageError(personalDetailsForm: any) {
-  const name = personalDetailsForm["name"] === "" ? "Name" : "";
-  const address = personalDetailsForm["address"] === "" ? "Address" : "";
-  const postcode = personalDetailsForm["postcode"] === "" ? "Postcode" : "";
+export function messageError(personalDetailsForm: {
+  name?: string;
+  address?: string;
+  postcode?: string;
+}) {
+  const { name = "", address = "", postcode = "" } = personalDetailsForm;
 
-  let messageArr = [name, address, postcode].filter((el) => el !== "");
-  const messageArrSize: any = {
-    1: messageArr[0],
-    2: `${messageArr[0]} and ${messageArr[1]}`,
-    3: `${messageArr[0]}, ${messageArr[1]} and ${messageArr[2]}`,
-  };
+  const errors = [
+    name === "" && "name",
+    address === "" && "address",
+    postcode === "" && "postcode",
+  ].filter(Boolean) as string[]; // ensure errors is always an array of strings
 
-  return (
-    !!messageArr.length &&
-    `${messageArrSize[messageArr.length]} can not be empty`
-  );
+  if (errors.length === 0) {
+    return false;
+  }
+
+  const errorMessage =
+    errors.length === 1
+      ? errors[0]
+      : `${errors.slice(0, -1).join(", ")} and ${errors[errors.length - 1]}`;
+
+  // Capitalize the first word
+  const capitalizedErrorMessage =
+    errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1);
+
+  return `${capitalizedErrorMessage} cannot be empty`;
 }
 export const postcodeValidation = (postcode: string) => {
   return postcode !== "" && postCodeRegex.test(postcode);

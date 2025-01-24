@@ -1,46 +1,32 @@
+import { slugify } from "@/util";
+
 const Checkbox = ({
   label,
   id,
+  value,
   onChange,
   checked,
-  labelClass,
-  isError,
-  messageError,
 }: {
-  messageError?: string;
-  isError?: boolean;
-  labelClass?: string;
   label: string;
   id: string;
+  value: string;
   onChange: (e: any) => void;
   checked: boolean;
 }) => {
   return (
-    <div className={`govuk-form-group ${isError && "govuk-form-group--error"}`}>
-      <div className="govuk-checkboxes" data-module="govuk-checkboxes">
-        <div className="govuk-checkboxes__item">
-          <input
-            className={`govuk-checkboxes__input`}
-            id={id}
-            name={label}
-            type="checkbox"
-            data-testid="checkbox"
-            onChange={(e) => onChange(e)}
-            checked={checked}
-          />
-          <label
-            className={`govuk-label govuk-checkboxes__label ${labelClass}`}
-            htmlFor={id}
-          >
-            {label}
-          </label>
-        </div>
-      </div>
-      {isError && (
-        <p id="nationality-error" className="govuk-error-message">
-          {messageError}
-        </p>
-      )}
+    <div className="govuk-checkboxes__item">
+      <input
+        className="govuk-checkboxes__input"
+        id={value}
+        name={id}
+        type="checkbox"
+        data-testid="checkbox"
+        onChange={(e) => onChange(e)}
+        checked={checked}
+      />
+      <label className="govuk-label govuk-checkboxes__label" htmlFor={value}>
+        {label}
+      </label>
     </div>
   );
 };

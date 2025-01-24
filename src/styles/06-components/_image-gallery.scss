@@ -15,6 +15,12 @@ $button-shadow-size: $govuk-border-width-form-element;
 .dpr-gallery {
   // lightbox
 
+  &--closed {
+    .dpr-gallery__lightbox {
+      display: none;
+    }
+  }
+
   &__lightbox {
     z-index: 1;
     position: fixed;

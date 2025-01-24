@@ -38,7 +38,9 @@ describe("Feeling component", () => {
     );
     const nextButton = screen.getByText(/Next/i);
     fireEvent.click(nextButton);
-    const errorMessage = screen.getByText(/Please select one/i);
+    const errorMessage = screen.getByText(
+      /Select how you feel about this development/i,
+    );
     expect(errorMessage).toBeInTheDocument();
   });
 

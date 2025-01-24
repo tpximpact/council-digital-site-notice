@@ -90,6 +90,12 @@ export default defineType({
       type: "string",
       description: "Optional",
     }),
+    defineField({
+      title: "Google Tag Manager",
+      name: "googleTagManager",
+      type: "string",
+      description: "Optional",
+    }),
   ],
   initialValue: {
     integrations: "manual",

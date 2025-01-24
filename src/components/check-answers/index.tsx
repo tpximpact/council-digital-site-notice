@@ -134,59 +134,94 @@ function CheckAnswers({
     }
   };
 
+  const SummaryRow = ({
+    label,
+    value,
+    action,
+  }: {
+    label: string;
+    value: string;
+    action: React.ReactNode;
+  }) => {
+    return (
+      <div className="govuk-summary-list__row">
+        <dt className="govuk-summary-list__key">{label}</dt>
+        <dd className="govuk-summary-list__value">{value}</dd>
+        <dd className="govuk-summary-list__actions">{action}</dd>
+      </div>
+    );
+  };
+
   return (
-    <div style={{ maxWidth: "64rem" }}>
+    <div>
       <BackLink content="Back" onClick={() => setQuestion(11)} />
       <h1 className="govuk-heading-xl">
         Check your responses before submitting
       </h1>
+
       <h2 className="govuk-heading-l">Your Comments</h2>
-      {questionId.map((label: any) => {
-        return (
-          <div key={label} className="wrap-answers">
-            <h3 className="govuk-body govuk-body govuk-!-font-weight-bold">
-              {questions[label]}
-            </h3>
-            <p className="govuk-body">
-              {commentForm[label] ? commentForm[label] : "No comment"}
-            </p>
-            <ButtonLink
-              content="Change"
-              onClick={() => onChangeQuestions(label)}
-            />
-          </div>
-        );
-      })}
+
+      <dl className="govuk-summary-list">
+        {questionId.map((label: any) => (
+          <SummaryRow
+            key={label}
+            label={questions[label]}
+            value={commentForm[label] ? commentForm[label] : "No comment"}
+            action={
+              <ButtonLink
+                content="Change"
+                onClick={() => onChangeQuestions(label)}
+              />
+            }
+          />
+        ))}
+      </dl>
+
       <h2 className="govuk-heading-m">Your Details</h2>
-      <div className="wrap-answers">
-        <h2 className="govuk-heading-s">Name</h2>
-        <p className="govuk-body">{personalDetailsForm?.name}</p>
-        <ButtonLink content="Change" onClick={() => setQuestion(11)} />
-      </div>
-      <div className="wrap-answers">
-        <h2 className="govuk-heading-s">Address</h2>
-        <p className="govuk-body">{personalDetailsForm?.address}</p>
-        <ButtonLink content="Change" onClick={() => setQuestion(11)} />
-      </div>
-      <div className="wrap-answers">
-        <h2 className="govuk-heading-s">Postcode</h2>
-        <p className="govuk-body">{personalDetailsForm?.postcode}</p>
-        <ButtonLink content="Change" onClick={() => setQuestion(11)} />
-      </div>
-      {personalDetailsForm?.email && (
-        <div className="wrap-answers">
-          <h2 className="govuk-heading-s">Email</h2>
-          <p className="govuk-body">{personalDetailsForm?.email}</p>
-          <ButtonLink content="Change" onClick={() => setQuestion(11)} />
-        </div>
-      )}
-      {personalDetailsForm?.phone && (
-        <div className="wrap-answers">
-          <h2 className="govuk-heading-s">Telephone number</h2>
-          <p className="govuk-body">{personalDetailsForm?.phone}</p>
-          <ButtonLink content="Change" onClick={() => setQuestion(11)} />
-        </div>
-      )}
+      <dl className="govuk-summary-list">
+        <SummaryRow
+          label="Name"
+          value={personalDetailsForm?.name}
+          action={
+            <ButtonLink content="Change" onClick={() => setQuestion(11)} />
+          }
+        />
+        <SummaryRow
+          label="Address"
+          value={personalDetailsForm?.address}
+          action={
+            <ButtonLink content="Change" onClick={() => setQuestion(11)} />
+          }
+        />
+        <SummaryRow
+          label="Postcode"
+          value={personalDetailsForm?.postcode}
+          action={
+            <ButtonLink content="Change" onClick={() => setQuestion(11)} />
+          }
+        />
+
+        {personalDetailsForm?.email && (
+          <SummaryRow
+            label="Email"
+            value={personalDetailsForm?.email}
+            action={
+              <ButtonLink content="Change" onClick={() => setQuestion(11)} />
+            }
+          />
+        )}
+
+        {personalDetailsForm?.phone && (
+          <SummaryRow
+            label="Telephone number"
+            value={personalDetailsForm?.phone}
+            action={
+              <ButtonLink content="Change" onClick={() => setQuestion(11)} />
+            }
+          />
+        )}
+      </dl>
+
       <Details
         summary="How we handle your data"
         description={descriptionDetail["consent"]}

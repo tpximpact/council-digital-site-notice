@@ -1,8 +1,40 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, BackLink } from "@/components/button";
-import { Happy, Neutral, Opposed } from "../../../public/assets/icons";
-import Validation from "@/components/validation";
 import { getLocalStorage } from "@/app/lib/application";
+
+const Radio = ({
+  fieldName,
+  label,
+  value,
+  onChange,
+  checked,
+}: {
+  fieldName: string;
+  label: string;
+  value: string;
+  onChange: () => void;
+  checked: boolean;
+}) => {
+  const id = `${fieldName}-${value}`;
+  return (
+    <div className="govuk-radios__item">
+      <input
+        className="govuk-radios__input"
+        id={id}
+        name={fieldName}
+        type="radio"
+        value={value}
+        checked={checked}
+        onChange={onChange}
+      />
+      <label className="govuk-label govuk-radios__label" htmlFor={id}>
+        {label}
+      </label>
+    </div>
+  );
+};
+
+const options = ["Opposed", "Neutral", "Support"];
 
 function Feeling({
   onChangeQuestion,
@@ -11,88 +43,68 @@ function Feeling({
   onChangeQuestion: () => void;
   setQuestion: (value: number) => void;
 }) {
-  const [feelingForm, setFeelingForm] = useState<string>("");
-  const [id, setId] = useState();
-  const [isError, setIsError] = useState(false);
+  const applicationStorage = getLocalStorage({
+    key: "application",
+    defaultValue: {},
+  });
+  const feelingStorage = getLocalStorage({
+    key: "feeling",
+    defaultValue: undefined,
+  });
 
-  useEffect(() => {
-    const applicationStorage = getLocalStorage({
-      key: "application",
-      defaultValue: {},
-    });
-    const feelingStorage = getLocalStorage({
-      key: "feeling",
-      defaultValue: feelingForm,
-    });
+  const [isError, setIsError] = useState<boolean>(false);
+  const [sentiment, setSentiment] = useState<string | undefined>(
+    feelingStorage?.value,
+  );
+  const id = applicationStorage?._id || "";
 
-    setId(applicationStorage?._id);
-
-    feelingStorage?.id === applicationStorage?._id &&
-      setFeelingForm(feelingStorage.value);
-  }, [feelingForm]);
-
-  const onChangeFeeling = (value: string) => {
-    if (feelingForm === value) {
-      setFeelingForm("");
-      localStorage.setItem("feeling", JSON.stringify({ id, value: "" }));
-    } else {
-      setFeelingForm(value);
-      localStorage.setItem("feeling", JSON.stringify({ id, value }));
-    }
+  const selectSentiment = (value: string) => {
+    setSentiment(value);
+    setIsError(false);
+    localStorage.setItem("feeling", JSON.stringify({ id, value }));
   };
-
-  const colors = {
-    Opposed: feelingForm === "Opposed" ? "#AA2A16" : "white",
-    Neutral: feelingForm === "Neutral" ? "#1D70B8" : "white",
-    Support: feelingForm === "Support" ? "#00703C" : "white",
-  };
-
-  function onNextPage() {
-    if (feelingForm !== "") {
-      setIsError(false);
-      onChangeQuestion();
-    } else {
-      setIsError(true);
-    }
-  }
 
   return (
     <section>
       <BackLink content="Back" onClick={() => setQuestion(0)} />
-      <h1 className="govuk-heading-l">
-        How do you feel about this development?
-      </h1>
-      <div className="wrap-icons-feeling">
-        <button
-          onClick={() => {
-            onChangeFeeling("Opposed");
-          }}
-          className="sentiment-button"
+      <div
+        className={`govuk-form-group ${isError && "govuk-form-group--error"}`}
+      >
+        <fieldset
+          className="govuk-fieldset"
+          {...(isError && { "aria-describedby": "sentiment-error" })}
         >
-          <Opposed color={colors["Opposed"]} />
-          <span className="govuk-body">Opposed</span>
-        </button>
-        <button
-          onClick={() => {
-            onChangeFeeling("Neutral");
-          }}
-          className="sentiment-button"
-        >
-          <Neutral color={colors["Neutral"]} />
-          <span className="govuk-body">Neutral</span>
-        </button>
-        <button
-          onClick={() => {
-            onChangeFeeling("Support");
-          }}
-          className="sentiment-button"
-        >
-          <Happy color={colors["Support"]} />
-          <span className="govuk-body">Support</span>
-        </button>
+          <legend className="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 className="govuk-fieldset__heading">
+              How do you feel about this development?
+            </h1>
+          </legend>
+          {isError && (
+            <p id="sentiment-error" className="govuk-error-message">
+              <span className="govuk-visually-hidden">Error:</span> Select how
+              you feel about this development
+            </p>
+          )}
+          <div className="govuk-radios" data-module="govuk-radios">
+            {options.map((option) => (
+              <Radio
+                fieldName="sentiment"
+                key={option}
+                label={option}
+                value={option}
+                checked={sentiment === option}
+                onChange={() => selectSentiment(option)}
+              />
+            ))}
+          </div>
+        </fieldset>
       </div>
-      {isError && <Validation message="Please select one" />}
-      <Button content="Next" onClick={() => onNextPage()} />
+      <Button
+        content="Next"
+        onClick={() => {
+          sentiment ? onChangeQuestion() : setIsError(true);
+        }}
+      />
     </section>
   );
 }

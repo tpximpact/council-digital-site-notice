@@ -1,11 +1,8 @@
 import Link from "next/link";
-import { LocalIcon } from "../../../public/assets/icons";
 import { urlFor } from "@/app/actions/sanityClient";
 import { PlanningApplication } from "../../../sanity/sanity.types";
-import { useRouter } from "next/navigation";
 
 const PlanningApplicationList = ({ data }: { data: PlanningApplication[] }) => {
-  const router = useRouter();
   return (
     <section className="dsn-planning-application-cards">
       {data &&
@@ -43,9 +40,9 @@ const PlanningApplicationList = ({ data }: { data: PlanningApplication[] }) => {
                       : "none",
                   }}
                 ></div>
-                <p className="dsn-planning-application-card__title">
+                <h3 className="dsn-planning-application-card__title">
                   {name || address}
-                </p>
+                </h3>
                 {(MetaAddress() || MetaDistance()) && (
                   <div className="dsn-planning-application-card__meta">
                     <div className="dsn-planning-application-card__meta-items">
