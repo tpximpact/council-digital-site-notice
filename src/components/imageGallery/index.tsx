@@ -2,8 +2,8 @@
 
 import { urlFor } from "@/app/actions/sanityClient";
 import { PlanningApplication } from "../../../sanity/sanity.types";
-import Image from "next/image";
 import { useState } from "react";
+import FocusLock from "react-focus-lock";
 
 const ImageGallery = ({
   images,
@@ -17,49 +17,53 @@ const ImageGallery = ({
 
   return (
     <div className={`dpr-gallery ${lightboxOpen ? "" : "dpr-gallery--closed"}`}>
-      <div
-        className="dpr-gallery__lightbox"
-        id="lightbox"
-        aria-hidden={lightboxOpen}
-        {...{ hidden: !lightboxOpen }}
-      >
-        <div>
-          <button
-            className="dpr-gallery__button"
-            onClick={() => setLightboxOpen(false)}
-            aria-controls="lightbox"
+      {lightboxOpen && (
+        <FocusLock>
+          <div
+            className="dpr-gallery__lightbox"
+            id="lightbox"
+            aria-hidden={lightboxOpen}
+            {...{ hidden: !lightboxOpen }}
           >
-            Close
-          </button>
-        </div>
+            <div>
+              <button
+                className="dpr-gallery__button"
+                onClick={() => setLightboxOpen(false)}
+                aria-controls="lightbox"
+              >
+                Close
+              </button>
+            </div>
 
-        <div
-          className="dpr-gallery__lightbox-image"
-          style={{
-            backgroundImage: images[selectedImage]
-              ? `url(${urlFor(images[selectedImage]).url()})`
-              : "none",
-          }}
-        ></div>
+            <div
+              className="dpr-gallery__lightbox-image"
+              style={{
+                backgroundImage: images[selectedImage]
+                  ? `url(${urlFor(images[selectedImage]).url()})`
+                  : "none",
+              }}
+            ></div>
 
-        <div className="dpr-gallery__lightbox-navigation">
-          <button
-            className="dpr-gallery__button"
-            onClick={() => setSelectedImage(selectedImage - 1)}
-            disabled={selectedImage <= 0}
-          >
-            Previous image
-          </button>
+            <div className="dpr-gallery__lightbox-navigation">
+              <button
+                className="dpr-gallery__button"
+                onClick={() => setSelectedImage(selectedImage - 1)}
+                disabled={selectedImage <= 0}
+              >
+                Previous image
+              </button>
 
-          <button
-            className="dpr-gallery__button"
-            onClick={() => setSelectedImage(selectedImage + 1)}
-            disabled={selectedImage >= images.length - 1}
-          >
-            Next image
-          </button>
-        </div>
-      </div>
+              <button
+                className="dpr-gallery__button"
+                onClick={() => setSelectedImage(selectedImage + 1)}
+                disabled={selectedImage >= images.length - 1}
+              >
+                Next image
+              </button>
+            </div>
+          </div>
+        </FocusLock>
+      )}
 
       <div
         className="dpr-gallery__featured-image"
