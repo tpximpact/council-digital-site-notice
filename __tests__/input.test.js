@@ -44,11 +44,11 @@ describe("Input", () => {
         onChange={() => {}}
         autocomplete="postal-code"
         isError={true}
-        messageError="Please enter a valid postcode"
+        messageError="You must enter a valid postcode"
       />,
     );
     expect(
-      screen.getByText("Please enter a valid postcode"),
+      screen.getByText("You must enter a valid postcode"),
     ).toBeInTheDocument();
   });
 
@@ -76,7 +76,7 @@ describe("Input", () => {
         onChange={() => {}}
         autocomplete="postal-code"
         isError={true}
-        messageError="Please enter a valid postcode"
+        messageError="You must enter a valid postcode"
       />,
     );
     const results = await axe(container);
