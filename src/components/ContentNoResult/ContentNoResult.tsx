@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const ContentNoResult = () => {
   return (
-    <div className="govuk-grid-row">
+    <div className="govuk-grid-row" role="alert">
       <div className="govuk-grid-column-full">
         <h2 className="govuk-heading-s">No applications match your search</h2>
         <p className="govuk-body">
