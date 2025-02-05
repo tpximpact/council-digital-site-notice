@@ -77,7 +77,6 @@ function FeedbackInformation({
         <p className="govuk-body">
           <Link
             href={urlConcern}
-            target="_blank"
             className="govuk govuk-link govuk-link--no-visited-state"
           >
             What can you do if these things concern you?
@@ -126,7 +125,6 @@ function FeedbackInformation({
           <Link
             href={globalConfig?.materialConsiderationUrl}
             className="govuk govuk-link govuk-link--no-visited-state"
-            target="_blank"
           >
             material considerations
           </Link>

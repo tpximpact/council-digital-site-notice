@@ -46,7 +46,6 @@ const FeedbackMessage = () => {
         <Link
           href={application?.applicationUpdatesUrl}
           className="govuk-button govuk-!-font-size-16"
-          target="_blank"
         >
           Sign up for updates about this application
         </Link>

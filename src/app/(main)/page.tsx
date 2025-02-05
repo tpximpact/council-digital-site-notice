@@ -96,7 +96,6 @@ const Home = async ({ params, searchParams }: HomeProps) => {
           {globalConfig?.signUpUrl && (
             <Link
               className="govuk-button govuk-button--secondary"
-              target="_blank"
               href={`${globalConfig?.signUpUrl}`}
             >
               Sign up for alerts on applications near you
