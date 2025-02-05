@@ -88,6 +88,7 @@ exports[`renders homepage unchanged 1`] = `
       </div>
       <div
         class="govuk-grid-row"
+        role="alert"
       >
         <div
           class="govuk-grid-column-full"
