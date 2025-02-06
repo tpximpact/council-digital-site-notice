@@ -26,7 +26,6 @@ function Process({ data }: { data: PlanningApplication }) {
           <Link
             className="govuk-link govuk-link--no-visited-state"
             href={globalConfig?.planningProcessUrl}
-            target="_blank"
           >
             Find out more about the planning process
           </Link>
@@ -51,7 +50,6 @@ function Process({ data }: { data: PlanningApplication }) {
                   className="govuk-button govuk-button--secondary"
                   data-module="govuk-button"
                   href={data?.applicationDocumentsUrl}
-                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   View application documents and comments
@@ -79,7 +77,6 @@ function Process({ data }: { data: PlanningApplication }) {
               <Link
                 href={data.applicationUpdatesUrl}
                 className="govuk-link govuk-link--no-visited-state"
-                target="_blank"
               >
                 Sign up for updates about this application
               </Link>

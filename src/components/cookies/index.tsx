@@ -51,7 +51,7 @@ const CookiesBanner = () => {
           >
             Reject analytics cookies
           </button>
-          <Link className="govuk-link" href="/cookie-policy" target="_blank">
+          <Link className="govuk-link" href="/cookie-policy">
             View cookies
           </Link>
         </div>

@@ -223,7 +223,6 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         where needed, in line with the{" "}
         <Link
           href="https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/key-definitions/what-is-personal-data/"
-          target="_blank"
           className="govuk-link"
         >
           General Data Protection Regulation
@@ -232,7 +231,6 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         published,{" "}
         <Link
           href="https://www.camden.gov.uk/contact-the-planning-advice-and-information-service"
-          target="_blank"
           className="govuk-link"
         >
           contact the Planning Advice and Information Service.
@@ -243,7 +241,6 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         Read our{" "}
         <Link
           href="https://www.camden.gov.uk/data-protection-privacy-and-cookies"
-          target="_blank"
           className="govuk-link"
         >
           corporate privacy statement
@@ -251,7 +248,6 @@ export const descriptionDetail: { [key: string]: ReactElement } = {
         and our{" "}
         <Link
           href="https://www.camden.gov.uk/documents/20142/2247044/Privacy+Notice_regenerationandplanning+-+updated+May19.pdf/23506373-1b95-2cc5-55b2-55897cfe4b42"
-          target="_blank"
           className="govuk-link"
         >
           planning service privacy statement
