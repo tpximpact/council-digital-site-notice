@@ -14,7 +14,7 @@ export const PageItem = ({ page, link, searchParams }: PageItemProps) => {
       className={`govuk-pagination__item ${page.current ? "govuk-pagination__item--current" : ""} ${page.number === -1 ? "govuk-pagination__item--ellipses" : ""}`}
     >
       {page.number === -1 ? (
-        <>&sdot;&sdot;&sdot;</>
+        <>&#x022EF;</>
       ) : (
         <Link
           className="govuk-link govuk-pagination__link"

@@ -32,7 +32,7 @@ exports[`renders homepage unchanged 1`] = `
             method="get"
           >
             <div
-              class="govuk-form-group "
+              class="govuk-form-group"
             >
               <h2
                 class="govuk-label-wrapper"
@@ -45,7 +45,7 @@ exports[`renders homepage unchanged 1`] = `
                 </label>
               </h2>
               <input
-                class="govuk-input "
+                class="govuk-input"
                 id="postcode"
                 name="postcode"
                 type="text"

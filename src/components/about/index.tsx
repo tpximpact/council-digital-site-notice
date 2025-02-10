@@ -53,7 +53,6 @@ function About({ data }: { data: PlanningApplication }) {
           <Link
             href={data.applicationUpdatesUrl}
             className="govuk-link govuk-link--no-visited-state"
-            target="_blank"
           >
             Sign up for updates about this application
           </Link>

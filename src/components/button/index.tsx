@@ -42,6 +42,7 @@ export const BackLink = ({
 export const ButtonLink = ({
   content,
   onClick,
+  ...props
 }: {
   content: string;
   icon?: React.ReactNode;
@@ -52,6 +53,7 @@ export const ButtonLink = ({
       className="govuk-body govuk-link dsn-button-link"
       data-module="govuk-button"
       onClick={onClick}
+      {...props}
     >
       {content}
     </button>

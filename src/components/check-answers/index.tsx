@@ -170,6 +170,7 @@ function CheckAnswers({
             action={
               <ButtonLink
                 content="Change"
+                aria-label={`Change comment on ${questions[label]}`}
                 onClick={() => onChangeQuestions(label)}
               />
             }
@@ -183,21 +184,33 @@ function CheckAnswers({
           label="Name"
           value={personalDetailsForm?.name}
           action={
-            <ButtonLink content="Change" onClick={() => setQuestion(11)} />
+            <ButtonLink
+              content="Change"
+              aria-label="Change name"
+              onClick={() => setQuestion(11)}
+            />
           }
         />
         <SummaryRow
           label="Address"
           value={personalDetailsForm?.address}
           action={
-            <ButtonLink content="Change" onClick={() => setQuestion(11)} />
+            <ButtonLink
+              content="Change"
+              aria-label="Change address"
+              onClick={() => setQuestion(11)}
+            />
           }
         />
         <SummaryRow
           label="Postcode"
           value={personalDetailsForm?.postcode}
           action={
-            <ButtonLink content="Change" onClick={() => setQuestion(11)} />
+            <ButtonLink
+              content="Change"
+              aria-label="Change postcode"
+              onClick={() => setQuestion(11)}
+            />
           }
         />
 
@@ -206,7 +219,11 @@ function CheckAnswers({
             label="Email"
             value={personalDetailsForm?.email}
             action={
-              <ButtonLink content="Change" onClick={() => setQuestion(11)} />
+              <ButtonLink
+                content="Change"
+                aria-label="Change email"
+                onClick={() => setQuestion(11)}
+              />
             }
           />
         )}
@@ -216,7 +233,11 @@ function CheckAnswers({
             label="Telephone number"
             value={personalDetailsForm?.phone}
             action={
-              <ButtonLink content="Change" onClick={() => setQuestion(11)} />
+              <ButtonLink
+                content="Change"
+                aria-label="Change telephone number"
+                onClick={() => setQuestion(11)}
+              />
             }
           />
         )}

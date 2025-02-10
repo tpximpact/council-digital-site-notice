@@ -24,7 +24,8 @@ async function fetchData({ params, searchParams }: HomeProps): Promise<any> {
   const globalConfig = await getGlobalContent();
 
   // get applications
-  let applicationsResponse, applications, totalApplications, locationValid;
+  let applicationsResponse;
+  let totalApplications;
   const offset = searchParams?.page
     ? (searchParams.page - 1) * itemsPerPage
     : 0;
@@ -32,30 +33,24 @@ async function fetchData({ params, searchParams }: HomeProps): Promise<any> {
   // determine search type
   const postcode = searchParams?.postcode;
   if (postcode) {
-    try {
-      const locationResponse = await getLocationFromPostcode(postcode);
-      if (locationResponse) {
-        applicationsResponse = await getActiveApplicationsByLocation(
-          offset,
-          locationResponse,
-          itemsPerPage,
-        );
-      } else {
-        locationValid = "Postcode not found. Please enter a valid postcode.";
-      }
-    } catch (error) {
-      locationValid =
-        "Error occured while validating postcode. Please try again.";
-      console.error("Error validating postcode:", error);
+    const locationResponse = await getLocationFromPostcode(postcode);
+    if (locationResponse) {
+      applicationsResponse = await getActiveApplicationsByLocation(
+        offset,
+        locationResponse,
+        itemsPerPage,
+      );
+    } else {
+      applicationsResponse = null;
     }
   } else {
     applicationsResponse = await getActiveApplications(offset, itemsPerPage);
   }
 
-  applications =
+  const applications =
     applicationsResponse && applicationsResponse?.results
       ? applicationsResponse.results
-      : {};
+      : [];
   totalApplications =
     applicationsResponse && applicationsResponse?.total
       ? applicationsResponse.total
@@ -66,15 +61,14 @@ async function fetchData({ params, searchParams }: HomeProps): Promise<any> {
     total_pages: Math.ceil(totalApplications / itemsPerPage),
   };
 
-  return [globalConfig, applications, pagination, locationValid];
+  return [globalConfig, applications, pagination];
 }
 
 const Home = async ({ params, searchParams }: HomeProps) => {
-  const [globalConfig, applications, pagination, locationValid] =
-    await fetchData({
-      params,
-      searchParams,
-    });
+  const [globalConfig, applications, pagination] = await fetchData({
+    params,
+    searchParams,
+  });
 
   return (
     <PageWrapper isCentered={true}>
@@ -86,17 +80,13 @@ const Home = async ({ params, searchParams }: HomeProps) => {
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-half">
           <form action="/" method="get">
-            <PostcodeSearch
-              postcode={searchParams?.postcode}
-              error={locationValid}
-            />
+            <PostcodeSearch postcode={searchParams?.postcode} />
           </form>
         </div>
         <div className="govuk-grid-column-one-half">
           {globalConfig?.signUpUrl && (
             <Link
               className="govuk-button govuk-button--secondary"
-              target="_blank"
               href={`${globalConfig?.signUpUrl}`}
             >
               Sign up for alerts on applications near you
