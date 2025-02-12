@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { useFormValue, useDocumentOperation } from "sanity";
 import { getGlobalContent } from "@/app/actions/sanityClient";
+import { getOpenApiUrl } from "@/app/actions/actions";
 
 export default function PopulateButton() {
   const [integrationMethod, setIntegrationMethod] = useState("");
   const [fetchStatus, setFetchStatus] = useState("idle");
+  const [apiUrl, setApiUrl] = useState("");
 
   useEffect(() => {
     const fetchGlobalContent = async () => {
@@ -19,6 +21,13 @@ export default function PopulateButton() {
     };
 
     fetchGlobalContent();
+
+    const fetchApiUrl = async () => {
+      const url = await getOpenApiUrl();
+      setApiUrl(url);
+    };
+
+    fetchApiUrl();
   }, []);
 
   const formId = useFormValue(["_id"]);
@@ -35,8 +44,14 @@ export default function PopulateButton() {
   const handlePopulate = async () => {
     setFetchStatus("idle");
     try {
+      if (!apiUrl) {
+        console.error("API URL is not available");
+        setFetchStatus("error");
+        return;
+      }
+
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL!}.json?$where=application_number='${applicationNumber}'`,
+        `${apiUrl}.json?$where=application_number='${applicationNumber}'`,
       );
       const data = await response.json();
 
