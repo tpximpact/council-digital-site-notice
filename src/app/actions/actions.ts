@@ -77,3 +77,7 @@ export async function getLocationFromPostcode(postcode: string) {
   }
   return null;
 }
+
+export async function getOpenApiUrl() {
+  return process.env.OPEN_API_URL || "";
+}

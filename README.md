@@ -90,7 +90,7 @@ Data is added manually using sanity studio
 
 #### OpenAPI
 
-Data is added by creating syncing with `NEXT_PUBLIC_API_URL`
+Data is added by creating syncing with `OPEN_API_URL`
 
 Simply add a valid Application Number to a planning application, scroll to Integrations and hit the Fetch from OpenAPI button. This then pulls in the following data: `application_type, name, development_address, development_description, location - latitude, longitude, applicationDocumentsUrl`. If the fields have a value it will display on Sanity.
 
@@ -183,9 +183,9 @@ You can provide config with a `.env` file. Run `cp sample.env .env` to create a 
 
 ### SANITY STUDIO
 
-| Variable              | Description                | Example   | Required?                                                |
-| --------------------- | -------------------------- | --------- | -------------------------------------------------------- |
-| `NEXT_PUBLIC_API_URL` | URL for public data source | `api-key` | Only if integrationMethod fetches data from a public api |
+| Variable       | Description                | Example   | Required?                                                |
+| -------------- | -------------------------- | --------- | -------------------------------------------------------- |
+| `OPEN_API_URL` | URL for public data source | `api-key` | Only if integrationMethod fetches data from a public api |
 
 ### SANITY
 
