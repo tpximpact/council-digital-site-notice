@@ -13,11 +13,11 @@ const TextArea = ({
 }) => {
   return (
     <>
-      <h2 className="govuk-label-wrapper">
+      <h1 className="govuk-label-wrapper">
         <label className="govuk-label govuk-label--l" htmlFor={id}>
           {label}
         </label>
-      </h2>
+      </h1>
       {hint && <p className="govuk-hint">{hint}</p>}
       <textarea
         className={`govuk-textarea`}
