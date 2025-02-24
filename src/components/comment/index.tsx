@@ -44,15 +44,17 @@ function CommentQuestion({
       setSelectedCheckbox(selectedCheckboxStorage?.value);
   }, []);
 
-  const onComment = (value: any) => {
-    setCommentForm({ ...commentForm, [question]: value });
+  const onComment = (value: string) => {
+    setCommentForm((prev) => ({ ...prev, [question]: value }));
     localStorage.setItem(
       "comment",
       JSON.stringify({ id, value: { ...commentForm, [question]: value } }),
     );
-    commentForm[question] !== "" && commentForm[question] !== undefined
-      ? setIsError(false)
-      : setIsError(true);
+    if (value.trim() !== "") {
+      setIsError(false);
+    } else {
+      setIsError(true);
+    }
   };
 
   function onNextPage() {
