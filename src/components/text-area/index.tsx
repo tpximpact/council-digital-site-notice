@@ -26,6 +26,7 @@ const TextArea = ({
         rows={5}
         aria-describedby={id}
         autoComplete="off"
+        required={true}
         value={value}
         onChange={(e) => onChange(e.target.value)}
       ></textarea>
