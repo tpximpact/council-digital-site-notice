@@ -4,7 +4,7 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 
 export const metadata: Metadata = {
-  title: "Page Not Found",
+  title: "Page Not Found | Digital Site Notice",
   description: "The page you are looking for is no longer available.",
 };
 

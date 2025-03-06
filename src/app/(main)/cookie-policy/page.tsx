@@ -1,5 +1,10 @@
 import { getGlobalContent } from "@/app/actions/sanityClient";
 import PageWrapper from "@/components/pageWrapper";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Cookie Policy",
+};
 
 const CookiePolicyPage = async () => {
   const globalConfig: any = await getGlobalContent();

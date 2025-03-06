@@ -22,7 +22,7 @@ const PlanningApplicationItem = () => {
     async function fetchData() {
       const result = await getApplicationById(id as string);
       // console.log({ result }, "id");
-      const getData = result[0];
+      const getData = result;
       result.length == 0 ? setData(null) : setData(getData);
 
       localStorage.setItem(

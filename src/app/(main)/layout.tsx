@@ -14,8 +14,15 @@ export const globalContent = await getGlobalContent();
 
 export async function generateMetadata(): Promise<Metadata> {
   const resMetadata = await globalContent?.favicon;
+  const title = "Find planning applications near you | Digital Site Notice";
+  const description =
+    "This site allows you to find, review and leave your comments on planning applications submitted through your local council planning authority.";
   return {
-    title: "Digital site notice",
+    title: {
+      template: "%s | Digital Site Notice",
+      default: title,
+    },
+    description,
     icons: {
       icon: resMetadata ? urlFor(resMetadata)?.url() : "/favicon_default.ico",
     },

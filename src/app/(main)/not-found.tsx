@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import PageWrapper from "@/components/pageWrapper";
 
 export const metadata: Metadata = {
-  title: "Page Not Found",
+  title: "Page Not Found | Digital Site Notice",
   description: "The page you are looking for is no longer available.",
 };
 
