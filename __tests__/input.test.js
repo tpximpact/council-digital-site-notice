@@ -16,7 +16,9 @@ describe("Input", () => {
         autocomplete="postal-code"
       />,
     );
-    expect(screen.getByLabelText("Enter a postcode")).toBeInTheDocument();
+    expect(
+      screen.getByRole("textbox", "Enter a postcode Optional"),
+    ).toBeInTheDocument();
   });
 
   it("should render hint when provided", () => {

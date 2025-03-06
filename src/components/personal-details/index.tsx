@@ -143,8 +143,9 @@ const PersonalDetails = ({
             type="text"
             isError={isNameError}
             messageError="Your name is required"
-            autocomplete="off"
+            autocomplete="name"
             id="name"
+            required={true}
           />
           <Input
             label="Address"
@@ -153,8 +154,9 @@ const PersonalDetails = ({
             type="text"
             isError={isAddressError}
             messageError="Your address is required"
-            autocomplete="off"
+            autocomplete="street-address"
             id="address"
+            required={true}
           />
           <Input
             label="Postcode"
@@ -163,8 +165,9 @@ const PersonalDetails = ({
             type="text"
             isError={isPostcodeError}
             messageError={`${personalDetailsForm?.postcode == "" ? "Your postcode is required" : "Invalid postcode"}`}
-            autocomplete="off"
+            autocomplete="postal-code"
             id="postcode"
+            required={true}
           />
           <Input
             label="Email address"
@@ -174,8 +177,9 @@ const PersonalDetails = ({
             type="email"
             isError={isEmailError}
             messageError="Invalid email"
-            autocomplete="off"
+            autocomplete="email"
             id="email"
+            required={false}
           />
           <Input
             label="Telephone number"
@@ -185,8 +189,9 @@ const PersonalDetails = ({
             type="tel"
             isError={isPhoneError}
             messageError="Invalid telephone number"
-            autocomplete="off"
+            autocomplete="tel"
             id="telephone"
+            required={false}
           />
 
           <div
