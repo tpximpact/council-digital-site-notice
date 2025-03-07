@@ -1,70 +1,46 @@
-"use client";
-import { useEffect, useState } from "react";
 import About from "@/components/about";
 import Impact from "@/components/impact";
 import Process from "@/components/process";
 import { getApplicationById } from "../../../actions/sanityClient";
-import { useParams } from "next/navigation";
-import { PlanningApplication } from "../../../../../sanity/sanity.types";
 import { notFound } from "next/navigation";
+import { PlanningApplication } from "../../../../../sanity/sanity.types";
 
 import PageWrapper from "@/components/pageWrapper";
 import Breadcrumbs from "@/components/breadcrumbs";
 
-export const dynamic = "force-dynamic";
+export interface HomeProps {
+  params: {
+    id: string;
+  };
+}
 
-const PlanningApplicationItem = () => {
-  const [data, setData] = useState<PlanningApplication | null>();
-  const params = useParams();
+async function fetchData({ params }: HomeProps): Promise<PlanningApplication> {
   const { id } = params;
+  const result = await getApplicationById(id);
+  return result;
+}
 
-  useEffect(() => {
-    async function fetchData() {
-      const result = await getApplicationById(id as string);
-      // console.log({ result }, "id");
-      const getData = result[0];
-      result.length == 0 ? setData(null) : setData(getData);
+const PlanningApplicationItem = async ({ params }: HomeProps) => {
+  const application = await fetchData({ params });
 
-      localStorage.setItem(
-        "application",
-        JSON.stringify({
-          address: getData?.address,
-          image_head: getData?.image_head,
-          image_gallery: getData?.image_gallery,
-          deadline: getData?.consultationDeadline,
-          name: getData?.name,
-          _id: getData?._id,
-          applicationNumber: getData?.applicationNumber,
-          applicationStage: getData?.applicationStage,
-          applicationUpdatesUrl: getData?.applicationUpdatesUrl,
-        }),
-      );
-    }
-    fetchData();
-  }, [id]);
-
-  if (data === null) return notFound();
+  if (!application) return notFound();
 
   return (
     <>
-      {data && (
-        <>
-          <div className="govuk-width-container">
-            <Breadcrumbs
-              breadcrumbs={[
-                { name: "Planning applications", href: "/" },
-                { name: data?.name || data?.address, href: "" },
-              ]}
-            />
-          </div>
-          <PageWrapper isCentered={false}>
-            <About data={data} />
-            <Impact data={data} />
-            <hr className="govuk-section-break govuk-section-break--l" />
-            <Process data={data} />
-          </PageWrapper>
-        </>
-      )}
+      <div className="govuk-width-container">
+        <Breadcrumbs
+          breadcrumbs={[
+            { name: "Planning applications", href: "/" },
+            { name: application?.name || application?.address, href: "" },
+          ]}
+        />
+      </div>
+      <PageWrapper isCentered={false}>
+        <About data={application} />
+        <Impact data={application} />
+        <hr className="govuk-section-break govuk-section-break--l" />
+        <Process data={application} />
+      </PageWrapper>
     </>
   );
 };
