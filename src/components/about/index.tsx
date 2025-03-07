@@ -1,3 +1,4 @@
+"use client";
 import Details from "@/components/details";
 import Link from "next/link";
 import { descriptionDetail } from "@/app/lib/description";
@@ -17,6 +18,23 @@ function About({ data }: { data: PlanningApplication }) {
       setGlobalConfig(fetchGlobalConfig);
     })();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "application",
+      JSON.stringify({
+        address: data?.address,
+        image_head: data?.image_head,
+        image_gallery: data?.image_gallery,
+        deadline: data?.consultationDeadline,
+        name: data?.name,
+        _id: data?._id,
+        applicationNumber: data?.applicationNumber,
+        applicationStage: data?.applicationStage,
+        applicationUpdatesUrl: data?.applicationUpdatesUrl,
+      }),
+    );
+  }, [data]);
 
   let galleryImages = data.image_head ? [data.image_head] : [];
 
