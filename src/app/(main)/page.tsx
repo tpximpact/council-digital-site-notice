@@ -25,7 +25,7 @@ export async function generateMetadata({
   searchParams,
 }: HomeProps): Promise<Metadata> {
   let title = "Find planning applications near you | Digital Site Notice";
-  if (searchParams) {
+  if (searchParams && searchParams?.postcode) {
     title = `Planning applications near ${searchParams.postcode} | Digital Site Notice`;
   }
   const description =
