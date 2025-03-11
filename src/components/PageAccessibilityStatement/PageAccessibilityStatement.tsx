@@ -79,7 +79,7 @@ export const PageAccessibilityStatement = ({
           </p>
 
           <h3 className="govuk-heading-s">
-            Web Content Accessibility Guidelines (WCAG) version 2.2 AA standard.
+            Web Content Accessibility Guidelines (WCAG) version 2.2 A standard.
           </h3>
 
           <p className="govuk-body">
