@@ -11,6 +11,7 @@ import Link from "next/link";
 import PostcodeSearch from "@/components/postcodeSearch";
 import { getLocationFromPostcode } from "../actions/actions";
 import { ContentNoResult } from "@/components/ContentNoResult";
+import { Metadata } from "next";
 
 interface HomeProps {
   params: any;
@@ -18,6 +19,25 @@ interface HomeProps {
 }
 
 const itemsPerPage = 6;
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: HomeProps): Promise<Metadata> {
+  let title = "Find planning applications near you | Digital Site Notice";
+  if (searchParams && searchParams?.postcode) {
+    title = `Planning applications near ${searchParams.postcode} | Digital Site Notice`;
+  }
+  const description =
+    "This site allows you to find, review and leave your comments on planning applications submitted through your local council planning authority.";
+  return {
+    title: {
+      template: "%s | Digital Site Notice",
+      default: title,
+    },
+    description,
+  };
+}
 
 async function fetchData({ params, searchParams }: HomeProps): Promise<any> {
   // site config

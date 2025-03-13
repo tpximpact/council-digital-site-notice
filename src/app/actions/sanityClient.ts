@@ -92,8 +92,8 @@ export async function getActiveApplications(
  * @returns
  */
 export async function getApplicationById(id: string) {
-  const query = `*[_type == "planning-application" && (_id == $_id || planningId == $_id) && isActive == true ${requiredFields}]`;
-  const post = await client.fetch(query, { _id: id, planningId: id });
+  const query = `*[_type == "planning-application" && (_id == $_id || planningId == $_id) && isActive == true ${requiredFields}][0]`;
+  const post = await client.fetch(query, { _id: id });
 
   return post;
 }

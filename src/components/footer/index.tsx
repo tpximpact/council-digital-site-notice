@@ -1,17 +1,27 @@
+import Link from "next/link";
+
 const Footer = ({ globalConfig }: any) => {
   return (
     <footer className="govuk-footer">
       <div className="govuk-width-container">
         <div className="govuk-footer__meta">
           <div className="govuk-footer__meta-item govuk-footer__meta-item--grow">
-            {/* <h2 className="govuk-visually-hidden">Support links</h2>
+            <h2 className="govuk-visually-hidden">Support links</h2>
             <ul className="govuk-footer__inline-list">
               <li className="govuk-footer__inline-list-item">
                 <Link className="govuk-footer__link" href="/">
                   Home
                 </Link>
               </li>
-            </ul> */}
+              <li className="govuk-footer__inline-list-item">
+                <Link
+                  className="govuk-footer__link"
+                  href="/accessibility-statement"
+                >
+                  Accessibility statement
+                </Link>
+              </li>
+            </ul>
             {/* <svg
               aria-hidden="true"
               focusable="false"
