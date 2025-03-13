@@ -74,17 +74,8 @@ export const PageAccessibilityStatement = ({
           </h3>
 
           <p className="govuk-body">
-            This website is fully compliant with the Web Content Accessibility
-            Guidelines (WCAG) version 2.2 AA standard.
-          </p>
-
-          <h3 className="govuk-heading-s">
-            Web Content Accessibility Guidelines (WCAG) version 2.2 A standard.
-          </h3>
-
-          <p className="govuk-body">
             This website is partially compliant with the Web Content
-            Accessibility Guidelines version 2.2 A standard, due to the
+            Accessibility Guidelines version 2.2 AA standard, due to the
             non-compliances listed below.
           </p>
 
@@ -99,21 +90,21 @@ export const PageAccessibilityStatement = ({
             </strong>
           </h4>
 
-          <p className="govuk-body">Issue found with all pages:</p>
+          <p className="govuk-body">
+            Issues found with {host ? `${host}` : "all pages"}:
+          </p>
           <ul className="govuk-list govuk-list--bullet">
             <li>
               <strong>This issue was fixed on 11th March 2025.</strong> Pages
               did not have unique and descriptive titles to describe their
               purpose to screen reader users.This fails the WCAG 2.2 success
-              criterion 2.4.2 (Page Titled). This will be reviewed and updated
-              to align with accessible standards.
+              criterion 2.4.2 (Page Titled).
             </li>
             <li>
-              <strong>This issue was fixed on 11th March 2025.</strong>Form
+              <strong>This issue was fixed on 11th March 2025.</strong> Form
               field information was not properly associated with the fields for
               screen reader users. This fails the WCAG 2.2 success criterion
-              1.3.1 (Info and relationships). This will be reviewed and updated
-              to align with accessible standards.
+              1.3.1 (Info and relationships).
             </li>
           </ul>
 
