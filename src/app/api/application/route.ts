@@ -189,30 +189,142 @@ import { processApplication } from "../handlers/handler";
  *             schema:
  *               type: object
  *               properties:
- *                 data:
- *                   type: object
- *                   properties:
- *                     success:
- *                       type: array
- *                       items:
- *                         type: string
+ *                _id:
+ *                  type: string
+ *                  description: "The ID of the updated planning application"
+ *                applicationNumber:
+ *                  type: string
+ *                  description: "The application number of the updated planning application"
+ *                planningId:
+ *                  type: string
+ *                  description: "The planning id of the updated planning application"
+ *                success:
+ *                  type: boolean
+ *                  description: "Indicates whether the update was successful"
+ *                message:
+ *                  type: string
+ *                  description: "A message indicating the result of the update"
+ *                error:
+ *                  type: string
+ *                  description: "An error message if the update failed"
  *               example:
- *                 data:
- *                   success:
- *                     - "1234/5678/A updated"
+ *                 _id: abc12345cde
+ *                 applicationNumber: "1234/5678/A"
+ *                 planningId: "123"
+ *                 success: true
+ *                 message: "Planning application updated"
  *       400:
  *         description: Invalid request body or missing required fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                _id:
+ *                  type: string
+ *                  description: "The ID of the updated planning application"
+ *                applicationNumber:
+ *                  type: string
+ *                  description: "The application number of the updated planning application"
+ *                planningId:
+ *                  type: string
+ *                  description: "The planning id of the updated planning application"
+ *                success:
+ *                  type: boolean
+ *                  description: "Indicates whether the update was successful"
+ *                message:
+ *                  type: string
+ *                  description: "A message indicating the result of the update"
+ *                error:
+ *                  type: string
+ *                  description: "An error message if the update failed"
+ *               example:
+ *                 _id: null
+ *                 applicationNumber: "1234/5678/A"
+ *                 planningId: "123"
+ *                 success: false
+ *                 message: "Planning application not updated"
+ *                 error: "An error occurred while processing the application"
  *       401:
  *         description: Not authorized
- *       500:
- *         description: An error occurred while updating the applications
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                _id:
+ *                  type: string
+ *                  description: "The ID of the updated planning application"
+ *                applicationNumber:
+ *                  type: string
+ *                  description: "The application number of the updated planning application"
+ *                planningId:
+ *                  type: string
+ *                  description: "The planning id of the updated planning application"
+ *                success:
+ *                  type: boolean
+ *                  description: "Indicates whether the update was successful"
+ *                message:
+ *                  type: string
+ *                  description: "A message indicating the result of the update"
+ *                error:
+ *                  type: string
+ *                  description: "An error message if the update failed"
+ *               example:
+ *                 _id: null
+ *                 applicationNumber: "1234/5678/A"
+ *                 planningId: "123"
+ *                 success: false
+ *                 error: "Invalid API key"
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                _id:
+ *                  type: string
+ *                  description: "The ID of the updated planning application"
+ *                applicationNumber:
+ *                  type: string
+ *                  description: "The application number of the updated planning application"
+ *                planningId:
+ *                  type: string
+ *                  description: "The planning id of the updated planning application"
+ *                success:
+ *                  type: boolean
+ *                  description: "Indicates whether the update was successful"
+ *                message:
+ *                  type: string
+ *                  description: "A message indicating the result of the update"
+ *                error:
+ *                  type: string
+ *                  description: "An error message if the update failed"
+ *               example:
+ *                 _id: null
+ *                 applicationNumber: "1234/5678/A"
+ *                 planningId: "123"
+ *                 success: false
+ *                 error: "Uniform integration is not enabled"
  */
 export async function PUT(req: NextRequest) {
+  const body = await req.json();
+
   const isUniformEnabled = await isUniformIntegrationEnabled();
   if (!isUniformEnabled) {
-    return new NextResponse("Uniform integration is not enabled", {
-      status: 403,
-    });
+    return NextResponse.json(
+      {
+        _id: null,
+        applicationNumber: body?.applicationNumber ?? null,
+        planningId: body.planningId ?? null,
+        success: false,
+        error: "Uniform integration is not enabled",
+      },
+      {
+        status: 403,
+      },
+    );
   }
   // Verify API key
   const referer = req.headers.get("x-api-key");
@@ -220,27 +332,36 @@ export async function PUT(req: NextRequest) {
   const isValidApiKey = verifyApiKey(apiKey);
 
   if (!isValidApiKey) {
-    return NextResponse.json("Invalid API key", {
-      status: 401,
-    });
+    return NextResponse.json(
+      {
+        _id: null,
+        applicationNumber: body?.applicationNumber ?? null,
+        planningId: body.planningId ?? null,
+        success: false,
+        error: "Invalid API key",
+      },
+      {
+        status: 401,
+      },
+    );
   }
 
-  const body = await req.json();
-
   if (!body || typeof body !== "object" || Array.isArray(body)) {
-    return new NextResponse("Invalid request body. Expected an object.", {
-      status: 400,
-    });
+    return NextResponse.json(
+      {
+        _id: null,
+        applicationNumber: body?.applicationNumber ?? null,
+        planningId: body.planningId ?? null,
+        success: false,
+        error: "Invalid request body. Expected an object.",
+      },
+      {
+        status: 400,
+      },
+    );
   }
 
   const result = await processApplication(body);
 
-  if (result.error) {
-    return NextResponse.json(
-      { data: { errors: [{ application: body, error: result.error }] } },
-      { status: 400 },
-    );
-  }
-
-  return NextResponse.json({ data: { success: [result.success] } });
+  return NextResponse.json(result, { status: result.success ? 200 : 400 });
 }

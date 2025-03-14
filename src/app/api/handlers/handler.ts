@@ -6,26 +6,28 @@ import {
 import { validateUniformData } from "@/app/actions/uniformValidator";
 import { checkAllowedUpdateFields } from "../checkAllowedUpdateFields";
 
-export interface ApplicationError {
-  application: any;
-  error: string;
-}
-
-export interface ApplicationResult {
-  success: string[];
-  errors: ApplicationError[];
+export interface ProcessApplicationResponse {
+  _id: string | null;
+  applicationNumber: string | null;
+  planningId: string | null;
+  success: boolean;
+  message?: string;
+  error?: string;
 }
 
 async function processApplication(
   application: any,
-): Promise<{ success?: string; error?: string }> {
+): Promise<ProcessApplicationResponse> {
   const validationErrors = await validateUniformData(application);
   if (validationErrors.errors.length > 0) {
-    return { error: validationErrors.errors[0].message };
-  }
-
-  if (!application || typeof application !== "object") {
-    return { error: "Invalid application data" };
+    return {
+      _id: null,
+      applicationNumber: application?.applicationNumber ?? null,
+      planningId: application?.planningId ?? null,
+      success: false,
+      message: "Invalid data",
+      error: validationErrors.errors[0].message,
+    };
   }
 
   const applicationData = {
@@ -61,42 +63,70 @@ async function processApplication(
   const { applicationNumber, ...updateData } = applicationData;
 
   if (!applicationNumber) {
-    return { error: "Missing required field: applicationNumber" };
+    return {
+      _id: null,
+      applicationNumber: applicationData?.applicationNumber ?? null,
+      planningId: applicationData?.planningId ?? null,
+      success: false,
+      message: "Planning application not updated",
+      error: "Missing required field: applicationNumber",
+    };
   }
 
   try {
     const existingApplication = await checkExistingReference(applicationNumber);
     if (existingApplication && existingApplication._id) {
       if (checkAllowedUpdateFields(existingApplication, updateData)) {
-        await updateApplication(existingApplication._id, updateData);
-        return { success: `Application ${applicationNumber} updated` };
+        const updated = await updateApplication(
+          existingApplication._id,
+          updateData,
+        );
+        return {
+          _id: updated._id,
+          applicationNumber: updated?.applicationNumber ?? null,
+          planningId: updated?.planningId ?? null,
+          success: true,
+          message: `Application ${applicationNumber} updated`,
+        };
       }
-      return { success: `Application ${applicationNumber} no update needed` };
+      return {
+        _id: existingApplication._id,
+        applicationNumber: existingApplication?.applicationNumber ?? null,
+        planningId: existingApplication?.planningId ?? null,
+        success: true,
+        message: `Application ${applicationNumber} no update needed`,
+      };
     } else {
-      await createApplication(applicationData);
-      return { success: `Application ${applicationNumber} created` };
+      const created = await createApplication(applicationData);
+      return {
+        _id: created._id,
+        applicationNumber: created?.applicationNumber ?? null,
+        planningId: created?.planningId ?? null,
+        success: true,
+        message: `Application ${applicationNumber} created`,
+      };
     }
   } catch (error) {
     console.error("Error processing application:", error);
-    return { error: "An error occurred while processing the application" };
+    return {
+      _id: null,
+      applicationNumber: applicationData?.applicationNumber ?? null,
+      planningId: applicationData?.planningId ?? null,
+      success: false,
+      message: "Planning application not updated",
+      error: "An error occurred while processing the application",
+    };
   }
 }
 
 export async function processMultipleApplications(
   applications: any[],
-): Promise<ApplicationResult> {
-  const results: ApplicationResult = { success: [], errors: [] };
+): Promise<ProcessApplicationResponse[]> {
+  const results = [];
 
   for (const application of applications) {
     const result = await processApplication(application);
-    if (result.error) {
-      results.errors.push({
-        application,
-        error: result.error,
-      });
-    } else if (result.success) {
-      results.success.push(result.success);
-    }
+    results.push(result);
   }
 
   return results;

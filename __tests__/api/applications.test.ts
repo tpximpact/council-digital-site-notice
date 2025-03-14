@@ -115,7 +115,7 @@ describe("Applications PUT endpoint", () => {
     expect(response.status).toBe(400);
   });
 
-  it("should return 207 for successful and failed applications", async () => {
+  it("should return 200 for successful and failed applications", async () => {
     const validApplication = generateUniformData();
     const invalidApplication = generateUniformData({
       applicationNumber: undefined,
@@ -148,6 +148,6 @@ describe("Applications PUT endpoint", () => {
 
     const response = (await PUT(mockRequest)) as NextResponse;
 
-    expect(response.status).toBe(207);
+    expect(response.status).toBe(200);
   });
 });
