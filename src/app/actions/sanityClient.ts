@@ -67,7 +67,7 @@ export async function getActiveApplications(
 ): Promise<sanityApplicationResponse> {
   try {
     const query = `{
-        "results": *[_type == "planning-application" && isActive == true ${requiredFields} && !(_id in path("drafts.**"))] | order(_id) 
+        "results": *[_type == "planning-application" && isActive == true ${requiredFields} && !(_id in path("drafts.**"))] | order(_updatedAt desc) 
           ${itemsPerPage ? `[${offSet}...${offSet + itemsPerPage}]` : ""} {
             _id, 
             image_head, 
