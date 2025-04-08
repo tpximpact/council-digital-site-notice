@@ -89,6 +89,7 @@ describe("Applications PUT endpoint", () => {
       headers: {
         get: jest.fn().mockReturnValue("invalid_key"),
       },
+      json: jest.fn().mockResolvedValue("invalid_data"),
     } as unknown as NextRequest;
 
     isUniformIntegrationEnabledMock.mockResolvedValue(true);

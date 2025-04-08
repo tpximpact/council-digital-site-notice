@@ -99,14 +99,14 @@ describe("Application Handlers", () => {
       const result = await processApplication(minimalApplication);
 
       expect(createApplication).toHaveBeenCalledTimes(1);
-      expect(result.success).toContain("created");
+      expect(result.message).toContain("created");
     });
 
     it("creates new application with all fields", async () => {
       const result = await processApplication(validApplication);
 
       expect(createApplication).toHaveBeenCalledTimes(1);
-      expect(result.success).toContain("created");
+      expect(result.message).toContain("created");
     });
 
     it("updates existing application when changes detected", async () => {
@@ -124,7 +124,7 @@ describe("Application Handlers", () => {
       const result = await processApplication(newData);
 
       expect(updateApplication).toHaveBeenCalledTimes(1);
-      expect(result.success).toContain("updated");
+      expect(result.message).toContain("updated");
     });
 
     it("handles validation errors", async () => {
@@ -159,9 +159,11 @@ describe("Application Handlers", () => {
 
         const results = await processMultipleApplications(applications);
 
-        expect(results.success).toHaveLength(2);
+        const successfulUpdates = results.filter((result) => result.success);
+        const failedUpdates = results.filter((result) => !result.success);
+        expect(successfulUpdates).toHaveLength(2);
         expect(createApplication).toHaveBeenCalledTimes(2);
-        expect(results.errors).toHaveLength(0);
+        expect(failedUpdates).toHaveLength(0);
       });
 
       it("handles mix of successful and failed applications", async () => {
@@ -173,8 +175,10 @@ describe("Application Handlers", () => {
 
         const results = await processMultipleApplications(applications);
 
-        expect(results.success).toHaveLength(1);
-        expect(results.errors).toHaveLength(1);
+        const successfulUpdates = results.filter((result) => result.success);
+        const failedUpdates = results.filter((result) => !result.success);
+        expect(successfulUpdates).toHaveLength(1);
+        expect(failedUpdates).toHaveLength(1);
         expect(createApplication).toHaveBeenCalledTimes(1);
       });
 
@@ -188,16 +192,20 @@ describe("Application Handlers", () => {
 
         const results = await processMultipleApplications(applications);
 
-        expect(results.success).toHaveLength(0);
-        expect(results.errors).toHaveLength(2);
+        const successfulUpdates = results.filter((result) => result.success);
+        const failedUpdates = results.filter((result) => !result.success);
+        expect(successfulUpdates).toHaveLength(0);
+        expect(failedUpdates).toHaveLength(2);
         expect(createApplication).not.toHaveBeenCalled();
       });
 
       it("processes empty array", async () => {
         const results = await processMultipleApplications([]);
 
-        expect(results.success).toHaveLength(0);
-        expect(results.errors).toHaveLength(0);
+        const successfulUpdates = results.filter((result) => result.success);
+        const failedUpdates = results.filter((result) => !result.success);
+        expect(successfulUpdates).toHaveLength(0);
+        expect(failedUpdates).toHaveLength(0);
         expect(createApplication).not.toHaveBeenCalled();
       });
 
@@ -213,8 +221,10 @@ describe("Application Handlers", () => {
 
         const results = await processMultipleApplications(applications);
 
-        expect(results.success).toHaveLength(1);
-        expect(results.errors).toHaveLength(1);
+        const successfulUpdates = results.filter((result) => result.success);
+        const failedUpdates = results.filter((result) => !result.success);
+        expect(successfulUpdates).toHaveLength(1);
+        expect(failedUpdates).toHaveLength(1);
         expect(createApplication).toHaveBeenCalledTimes(2);
       });
     });
