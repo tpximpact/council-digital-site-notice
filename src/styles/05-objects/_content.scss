@@ -1,0 +1,37 @@
+/**
+Allows you to use html without govuk-frontend classes and still have styles
+*/
+
+.dsn-content {
+  @include govuk-global-styles;
+  // headings
+  h1 {
+    @extend %govuk-heading-m;
+  }
+  h2 {
+    @extend %govuk-heading-s;
+  }
+  h3 {
+    @extend %govuk-heading-s;
+  }
+  h4 {
+    @extend %govuk-heading-s;
+  }
+  h5 {
+    @extend %govuk-heading-s;
+  }
+  h6 {
+    @extend %govuk-heading-s;
+  }
+  // lists
+  ul,
+  ol {
+    @extend %govuk-list;
+  }
+  ul {
+    @extend %govuk-list--bullet;
+  }
+  ol {
+    @extend %govuk-list--number;
+  }
+}

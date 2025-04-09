@@ -11,7 +11,7 @@ const CookiePolicyPage = async () => {
   return (
     <PageWrapper isCentered={true}>
       <h1 className="govuk-heading-l">Cookie Policy</h1>
-      <p className="govuk-body">{globalConfig?.cookiePolicyContent}</p>
+      <div className="dsn-content">{globalConfig?.cookiePolicyContent}</div>
     </PageWrapper>
   );
 };
