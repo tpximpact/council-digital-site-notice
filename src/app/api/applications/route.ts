@@ -184,74 +184,184 @@ import { processMultipleApplications } from "../handlers/handler";
  *               showJobs: true
  *               jobs: { "min": 5, "max": 15 }
  *     responses:
- *       '200':
+ *       200:
  *         description: Returns updated planning applications
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 data:
- *                   type: object
- *                   properties:
- *                     success:
- *                       type: array
- *                       items:
- *                         type: string
+ *                _id:
+ *                  type: string
+ *                  description: "The ID of the updated planning application"
+ *                applicationNumber:
+ *                  type: string
+ *                  description: "The application number of the updated planning application"
+ *                planningId:
+ *                  type: string
+ *                  description: "The planning id of the updated planning application"
+ *                success:
+ *                  type: boolean
+ *                  description: "Indicates whether the update was successful"
+ *                message:
+ *                  type: string
+ *                  description: "A message indicating the result of the update"
+ *                error:
+ *                  type: string
+ *                  description: "An error message if the update failed"
  *               example:
- *                 data:
- *                   success:
- *                     - "Application 1234/5678/A no update needed"
- *                     - "Application 9876/5432/A updated"
- *       '400':
+ *                 - _id: abc12345cde
+ *                   applicationNumber: "1234/5678/A"
+ *                   planningId: "123"
+ *                   success: true
+ *                   message: "Planning application updated"
+ *                 - _id: edc54321cba
+ *                   applicationNumber: "9876/5432/A"
+ *                   planningId: "321"
+ *                   success: false
+ *                   message: "Planning application not updated"
+ *       400:
  *         description: Invalid request body or missing required fields
- *       '401':
+ *       401:
  *         description: Not authorized
- *       '403':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                _id:
+ *                  type: string
+ *                  description: "The ID of the updated planning application"
+ *                applicationNumber:
+ *                  type: string
+ *                  description: "The application number of the updated planning application"
+ *                planningId:
+ *                  type: string
+ *                  description: "The planning id of the updated planning application"
+ *                success:
+ *                  type: boolean
+ *                  description: "Indicates whether the update was successful"
+ *                message:
+ *                  type: string
+ *                  description: "A message indicating the result of the update"
+ *                error:
+ *                  type: string
+ *                  description: "An error message if the update failed"
+ *               example:
+ *                 _id: null
+ *                 applicationNumber: null
+ *                 planningId: null
+ *                 success: false
+ *                 error: "Invalid API key"
+ *       403:
  *         description: Forbidden
- *       '207':
- *         description: Some applications were updated or created, while others failed
- *       '500':
- *         description: An error occurred while updating the applications
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                _id:
+ *                  type: string
+ *                  description: "The ID of the updated planning application"
+ *                applicationNumber:
+ *                  type: string
+ *                  description: "The application number of the updated planning application"
+ *                planningId:
+ *                  type: string
+ *                  description: "The planning id of the updated planning application"
+ *                success:
+ *                  type: boolean
+ *                  description: "Indicates whether the update was successful"
+ *                message:
+ *                  type: string
+ *                  description: "A message indicating the result of the update"
+ *                error:
+ *                  type: string
+ *                  description: "An error message if the update failed"
+ *               example:
+ *                 _id: null
+ *                 applicationNumber: null
+ *                 planningId: null
+ *                 success: false
+ *                 error: "Uniform integration is not enabled"
  */
 
 export async function PUT(req: NextRequest) {
   const isUniformEnabled = await isUniformIntegrationEnabled();
   if (!isUniformEnabled) {
-    return new NextResponse("Uniform integration is not enabled", {
-      status: 403,
-    });
+    return NextResponse.json(
+      {
+        _id: null,
+        applicationNumber: null,
+        planningId: null,
+        success: false,
+        error: "Uniform integration is not enabled",
+      },
+      {
+        status: 403,
+      },
+    );
   }
   // Verify API key
   const referer = req.headers.get("x-api-key");
   const apiKey = referer as string;
   const isValidApiKey = verifyApiKey(apiKey);
   if (!isValidApiKey) {
-    return new NextResponse("Invalid API key", { status: 401 });
+    return NextResponse.json(
+      {
+        _id: null,
+        applicationNumber: null,
+        planningId: null,
+        success: false,
+        error: "Invalid API key",
+      },
+      { status: 401 },
+    );
   }
 
   const body = await req.json();
 
   if (!Array.isArray(body)) {
-    return new NextResponse("Invalid request body. Expected an array.", {
-      status: 400,
-    });
+    return NextResponse.json(
+      {
+        _id: null,
+        applicationNumber: null,
+        planningId: null,
+        success: false,
+        error: "Invalid request body. Expected an array.",
+      },
+      { status: 400 },
+    );
   }
 
   if (body.length === 0) {
-    return new NextResponse("No applications provided", { status: 400 });
+    return NextResponse.json(
+      {
+        _id: null,
+        applicationNumber: null,
+        planningId: null,
+        success: false,
+        error: "No applications provided",
+      },
+      { status: 400 },
+    );
   }
 
   const results = await processMultipleApplications(body);
 
-  if (results.success.length === 0 && results.errors.length > 0) {
+  const failedUpdates = results.filter((result) => !result.success);
+  if (failedUpdates.length === results.length) {
     return NextResponse.json(
-      { data: { errors: results.errors } },
+      {
+        _id: null,
+        applicationNumber: null,
+        planningId: null,
+        success: false,
+        error: "All applications failed validation",
+      },
       { status: 400 },
     );
-  } else if (results.errors.length > 0) {
-    return NextResponse.json({ data: results }, { status: 207 });
   }
 
-  return NextResponse.json({ data: { success: results.success } });
+  return NextResponse.json(results, { status: 200 });
 }

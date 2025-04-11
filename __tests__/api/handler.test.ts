@@ -57,14 +57,14 @@ describe("Application Handlers", () => {
       const result = await processApplication(minimalApplication);
 
       expect(createApplication).toHaveBeenCalledTimes(1);
-      expect(result.success).toContain("created");
+      expect(result.message).toContain("created");
     });
 
     it("creates new application with all fields", async () => {
       const result = await processApplication(validApplication);
 
       expect(createApplication).toHaveBeenCalledTimes(1);
-      expect(result.success).toContain("created");
+      expect(result.message).toContain("created");
     });
 
     it("updates existing application when changes detected", async () => {
@@ -82,7 +82,7 @@ describe("Application Handlers", () => {
       const result = await processApplication(newData);
 
       expect(updateApplication).toHaveBeenCalledTimes(1);
-      expect(result.success).toContain("updated");
+      expect(result.message).toContain("updated");
     });
 
     describe("Field-by-Field Update Tests", () => {
@@ -101,7 +101,7 @@ describe("Application Handlers", () => {
             isActive: validApplication.isActive,
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("no update needed");
+          expect(result.message).toContain("no update needed");
           expect(updateApplication).not.toHaveBeenCalled();
         });
 
@@ -111,7 +111,7 @@ describe("Application Handlers", () => {
             isActive: !validApplication.isActive,
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("updated");
+          expect(result.message).toContain("updated");
           expect(updateApplication).toHaveBeenCalled();
         });
 
@@ -121,14 +121,14 @@ describe("Application Handlers", () => {
             planningId: validApplication.planningId,
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("no update needed");
+          expect(result.message).toContain("no update needed");
           expect(updateApplication).not.toHaveBeenCalled();
         });
 
         it("detects changes in planningId", async () => {
           const updateData = { ...validApplication, planningId: "NEW123" };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("updated");
+          expect(result.message).toContain("updated");
         });
 
         it("detects no changes in address", async () => {
@@ -137,14 +137,14 @@ describe("Application Handlers", () => {
             address: validApplication.address,
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("no update needed");
+          expect(result.message).toContain("no update needed");
           expect(updateApplication).not.toHaveBeenCalled();
         });
 
         it("detects changes in address", async () => {
           const updateData = { ...validApplication, address: "456 New Road" };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("updated");
+          expect(result.message).toContain("updated");
         });
       });
 
@@ -155,7 +155,7 @@ describe("Application Handlers", () => {
             location: { ...validApplication.location },
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("no update needed");
+          expect(result.message).toContain("no update needed");
           expect(updateApplication).not.toHaveBeenCalled();
         });
 
@@ -168,7 +168,7 @@ describe("Application Handlers", () => {
             },
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("updated");
+          expect(result.message).toContain("updated");
         });
 
         it("detects no changes in proposedLandUse", async () => {
@@ -177,7 +177,7 @@ describe("Application Handlers", () => {
             proposedLandUse: { ...validApplication.proposedLandUse },
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("no update needed");
+          expect(result.message).toContain("no update needed");
           expect(updateApplication).not.toHaveBeenCalled();
         });
 
@@ -189,7 +189,7 @@ describe("Application Handlers", () => {
             },
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("updated");
+          expect(result.message).toContain("updated");
         });
       });
 
@@ -199,7 +199,7 @@ describe("Application Handlers", () => {
             ...validApplication,
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("no update needed");
+          expect(result.message).toContain("no update needed");
           expect(updateApplication).not.toHaveBeenCalled();
         });
 
@@ -213,7 +213,7 @@ describe("Application Handlers", () => {
             },
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("updated");
+          expect(result.message).toContain("updated");
         });
 
         it("detects no changes in carbonEmissions when showCarbon is true", async () => {
@@ -221,7 +221,7 @@ describe("Application Handlers", () => {
             ...validApplication,
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("no update needed");
+          expect(result.message).toContain("no update needed");
           expect(updateApplication).not.toHaveBeenCalled();
         });
 
@@ -232,7 +232,7 @@ describe("Application Handlers", () => {
             carbonEmissions: 1,
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("updated");
+          expect(result.message).toContain("updated");
         });
       });
 
@@ -244,7 +244,7 @@ describe("Application Handlers", () => {
             openSpaceArea: validApplication.openSpaceArea,
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("no update needed");
+          expect(result.message).toContain("no update needed");
           expect(updateApplication).not.toHaveBeenCalled();
         });
 
@@ -254,7 +254,7 @@ describe("Application Handlers", () => {
             showOpenSpace: !validApplication.showOpenSpace,
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("updated");
+          expect(result.message).toContain("updated");
         });
 
         it("detects changes in openSpaceArea when showOpenSpace is true", async () => {
@@ -264,7 +264,7 @@ describe("Application Handlers", () => {
             openSpaceArea: 1,
           };
           const result = await processApplication(updateData);
-          expect(result.success).toContain("updated");
+          expect(result.message).toContain("updated");
         });
       });
     });
@@ -284,7 +284,7 @@ describe("Application Handlers", () => {
       const result = await processApplication(updateData);
 
       expect(updateApplication).not.toHaveBeenCalled();
-      expect(result.success).toContain("no update needed");
+      expect(result.message).toContain("no update needed");
     });
 
     it("handles validation errors", async () => {
@@ -320,9 +320,11 @@ describe("Application Handlers", () => {
 
       const results = await processMultipleApplications(applications);
 
-      expect(results.success).toHaveLength(2);
+      const successfulUpdates = results.filter((result) => result.success);
+      const failedUpdates = results.filter((result) => !result.success);
+      expect(successfulUpdates).toHaveLength(2);
       expect(createApplication).toHaveBeenCalledTimes(2);
-      expect(results.errors).toHaveLength(0);
+      expect(failedUpdates).toHaveLength(0);
     });
 
     it("handles mix of successful and failed applications", async () => {
@@ -334,8 +336,10 @@ describe("Application Handlers", () => {
 
       const results = await processMultipleApplications(applications);
 
-      expect(results.success).toHaveLength(1);
-      expect(results.errors).toHaveLength(1);
+      const successfulUpdates = results.filter((result) => result.success);
+      const failedUpdates = results.filter((result) => !result.success);
+      expect(successfulUpdates).toHaveLength(1);
+      expect(failedUpdates).toHaveLength(1);
       expect(createApplication).toHaveBeenCalledTimes(1);
     });
 
@@ -349,16 +353,20 @@ describe("Application Handlers", () => {
 
       const results = await processMultipleApplications(applications);
 
-      expect(results.success).toHaveLength(0);
-      expect(results.errors).toHaveLength(2);
+      const successfulUpdates = results.filter((result) => result.success);
+      const failedUpdates = results.filter((result) => !result.success);
+      expect(successfulUpdates).toHaveLength(0);
+      expect(failedUpdates).toHaveLength(2);
       expect(createApplication).not.toHaveBeenCalled();
     });
 
     it("processes empty array", async () => {
       const results = await processMultipleApplications([]);
 
-      expect(results.success).toHaveLength(0);
-      expect(results.errors).toHaveLength(0);
+      const successfulUpdates = results.filter((result) => result.success);
+      const failedUpdates = results.filter((result) => !result.success);
+      expect(successfulUpdates).toHaveLength(0);
+      expect(failedUpdates).toHaveLength(0);
       expect(createApplication).not.toHaveBeenCalled();
     });
 
@@ -374,8 +382,10 @@ describe("Application Handlers", () => {
 
       const results = await processMultipleApplications(applications);
 
-      expect(results.success).toHaveLength(1);
-      expect(results.errors).toHaveLength(1);
+      const successfulUpdates = results.filter((result) => result.success);
+      const failedUpdates = results.filter((result) => !result.success);
+      expect(successfulUpdates).toHaveLength(1);
+      expect(failedUpdates).toHaveLength(1);
       expect(createApplication).toHaveBeenCalledTimes(2);
     });
   });
