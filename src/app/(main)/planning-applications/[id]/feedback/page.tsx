@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Instructions from "./instructions";
 import Questions from "../../../../../components/questions";
-import { getLocalStorage } from "../../../../lib/application";
+import { getSessionStorage } from "../../../../lib/application";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 import { getGlobalContent } from "@/app/actions/sanityClient";
 import { useRouter } from "next/navigation";
@@ -21,8 +21,8 @@ const Feedback = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const initializePage = async () => {
       const globalConfig = await getGlobalContent();
-      const storedApplication = getLocalStorage({
-        key: "application",
+      const storedApplication = getSessionStorage({
+        key: `application_${applicationId}`,
         defaultValue: {},
       });
 
@@ -51,8 +51,8 @@ const Feedback = ({ params }: { params: { id: string } }) => {
   }, [router, applicationId]);
 
   const onChangeQuestion = () => {
-    const getStorageSelectedCheckbox = getLocalStorage({
-      key: "topics",
+    const getStorageSelectedCheckbox = getSessionStorage({
+      key: `topics_${applicationId}`,
       defaultValue: [],
     });
     const selectedCheckbox =
@@ -85,12 +85,15 @@ const Feedback = ({ params }: { params: { id: string } }) => {
 
   return (
     <PageWrapper isCentered={false}>
-      {question !== 0 && question !== 13 && <Instructions />}
+      {question !== 0 && question !== 13 && (
+        <Instructions applicationId={applicationId} />
+      )}
       <PageCenter>
         <Questions
           question={question}
           onChangeQuestion={() => onChangeQuestion()}
           setQuestion={setQuestion}
+          applicationId={applicationId}
         />
       </PageCenter>
     </PageWrapper>

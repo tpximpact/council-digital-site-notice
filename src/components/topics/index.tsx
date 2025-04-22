@@ -5,14 +5,16 @@ import Details from "@/components/details";
 import Validation from "@/components/validation";
 import { descriptionDetail } from "@/app/lib/description";
 import { questions } from "@/app/lib/application";
-import { getLocalStorage } from "@/app/lib/application";
+import { getSessionStorage } from "@/app/lib/application";
 
 export const checkboxId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
 const TopicsQuestion = ({
+  applicationId,
   onChangeQuestion,
   setQuestion,
 }: {
+  applicationId: string;
   onChangeQuestion: () => void;
   setQuestion: (value: number) => void;
 }) => {
@@ -21,26 +23,26 @@ const TopicsQuestion = ({
   const [idApplication, setId] = useState();
 
   useEffect(() => {
-    const getStorage = getLocalStorage({
-      key: "topics",
+    const getStorage = getSessionStorage({
+      key: `topics_${applicationId}`,
       defaultValue: {},
     });
-    const applicationStorage = getLocalStorage({
-      key: "application",
+    const applicationStorage = getSessionStorage({
+      key: `application_${applicationId}`,
       defaultValue: {},
     });
 
     setId(applicationStorage?._id);
     getStorage?.id === applicationStorage?._id &&
       setSelectedCheckbox(getStorage.value);
-  }, [setSelectedCheckbox]);
+  }, [setSelectedCheckbox, applicationId]);
 
   const onChecked = (e: any) => {
     const { id, checked } = e.target;
     checked
       ? (setSelectedCheckbox([...selectedCheckbox, parseInt(id)]),
-        localStorage.setItem(
-          "topics",
+        sessionStorage.setItem(
+          `topics_${applicationId}`,
           JSON.stringify({
             id: idApplication,
             value: [...selectedCheckbox, parseInt(id)],
@@ -49,8 +51,8 @@ const TopicsQuestion = ({
       : (setSelectedCheckbox([
           ...selectedCheckbox?.filter((el) => el !== parseInt(id)),
         ]),
-        localStorage.setItem(
-          "topics",
+        sessionStorage.setItem(
+          `topics_${applicationId}`,
           JSON.stringify({
             id: idApplication,
             value: [...selectedCheckbox?.filter((el) => el !== parseInt(id))],
