@@ -1,27 +1,27 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import { useEffect, useState } from "react";
-import { getLocalStorage } from "../../../../lib/application";
+import { getSessionStorage } from "../../../../lib/application";
 import { getGlobalContent } from "../../../../actions/sanityClient";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 import CommentHead from "@/components/commentHead";
 import PageCenter from "@/components/pageCenter";
 
-function Instructions() {
+function Instructions({ applicationId }: { applicationId: string }) {
   const [application, setApplication] = useState<PlanningApplication>();
   const [councilName, setCouncilName] = useState();
 
   useEffect(() => {
     (async () => {
       const globalConfig: any = await getGlobalContent();
-      const getStorage = getLocalStorage({
-        key: "application",
+      const getStorage = getSessionStorage({
+        key: `application_${applicationId}`,
         defaultValue: {},
       });
       setApplication(getStorage);
       setCouncilName(globalConfig?.councilName);
     })();
-  }, []);
+  }, [applicationId]);
 
   return (
     <div className="dsn-impact">

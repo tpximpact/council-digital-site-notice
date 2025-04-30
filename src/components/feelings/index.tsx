@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, BackLink } from "@/components/button";
-import { getLocalStorage } from "@/app/lib/application";
+import { getSessionStorage } from "@/app/lib/application";
 
 const Radio = ({
   fieldName,
@@ -37,18 +37,20 @@ const Radio = ({
 const options = ["Opposed", "Neutral", "Support"];
 
 function Feeling({
+  applicationId,
   onChangeQuestion,
   setQuestion,
 }: {
+  applicationId: string;
   onChangeQuestion: () => void;
   setQuestion: (value: number) => void;
 }) {
-  const applicationStorage = getLocalStorage({
-    key: "application",
+  const applicationStorage = getSessionStorage({
+    key: `application_${applicationId}`,
     defaultValue: {},
   });
-  const feelingStorage = getLocalStorage({
-    key: "feeling",
+  const feelingStorage = getSessionStorage({
+    key: `feeling_${applicationId}`,
     defaultValue: undefined,
   });
 
@@ -61,7 +63,10 @@ function Feeling({
   const selectSentiment = (value: string) => {
     setSentiment(value);
     setIsError(false);
-    localStorage.setItem("feeling", JSON.stringify({ id, value }));
+    sessionStorage.setItem(
+      `feeling_${applicationId}`,
+      JSON.stringify({ id, value }),
+    );
   };
 
   return (

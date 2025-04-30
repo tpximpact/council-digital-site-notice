@@ -15,6 +15,7 @@ beforeEach(() => {
 describe("Feeling component", () => {
   const mockOnChangeQuestion = jest.fn();
   const mockSetQuestion = jest.fn();
+  const mockApplicationId = "mockId";
 
   it("renders the component", () => {
     render(
@@ -32,6 +33,7 @@ describe("Feeling component", () => {
   it("displays an error message when Next button is clicked without selecting an option", () => {
     render(
       <Feeling
+        applicationId={mockApplicationId}
         onChangeQuestion={mockOnChangeQuestion}
         setQuestion={mockSetQuestion}
       />,

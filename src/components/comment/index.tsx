@@ -3,14 +3,16 @@ import TextArea from "@/components/text-area";
 import Validation from "@/components/validation";
 import { Button, BackLink } from "@/components/button";
 import { questions } from "@/app/lib/application";
-import { getLocalStorage } from "@/app/lib/application";
+import { getSessionStorage } from "@/app/lib/application";
 import { CommentForm } from "@/app/lib/type";
 
 function CommentQuestion({
+  applicationId,
   onChangeQuestion,
   setQuestion,
   question,
 }: {
+  applicationId: string;
   onChangeQuestion: () => void;
   setQuestion: (value: number) => void;
   question: number;
@@ -25,16 +27,16 @@ function CommentQuestion({
   const label = questions[question];
 
   useEffect(() => {
-    const commentStorage = getLocalStorage({
-      key: "comment",
+    const commentStorage = getSessionStorage({
+      key: `comment_${applicationId}`,
       defaultValue: {},
     });
-    const selectedCheckboxStorage = getLocalStorage({
-      key: "topics",
+    const selectedCheckboxStorage = getSessionStorage({
+      key: `topics_${applicationId}`,
       defaultValue: {},
     });
-    const applicationStorage = getLocalStorage({
-      key: "application",
+    const applicationStorage = getSessionStorage({
+      key: `application_${applicationId}`,
       defaultValue: {},
     });
     setId(applicationStorage?._id);
@@ -42,12 +44,12 @@ function CommentQuestion({
       setCommentForm(commentStorage?.value);
     selectedCheckboxStorage?.id == applicationStorage?._id &&
       setSelectedCheckbox(selectedCheckboxStorage?.value);
-  }, []);
+  }, [applicationId]);
 
   const onComment = (value: string) => {
     setCommentForm((prev) => ({ ...prev, [question]: value }));
-    localStorage.setItem(
-      "comment",
+    sessionStorage.setItem(
+      `comment_${applicationId}`,
       JSON.stringify({ id, value: { ...commentForm, [question]: value } }),
     );
     if (value.trim() !== "") {

@@ -14,8 +14,8 @@ export const phoneRegex =
 export const postCodeRegex =
   /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/;
 
-export function getLocalStorage({ key, defaultValue }: any) {
-  const getValue = localStorage.getItem(key);
+export function getSessionStorage({ key, defaultValue }: any) {
+  const getValue = sessionStorage.getItem(key);
 
   let storagedValue = defaultValue;
 

@@ -76,7 +76,6 @@ export type GlobalContent = {
   integrations?: "manual" | "openAPI" | "uniformAPI";
   concernUrl?: string;
   concernContent?: string;
-  cookiePolicyContent?: string;
   feedbackUrl?: string;
   councilName?: string;
   signUpUrl?: string;

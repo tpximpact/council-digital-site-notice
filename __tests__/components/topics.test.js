@@ -10,21 +10,25 @@ describe("TopicsQuestion Component", () => {
   const mockOnChangeQuestion = jest.fn();
 
   beforeEach(() => {
-    // Clear mock localStorage before each test
-    localStorage.clear();
+    // Clear mock sessionStorage before each test
+    sessionStorage.clear();
 
-    // Mocking localStorage to return an array for 'topics'
+    // Mocking sessionStorage to return an array for 'topics'
     const mockTopicsStorage = JSON.stringify({
       id: "mockId",
       value: [], // Assuming initial state is an empty array, adjust as needed
     });
-    localStorage.setItem("topics", mockTopicsStorage);
-    localStorage.setItem("application", JSON.stringify({ _id: "mockId" }));
+    sessionStorage.setItem("topics_mockId", mockTopicsStorage);
+    sessionStorage.setItem(
+      "application_mockId",
+      JSON.stringify({ _id: "mockId" }),
+    );
   });
 
   const renderComponent = () =>
     render(
       <TopicsQuestion
+        applicationId="mockId"
         onChangeQuestion={mockOnChangeQuestion}
         setQuestion={mockSetQuestion}
       />,

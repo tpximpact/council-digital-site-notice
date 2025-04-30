@@ -37,11 +37,6 @@ export default defineType({
       type: "text",
     }),
     defineField({
-      title: "Cookie Policy Content",
-      name: "cookiePolicyContent",
-      type: "text",
-    }),
-    defineField({
       name: "feedbackUrl",
       title: "Feedback Url",
       type: "string",

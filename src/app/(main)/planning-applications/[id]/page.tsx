@@ -36,7 +36,7 @@ const PlanningApplicationItem = async ({ params }: HomeProps) => {
         />
       </div>
       <PageWrapper isCentered={false}>
-        <About data={application} />
+        <About data={application} applicationId={params.id} />
         <Impact data={application} />
         <hr className="govuk-section-break govuk-section-break--l" />
         <Process data={application} />
