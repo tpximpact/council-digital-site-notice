@@ -91,7 +91,7 @@ const ImageGallery = ({
             className="dpr-gallery__lightbox-image"
             style={{
               backgroundImage: images[selectedImage]
-                ? `url(${urlFor(images[selectedImage]).url()})`
+                ? `url(${urlFor(images[selectedImage]).width(1024).height(768).ignoreImageParams().fit("fillmax").bg("f3f2f1").url()})`
                 : "none",
             }}
           ></div>
@@ -131,7 +131,7 @@ const ImageGallery = ({
         id="current-image"
         style={{
           backgroundImage: images[selectedImage]
-            ? `url(${urlFor(images[selectedImage]).url()})`
+            ? `url(${urlFor(images[selectedImage]).width(385).height(270).ignoreImageParams().fit("fillmax").bg("f3f2f1").url()})`
             : "none",
         }}
       >
@@ -153,7 +153,7 @@ const ImageGallery = ({
             title={`Click to show image number ${index + 1}`}
             style={{
               backgroundImage: images[index]
-                ? `url(${urlFor(images[index]).url()})`
+                ? `url(${urlFor(images[index]).width(110).height(77).ignoreImageParams().fit("fillmax").bg("f3f2f1").url()})`
                 : "none",
             }}
           >
