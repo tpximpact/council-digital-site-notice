@@ -14,6 +14,8 @@ const PostcodeSearch = ({ postcode }: { postcode?: string }) => {
           id="postcode"
           name="postcode"
           type="text"
+          minLength={3}
+          maxLength={20}
           defaultValue={postcode}
         />
       </div>
