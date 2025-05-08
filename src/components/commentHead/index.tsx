@@ -18,7 +18,7 @@ const CommentHead = ({
           className="dsn-comment-head__image"
           style={{
             backgroundImage: application?.image_head
-              ? `url(${urlFor(application?.image_head).url()})`
+              ? `url(${urlFor(application?.image_head).width(200).url()})`
               : "none",
           }}
         ></div>

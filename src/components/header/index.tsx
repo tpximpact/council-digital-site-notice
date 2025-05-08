@@ -13,7 +13,11 @@ const Header = ({ globalConfig }: any) => {
                 width={100}
                 height={35}
                 alt={`${globalConfig?.councilName} Council`}
-                src={urlFor(globalConfig?.logo)?.url()}
+                src={urlFor(globalConfig?.logo)
+                  ?.height(35)
+                  .width(100)
+                  .fit("max")
+                  .url()}
               />
             </Link>
           </div>
