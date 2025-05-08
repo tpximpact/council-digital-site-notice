@@ -56,6 +56,7 @@ const Input = ({
         value={value}
         autoComplete={autocomplete}
         required={required}
+        maxLength={100}
       />
     </div>
   );

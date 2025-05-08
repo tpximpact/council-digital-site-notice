@@ -29,6 +29,7 @@ const TextArea = ({
         required={true}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        maxLength={3000}
       ></textarea>
     </>
   );
