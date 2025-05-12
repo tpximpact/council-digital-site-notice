@@ -9,7 +9,13 @@ import PageCenter from "../pageCenter";
 import ButtonStart from "../buttonStart";
 import ImageGallery from "../imageGallery";
 
-function About({ data }: { data: PlanningApplication }) {
+function About({
+  data,
+  applicationId,
+}: {
+  data: PlanningApplication;
+  applicationId: string;
+}) {
   const [globalConfig, setGlobalConfig] = useState<any>();
 
   useEffect(() => {
@@ -20,8 +26,8 @@ function About({ data }: { data: PlanningApplication }) {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(
-      "application",
+    sessionStorage.setItem(
+      `application_${applicationId}`,
       JSON.stringify({
         address: data?.address,
         image_head: data?.image_head,
@@ -34,7 +40,7 @@ function About({ data }: { data: PlanningApplication }) {
         applicationUpdatesUrl: data?.applicationUpdatesUrl,
       }),
     );
-  }, [data]);
+  }, [data, applicationId]);
 
   let galleryImages = data.image_head ? [data.image_head] : [];
 

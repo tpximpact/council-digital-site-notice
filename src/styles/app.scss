@@ -4,8 +4,7 @@ $govuk-font-family: Arial, Helvetica, sans-serif;
 // 02-tools
 
 // 03-generic
-@import "node_modules/govuk-frontend/dist/govuk/index";
-@import "~react-image-gallery/styles/scss/image-gallery.scss";
+@import "node_modules/govuk-frontend/dist/govuk/all";
 
 // 04-elements
 

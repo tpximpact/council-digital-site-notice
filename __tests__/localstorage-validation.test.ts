@@ -1,29 +1,36 @@
-import { getLocalStorage } from "../src/app/lib/application";
+import { getSessionStorage } from "../src/app/lib/application";
 
-describe("localstorage", () => {
+describe("sessionStorage", () => {
+  const mockApplicationId = "mockId";
   beforeAll(() => {
-    localStorage.clear();
-    localStorage.setItem("topics", JSON.stringify([1, 2, 3]));
-    localStorage.setItem("feelings", JSON.stringify(undefined));
+    sessionStorage.clear();
+    sessionStorage.setItem(
+      `topics_${mockApplicationId}`,
+      JSON.stringify([1, 2, 3]),
+    );
+    sessionStorage.setItem(
+      `feelings_${mockApplicationId}`,
+      JSON.stringify(undefined),
+    );
   });
 
   it("should return defaultValue", async () => {
-    const storage = getLocalStorage({
-      key: "feelings",
+    const storage = getSessionStorage({
+      key: `feelings_${mockApplicationId}`,
       defaultValue: {},
     });
     expect(storage).toEqual({});
   }),
     it("should return default when it's not storage", async () => {
-      const storage = getLocalStorage({
-        key: "comments",
+      const storage = getSessionStorage({
+        key: `comments_${mockApplicationId}`,
         defaultValue: {},
       });
       expect(storage).toEqual({});
     });
   it("should return some storage", async () => {
-    const storage = getLocalStorage({
-      key: "topics",
+    const storage = getSessionStorage({
+      key: `topics_${mockApplicationId}`,
       defaultValue: {},
     });
     expect(storage).toEqual([1, 2, 3]);

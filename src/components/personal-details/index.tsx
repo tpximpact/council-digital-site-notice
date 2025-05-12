@@ -18,13 +18,15 @@ import {
   postcodeValidation,
 } from "../../app/lib/feedback-validation";
 import { PersonalDetailsForm } from "../../app/lib/type";
-import { getLocalStorage } from "../../app/lib/application";
+import { getSessionStorage } from "../../app/lib/application";
 import { getGlobalContent } from "../../app/actions/sanityClient";
 
 const PersonalDetails = ({
+  applicationId,
   onChangeQuestion,
   setQuestion,
 }: {
+  applicationId: string;
   onChangeQuestion: () => void;
   setQuestion: (value: number) => void;
 }) => {
@@ -62,32 +64,32 @@ const PersonalDetails = ({
       const fetchGlobalConfig: any = await getGlobalContent();
       setGlobalConfig(fetchGlobalConfig);
 
-      const applicationStorage = getLocalStorage({
-        key: "application",
+      const applicationStorage = getSessionStorage({
+        key: `application_${applicationId}`,
         defaultValue: {},
       });
       setId(applicationStorage?._id);
 
-      const personalDetailsStorage = getLocalStorage({
-        key: "personalDetails",
+      const personalDetailsStorage = getSessionStorage({
+        key: `personalDetails_${applicationId}`,
         defaultValue: {},
       });
       personalDetailsStorage?.id === applicationStorage?._id &&
         setPersonalDetailsForm(personalDetailsStorage?.value);
 
-      const selectedCheckboxStorage = getLocalStorage({
-        key: "topics",
+      const selectedCheckboxStorage = getSessionStorage({
+        key: `topics_${applicationId}`,
         defaultValue: {},
       });
       selectedCheckboxStorage?.id === applicationStorage?._id &&
         setSelectedCheckbox(selectedCheckboxStorage?.value);
     })();
-  }, []);
+  }, [applicationId]);
 
   const onChangeDetails = (value: any, key: string) => {
     setPersonalDetailsForm({ ...personalDetailsForm, [key]: value });
-    localStorage.setItem(
-      "personalDetails",
+    sessionStorage.setItem(
+      `personalDetails_${applicationId}`,
       JSON.stringify({ id, value: { ...personalDetailsForm, [key]: value } }),
     );
   };

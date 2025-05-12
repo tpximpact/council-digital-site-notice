@@ -3,14 +3,16 @@
 import Link from "next/link";
 import { BackLink, Button } from "@/components/button";
 import { useEffect, useState } from "react";
-import { getLocalStorage } from "@/app/lib/application";
+import { getSessionStorage } from "@/app/lib/application";
 import { getGlobalContent } from "@/app/actions/sanityClient";
 import { useRouter } from "next/navigation";
 import ButtonStart from "../buttonStart";
 
 function FeedbackInformation({
+  applicationId,
   onChangeQuestion,
 }: {
+  applicationId: string;
   onChangeQuestion: () => void;
 }) {
   const [globalConfig, setGlobalConfig] = useState<any>();
@@ -28,14 +30,14 @@ function FeedbackInformation({
           : fetchGlobalConfig?.concernContent && "/concern-info",
       );
 
-      const applicationContent = getLocalStorage({
-        key: "application",
+      const applicationContent = getSessionStorage({
+        key: `application_${applicationId}`,
         defaultValue: {},
       });
-      localStorage.removeItem("formId");
+      sessionStorage.removeItem(`formId_${applicationId}`);
       setId(applicationContent?._id);
     })();
-  }, []);
+  }, [applicationId]);
 
   return (
     <>

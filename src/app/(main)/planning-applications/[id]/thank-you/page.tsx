@@ -3,13 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getLocalStorage } from "../../../../lib/application";
+import { getSessionStorage } from "../../../../lib/application";
 import { getGlobalContent, urlFor } from "../../../../actions/sanityClient";
 import { PlanningApplication } from "../../../../../../sanity/sanity.types";
 import CommentHead from "@/components/commentHead";
 import PageWrapper from "@/components/pageWrapper";
 
-const FeedbackMessage = () => {
+const FeedbackMessage = ({ applicationId }: { applicationId: string }) => {
   const [globalConfig, setGlobalConfig] = useState<any>();
   const [application, setAplication] = useState<PlanningApplication>();
   const [formId, setFormId] = useState<string | null>();
@@ -18,16 +18,16 @@ const FeedbackMessage = () => {
     (async () => {
       const fetchGlobalConfig: any = await getGlobalContent();
       setGlobalConfig(fetchGlobalConfig);
-      const initialValue = getLocalStorage({
-        key: "application",
+      const initialValue = getSessionStorage({
+        key: `application_${applicationId}`,
         defaultValue: {},
       });
       setAplication(initialValue);
 
-      const formId = localStorage.getItem("formId");
+      const formId = sessionStorage.getItem(`formId_${applicationId}`);
       setFormId(formId);
     })();
-  }, []);
+  }, [applicationId]);
 
   return (
     <PageWrapper isCentered={true}>
