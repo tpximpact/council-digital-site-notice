@@ -8,7 +8,11 @@ import { cookies } from "next/headers";
 export async function createCookies(value: any) {
   const cookieStore = cookies();
   cookieStore.set("isShowCookie", "false"),
-    cookieStore.set("isConsentCookie", value);
+    cookieStore.set("isConsentCookie", value.toString(), {
+      path: "/",
+      maxAge: 31536000,
+      sameSite: "strict",
+    });
 }
 
 export async function saveComments(data: any) {
