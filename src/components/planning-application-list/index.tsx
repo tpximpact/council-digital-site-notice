@@ -36,7 +36,7 @@ const PlanningApplicationList = ({ data }: { data: PlanningApplication[] }) => {
                   className="dsn-planning-application-card__image"
                   style={{
                     backgroundImage: image_head
-                      ? `url(${urlFor(image_head).url()})`
+                      ? `url(${urlFor(image_head).height(223).url()})`
                       : "none",
                   }}
                 ></div>

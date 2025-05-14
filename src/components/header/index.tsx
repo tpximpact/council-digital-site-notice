@@ -1,20 +1,36 @@
-import Image from "next/image";
 import Link from "next/link";
 import { urlFor } from "@/app/actions/sanityClient";
 
 const Header = ({ globalConfig }: any) => {
   return (
-    <header className="dsn-header">
+    <header
+      className={`dsn-header ${
+        globalConfig?.logo ? "dsn-header--has-logo" : ""
+      }`}
+    >
       <div className="dsn-header__content">
-        {globalConfig?.logo && (
+        {globalConfig?.councilName && (
           <div className="dsn-header__logo">
-            <Link href="/">
-              <Image
-                width={100}
-                height={35}
-                alt={`${globalConfig?.councilName} Council`}
-                src={urlFor(globalConfig?.logo)?.url()}
-              />
+            <Link
+              href="/"
+              className={`dsn-header__logo-link`}
+              style={{
+                backgroundImage: globalConfig?.logo
+                  ? `url(${urlFor(globalConfig?.logo)
+                      ?.width(100)
+                      .height(35)
+                      .fit("max")
+                      .url()})`
+                  : "none",
+              }}
+            >
+              {globalConfig?.logo ? (
+                <div className="govuk-visually-hidden">
+                  {globalConfig?.councilName} Council
+                </div>
+              ) : (
+                <>{globalConfig?.councilName} Council</>
+              )}
             </Link>
           </div>
         )}
