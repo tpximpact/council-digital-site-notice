@@ -21,13 +21,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+export const WithCouncilName: Story = {
+  args: {
+    globalConfig: {
+      councilName: "Test",
+    },
+  },
+};
 export const WithLogo: Story = {
   args: {
     globalConfig: {
+      councilName: "Test",
       logo: {
         _type: "image",
         asset: {
-          _ref: "image-5cde9e98a2fa6341f5957fff4f9a98f00f52ab1a-101x36-png",
+          _ref: "image-2cbc1b3cd555f9b0363faa840bc48ffb515f9a2a-320x113-svg",
           _type: "reference",
         },
       },
