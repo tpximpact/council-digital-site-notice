@@ -47,6 +47,8 @@ exports[`renders homepage unchanged 1`] = `
               <input
                 class="govuk-input"
                 id="postcode"
+                maxlength="20"
+                minlength="3"
                 name="postcode"
                 type="text"
                 value=""
