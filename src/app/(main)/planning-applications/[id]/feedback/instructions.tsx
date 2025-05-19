@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import { useEffect, useState } from "react";
-import { getSessionStorage } from "../../../../lib/application";
+import { getSessionStorage } from "@/lib/session";
 import { getGlobalContent } from "@/actions/sanityClient";
-import { PlanningApplication } from "@/sanity/sanity.types";
+import { PlanningApplication } from "@/sanity/types";
 import CommentHead from "@/components/commentHead";
 import PageCenter from "@/components/pageCenter";
 

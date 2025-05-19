@@ -1,7 +1,7 @@
 import { getApplicationById } from "@/actions/sanityClient";
 import { ReactNode } from "react";
 import { HomeProps } from "./page";
-import { PlanningApplication } from "@/sanity/sanity.types";
+import { PlanningApplication } from "@/sanity/types";
 
 /**
  * genertes default title for every page undeer this

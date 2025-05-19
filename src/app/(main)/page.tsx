@@ -9,7 +9,7 @@ import PlanningApplicationList from "@/components/planning-application-list";
 import { Pagination } from "@/components/govuk/Pagination";
 import Link from "next/link";
 import PostcodeSearch from "@/components/postcodeSearch";
-import { getLocationFromPostcode } from "../actions/actions";
+import { getLocationFromPostcode } from "@/actions/getLocationFromPostcode";
 import { ContentNoResult } from "@/components/ContentNoResult";
 import { Metadata } from "next";
 
