@@ -1,5 +1,5 @@
 import { client } from "@/sanity/lib/client";
-import { PlanningApplication } from "@/sanity/sanity.types";
+import { PlanningApplication } from "@/sanity/types";
 
 const SECRET_TOKEN = process.env.SANITY_SECRET_TOKEN;
 
@@ -139,6 +139,15 @@ export async function getGlobalContent() {
   return info;
 }
 
+export async function getApplicationByApplicationNumber(
+  applicationNumber: string,
+): Promise<PlanningApplication | null> {
+  const query =
+    '*[_type == "planning-application" && applicationNumber == $applicationNumber]';
+  const application = await client.fetch(query, { applicationNumber });
+  return application[0] ? application[0] : null;
+}
+
 export async function createApplication(post: any) {
   const result = await clientWithToken.create(post);
   return result;
@@ -150,13 +159,4 @@ export async function updateApplication(_id: string, body: any) {
     .set({ ...body })
     .commit();
   return result;
-}
-
-export async function checkExistingReference(
-  applicationNumber: string,
-): Promise<PlanningApplication | null> {
-  const query =
-    '*[_type == "planning-application" && applicationNumber == $applicationNumber]';
-  const application = await client.fetch(query, { applicationNumber });
-  return application ? application[0] : null;
 }
