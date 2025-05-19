@@ -3,7 +3,7 @@ import Banner from "@/components/banner";
 import CookiesBanner from "@/components/cookies";
 import { urlFor } from "../actions/sanityClient";
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
+import { getConsentCookies } from "@/actions/cookies";
 import { getGlobalContent } from "../actions/sanityClient";
 import { Suspense } from "react";
 import { GovUkInitAll } from "@/components/GovUkInitAll";
@@ -35,15 +35,7 @@ export default async function MainLayout({
   children: React.ReactNode;
 }) {
   const environment = process.env.NODE_ENV;
-  const cookieStore = cookies();
-  const isShowCookieValue = cookieStore.get("isShowCookie")?.value;
-  const isShowCookie =
-    isShowCookieValue === undefined ? true : isShowCookieValue === "true";
-  const isConsentCookieValue = cookieStore.get("isConsentCookie")?.value;
-  const isConsentCookie =
-    isConsentCookieValue === undefined
-      ? false
-      : isConsentCookieValue === "true";
+  const { isShowCookie, isConsentCookie } = await getConsentCookies();
 
   return (
     <>
