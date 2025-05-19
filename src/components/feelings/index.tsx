@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, BackLink } from "@/components/button";
-import { getSessionStorage } from "@/app/lib/application";
+import { getSessionStorage } from "@/lib/session";
 
 const Radio = ({
   fieldName,

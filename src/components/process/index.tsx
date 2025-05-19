@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getGlobalContent } from "@/actions/sanityClient";
-import { PlanningApplication } from "@/sanity/sanity.types";
+import { PlanningApplication } from "@/sanity/types";
 import PageCenter from "../pageCenter";
 import ButtonStart from "../buttonStart";
 import ApplicationStatus from "../applicationStatus";

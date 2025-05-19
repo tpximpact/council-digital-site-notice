@@ -2,11 +2,12 @@
 import { useEffect, useState } from "react";
 import { BackLink, Button, ButtonLink } from "@/components/button";
 import Details from "@/components/details";
-import { questions, getSessionStorage } from "@/app/lib/application";
-import { descriptionDetail } from "@/app/lib/description";
+import { questions } from "@/lib/topicQuestions";
+import { getSessionStorage } from "@/lib/session";
+import { descriptionDetail } from "@/lib/description";
 import { useRouter } from "next/navigation";
-import { PersonalDetailsForm, CommentForm } from "@/app/lib/type";
-import { saveComments } from "@/app/actions/actions";
+import { PersonalDetailsForm, CommentForm } from "@/types";
+import { saveComments } from "@/actions/saveComments";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 

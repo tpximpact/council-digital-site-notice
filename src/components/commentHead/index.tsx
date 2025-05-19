@@ -1,5 +1,5 @@
 import { urlFor } from "@/sanity/lib/image";
-import { PlanningApplication } from "@/sanity/sanity.types";
+import { PlanningApplication } from "@/sanity/types";
 import Link from "next/link";
 
 const CommentHead = ({

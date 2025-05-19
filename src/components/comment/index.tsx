@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import TextArea from "@/components/text-area";
 import Validation from "@/components/validation";
 import { Button, BackLink } from "@/components/button";
-import { questions } from "@/app/lib/application";
-import { getSessionStorage } from "@/app/lib/application";
-import { CommentForm } from "@/app/lib/type";
+import { questions } from "@/lib/topicQuestions";
+import { getSessionStorage } from "@/lib/session";
+import { CommentForm } from "@/types";
 
 function CommentQuestion({
   applicationId,

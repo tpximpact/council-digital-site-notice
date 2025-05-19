@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { BackLink, Button } from "@/components/button";
 import { useEffect, useState } from "react";
-import { getSessionStorage } from "@/app/lib/application";
+import { getSessionStorage } from "@/lib/session";
 import { getGlobalContent } from "@/actions/sanityClient";
 import { useRouter } from "next/navigation";
 import ButtonStart from "../buttonStart";
