@@ -1,28 +1,11 @@
-import { createClient } from "next-sanity";
-import imageUrlBuilder from "@sanity/image-url";
-import { PlanningApplication } from "../../../sanity/sanity.types";
+import { client } from "@/sanity/lib/client";
+import { PlanningApplication } from "@/sanity/sanity.types";
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2023-05-03";
-const token = process.env.SANITY_SECRET_TOKEN;
+const SECRET_TOKEN = process.env.SANITY_SECRET_TOKEN;
 
-const client = createClient({
-  projectId,
-  dataset,
-  apiVersion,
-  useCdn: false,
+export const clientWithToken = client.withConfig({
+  token: SECRET_TOKEN,
 });
-
-const clientWithToken = client.withConfig({
-  token,
-});
-
-const builder = imageUrlBuilder(client);
-
-export function urlFor(source: any) {
-  return builder.image(source);
-}
 
 export async function sanityFetch<T>({
   query,

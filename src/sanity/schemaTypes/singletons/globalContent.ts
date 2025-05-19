@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 
-export default defineType({
+export const globalContent = defineType({
   title:
     "Global Content (Any changes to this page can take up to 24 hours to display on the published website)",
   name: "global-content",

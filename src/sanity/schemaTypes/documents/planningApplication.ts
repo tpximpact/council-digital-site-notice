@@ -4,12 +4,12 @@ import {
   assessment,
   consultation,
   decision,
-} from "../structure/helper";
-import PopulateButton from "../../src/components/populate-button";
+} from "../../structure/helper";
+import PopulateButton from "@/components/populate-button";
 import ApplicationNumber from "@/components/applicationNumber";
-import { getGlobalContent } from "@/app/actions/sanityClient";
+import { getGlobalContent } from "@/actions/sanityClient";
 
-export default defineType({
+export const planningApplication = defineType({
   title: "Planning application",
   name: "planning-application",
   type: "document",
