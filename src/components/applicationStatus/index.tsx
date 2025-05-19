@@ -1,11 +1,11 @@
 "use client";
-import { PlanningApplication } from "../../../sanity/sanity.types";
+import { PlanningApplication } from "@/sanity/sanity.types";
 import {
   consultation,
   assessment,
   decision,
   appeal,
-} from "../../../sanity/structure/helper";
+} from "@/sanity/structure/helper";
 import { calculateDaysRemaining, slugify } from "@/util";
 import capitaliseFirstLetter from "@/util/capitaliseFirstLetter";
 

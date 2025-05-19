@@ -4,7 +4,7 @@ import {
   getActiveApplications,
   getActiveApplicationsByLocation,
   getGlobalContent,
-} from "../actions/sanityClient";
+} from "@/actions/sanityClient";
 import PlanningApplicationList from "@/components/planning-application-list";
 import { Pagination } from "@/components/govuk/Pagination";
 import Link from "next/link";

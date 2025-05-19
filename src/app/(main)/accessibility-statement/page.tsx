@@ -1,4 +1,4 @@
-import { getGlobalContent } from "@/app/actions/sanityClient";
+import { getGlobalContent } from "@/actions/sanityClient";
 import { PageAccessibilityStatement } from "@/components/PageAccessibilityStatement";
 import PageWrapper from "@/components/pageWrapper";
 import type { Metadata } from "next";

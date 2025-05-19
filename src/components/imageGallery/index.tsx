@@ -1,7 +1,7 @@
 "use client";
 
-import { urlFor } from "@/app/actions/sanityClient";
-import { PlanningApplication } from "../../../sanity/sanity.types";
+import { urlFor } from "@/sanity/lib/image";
+import { PlanningApplication } from "@/sanity/sanity.types";
 import { useEffect, useRef, useState } from "react";
 
 const ImageGallery = ({

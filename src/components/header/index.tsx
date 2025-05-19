@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { urlFor } from "@/app/actions/sanityClient";
+import { urlFor } from "@/sanity/lib/image";
 
 const Header = ({ globalConfig }: any) => {
   return (

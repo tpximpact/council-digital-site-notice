@@ -1,10 +1,10 @@
 import Header from "@/components/header";
 import Banner from "@/components/banner";
 import CookiesBanner from "@/components/cookies";
-import { urlFor } from "../actions/sanityClient";
+import { urlFor } from "@/sanity/lib/image";
 import type { Metadata } from "next";
 import { getConsentCookies } from "@/actions/cookies";
-import { getGlobalContent } from "../actions/sanityClient";
+import { getGlobalContent } from "@/actions/sanityClient";
 import { Suspense } from "react";
 import { GovUkInitAll } from "@/components/GovUkInitAll";
 import Footer from "@/components/footer";

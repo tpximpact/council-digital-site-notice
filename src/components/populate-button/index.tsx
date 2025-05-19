@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useFormValue, useDocumentOperation } from "sanity";
-import { getGlobalContent } from "@/app/actions/sanityClient";
+import { getGlobalContent } from "@/actions/sanityClient";
 import { getOpenApiUrl } from "@/app/actions/actions";
 
 export default function PopulateButton() {
