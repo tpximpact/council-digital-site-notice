@@ -1,7 +1,9 @@
-import { verifyApiKey } from "../../lib/apiKey";
 import { NextRequest, NextResponse } from "next/server";
-import { isUniformIntegrationEnabled } from "@/app/actions/uniformValidator";
-import { processApplication } from "../handlers/handler";
+import { processApplication } from "@/actions/api/processApplication";
+import { checkApiAccess } from "@/actions/api/checkApiAccess";
+import { planningApplicationSchema } from "@/schemas/planningApplication";
+import { access } from "fs";
+import { error } from "console";
 
 /**
  * @swagger
@@ -310,58 +312,45 @@ import { processApplication } from "../handlers/handler";
  */
 export async function PUT(req: NextRequest) {
   const body = await req.json();
+  const accessResponse = await checkApiAccess(req.headers.get("x-api-key"));
+  // console.error("API access error:", accessResponse);
+  if (accessResponse) {
+    const { status, message } = accessResponse;
 
-  const isUniformEnabled = await isUniformIntegrationEnabled();
-  if (!isUniformEnabled) {
     return NextResponse.json(
       {
         _id: null,
         applicationNumber: body?.applicationNumber ?? null,
         planningId: body.planningId ?? null,
         success: false,
-        error: "Uniform integration is not enabled",
+        error: message ?? "An error occurred while processing the application",
       },
       {
-        status: 403,
+        status: status ?? 400,
       },
     );
   }
-  // Verify API key
-  const referer = req.headers.get("x-api-key");
-  const apiKey = referer as string;
-  const isValidApiKey = verifyApiKey(apiKey);
 
-  if (!isValidApiKey) {
+  // Validate the request body
+  const validationResult = planningApplicationSchema.safeParse(body);
+  if (!validationResult.success) {
+    const errorString = validationResult.error.errors
+      .map((err) => `${err.path.join(".")}: ${err.message}`)
+      .join("; ");
+
     return NextResponse.json(
       {
         _id: null,
         applicationNumber: body?.applicationNumber ?? null,
         planningId: body.planningId ?? null,
         success: false,
-        error: "Invalid API key",
+        error: errorString || "Invalid request body",
       },
-      {
-        status: 401,
-      },
+      { status: 400 },
     );
   }
 
-  if (!body || typeof body !== "object" || Array.isArray(body)) {
-    return NextResponse.json(
-      {
-        _id: null,
-        applicationNumber: body?.applicationNumber ?? null,
-        planningId: body.planningId ?? null,
-        success: false,
-        error: "Invalid request body. Expected an object.",
-      },
-      {
-        status: 400,
-      },
-    );
-  }
-
-  const result = await processApplication(body);
-
+  // Process the application if validation passes
+  const result = await processApplication(validationResult.data);
   return NextResponse.json(result, { status: result.success ? 200 : 400 });
 }

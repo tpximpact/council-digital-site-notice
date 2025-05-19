@@ -1,7 +1,7 @@
-import { isUniformIntegrationEnabled } from "@/app/actions/uniformValidator";
-import { verifyApiKey } from "@/app/lib/apiKey";
 import { NextRequest, NextResponse } from "next/server";
-import { processMultipleApplications } from "../handlers/handler";
+import { processMultipleApplications } from "@/actions/api/processApplication";
+import { checkApiAccess } from "@/actions/api/checkApiAccess";
+import { planningApplicationsSchema } from "@/schemas/planningApplication";
 
 /**
  * @swagger
@@ -285,70 +285,46 @@ import { processMultipleApplications } from "../handlers/handler";
  *                 success: false
  *                 error: "Uniform integration is not enabled"
  */
-
 export async function PUT(req: NextRequest) {
-  const isUniformEnabled = await isUniformIntegrationEnabled();
-  if (!isUniformEnabled) {
-    return NextResponse.json(
-      {
-        _id: null,
-        applicationNumber: null,
-        planningId: null,
-        success: false,
-        error: "Uniform integration is not enabled",
-      },
-      {
-        status: 403,
-      },
-    );
-  }
-  // Verify API key
-  const referer = req.headers.get("x-api-key");
-  const apiKey = referer as string;
-  const isValidApiKey = verifyApiKey(apiKey);
-  if (!isValidApiKey) {
-    return NextResponse.json(
-      {
-        _id: null,
-        applicationNumber: null,
-        planningId: null,
-        success: false,
-        error: "Invalid API key",
-      },
-      { status: 401 },
-    );
-  }
-
   const body = await req.json();
+  const accessResponse = await checkApiAccess(req.headers.get("x-api-key"));
 
-  if (!Array.isArray(body)) {
+  if (accessResponse) {
+    const { status, message } = accessResponse;
     return NextResponse.json(
       {
         _id: null,
         applicationNumber: null,
         planningId: null,
         success: false,
-        error: "Invalid request body. Expected an array.",
+        error: message ?? "An error occurred while processing the application",
       },
-      { status: 400 },
+      {
+        status: status ?? 400,
+      },
     );
   }
 
-  if (body.length === 0) {
+  // Validate the request body
+  const validationResult = planningApplicationsSchema.safeParse(body);
+  if (!validationResult.success) {
+    const errorString = validationResult.error.errors
+      .map((err) => `${err.path.join(".")}: ${err.message}`)
+      .join("; ");
     return NextResponse.json(
       {
         _id: null,
         applicationNumber: null,
         planningId: null,
         success: false,
-        error: "No applications provided",
+        error: errorString || "Invalid request body",
       },
       { status: 400 },
     );
   }
 
-  const results = await processMultipleApplications(body);
-
+  // Process the application if validation passes
+  const results = await processMultipleApplications(validationResult.data);
   const failedUpdates = results.filter((result) => !result.success);
   if (failedUpdates.length === results.length) {
     return NextResponse.json(
