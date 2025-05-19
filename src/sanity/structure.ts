@@ -6,7 +6,7 @@ const DISABLED_TYPES = ["global-content", "assist.instruction.context"];
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 // https://www.sanity.io/docs/studio/structure-builder-introduction
 export const structure: StructureResolver = (S, Context) => {
-  console.log(...S.documentTypeListItems());
+  // console.log(...S.documentTypeListItems());
   return S.list()
     .title("DSN")
     .items([
