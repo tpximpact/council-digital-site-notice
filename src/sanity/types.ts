@@ -157,9 +157,11 @@ export type PlanningApplication = {
     min?: number;
     max?: number;
   };
-  commments?: Array<{
-    _key: string;
-  } & Comment>;
+  commments?: Array<
+    {
+      _key: string;
+    } & Comment
+  >;
 };
 
 export type Geopoint = {
@@ -270,5 +272,19 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Slug | Comment | PlanningApplication | Geopoint | GlobalContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes =
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityFileAsset
+  | Slug
+  | Comment
+  | PlanningApplication
+  | Geopoint
+  | GlobalContent
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImageAsset
+  | SanityAssetSourceData
+  | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
