@@ -29,3 +29,27 @@ export interface DprPagination {
   page: number;
   total_pages: number;
 }
+
+export type PersonalDetailsForm = {
+  name: string;
+  address: string;
+  email: string;
+  phone: string;
+  postcode: string;
+  consent: boolean;
+};
+
+export type CommentForm = {
+  [key: number]: string;
+};
+
+export type IntegrationMethod = "manual" | "openAPI" | "uniformAPI";
+
+export interface ProcessApplicationResponse {
+  _id: string | null;
+  applicationNumber: string | null;
+  planningId: string | null;
+  success: boolean;
+  message?: string;
+  error?: string;
+}
