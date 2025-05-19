@@ -8,7 +8,8 @@ import { PlanningApplication } from "@/sanity/types";
 import CommentHead from "@/components/commentHead";
 import PageWrapper from "@/components/pageWrapper";
 
-const FeedbackMessage = ({ applicationId }: { applicationId: string }) => {
+const FeedbackMessage = ({ params }: { params: { id: string } }) => {
+  const { id: applicationId } = params;
   const [globalConfig, setGlobalConfig] = useState<any>();
   const [application, setAplication] = useState<PlanningApplication>();
   const [formId, setFormId] = useState<string | null>();
