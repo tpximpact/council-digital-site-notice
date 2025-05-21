@@ -2,16 +2,11 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { axe, toHaveNoViolations } from "jest-axe";
 import Link, { LinkProps } from "next/link";
-import Header from "../src/components/header";
+import Header from "@/components/header";
 import { ReactNode } from "react";
 
 expect.extend(toHaveNoViolations);
-
-jest.mock("../src/app/actions/sanityClient", () => ({
-  urlFor: jest.fn(),
-}));
-
-jest.mock("../src/app/actions/sanityClient", () => ({
+jest.mock("@/sanity/lib/image", () => ({
   urlFor: jest.fn(() => ({
     width: jest.fn().mockReturnThis(),
     height: jest.fn().mockReturnThis(),
