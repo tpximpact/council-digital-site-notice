@@ -82,8 +82,10 @@ describe("PUT /api/application", () => {
       expect.objectContaining({
         _id: null,
         applicationNumber: "A1",
+        error:
+          "Error: undefined at path: name expected: Required; Error: undefined at path: address expected: Required",
+        planningId: null,
         success: false,
-        error: expect.stringContaining("name: Required; address: Required"),
       }),
       { status: 400 },
     );

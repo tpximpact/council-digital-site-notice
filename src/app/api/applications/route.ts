@@ -308,19 +308,36 @@ export async function PUT(req: NextRequest) {
   // Validate the request body
   const validationResult = planningApplicationsSchema.safeParse(body);
   if (!validationResult.success) {
-    const errorString = validationResult.error.errors
-      .map((err) => `${err.path.join(".")}: ${err.message}`)
-      .join("; ");
-    return NextResponse.json(
-      {
-        _id: null,
-        applicationNumber: null,
-        planningId: null,
-        success: false,
-        error: errorString || "Invalid request body",
-      },
-      { status: 400 },
-    );
+    // Group errors by the first element in path (the array index)
+    const grouped: Record<number, typeof validationResult.error.errors> = {};
+    for (const err of validationResult.error.errors) {
+      const idx = err.path[0] as number;
+      if (!grouped[idx]) grouped[idx] = [];
+      grouped[idx].push(err);
+    }
+
+    // Build error responses for each item
+    const errorResponse = Object.entries(grouped).map(([idx, errors]) => ({
+      _id: null,
+      applicationNumber:
+        body[idx]?.applicationNumber &&
+        typeof body[idx]?.applicationNumber === "string"
+          ? body[idx]?.applicationNumber
+          : null,
+      planningId:
+        body[idx]?.planningId && typeof body[idx]?.planningId === "string"
+          ? body[idx]?.planningId
+          : null,
+      success: false,
+      error: errors
+        .map(
+          (err) =>
+            `Error: ${err.code} at path: ${err.path.slice(1, err.path.length).join(".")} expected: ${err.message}`,
+        )
+        .join("; "),
+    }));
+
+    return NextResponse.json(errorResponse, { status: 400 });
   }
 
   // Process the application if validation passes

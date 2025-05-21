@@ -83,13 +83,22 @@ describe("PUT /api/applications", () => {
     await PUT(req);
 
     expect(mockJson).toHaveBeenCalledWith(
-      expect.objectContaining({
-        _id: null,
-        applicationNumber: null,
-        planningId: null,
-        success: false,
-        error: expect.stringContaining("0.name: Required; 1.address: Required"),
-      }),
+      expect.objectContaining([
+        {
+          _id: null,
+          applicationNumber: "A1",
+          error: "Error: undefined at path: name expected: Required",
+          planningId: null,
+          success: false,
+        },
+        {
+          _id: null,
+          applicationNumber: "A2",
+          error: "Error: undefined at path: address expected: Required",
+          planningId: null,
+          success: false,
+        },
+      ]),
       { status: 400 },
     );
   });

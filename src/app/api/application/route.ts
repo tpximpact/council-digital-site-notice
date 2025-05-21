@@ -335,14 +335,23 @@ export async function PUT(req: NextRequest) {
   const validationResult = planningApplicationSchema.safeParse(body);
   if (!validationResult.success) {
     const errorString = validationResult.error.errors
-      .map((err) => `${err.path.join(".")}: ${err.message}`)
+      .map(
+        (err) =>
+          `Error: ${err.code} at path: ${err.path.join(".")} expected: ${err.message}`,
+      )
       .join("; ");
 
     return NextResponse.json(
       {
         _id: null,
-        applicationNumber: body?.applicationNumber ?? null,
-        planningId: body.planningId ?? null,
+        applicationNumber:
+          body?.applicationNumber && typeof body?.applicationNumber === "string"
+            ? body?.applicationNumber
+            : null,
+        planningId:
+          body.planningId && typeof body.planningId === "string"
+            ? body.planningId
+            : null,
         success: false,
         error: errorString || "Invalid request body",
       },
