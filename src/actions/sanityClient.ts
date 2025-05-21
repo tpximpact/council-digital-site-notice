@@ -75,10 +75,7 @@ export async function getActiveApplications(
  * @returns
  */
 export async function getApplicationById(id: string) {
-  const query = 
-  `*[_type == "planning-application"
-    && isActive == true
-    && $_id in [_id, planningId] ${requiredFields}][0]`
+  const query = `*[_type == "planning-application" && isActive == true && $_id in [_id, planningId] ${requiredFields}][0]`
   const post = await client.fetch(query, { _id: id })
   return post;
 }
