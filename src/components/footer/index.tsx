@@ -21,6 +21,11 @@ const Footer = ({ globalConfig }: any) => {
                   Accessibility statement
                 </Link>
               </li>
+              <li className="govuk-footer__inline-list-item">
+                <Link className="govuk-footer__link" href="/cookie-policy">
+                  Cookie policy
+                </Link>
+              </li>
             </ul>
             {/* <svg
               aria-hidden="true"

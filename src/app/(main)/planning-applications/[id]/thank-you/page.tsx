@@ -1,15 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getLocalStorage } from "../../../../lib/application";
-import { getGlobalContent, urlFor } from "../../../../actions/sanityClient";
-import { PlanningApplication } from "../../../../../../sanity/sanity.types";
+import { getSessionStorage } from "@/lib/session";
+import { getGlobalContent } from "@/actions/sanityClient";
+import { PlanningApplication } from "@/sanity/types";
 import CommentHead from "@/components/commentHead";
 import PageWrapper from "@/components/pageWrapper";
 
-const FeedbackMessage = () => {
+const FeedbackMessage = ({ params }: { params: { id: string } }) => {
+  const { id: applicationId } = params;
   const [globalConfig, setGlobalConfig] = useState<any>();
   const [application, setAplication] = useState<PlanningApplication>();
   const [formId, setFormId] = useState<string | null>();
@@ -18,16 +18,16 @@ const FeedbackMessage = () => {
     (async () => {
       const fetchGlobalConfig: any = await getGlobalContent();
       setGlobalConfig(fetchGlobalConfig);
-      const initialValue = getLocalStorage({
-        key: "application",
+      const initialValue = getSessionStorage({
+        key: `application_${applicationId}`,
         defaultValue: {},
       });
       setAplication(initialValue);
 
-      const formId = localStorage.getItem("formId");
+      const formId = sessionStorage.getItem(`formId_${applicationId}`);
       setFormId(formId);
     })();
-  }, []);
+  }, [applicationId]);
 
   return (
     <PageWrapper isCentered={true}>

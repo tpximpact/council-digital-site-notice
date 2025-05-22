@@ -1,115 +1,136 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { Button, Card, Text } from "@sanity/ui";
+import { ApiIcon } from "@sanity/icons";
+import { IntegrationMethod } from "@/types";
 import { useFormValue, useDocumentOperation } from "sanity";
-import { getGlobalContent } from "@/app/actions/sanityClient";
-import { getOpenApiUrl } from "@/app/actions/actions";
+import { getGlobalContent } from "@/actions/sanityClient";
+import { fetchOpenApiData } from "@/actions/integrations";
+
+export function buildPatchData(data: any, formApplicationNumber: string) {
+  return [
+    { set: { applicationType: data[0].application_type } },
+    { set: { name: data[0].name } },
+    { set: { address: data[0].development_address } },
+    { set: { description: data[0].development_description } },
+    {
+      set: {
+        location: { lng: +data[0].longitude, lat: +data[0].latitude },
+      },
+    },
+    {
+      set: {
+        applicationDocumentsUrl: `http://camdocs.camden.gov.uk/HPRMWebDrawer/PlanRec?q=recContainer:%22${formApplicationNumber}%22`,
+      },
+    },
+  ];
+}
 
 export default function PopulateButton() {
-  const [integrationMethod, setIntegrationMethod] = useState("");
-  const [fetchStatus, setFetchStatus] = useState("idle");
-  const [apiUrl, setApiUrl] = useState("");
+  const [integrationMethod, setIntegrationMethod] =
+    useState<IntegrationMethod>("manual");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    const fetchGlobalContent = async () => {
-      try {
-        const globalContent = await getGlobalContent();
-        setIntegrationMethod(globalContent.integrations);
-      } catch (error) {
-        console.error("Error fetching global content", error);
-        setIntegrationMethod("manual");
-      }
-    };
-
-    fetchGlobalContent();
-
-    const fetchApiUrl = async () => {
-      const url = await getOpenApiUrl();
-      setApiUrl(url);
-    };
-
-    fetchApiUrl();
-  }, []);
+  const formApplicationNumber = useFormValue(["applicationNumber"]) as string;
 
   const formId = useFormValue(["_id"]);
   const docId =
     typeof formId === "string" ? formId.replace("drafts.", "") : formId;
-  const { patch, publish } = useDocumentOperation(
+  const { patch } = useDocumentOperation(
     docId as string,
     "planning-application",
   );
 
-  const getApplicationNumber: any = useFormValue(["applicationNumber"]);
-  const applicationNumber: any = getApplicationNumber?.toUpperCase();
+  useEffect(() => {
+    const fetchGlobalContent = async () => {
+      const globalContent = await getGlobalContent();
+      setIntegrationMethod(globalContent?.integrations ?? "manual");
+    };
+    fetchGlobalContent();
+  }, []);
 
   const handlePopulate = async () => {
-    setFetchStatus("idle");
+    setLoading(true);
+    setError(undefined);
+    setSuccess(false);
+
+    if (!formApplicationNumber) {
+      setError("Application number is required.");
+      setLoading(false);
+      return;
+    }
+
+    if (!formId || !docId || !patch) {
+      setError("Form ID, Document ID, or Patch function is not available.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      if (!apiUrl) {
-        console.error("API URL is not available");
-        setFetchStatus("error");
-        return;
+      const data = await fetchOpenApiData(formApplicationNumber);
+
+      patch.execute(buildPatchData(data, formApplicationNumber));
+
+      setSuccess(true);
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(`Could not fetch the data. ${e.message}`);
+      } else {
+        setError("Could not fetch the data. An unknown error occurred.");
       }
-
-      const response = await fetch(
-        `${apiUrl}.json?$where=application_number='${applicationNumber}'`,
-      );
-      const data = await response.json();
-
-      if (data.length === 0) {
-        setFetchStatus("error");
-        return;
-      }
-
-      // Populate form fields
-      patch.execute([
-        { set: { applicationType: data[0].application_type } },
-        { set: { name: data[0].name } },
-        { set: { address: data[0].development_address } },
-        { set: { description: data[0].development_description } },
-        {
-          set: {
-            location: { lng: +data[0].longitude, lat: +data[0].latitude },
-          },
-        },
-        {
-          set: {
-            applicationDocumentsUrl: `http://camdocs.camden.gov.uk/HPRMWebDrawer/PlanRec?q=recContainer:%22${applicationNumber}%22`,
-          },
-        },
-      ]);
-
-      setFetchStatus("success");
-    } catch (error) {
-      console.error("ERROR", error);
-      setFetchStatus("error");
+    } finally {
+      setLoading(false);
     }
   };
-  const buttonText =
-    integrationMethod !== "manual"
-      ? `Fetch from ${
-          integrationMethod.charAt(0).toUpperCase() + integrationMethod.slice(1)
-        }`
-      : "";
 
-  return (
-    <div>
-      {integrationMethod === "manual" ? (
-        <p>No integration detected. Manual data entry is required.</p>
-      ) : integrationMethod === "uniformAPI" ? (
-        ""
-      ) : (
-        <button type="button" onClick={handlePopulate}>
-          {buttonText}
-        </button>
-      )}
-      {fetchStatus === "error" && (
-        <div style={{ color: "red" }}>
-          Could not fetch the data. Please check the application number.
-        </div>
-      )}
-      {fetchStatus === "success" && (
-        <div style={{ color: "green" }}>Data fetched successfully!</div>
-      )}
-    </div>
-  );
+  if (integrationMethod === "openAPI") {
+    return (
+      <>
+        <Card margin={[3, 3, 4]}>
+          <Button
+            fontSize={[1, 1, 2]}
+            padding={[2, 2, 3]}
+            aria-label={`Fetch from ${integrationMethod}`}
+            icon={ApiIcon}
+            mode="ghost"
+            type="button"
+            text={`Fetch from ${integrationMethod}`}
+            loading={loading}
+            onClick={handlePopulate}
+          />
+        </Card>
+
+        {error && (
+          <Card
+            margin={[3, 3, 4]}
+            padding={[3, 3, 4]}
+            radius={2}
+            shadow={1}
+            tone="critical"
+          >
+            <Text align="center" size={[2, 2, 3]}>
+              {error}
+            </Text>
+          </Card>
+        )}
+        {success && (
+          <Card
+            margin={[3, 3, 4]}
+            padding={[3, 3, 4]}
+            radius={2}
+            shadow={1}
+            tone="positive"
+          >
+            <Text align="center" size={[2, 2, 3]}>
+              Data fetched successfully!
+            </Text>
+          </Card>
+        )}
+      </>
+    );
+  } else {
+    return <></>;
+  }
 }

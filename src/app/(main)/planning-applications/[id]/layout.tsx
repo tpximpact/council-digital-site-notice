@@ -1,7 +1,7 @@
-import { getApplicationById } from "@/app/actions/sanityClient";
+import { getActiveApplicationById } from "@/actions/sanityClient";
 import { ReactNode } from "react";
 import { HomeProps } from "./page";
-import { PlanningApplication } from "../../../../../sanity/sanity.types";
+import { PlanningApplication } from "@/sanity/types";
 
 /**
  * genertes default title for every page undeer this
@@ -11,7 +11,7 @@ import { PlanningApplication } from "../../../../../sanity/sanity.types";
 export async function generateMetadata({ params }: HomeProps) {
   const { id } = params;
 
-  const application = (await getApplicationById(
+  const application = (await getActiveApplicationById(
     id,
   )) as PlanningApplication | null;
   let firstHeading = "Planning application not found";

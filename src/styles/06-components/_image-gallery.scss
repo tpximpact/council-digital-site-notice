@@ -38,7 +38,7 @@ $button-shadow-size: $govuk-border-width-form-element;
 
   &__lightbox-image {
     background-color: govuk-colour("light-grey");
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     width: 85vw;

@@ -1,5 +1,5 @@
-import { urlFor } from "@/app/actions/sanityClient";
-import { PlanningApplication } from "../../../sanity/sanity.types";
+import { urlFor } from "@/sanity/lib/image";
+import { PlanningApplication } from "@/sanity/types";
 import Link from "next/link";
 
 const CommentHead = ({
@@ -18,7 +18,7 @@ const CommentHead = ({
           className="dsn-comment-head__image"
           style={{
             backgroundImage: application?.image_head
-              ? `url(${urlFor(application?.image_head).url()})`
+              ? `url(${urlFor(application?.image_head).width(200).url()})`
               : "none",
           }}
         ></div>

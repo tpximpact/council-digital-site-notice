@@ -1,15 +1,21 @@
 "use client";
 import Details from "@/components/details";
 import Link from "next/link";
-import { descriptionDetail } from "@/app/lib/description";
+import { descriptionDetail } from "@/lib/description";
 import { useEffect, useState } from "react";
-import { PlanningApplication } from "../../../sanity/sanity.types";
-import { getGlobalContent } from "@/app/actions/sanityClient";
-import PageCenter from "../pageCenter";
-import ButtonStart from "../buttonStart";
-import ImageGallery from "../imageGallery";
+import { PlanningApplication } from "@/sanity/types";
+import { getGlobalContent } from "@/actions/sanityClient";
+import PageCenter from "@/components/pageCenter";
+import ButtonStart from "@/components/buttonStart";
+import ImageGallery from "@/components/imageGallery";
 
-function About({ data }: { data: PlanningApplication }) {
+function About({
+  data,
+  applicationId,
+}: {
+  data: PlanningApplication;
+  applicationId: string;
+}) {
   const [globalConfig, setGlobalConfig] = useState<any>();
 
   useEffect(() => {
@@ -20,8 +26,8 @@ function About({ data }: { data: PlanningApplication }) {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(
-      "application",
+    sessionStorage.setItem(
+      `application_${applicationId}`,
       JSON.stringify({
         address: data?.address,
         image_head: data?.image_head,
@@ -34,7 +40,7 @@ function About({ data }: { data: PlanningApplication }) {
         applicationUpdatesUrl: data?.applicationUpdatesUrl,
       }),
     );
-  }, [data]);
+  }, [data, applicationId]);
 
   let galleryImages = data.image_head ? [data.image_head] : [];
 

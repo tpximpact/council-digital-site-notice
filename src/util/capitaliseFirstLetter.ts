@@ -1,11 +1,23 @@
 /**
- * Capitalises the first letter of a string.
- * @param str - The string to capitalise.
- * @returns The string with the first letter capitalised.
+ * Capitalizes the first letter of a given string.
+ *
+ * @param {string} string - The string to be capitalized.
+ * @returns {string} - The string with the first letter capitalized.
+ *
+ * @example
+ * // Returns "Hello"
+ * capitalizeFirstLetter("hello");
+ *
+ * @example
+ * // Returns "Hello world"
+ * capitalizeFirstLetter("hello world");
+ *
+ * @example
+ * // Returns "123abc"
+ * capitalizeFirstLetter("123abc");
  */
-function capitaliseFirstLetter(str: string): string {
-  if (!str) return str;
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-export default capitaliseFirstLetter;
+export const capitaliseFirstLetter = (string: string) => {
+  return (
+    string.toLowerCase().charAt(0).toUpperCase() + string.toLowerCase().slice(1)
+  );
+};

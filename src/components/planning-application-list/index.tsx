@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { urlFor } from "@/app/actions/sanityClient";
-import { PlanningApplication } from "../../../sanity/sanity.types";
+import { urlFor } from "@/sanity/lib/image";
+import { PlanningApplication } from "@/sanity/types";
 
 const PlanningApplicationList = ({ data }: { data: PlanningApplication[] }) => {
   return (
@@ -36,7 +36,7 @@ const PlanningApplicationList = ({ data }: { data: PlanningApplication[] }) => {
                   className="dsn-planning-application-card__image"
                   style={{
                     backgroundImage: image_head
-                      ? `url(${urlFor(image_head).url()})`
+                      ? `url(${urlFor(image_head).height(223).url()})`
                       : "none",
                   }}
                 ></div>

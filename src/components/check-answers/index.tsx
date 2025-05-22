@@ -2,18 +2,21 @@
 import { useEffect, useState } from "react";
 import { BackLink, Button, ButtonLink } from "@/components/button";
 import Details from "@/components/details";
-import { questions, getLocalStorage } from "@/app/lib/application";
-import { descriptionDetail } from "@/app/lib/description";
+import { questions } from "@/lib/topicQuestions";
+import { getSessionStorage } from "@/lib/session";
+import { descriptionDetail } from "@/lib/description";
 import { useRouter } from "next/navigation";
-import { PersonalDetailsForm, CommentForm } from "@/app/lib/type";
-import { saveComments } from "@/app/actions/actions";
+import { PersonalDetailsForm, CommentForm } from "@/types";
+import { saveComments } from "@/actions/saveComments";
 
 export const questionId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 
 function CheckAnswers({
+  applicationId,
   onChangeQuestion,
   setQuestion,
 }: {
+  applicationId: string;
   onChangeQuestion: () => void;
   setQuestion: (value: number) => void;
 }) {
@@ -34,32 +37,32 @@ function CheckAnswers({
   const router = useRouter();
 
   useEffect(() => {
-    const applicationStorage = getLocalStorage({
-      key: "application",
+    const applicationStorage = getSessionStorage({
+      key: `application_${applicationId}`,
       defaultValue: {},
     });
 
     setId(applicationStorage?._id);
 
-    const initialPersonalDetails = getLocalStorage({
-      key: "personalDetails",
+    const initialPersonalDetails = getSessionStorage({
+      key: `personalDetails_${applicationId}`,
       defaultValue: {},
     });
     initialPersonalDetails?.id === applicationStorage?._id &&
       setPersonalDetailsForm(initialPersonalDetails?.value);
 
-    const initialValueComment = getLocalStorage({
-      key: "comment",
+    const initialValueComment = getSessionStorage({
+      key: `comment_${applicationId}`,
       defaultValue: {},
     });
 
-    const initialValueCheckbox = getLocalStorage({
-      key: "topics",
+    const initialValueCheckbox = getSessionStorage({
+      key: `topics_${applicationId}`,
       defaultValue: {},
     });
 
-    const initialValueFeeling = getLocalStorage({
-      key: "feeling",
+    const initialValueFeeling = getSessionStorage({
+      key: `feeling_${applicationId}`,
       defaultValue: {},
     });
     initialValueCheckbox?.id === applicationStorage?._id &&
@@ -79,8 +82,8 @@ function CheckAnswers({
     } else {
       setQuestion(label);
       setSelectedCheckbox([...selectedCheckbox, label]);
-      localStorage.setItem(
-        "topics",
+      sessionStorage.setItem(
+        `topics_${applicationId}`,
         JSON.stringify({ id, value: [...selectedCheckbox, label] }),
       );
     }
@@ -94,7 +97,7 @@ function CheckAnswers({
     // });
 
     let formId = crypto.randomUUID();
-    localStorage.setItem("formId", formId);
+    sessionStorage.setItem(`formId_${applicationId}`, formId);
 
     let topics: any = [];
     let comment: any = {};
@@ -103,8 +106,8 @@ function CheckAnswers({
       topics.push(questions[el]);
       comment = { ...comment, [questions[el]]: commentForm[el] };
     });
-    const application = getLocalStorage({
-      key: "application",
+    const application = getSessionStorage({
+      key: `application_${applicationId}`,
       defaultValue: {},
     });
     const applicationNumber = application?.applicationNumber;
@@ -122,10 +125,10 @@ function CheckAnswers({
       if (response.ok) {
         onChangeQuestion();
         router.push(`/planning-applications/${id}/thank-you`);
-        localStorage.removeItem("feeling");
-        localStorage.removeItem("topics");
-        localStorage.removeItem("comment");
-        localStorage.removeItem("personalDetails");
+        sessionStorage.removeItem(`feeling_${applicationId}`);
+        sessionStorage.removeItem(`topics_${applicationId}`);
+        sessionStorage.removeItem(`comment_${applicationId}`);
+        sessionStorage.removeItem(`personalDetails_${applicationId}`);
       } else {
         console.log("Error fetching data");
       }

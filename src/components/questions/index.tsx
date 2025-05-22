@@ -9,18 +9,26 @@ const FeedbackQuestions = ({
   question,
   onChangeQuestion,
   setQuestion,
+  applicationId,
 }: {
   question: number;
   onChangeQuestion: () => void;
   setQuestion: (value: number) => void;
+  applicationId: string;
 }) => {
   const switchComponent = () => {
     switch (question) {
       case 0:
-        return <FeedbackInformation onChangeQuestion={onChangeQuestion} />;
+        return (
+          <FeedbackInformation
+            applicationId={applicationId}
+            onChangeQuestion={onChangeQuestion}
+          />
+        );
       case 1:
         return (
           <Feeling
+            applicationId={applicationId}
             onChangeQuestion={onChangeQuestion}
             setQuestion={setQuestion}
           />
@@ -28,6 +36,7 @@ const FeedbackQuestions = ({
       case 2:
         return (
           <Topics
+            applicationId={applicationId}
             onChangeQuestion={onChangeQuestion}
             setQuestion={setQuestion}
           />
@@ -35,6 +44,7 @@ const FeedbackQuestions = ({
       case 11:
         return (
           <PersonalDetails
+            applicationId={applicationId}
             onChangeQuestion={onChangeQuestion}
             setQuestion={setQuestion}
           />
@@ -42,6 +52,7 @@ const FeedbackQuestions = ({
       case 12:
         return (
           <CheckAnswers
+            applicationId={applicationId}
             onChangeQuestion={onChangeQuestion}
             setQuestion={setQuestion}
           />
@@ -51,6 +62,7 @@ const FeedbackQuestions = ({
       default:
         return (
           <Comment
+            applicationId={applicationId}
             onChangeQuestion={onChangeQuestion}
             setQuestion={setQuestion}
             question={question}
