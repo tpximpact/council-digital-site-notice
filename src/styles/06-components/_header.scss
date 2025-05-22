@@ -2,10 +2,14 @@ $govuk-header-background: govuk-colour("black");
 $govuk-header-border-color: $govuk-brand-colour;
 $govuk-header-text: govuk-colour("white");
 
-.dsn-header {
+$selector: dsn-header;
+
+.#{$selector} {
   @include govuk-font($size: 16, $line-height: 1);
-  border-bottom: govuk-spacing(2) solid $govuk-header-border-color;
+  @include govuk-font-size($size: 24, $line-height: 1);
+  @include govuk-typography-weight-bold;
   color: $govuk-header-text;
+  border-bottom: govuk-spacing(2) solid $govuk-header-border-color;
   background: $govuk-header-background;
   padding: govuk-spacing(3);
   background-color: govuk-colour("black");
@@ -14,7 +18,11 @@ $govuk-header-text: govuk-colour("white");
     @include govuk-width-container();
     display: flex;
     flex-direction: column;
-    gap: $govuk-gutter-half;
+    gap: $govuk-gutter-half / 2;
+
+    .#{$selector}--has-logo & {
+      gap: $govuk-gutter-half;
+    }
 
     @include govuk-media-query($from: desktop) {
       align-items: center;
@@ -22,8 +30,21 @@ $govuk-header-text: govuk-colour("white");
     }
   }
 
-  &__title {
-    @include govuk-font-size($size: 24, $line-height: 1);
-    @include govuk-typography-weight-bold;
+  &__logo-link {
+    color: govuk-colour("white");
+    text-decoration: none;
+    display: block;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    > * {
+      @include govuk-visually-hidden;
+    }
+
+    .#{$selector}--has-logo & {
+      width: 100px;
+      height: 31px;
+    }
   }
 }
