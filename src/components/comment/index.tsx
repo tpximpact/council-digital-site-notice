@@ -76,7 +76,7 @@ function CommentQuestion({
         label={label}
         onChange={(value: any) => onComment(value)}
         value={commentForm[question] || ""}
-        id={question}
+        id={`${question}`}
       />
 
       {isError && <Validation message="Please leave a comment" />}
