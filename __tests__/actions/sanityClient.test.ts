@@ -1,6 +1,6 @@
 import {
   getActiveApplications,
-  getApplicationById,
+  getActiveApplicationById,
   getActiveApplicationsByLocation,
   getGlobalContent,
   getApplicationByApplicationNumber,
@@ -61,12 +61,12 @@ describe("sanityClient actions", () => {
     });
   });
 
-  describe("getApplicationById", () => {
+  describe("getActiveApplicationById", () => {
     it("fetches by id", async () => {
       mockClient.fetch.mockResolvedValue({ _id: "id1" });
-      const result = await getApplicationById("id1");
+      const result = await getActiveApplicationById("id1");
       expect(mockClient.fetch).toHaveBeenCalledWith(
-        expect.stringContaining("_id == $_id"),
+        expect.stringContaining("$_id in [_id, planningId]"),
         { _id: "id1" },
       );
       expect(result).toEqual({ _id: "id1" });
