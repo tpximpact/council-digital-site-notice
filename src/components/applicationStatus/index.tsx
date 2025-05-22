@@ -1,13 +1,13 @@
 "use client";
-import { PlanningApplication } from "../../../sanity/sanity.types";
+import { PlanningApplication } from "@/sanity/types";
 import {
   consultation,
   assessment,
   decision,
   appeal,
-} from "../../../sanity/structure/helper";
+} from "@/sanity/structure/helper";
 import { calculateDaysRemaining, slugify } from "@/util";
-import capitaliseFirstLetter from "@/util/capitaliseFirstLetter";
+import { capitaliseFirstLetter } from "@/util";
 
 const decisionInformation: Record<string, Record<string, string>> = {
   consultation: {
@@ -56,7 +56,8 @@ const ApplicationStatus = ({
   consultationDeadline?: PlanningApplication["consultationDeadline"];
 }) => {
   // if (stage === "Consultation" && !consultationDeadline) return null;
-  if (!applicationStage) return null;
+  if (!applicationStage || !applicationStage.stage || !applicationStage.status)
+    return null;
   let stage = applicationStage.stage;
   const status = Object.values(applicationStage.status)[0];
   const isValid = checkValidity(stage, status);

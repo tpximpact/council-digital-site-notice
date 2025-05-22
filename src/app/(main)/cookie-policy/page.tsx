@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { getGlobalContent } from "@/app/actions/sanityClient";
+import { getGlobalContent } from "@/actions/sanityClient";
 import PageWrapper from "@/components/pageWrapper";
 import { Metadata } from "next";
 

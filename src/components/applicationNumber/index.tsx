@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getGlobalContent } from "@/app/actions/sanityClient";
+import { getGlobalContent } from "@/actions/sanityClient";
 import { TextInput } from "@sanity/ui";
-import { PatchEvent, set, unset } from "sanity";
 import { useFormValue, useDocumentOperation } from "sanity";
 
 const ApplicationNumber = (props: any) => {

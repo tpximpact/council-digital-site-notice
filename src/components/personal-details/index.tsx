@@ -5,7 +5,7 @@ import Details from "@/components/details";
 import Input from "@/components/input";
 import Validation from "@/components/validation";
 import Checkbox from "@/components/checkbox";
-import { descriptionDetail } from "@/app/lib/description";
+import { descriptionDetail } from "@/lib/description";
 import {
   messageError,
   optionalValidation,
@@ -16,10 +16,10 @@ import {
   emailValidation,
   phoneValidation,
   postcodeValidation,
-} from "../../app/lib/feedback-validation";
-import { PersonalDetailsForm } from "../../app/lib/type";
-import { getSessionStorage } from "../../app/lib/application";
-import { getGlobalContent } from "../../app/actions/sanityClient";
+} from "./feedback-validation";
+import { getSessionStorage } from "@/lib/session";
+import { getGlobalContent } from "@/actions/sanityClient";
+import { PersonalDetailsForm } from "@/types";
 
 const PersonalDetails = ({
   applicationId,

@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { urlFor } from "@/app/actions/sanityClient";
-import { PlanningApplication } from "../../../sanity/sanity.types";
+import { urlFor } from "@/sanity/lib/image";
+import { PlanningApplication } from "@/sanity/types";
 
 const PlanningApplicationList = ({ data }: { data: PlanningApplication[] }) => {
   return (

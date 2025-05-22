@@ -1,6 +1,6 @@
 import Details from "@/components/details";
-import { descriptionDetail } from "@/app/lib/description";
-import { PlanningApplication } from "../../../sanity/sanity.types";
+import { descriptionDetail } from "@/lib/description";
+import { PlanningApplication } from "@/sanity/types";
 import PageCenter from "../pageCenter";
 import React from "react";
 import DataPoints, { DataPoint } from "../dataPoints";

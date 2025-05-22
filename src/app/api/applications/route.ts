@@ -1,7 +1,7 @@
-import { isUniformIntegrationEnabled } from "@/app/actions/uniformValidator";
-import { verifyApiKey } from "@/app/lib/apiKey";
 import { NextRequest, NextResponse } from "next/server";
-import { processMultipleApplications } from "../handlers/handler";
+import { processMultipleApplications } from "@/actions/api/processApplication";
+import { checkApiAccess } from "@/actions/api/checkApiAccess";
+import { planningApplicationsSchema } from "@/schemas/planningApplication";
 
 /**
  * @swagger
@@ -285,70 +285,63 @@ import { processMultipleApplications } from "../handlers/handler";
  *                 success: false
  *                 error: "Uniform integration is not enabled"
  */
-
 export async function PUT(req: NextRequest) {
-  const isUniformEnabled = await isUniformIntegrationEnabled();
-  if (!isUniformEnabled) {
-    return NextResponse.json(
-      {
-        _id: null,
-        applicationNumber: null,
-        planningId: null,
-        success: false,
-        error: "Uniform integration is not enabled",
-      },
-      {
-        status: 403,
-      },
-    );
-  }
-  // Verify API key
-  const referer = req.headers.get("x-api-key");
-  const apiKey = referer as string;
-  const isValidApiKey = verifyApiKey(apiKey);
-  if (!isValidApiKey) {
-    return NextResponse.json(
-      {
-        _id: null,
-        applicationNumber: null,
-        planningId: null,
-        success: false,
-        error: "Invalid API key",
-      },
-      { status: 401 },
-    );
-  }
-
   const body = await req.json();
+  const accessResponse = await checkApiAccess(req.headers.get("x-api-key"));
 
-  if (!Array.isArray(body)) {
+  if (accessResponse) {
+    const { status, message } = accessResponse;
     return NextResponse.json(
       {
         _id: null,
         applicationNumber: null,
         planningId: null,
         success: false,
-        error: "Invalid request body. Expected an array.",
+        error: message ?? "An error occurred while processing the application",
       },
-      { status: 400 },
-    );
-  }
-
-  if (body.length === 0) {
-    return NextResponse.json(
       {
-        _id: null,
-        applicationNumber: null,
-        planningId: null,
-        success: false,
-        error: "No applications provided",
+        status: status ?? 400,
       },
-      { status: 400 },
     );
   }
 
-  const results = await processMultipleApplications(body);
+  // Validate the request body
+  const validationResult = planningApplicationsSchema.safeParse(body);
+  if (!validationResult.success) {
+    // Group errors by the first element in path (the array index)
+    const grouped: Record<number, typeof validationResult.error.errors> = {};
+    for (const err of validationResult.error.errors) {
+      const idx = err.path[0] as number;
+      if (!grouped[idx]) grouped[idx] = [];
+      grouped[idx].push(err);
+    }
 
+    // Build error responses for each item
+    const errorResponse = Object.entries(grouped).map(([idx, errors]) => ({
+      _id: null,
+      applicationNumber:
+        body[idx]?.applicationNumber &&
+        typeof body[idx]?.applicationNumber === "string"
+          ? body[idx]?.applicationNumber
+          : null,
+      planningId:
+        body[idx]?.planningId && typeof body[idx]?.planningId === "string"
+          ? body[idx]?.planningId
+          : null,
+      success: false,
+      error: errors
+        .map(
+          (err) =>
+            `Error: ${err.code} at path: ${err.path.slice(1, err.path.length).join(".")} expected: ${err.message}`,
+        )
+        .join("; "),
+    }));
+
+    return NextResponse.json(errorResponse, { status: 400 });
+  }
+
+  // Process the application if validation passes
+  const results = await processMultipleApplications(validationResult.data);
   const failedUpdates = results.filter((result) => !result.success);
   if (failedUpdates.length === results.length) {
     return NextResponse.json(

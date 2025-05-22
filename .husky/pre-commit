@@ -1,3 +1,5 @@
+yarn typegen
+
 yarn test
 
 yarn lint

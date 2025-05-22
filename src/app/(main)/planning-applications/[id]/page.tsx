@@ -1,9 +1,9 @@
 import About from "@/components/about";
 import Impact from "@/components/impact";
 import Process from "@/components/process";
-import { getApplicationById } from "../../../actions/sanityClient";
+import { getApplicationById } from "@/actions/sanityClient";
 import { notFound } from "next/navigation";
-import { PlanningApplication } from "../../../../../sanity/sanity.types";
+import { PlanningApplication } from "@/sanity/types";
 
 import PageWrapper from "@/components/pageWrapper";
 import Breadcrumbs from "@/components/breadcrumbs";

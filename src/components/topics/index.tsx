@@ -2,10 +2,9 @@ import { Button, BackLink } from "@/components/button";
 import { useEffect, useState } from "react";
 import Checkbox from "@/components/checkbox";
 import Details from "@/components/details";
-import Validation from "@/components/validation";
-import { descriptionDetail } from "@/app/lib/description";
-import { questions } from "@/app/lib/application";
-import { getSessionStorage } from "@/app/lib/application";
+import { descriptionDetail } from "@/lib/description";
+import { questions } from "@/lib/topicQuestions";
+import { getSessionStorage } from "@/lib/session";
 
 export const checkboxId: number[] = [3, 4, 5, 6, 7, 8, 9, 10];
 

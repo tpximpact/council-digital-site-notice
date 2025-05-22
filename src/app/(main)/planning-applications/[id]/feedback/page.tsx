@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import Instructions from "./instructions";
 import Questions from "../../../../../components/questions";
-import { getSessionStorage } from "../../../../lib/application";
-import { PlanningApplication } from "../../../../../../sanity/sanity.types";
-import { getGlobalContent } from "@/app/actions/sanityClient";
+import { getSessionStorage } from "@/lib/session";
+import { PlanningApplication } from "@/sanity/types";
+import { getGlobalContent } from "@/actions/sanityClient";
 import { useRouter } from "next/navigation";
 import PageWrapper from "@/components/pageWrapper";
 import PageCenter from "@/components/pageCenter";

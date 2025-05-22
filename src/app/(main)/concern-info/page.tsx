@@ -1,5 +1,5 @@
 import PageWrapper from "@/components/pageWrapper";
-import { getGlobalContent } from "../../actions/sanityClient";
+import { getGlobalContent } from "@/actions/sanityClient";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

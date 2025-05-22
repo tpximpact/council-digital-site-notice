@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { createCookies } from "@/app/actions/actions";
+import { createConsentCookies } from "@/actions/cookies";
 import { useRouter } from "next/navigation";
 
 const CookiesBanner = () => {
@@ -35,7 +35,7 @@ const CookiesBanner = () => {
             className="govuk-button"
             data-module="govuk-button"
             onClick={() => {
-              createCookies(true);
+              createConsentCookies(true);
               router.refresh();
             }}
           >
@@ -46,7 +46,7 @@ const CookiesBanner = () => {
             className="govuk-button"
             data-module="govuk-button"
             onClick={() => {
-              createCookies(false);
+              createConsentCookies(false);
             }}
           >
             Reject analytics cookies
