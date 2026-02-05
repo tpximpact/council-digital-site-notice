@@ -1,7 +1,10 @@
 import About from "@/components/about";
 import Impact from "@/components/impact";
 import Process from "@/components/process";
-import { getActiveApplicationById } from "@/actions/sanityClient";
+import {
+  getActiveApplicationById,
+  getActiveApplicationByPlanningId,
+} from "@/actions/sanityClient";
 import { notFound } from "next/navigation";
 import { PlanningApplication } from "@/sanity/types";
 
@@ -16,8 +19,7 @@ export interface HomeProps {
 
 async function fetchData({ params }: HomeProps): Promise<PlanningApplication> {
   const { id } = params;
-  const result = await getActiveApplicationById(id);
-  return result;
+  return await getActiveApplicationById(id);
 }
 
 const PlanningApplicationItem = async ({ params }: HomeProps) => {

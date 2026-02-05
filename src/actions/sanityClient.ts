@@ -70,12 +70,44 @@ export async function getActiveApplications(
 }
 
 /**
- * Used on show page to fetch a single active application by id
+ * Used on show page to fetch a single active application by either sanity id or planning id
  * @param id
  * @returns
  */
 export async function getActiveApplicationById(id: string) {
-  const query = `*[_type == "planning-application" && isActive == true && $_id in [_id, planningId] ${requiredFields}][0]`;
+  // If the id contains a dash, it's likely a Sanity document ID, otherwise it's a planning ID
+  // We only support fetching by planning ID if the OPEN_API_URL environment variable is set, otherwise we default to fetching by Sanity document ID
+  // Fetching by like id, planningId caches the query and causes issues when the same result is returned for id and planning id
+  if (process.env.OPEN_API_URL) {
+    if (id.includes("-")) {
+      return await getActiveApplicationBySanityId(id);
+    } else {
+      return await getActiveApplicationByPlanningId(id);
+    }
+  } else {
+    return await getActiveApplicationBySanityId(id);
+  }
+}
+
+/**
+ * Fetch a single active application by id
+ * @param id
+ * @returns
+ */
+export async function getActiveApplicationBySanityId(id: string) {
+  const query = `*[_type == "planning-application" && isActive == true && $_id == _id ${requiredFields}][0]`;
+  const post = await client.fetch(query, { _id: id });
+  return post;
+}
+
+/**
+ * Fetch a single active application by PlanningId
+ * Only used if the OPEN_API_URL environment variable is set, otherwise we default to fetching by Sanity document ID
+ * @param id
+ * @returns
+ */
+export async function getActiveApplicationByPlanningId(id: string) {
+  const query = `*[_type == "planning-application" && isActive == true && $_id == planningId ${requiredFields}][0]`;
   const post = await client.fetch(query, { _id: id });
   return post;
 }
