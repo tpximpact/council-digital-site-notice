@@ -1,4 +1,7 @@
-import { getActiveApplicationById } from "@/actions/sanityClient";
+import {
+  getActiveApplicationById,
+  getGlobalContent,
+} from "@/actions/sanityClient";
 import { ReactNode } from "react";
 import { HomeProps } from "./page";
 import { PlanningApplication } from "@/sanity/types";
@@ -11,8 +14,11 @@ import { PlanningApplication } from "@/sanity/types";
 export async function generateMetadata({ params }: HomeProps) {
   const { id } = params;
 
+  const globalContent = await getGlobalContent();
+
   const application = (await getActiveApplicationById(
     id,
+    globalContent?.integrations ?? "manual",
   )) as PlanningApplication | null;
   let firstHeading = "Planning application not found";
   let secondHeading = "Planning application not found";
