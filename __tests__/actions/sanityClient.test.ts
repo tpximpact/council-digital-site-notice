@@ -1,6 +1,5 @@
 import {
   getActiveApplications,
-  getActiveApplicationById,
   getActiveApplicationsByLocation,
   getGlobalContent,
   getApplicationByApplicationNumber,
@@ -8,6 +7,8 @@ import {
   updateApplication,
   sanityFetch,
   clientWithToken,
+  getActiveApplicationByPlanningId,
+  getActiveApplicationBySanityId,
 } from "@/actions/sanityClient";
 
 jest.mock("@/sanity/lib/client", () => ({
@@ -61,15 +62,29 @@ describe("sanityClient actions", () => {
     });
   });
 
-  describe("getActiveApplicationById", () => {
+  describe("getActiveApplicationBySanityId", () => {
     it("fetches by id", async () => {
       mockClient.fetch.mockResolvedValue({ _id: "id1" });
-      const result = await getActiveApplicationById("id1");
+      const result = await getActiveApplicationBySanityId("id1");
       expect(mockClient.fetch).toHaveBeenCalledWith(
-        expect.stringContaining("$_id in [_id, planningId]"),
+        expect.stringContaining("$_id == _id"),
         { _id: "id1" },
       );
       expect(result).toEqual({ _id: "id1" });
+    });
+  });
+
+  describe("getActiveApplicationByPlanningId", () => {
+    it("fetches by id", async () => {
+      mockClient.fetch.mockResolvedValue({ _id: "1234-1234-1234-1234" });
+      const result = await getActiveApplicationByPlanningId(
+        "1234-1234-1234-1234",
+      );
+      expect(mockClient.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("$_id == planningId"),
+        { _id: "1234-1234-1234-1234" },
+      );
+      expect(result).toEqual({ _id: "1234-1234-1234-1234" });
     });
   });
 
