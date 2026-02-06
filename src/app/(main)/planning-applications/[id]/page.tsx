@@ -3,7 +3,7 @@ import Impact from "@/components/impact";
 import Process from "@/components/process";
 import {
   getActiveApplicationById,
-  getActiveApplicationByPlanningId,
+  getGlobalContent,
 } from "@/actions/sanityClient";
 import { notFound } from "next/navigation";
 import { PlanningApplication } from "@/sanity/types";
@@ -17,9 +17,16 @@ export interface HomeProps {
   };
 }
 
-async function fetchData({ params }: HomeProps): Promise<PlanningApplication> {
+async function fetchData({
+  params,
+}: HomeProps): Promise<PlanningApplication | null> {
+  const globalContent = await getGlobalContent();
+
   const { id } = params;
-  return await getActiveApplicationById(id);
+  return await getActiveApplicationById(
+    id,
+    globalContent?.integrations ?? "manual",
+  );
 }
 
 const PlanningApplicationItem = async ({ params }: HomeProps) => {

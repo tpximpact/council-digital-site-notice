@@ -1,5 +1,6 @@
 import { client } from "@/sanity/lib/client";
 import { PlanningApplication } from "@/sanity/types";
+import { IntegrationMethod } from "@/types";
 
 const SECRET_TOKEN = process.env.SANITY_SECRET_TOKEN;
 
@@ -74,18 +75,21 @@ export async function getActiveApplications(
  * @param id
  * @returns
  */
-export async function getActiveApplicationById(id: string) {
-  // If the id contains a dash, it's likely a Sanity document ID, otherwise it's a planning ID
-  // We only support fetching by planning ID if the OPEN_API_URL environment variable is set, otherwise we default to fetching by Sanity document ID
-  // Fetching by like id, planningId caches the query and causes issues when the same result is returned for id and planning id
-  if (process.env.OPEN_API_URL) {
-    if (id.includes("-")) {
-      return await getActiveApplicationBySanityId(id);
-    } else {
+export async function getActiveApplicationById(
+  id: string,
+  integrationMethod: IntegrationMethod,
+): Promise<PlanningApplication | null> {
+  try {
+    // If the id contains a dash, it's likely a Sanity document ID, otherwise it's a planning ID
+    // We only support fetching by planning ID if the integrationMethod is openAPI, otherwise we default to fetching by Sanity document ID
+    if (integrationMethod === "openAPI" && !id.includes("-")) {
       return await getActiveApplicationByPlanningId(id);
+    } else {
+      return await getActiveApplicationBySanityId(id);
     }
-  } else {
-    return await getActiveApplicationBySanityId(id);
+  } catch (error) {
+    console.error("Error fetching application by ID:", error);
+    return null;
   }
 }
 
